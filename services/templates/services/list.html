@@ -1,0 +1,11 @@
+{% for service in services  %}
+    {% comment %} <a href="{% url 'service:service_detail' service.id %}">  {% endcomment %}
+        <div>
+            {% if service.img %}
+                <img src="{{ service.img.url }}" />
+            {% endif %}
+            {{ service.name }}
+            {{ service.intro }}
+        </div>
+    {% comment %} </a> {% endcomment %}
+{% endfor %}
