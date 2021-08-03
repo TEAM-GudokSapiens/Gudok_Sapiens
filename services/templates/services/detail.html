@@ -1,3 +1,21 @@
 {% extends "base.html" %}
 {% block content %}
+<div class="d-flex flex-column align-items-center">
+    <div class="img-container">
+        {% if service.img %}
+            <img src="{{ service.img.url }}" width='600px' height="400px"/>
+        {% endif %}
+    </div>
+    <div class="service-content">
+        <h1>{{service.name}}</h1>
+        <p>{{service.intro}}</p>
+        <p>{{service.content}}</p>
+    </div>
+    <div class="page-menu d-flex justify-content-around">
+        <div class="mr-3 ml-3"><a href="">가격</a></div>
+        <div class="mr-3 ml-3"><a href="">리뷰</a></div>
+        <div class="mr-3 ml-3"><a href="">SNS</a></div>
+        <div class="mr-3 ml-3"><a href="">정보</a></div>
+    </div>
+</div>
 {% endblock %}
