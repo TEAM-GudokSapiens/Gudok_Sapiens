@@ -1,13 +1,42 @@
-
 {% extends 'base.html' %}
-{% load bootstrap4 %} 
+{% load bootstrap4 %}
 {% block content %}
-<div class="wrapper" style="text-align: center;"> 
-	<h2>회원가입</h> 
-	<form method="POST"> 
-		{% csrf_token %} 
-		{% bootstrap_form form %} 
-	<input type="submit" class="btn btn-primary" value="Sign Up"> 
-	</form> 
-</div> 
+<div class="wrapper" style="text-align: center;">
+    <h1>회원가입</h1>
+    <form method="POST">
+        {% csrf_token %}
+		이메일: <br>
+        <input name="email" type="email">
+        <br>
+        비밀번호: <br>
+        <input name="password1" type="password">
+        <br>
+        비밀번호 확인: <br>
+        <input name="password2" type="password">
+        <br>
+		이름: <br>
+        <input name="name" type="text">
+        <br>
+		닉네임: <br>
+        <input name="nickname" type="text">
+        <br>
+		전화번호: <br>
+        <input type="tel" id="phonenum" name="phonenum"
+       pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}"
+       required>
+        <br>
+		성별: <br>
+		<div>
+		  <input type="radio" id="MALE" name="gender" value="MALE">
+		  <label for="MALE">남</label>
+		</div>
+		<div>
+		  <input type="radio" id="FEMALE" name="gender" value="FEMALE">
+		  <label for="dewey">여</label>
+		</div>
+        <br>
+		<br>
+        <input type="submit" class="btn btn-primary" value="Sign Up">
+    </form>
+</div>
 {% endblock %}
