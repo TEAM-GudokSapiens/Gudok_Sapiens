@@ -1,3 +1,5 @@
-from django.db import models
-class User(models.Model):    
-    pass
+# from django.db import models
+# from django.contrib.auth.models import AbstractUser
+
+# class User(AbstractUser):
+#   password
