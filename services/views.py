@@ -1,3 +1,6 @@
 from django.shortcuts import render
 
-# Create your views here.
+
+def main(request):
+    ctx = {"main": main}
+    return render(request, 'services/main.html', context=ctx)
