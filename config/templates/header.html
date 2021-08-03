@@ -1,0 +1,27 @@
+<div>
+  <h1>
+    구독사피엔스
+  </h1>
+</div>
+<div>
+  <a href="">홈</a><!-- 홈 -->
+  <a href="">커뮤니티</a><!-- 커뮤니티 -->
+  <a href="">나에게맞는서비스랒기</a><!-- 나에게맞는서비스찾기 -->
+</div>
+<div>
+  <a href="">로그인</a><!-- 로그인 -->
+</div>
+<div class="navbar">
+  <a href="">전체보기</a><!-- 전체보기 -->
+  <a href="">라이프스타일</a><!-- 라이프스타일 -->
+  <a href="">음식</a><!-- 음식 -->
+  <a href="">컨텐츠</a><!-- 컨텐츠 -->
+  <a href="">뉴스레터</a><!-- 뉴스레터 -->
+  <form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_table }}
+    <input type="submit" value="검색" class="btn btn-primary btn-sm">
+  </form>
+</div>
+
+

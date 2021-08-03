@@ -7,6 +7,10 @@ def services_list(request):
     ctx = {'services': services}
     return render(request, 'services/list.html', context=ctx)
 
+def main(request):
+    ctx = {"main": main}
+    return render(request, 'services/main.html', context=ctx)
+
 def category_list(request, slug):
     services = Service.objects.filter(category.slug==slug)
     ctx = {'services': services}
