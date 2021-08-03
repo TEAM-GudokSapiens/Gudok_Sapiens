@@ -1,21 +1,35 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="d-flex flex-column align-items-center">
+<div class="detail-container d-flex flex-column align-items-center mt-3">
     <div class="img-container">
         {% if service.img %}
-            <img src="{{ service.img.url }}" width='600px' height="400px"/>
+            <img src="{{ service.img.url }}" class="w-100"/>
         {% endif %}
     </div>
-    <div class="service-content">
-        <h1>{{service.name}}</h1>
-        <p>{{service.intro}}</p>
-        <p>{{service.content}}</p>
+    <div class="service-container">
+        <td>
+            <div class="service-content p-3">
+                <div class="service-name">{{service.name}}</div>
+                <div class="service-intro">{{service.intro}}</div>
+                <div class="service-content">{{service.content}}</div>
+            </div>
+            <div class="page-menu d-flex justify-content-around">
+                <div class=""><a href="">가격</a></div>
+                <div class=""><a href="">리뷰</a></div>
+                <div class=""><a href="">SNS</a></div>
+                <div class=""><a href="">정보</a></div>
+            </div>
+            <div style="height: 1000px;"></div>
+        </td>
     </div>
-    <div class="page-menu d-flex justify-content-around">
-        <div class="mr-3 ml-3"><a href="">가격</a></div>
-        <div class="mr-3 ml-3"><a href="">리뷰</a></div>
-        <div class="mr-3 ml-3"><a href="">SNS</a></div>
-        <div class="mr-3 ml-3"><a href="">정보</a></div>
+</div>
+<div class="fixing-box">
+    <div>키워드 나열</div>
+    <div>{{service.name}}</div>
+    <div>{{service.intro}}</div>
+    <div>별점</div>
+    <div><a href="">찜</a> /
+        <a href="">공유</a>
     </div>
 </div>
 {% endblock %}
