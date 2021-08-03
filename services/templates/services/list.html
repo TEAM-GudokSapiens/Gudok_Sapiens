@@ -1,11 +1,29 @@
-{% for service in services  %}
-    {% comment %} <a href="{% url 'service:service_detail' service.id %}">  {% endcomment %}
-        <div>
-            {% if service.img %}
-                <img src="{{ service.img.url }}" />
-            {% endif %}
-            {{ service.name }}
-            {{ service.intro }}
+
+
+<div class="album py-5 bg-light">
+    <div class="container"> 
+        <div class="flex row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for service in services  %}
+                <a href="{% url 'service:service_detail' service.id %}"> 
+                    <div class="col">
+                        <div class='card'>
+                            <div class='card-img-top'>
+                            {% if service.img %}
+                                <img src="{{ service.img.url }}" width='250px' />
+                            {% endif %}
+                            </div>
+                            <div class='card-body'>
+                            
+                            </div>
+                            
+                            {{ service.name }}
+                            {{ service.intro }}
+                        </div>
+                        
+                    </div>
+                {% comment %} </a> {% endcomment %}
+            {% endfor %}
         </div>
-    {% comment %} </a> {% endcomment %}
-{% endfor %}
+    </div>
+</div>
+
