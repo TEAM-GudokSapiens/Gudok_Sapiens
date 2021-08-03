@@ -32,7 +32,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
     'services',
-    'reviews',
     'bootstrap4',
 ]
 
