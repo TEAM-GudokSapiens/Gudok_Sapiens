@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'users',
     'services',
     'bootstrap4',
+    'common',
 ]
 
 MIDDLEWARE = [
