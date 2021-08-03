@@ -1,0 +1,10 @@
+<!-- {% extends 'base.html' %} 이부분 채워주세요 -->
+
+{% load bootstrap4 %}
+{% block content %}
+<form method="POST" action="{% url 'users:login' %}">
+    {% csrf_token %}
+    {{form}}
+    <button>Login</button>
+</form>
+{% endblock content %}
