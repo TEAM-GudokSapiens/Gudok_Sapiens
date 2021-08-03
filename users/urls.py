@@ -11,5 +11,6 @@ app_name = 'users'
 
 urlpatterns = [
     path('signup/', views.signup, name='signup'),
+    path("login/",views.LoginView.as_view(),name="login"),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

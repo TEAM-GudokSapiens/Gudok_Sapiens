@@ -1,34 +1,13 @@
-<!-- {% extends 'base.html' %} 이부분 채워주세요 -->
 
-{% load bootstrap4 %}
+{% extends 'base.html' %}
+{% load bootstrap4 %} 
 {% block content %}
-<div class="wrapper" style="text-align: center;">
-    <h2>회원가입</h2>
-    <form method="POST">
-        {% csrf_token %}
-        이메일: <br>
-        <input name="email_id" type="email">
-        <br>
-        이름: <br>
-        <input name="name" type="text">
-        <br>
-        비밀번호: <br>
-        <input name="password1" type="password">
-        <br>
-        비밀번호 확인: <br>
-        <input name="password2" type="password">
-        <br>
-        닉네임: <br>
-        <input name="nickname" type="text">
-        <br>
-        전화번호: <br>
-        <input name="phonenum" type="tel" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}">
-        <br>
-        성별: <br>
-        <input name="gender" type="radio">
-        <br>
-        <br>
-        <input type="submit" class="btn btn-primary" value="Sign Up">
-    </form>
-</div>
+<div class="wrapper" style="text-align: center;"> 
+	<h2>회원가입</h> 
+	<form method="POST"> 
+		{% csrf_token %} 
+		{% bootstrap_form form %} 
+	<input type="submit" class="btn btn-primary" value="Sign Up"> 
+	</form> 
+</div> 
 {% endblock %}
