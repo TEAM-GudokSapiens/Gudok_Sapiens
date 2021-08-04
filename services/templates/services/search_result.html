@@ -1,77 +1,59 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-<div class='container'>
-    <div class="row mt-5">
-            <div class="col-12">
-                <h4 style="font-weight: bold;">서비스 리스트</h4>
-                {% if q %}
-                <h5 style="color: gray; font-weight: 550;"><i class="fas fa-search"></i>&nbsp;'{{ q }}' 검색 결과입니다.</h5>
-                {% endif %}
-            </div>
-    </div>
-        <div>
-            <table class="table table-sm table-hover">
-                <thead style="border-top: 1px solid #dee2e6;">
-                    <tr class="text-center">
-                        <th style="font-weight: bold; font-size: 16px;">번호</th>
-                        <th style="font-weight: bold; font-size: 16px;">제목</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% if service_list %}
-                    {% for service in service_list %}
-                    <tr class="text-center" style="cursor:pointer;" onclick="location.href='/service/{{ service.id }}/'">
-                        <td style="font-weight: 500;">{{ service.id }}</td>
-                        <td class="text-left" style="width:50%; font-weight: 600;"><a id="service-{{ service.id }}">{{ service.title|truncatechars:30 }}</a></td>
-                        <td style="font-weight: 500;">{{ service.writer }}</td>
-                        <td style="font-weight: 500;">{{ service.registered_date|date:'Y. m. d' }}</td>
-                        <td style="font-weight: 500;">{{ service.hits }}</td>
-                    </tr>
-                    {% endfor %}
-                    {% else %}
-                        {% if q %}
-                        <tr class="text-center">
-                            <td style="font-weight: bold; color:gray;" colspan="5">
-                                &nbsp;일치하는 검색 결과가 없습니다.
-                            </td>
-                        </tr>
-                        {% else %}
-                            <tr class="text-center">
-                                <td style="font-weight: bold; color:gray;" colspan="5">
-                                    &nbsp;작성된 게시글이 없습니다.~
-                                </td>
-                            </tr>
-                        {% endif %}
-                    {% endif %}
-                </tbody>
-            </table>
-        </div>
-    <form action="" method="GET">
-        <div style="float: right;" class="form-row">
-            <div class="form-row">
-                <div class="col" style="margin-top: 10px;">
-                        <select style="width: 6em;" class="custom-select custom-select-md" name="type">
-                            <option value="all">전체</option>
-                            <option value="title_content">제목+내용</option>
-                            <option value="title">제목</option>
-                            <option value="content">내용</option>
-                            <option value="writer">작성자</option>
-                        </select>
-                    </div>
-                        <div class="col" style="margin-top: 10px;">
-                            <input type="text" name="q" value="{{ q }}" class="form-control form-control-md"
-                                style="width: 15em;" placeholder="검색어를 입력해주세요.">
-                        </div>
-                        <div class="col">
-                            <!-- <button class="btn btn-md btn-outline-dark" type="submit">검색</button> -->
-                            <button class="btn btn-sm" type="submit" id="search_btn">검색</button>
-                        </div>
-                    </div>
-                    </div>
-            </div>
+<div class="navbar">
+  <a href="{% url 'services:services_list' %}">전체보기</a><!-- 전체보기 -->
+  {% for category in categories %}
+    <a href="{% url 'services:category_list' category.slug %}">{{ category.name }}</a>
+  {% endfor %}
+   <form method="GET" action="{% url 'services:search' %}"  >
+    {% csrf_token %}
+        <input type='text' name='search_key' value="{{ search_key }}" placeholder='Search' />
+        <input type='submit' value="Search" />
     </form>
-        
 </div>
+
+{% if query %}
+<h5 style="color: gray; font-weight: 550;">&nbsp;'{{ query }}' 검색 결과입니다.</h5>
+{% endif %}
+
+<div class="album py-5 bg-light">
+    <div class="container"> 
+        <div class="flex row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% if results %}
+                {% for service in results  %}
+                <a href="{% url 'services:services_detail' service.id %}"> 
+                    <div class="col">
+                        <div class='card'>
+                            <div class='card-img-top'>
+                            {% if service.img %}
+                                <img src="{{ service.img.url }}" width='250px' />
+                            {% endif %}
+                            </div>
+                            <div class='card-body'>
+                            </div>
+                            {{ service.name }}
+                            {{ service.intro }}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                {% if query %}
+                    <tr class="text-center">
+                        <td style="font-weight: bold; color:gray;" colspan="5">
+                                &nbsp;일치하는 검색 결과가 없습니다.
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr class="text-center">
+                    <td style="font-weight: bold; color:gray;" colspan="5">
+                            &nbsp;작성된 게시글이 없습니다.~
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endif %}         
+        </div>
+    </div>
+</div>
+
 {% endblock %}

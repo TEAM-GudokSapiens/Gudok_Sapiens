@@ -34,45 +34,19 @@ def services_detail(request, pk):
     ctx = {'service': service}
     return render(request, 'services/detail.html', context=ctx)
 
-
-class ServiceListView(ListView):
-    model = Service
-    template_name = 'services/search_result.html'
-    context_object_name = 'service_list_view'
-
-    def get_queryset(self):
-        search_keyword = self.request.GET.get('q', '')
-        search_type = self.request.GET.get('type', '')
-        service_list = Service.objects.all()
-
-        if search_keyword :
-            if len(search_keyword) > 1:
-                if search_type == 'all':
-                    search_service_list = service_list.filter(Q (name__icontains=search_keyword) | Q(intro__icontains=search_keyword) | Q(content__icontains=search_keyword))
-                elif search_type == 'name_content':
-                    search_service_list = service_list.filter(Q (name__icontains=search_keyword) | Q(content__icontains=search_keyword))
-                elif search_type == 'name':
-                    search_service_list = service_list.filter(name__icontains=search_keyword)
-                elif search_type == 'intro':
-                    search_service_list = service_list.filter(intro__icontains=search_keyword)
-                elif search_type == 'content':
-                    search_service_list = service_list.filter(content__icontains=search_keyword)
-                
-                return search_service_list
-            else:
-                messages.error(self.request, '검색어는 2글자 이상 입력해주세요.')
-        return service_list
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        search_keyword = self.request.GET.get('q', '')
-        search_type = self.request.GET.get('type', '')
-
-        if len(search_keyword) > 1:
-            context['q'] = search_keyword
-        context['type'] = search_type
-
-        return context
-
-
+def search(request):
+    categories = Category.objects.all()
+    query = request.GET.get('search_key')
+    if query:
+        results = Service.objects.filter(Q (name__icontains=query) | Q(intro__icontains=query) | Q(content__icontains=query)).distinct()
+    else:
+        results = []
+    ctx = {
+        'results':results,
+        'query':query,
+        'categories':categories,
+    }
+    return render(request, 'services/search_result.html', context=ctx)
+        
+        
 

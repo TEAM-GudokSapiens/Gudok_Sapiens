@@ -1,19 +1,16 @@
 {% extends 'base.html' %}
 
-
-
-
 {% block content %}
 <div class="navbar">
   <a href="{% url 'services:services_list' %}">전체보기</a><!-- 전체보기 -->
   {% for category in categories %}
     <a href="{% url 'services:category_list' category.slug %}">{{ category.name }}</a>
   {% endfor %}
-  <form action="" method="post">
+   <form method="GET" action="{% url 'services:search' %}"  >
     {% csrf_token %}
-    {{ form.as_table }}
-    <input type="submit" value="검색" class="btn btn-primary btn-sm">
-  </form>
+        <input type='text' name='search_key' value="{{ search_key }}" placeholder='Search' />
+        <input type='submit' value="Search" />
+    </form>
 </div>
 
 <div class="album py-5 bg-light">
