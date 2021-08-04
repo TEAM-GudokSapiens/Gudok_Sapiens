@@ -3,12 +3,20 @@
 <div class="d-flex justify-content-center">
     <div class="detail-container mt-3">
         <div class="img-container d-flex justify-content-around">
-            <img src="{{ service.img.url }}" class="main-img"/>
-            <div class="sub-container d-flex flex-column">
-                <img src="{{ service.img.url }}" class="second-img" />
-                <div class="sub-img">
-                    <img src="{{ service.img.url }}" />
-                    <img src="{{ service.img.url }}" />
+            <div class="main-img-container">
+                <img src="{{ service.img.url }}" class="main-img"/>
+            </div>
+            <div class="img-sub-container d-flex flex-column">
+                <div>
+                    <img src="{{ service.img.url }}" class="second-img" />
+                </div>
+                <div class="sub-img d-flex justify-content-around">
+                    <div>
+                        <img src="{{ service.img.url }}" />
+                    </div>
+                    <div>
+                        <img src="{{ service.img.url }}" />
+                    </div>
                 </div>
             </div>
         </div>
@@ -19,18 +27,31 @@
                     <div class="service-content">{{service.content}}</div>
                 </div>
                 <div class="page-menu d-flex justify-content-around">
-                    <div class=""><a href="">가격</a></div>
-                    <div class=""><a href="">리뷰</a></div>
-                    <div class=""><a href="">정보</a></div>
+                    <div class=""><a href="" class="text-secondary">가격</a></div>
+                    <div class=""><a href="" class="text-secondary">리뷰</a></div>
+                    <div class=""><a href="" class="text-secondary">정보</a></div>
                 </div>
                 <div class="price-tab">
                     <div class="tab-title">서비스 최저가</div>
                     <p class="tab-content">{{service.price}}원 (한달 기준)</p>
                 </div>
-                <div class="review-tab">
-                    <div class="tab-title">리뷰</div>
 
+                <div class="review-tab">
+                    <div class="tab-title d-inline">리뷰</div>
+                    <div class="review-count d-inline">1,982,410개</div>
+                    <div class="review-content">
+                        <div class="title-block mb-3">
+                            <div class="d-inline">피로그래머🌱</div>
+                            <div class="review-date d-inline">2021/08/04</div>
+                        </div>
+                        <div class="content-block">
+                            <img src="{{ service.img.url }}" class="review-img" />
+                            <p class="d-inline">반신반의하며 구독해봤는데 넘나 좋은 것..</p>
+                        </div>
+                    </div>
+                    <hr>
                 </div>
+
                 <div class="info-tab">
                     <div class="tab-title">회사 정보</div>
                     <p class="tab-content">회사명: XXX</p>
