@@ -1,4 +1,10 @@
 from django.urls import path
-from django.conf.urls import url
-from django.urls.conf import path
-from django.urls.resolvers import URLPattern
+from . import views
+
+app_name='users'
+
+urlpatterns = [
+    path('signup/', view=views.signup, name='signup'),
+    path('login/', view=views.login, name='login'),   
+    path("logout/", view=views.logout, name="logout"),  # logout     
+]
