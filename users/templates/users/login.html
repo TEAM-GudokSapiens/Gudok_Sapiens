@@ -1,10 +1,23 @@
-<!-- {% extends 'base.html' %} 이부분 채워주세요 -->
-
-{% load bootstrap4 %}
+{% extends 'base.html' %}
 {% block content %}
-<form method="POST" action="{% url 'users:login' %}">
+<h3>로그인</h3>
+<hr>
+<form method="POST">
     {% csrf_token %}
-    {{form}}
-    <button>Login</button>
+    Username:
+    <br>
+    <input name="username" type="text" />
+    <br>
+    Password:
+    <br>
+    <input name="password" type="password" />
+    <br><br>
+    <p>비밀번호 찾기</p>
+    <p><a href="{% url 'users:signup' %}">회원가입</a></p>
+    <input class="btn btn-primary" type="submit" value="로그인">
+    <a href="/accounts/google/login/?process=login">구글로그인</a>
+    <a href="/accounts/naver/login/?process=login">네이버로그인</a>
 </form>
-{% endblock content %}
+
+{% endblock %}
+

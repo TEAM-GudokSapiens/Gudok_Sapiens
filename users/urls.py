@@ -1,16 +1,13 @@
 from django.urls import path
-from django.conf import settings
-from django.conf.urls import url
-from django.urls.conf import path
-from django.urls.resolvers import URLPattern
 from . import views
-
-from django.conf.urls.static import static
 
 app_name = 'users'
 
 urlpatterns = [
-    path('signup/', views.signup, name='signup'),
-    path("login/",views.LoginView.as_view(),name="login"),
+    path('signup/', view=views.signup, name='signup'),
+    path('login/', view=views.login, name='login'),
+    path('logout/', view=views.logout, name='logout'),
 
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('<int:pk>/detail', view=views.detail, name='detail'),
+    path('change_pw/', view=views.change_pw, name='change_pw'),
+]

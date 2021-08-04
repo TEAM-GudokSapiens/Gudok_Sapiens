@@ -1,16 +1,17 @@
 from django.contrib.auth.models import AbstractBaseUser, UserManager
 from django.core.mail import send_mail
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
 
 
-class User(AbstractBaseUser):
+class User(AbstractUser):
     GENDERS = (
-        ('MALE', '남성(Man)'),
-        ('FEMALE', '여성(Woman)'),
+        ('MALE', 'MALE'),
+        ('FEMALE', 'FEMALE'),
     )
 
-    email_id = models.EmailField(verbose_name='email_id', unique=True)
+    email = models.EmailField(verbose_name='email', unique=True, )
     name = models.CharField(verbose_name='name', max_length=30)
     nickname = models.CharField(verbose_name='nickname', max_length=30)
     phonenum = models.CharField(verbose_name='phonenum', max_length=30)
@@ -18,9 +19,5 @@ class User(AbstractBaseUser):
                               choices=GENDERS, max_length=30)
     created_at = models.DateTimeField('created_at', default=timezone.now)
 
-    USERNAME_FIELD = 'email_id'                     # email을 사용자의 식별자로 설정
-    REQUIRED_FIELDS = ['name']
-    objects = UserManager()                # 필수입력값
-
-    def email_user(self, subject, message, from_email=None, **kwargs):  # 이메일 발송 메소드
-        send_mail(subject, message, from_email, [self.email], **kwargs)
+    def __str__(self):
+        return self.username

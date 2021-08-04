@@ -1,10 +1,10 @@
 
 from django.contrib import admin
-
 from .models import User
 
 
+# Register your models here.
 @admin.register(User)
-class UserAdmin(admin.ModelAdmin):
-    list_display = ('email_id', 'name', 'nickname',
-                    'phonenum', 'gender', 'created_at')
+class CustomUserAdmin(admin.ModelAdmin):
+    fields = ('email', 'name', 'nickname', 'phonenum', 'gender',)
+    list_display = ('email', 'name',)
