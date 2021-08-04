@@ -9,10 +9,11 @@
   <a href="">나에게맞는서비스랒기</a><!-- 나에게맞는서비스찾기 -->
 </div>
 <div>
-  {% if user.is_authenticated %}
+  {% if user.is_authenticated %} <!--로그인상태-->
   <a href="{% url 'users:logout' %}">로그아웃</a>  
-  {% else %}
-  <a href="{% url 'users:login' %}">로그인</a><!-- 로그인 -->
+  <a href="{% url 'users:detail' user.id %}">유저정보</a>
+  {% else %} <!--로그아웃상태-->
+  <a href="{% url 'users:login' %}">로그인</a>
   {% endif %}
 </div>
 <div class="navbar">
