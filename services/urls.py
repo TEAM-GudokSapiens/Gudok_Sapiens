@@ -6,16 +6,8 @@ app_name = 'services'
 urlpatterns = [
     path('main/', views.main, name='main'),
     # path('service_list/', views.ServiceListView.as_view(), name='service_list_view'),
-<<<<<<< HEAD
     path('search/',views.search, name='search' ),
     path('list/', views.services_list, name='services_list'),
     path('list/<slug:slug>/', views.category_list, name='category_list'),
     path('detail/<int:pk>/', views.services_detail, name='services_detail'),
 ]
-=======
-    path('search/', views.search, name='search'),
-    path('list/', views.services_list, name='services_list'),
-    path('list/<slug:slug>/', views.category_list, name='category_list'),
-    path('detail/<int:pk>/', views.services_detail, name='services_detail'),
-]
->>>>>>> 0d1a5b323888b404fb0fbd3f9a85b7c455b0649f
