@@ -54,3 +54,8 @@ class Board(models.Model):
 
     def __str__(self):
         return self.title
+
+    @property
+    def update_counter(self):
+        self.hits=self.hits+1
+        self.save()

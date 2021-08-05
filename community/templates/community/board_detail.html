@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {{ board.update_counter }}
+    <h3>{{ board.title }}</h3>
+    작성일: {{ board.created_at  | date:"Y/m/d" }} <br>
+    좋아요
+    조회수 : {{ board.hits }} <br>
+    <hr>
+    {{ board.content }} <br>
+    
+    {% if board.img %}
+    <img src="{{ board.img.url }}" style="width: 450px;"> <br>
+    {% else %}
+    <p></p>
+    {% endif %}
+
+    <hr>
+    <a href="{%url 'community:board'%}">목록으로 </a> <br>
+
+    <!--로그인한 사람 == 작성자 일때만 삭제가능-->
+    {% if user.username == board.user.username %}
+    <a href="{% url 'community:board_delete' board.id %}">삭제하기</a>
+    {% endif %}
+  
+{% endblock %}
