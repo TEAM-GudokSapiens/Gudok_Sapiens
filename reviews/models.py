@@ -1,13 +1,11 @@
 from django.db import models
-from services.models import Service
-from users.models import User
 from likes.models import Like
 from django.core.validators import MinValueValidator, MaxValueValidator, MinLengthValidator
 
 
 class Review(models.Model):
     target = models.ForeignKey(
-        "services.Service", on_delete=models.CASCADE, verbose_name='서비스')
+        "services.Service", related_name='review', on_delete=models.CASCADE, verbose_name='서비스')
     user = models.ForeignKey(
         "users.User", related_name='review', on_delete=models.CASCADE, verbose_name='유저'
     )
@@ -17,7 +15,7 @@ class Review(models.Model):
     content = models.TextField(verbose_name='내용', validators=[
         MinLengthValidator(15)])
     like = models.OneToOneField(
-        Like, on_delete=models.PROTECT, verbose_name='좋아요',blank=True,null=True)
+        Like, on_delete=models.PROTECT, verbose_name='좋아요', blank=True, null=True)
     score = models.PositiveSmallIntegerField(verbose_name='별점', validators=[
         MinValueValidator(0), MaxValueValidator(10)])
     period = models.PositiveSmallIntegerField(verbose_name='사용기간')

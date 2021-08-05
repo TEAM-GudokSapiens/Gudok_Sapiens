@@ -1,11 +1,9 @@
-body {
-}
 .service-container {
   width: 35vw;
-  height: 1000px;
   font-family: "GmarketSansTTFLight";
   /* border: 1px solid rgb(215, 215, 215); */
   margin-top: 13px;
+  max-height: fit-content;
 }
 .page-menu div {
   width: 100vw;
@@ -63,6 +61,10 @@ body {
 .main-img {
   width: 100%;
   height: 40vh;
+}
+
+.footer-container {
+  text-align: center;
 }
 
 .fixing-box {
@@ -135,6 +137,7 @@ body {
   }
   .service-content {
     font-size: 1rem;
+    overflow-y: scroll;
   }
   .sub-img,
   .second-img {
@@ -191,7 +194,7 @@ body {
 .review-content {
   margin: 15px 0px 5px 15px;
 }
-}
+
 
 .forms {
   margin: 3rem auto;
