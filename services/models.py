@@ -51,11 +51,11 @@ class Service(models.Model):
     price = models.IntegerField(verbose_name='최저 가격')
     link = models.URLField(verbose_name='서비스 홈페이지', max_length=200)
     created_at = models.DateTimeField(auto_now_add=True)
-    dibs = models.OneToOneField(
-        Like, on_delete=models.PROTECT, verbose_name='찜',blank=True,null=True)
+    # dibs = models.OneToOneField(
+    #     Like, on_delete=models.PROTECT, verbose_name='찜',blank=True,null=True)
 
-    def get_total_dibs(self):
-        return self.dibs.users.count()
+    # def get_total_dibs(self):
+    #     return self.dibs.users.count()
 
 
 # class Dib(models.Model):

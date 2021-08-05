@@ -1,11 +1,9 @@
 from django.shortcuts import render
-
 from .models import Service
-
 from .models import *
 from django.contrib import messages
 from django.db.models import Q
-from django.views.generic import View, ListView
+from django.core.paginator import Paginator
 
 def main(request):
     ctx = {"main": main}
@@ -13,8 +11,13 @@ def main(request):
 
 # 전체 보기 페이지
 def services_list(request):
-    services = Service.objects.all()
+    services_list = Service.objects.all()
     categories = Category.objects.all()
+    # 한 페이지 당 담을 수 있는 객체 수를 정할 수 있음
+    paginator = Paginator(services_list, 10)
+    page = request.GET.get('page')
+    services = paginator.get_page(page)
+
     ctx = {
         'services': services,
         'categories':categories,
@@ -23,8 +26,12 @@ def services_list(request):
 
 # 카테고리별 페이지 보기
 def category_list(request, slug):
-    services = Service.objects.filter(category__slug__contains=slug)
+    services_list = Service.objects.filter(category__slug__contains=slug)
     categories = Category.objects.all()
+    # 한 페이지 당 담을 수 있는 객체 수를 정할 수 있음
+    paginator = Paginator(services_list, 10)
+    page = request.GET.get('page')
+    services = paginator.get_page(page)
 
     ctx = {
         'services': services,

@@ -21,8 +21,8 @@
                     <div class="col">
                         <div class='card'>
                             <div class='card-img-top'>
-                            {% if service.img %}
-                                <img src="{{ service.img.url }}" width='250px' />
+                            {% if service.img1 %}
+                                <img src="{{ service.img1.url }}" width='250px' />
                             {% endif %}
                             </div>
                             <div class='card-body'>
@@ -35,6 +35,51 @@
         </div>
     </div>
 </div>
+
+<br/>
+
+<div>
+    <ul class="pagination justify-content-center">
+        <!-- 이전페이지 -->
+        {% if services.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ services.previous_page_number }}">이전</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+        </li>
+        {% endif %}
+        <!-- 페이지리스트 -->
+        {% for page_number in services.paginator.page_range %}
+        {% if page_number >= services.number|add:-2 and page_number <= services.number|add:2 %}
+            {% if page_number == services.number %}
+            <li class="page-item active" aria-current="page">
+                <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+            </li>
+            {% else %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+            </li>
+            {% endif %}
+        {% endif %}
+        {% endfor %}
+        <!-- 다음페이지 -->
+        {% if services.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ services.next_page_number }}">다음</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+        </li>
+        {% endif %}
+    </ul>
+    <!-- 페이징처리 끝 -->
+
+
+</div>
+
 {% endblock %}
 
 
