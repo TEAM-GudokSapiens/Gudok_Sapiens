@@ -5,6 +5,34 @@
         <div class="img-container d-flex justify-content-around">
             <div class="main-img-container">
                 <img src="{{ service.img1.url }}" class="main-img"/>
+                
+                <!-- carousel -->
+                <div id="carouselControls" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                      <div class="carousel-item active">
+                        <img src="{{ service.img1.url }}"/>
+                      </div>
+                      <div class="carousel-item">
+                        <img src="{{ service.img2.url }}"/>
+                      </div>
+                      <div class="carousel-item">
+                        <img src="{{ service.img3.url }}"/>
+                      </div>
+                      <div class="carousel-item">
+                        <img src="{{ service.img4.url }}"/>
+                      </div>
+                    </div>
+                    <button class="carousel-control-prev btn" data-bs-target="#carouselControls" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                      </button>
+                      <button class="carousel-control-next btn" data-bs-target="#carouselControls" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                      </button>
+                  </div>
+                <!-- carousel end -->
+
             </div>
             <div class="img-sub-container d-flex flex-column">
                 <div>
@@ -45,7 +73,7 @@
                             <div class="review-date d-inline">2021/08/04</div>
                         </div>
                         <div class="content-block">
-                            <img src="{{ service.img.url }}" class="review-img" />
+                            <img src="{{ service.img1.url }}" class="review-img" />
                             <p class="d-inline">반신반의하며 구독해봤는데 넘나 좋은 것..</p>
                         </div>
                     </div>

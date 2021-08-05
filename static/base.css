@@ -1,4 +1,4 @@
-body {
+.detail-container {
 }
 .service-container {
   width: 35vw;
@@ -86,7 +86,7 @@ body {
 
 .top-header-title {
   text-decoration: none !important;
-  font-family: 'KOTRA_SONGEULSSI';
+  font-family: "KOTRA_SONGEULSSI";
   font-size: 2rem;
 }
 
@@ -106,9 +106,6 @@ body {
   .service-container {
     width: 80vw;
   }
-  .img-container {
-    width: 100vw;
-  }
   .fixing-box {
     display: none;
   }
@@ -117,35 +114,70 @@ body {
     flex-direction: column;
     align-items: center;
   }
+
   .main-img-container {
     width: 90%;
     padding-bottom: 15px;
   }
   .img-container {
+    width: 90vw;
     flex-direction: column;
     align-items: center;
     height: auto;
   }
-  .sub-img-container {
+  .img-sub-container {
     height: auto;
   }
-  .img-sub-container {
-    width: 90vw;
+  .img-sub-container div,
+  .sub-img div {
+    /* width: 90vw;
+    height: auto; */
+    display: none;
+  }
+  .sub-img {
     height: auto;
   }
   .service-content {
     font-size: 1rem;
   }
-  .sub-img,
-  .second-img {
-    padding: 0px 0px 15px 0px;
-    height: 30vh;
+  .carousel-item img {
+    height: 40vh;
+    /* width: 90vw; */
   }
 }
 @media screen and (max-width: 1150px) {
   .service-content {
     font-size: 1.1rem;
   }
+
+  .img-sub-container {
+    height: 0px;
+    width: 0px;
+  }
+  .img-sub-container div,
+  .sub-img div {
+    /* width: 90vw;
+    height: auto; */
+    display: none;
+  }
+  .sub-img {
+    height: auto;
+  }
+  .main-img-container {
+    width: auto;
+  }
+  .main-img {
+    display: none;
+  }
+}
+@media screen and (min-width: 1150px) {
+  .carousel {
+    display: none;
+  }
+}
+.carousel-item img {
+  height: 40vh;
+  width: 60vw;
 }
 .keywords {
   margin: 10px 0px;
@@ -191,24 +223,24 @@ body {
 .review-content {
   margin: 15px 0px 5px 15px;
 }
-}
 
 .forms {
   margin: 3rem auto;
-  font-family: 'GmarketSansTTFMedium';
+  font-family: "GmarketSansTTFMedium";
 }
 
 .form-logo {
   margin-bottom: 3rem;
-  font-family: 'GmarketSansTTFMedium';
+  font-family: "GmarketSansTTFMedium";
   font-size: 1.6rem;
 }
 
-.social-login1, .social-login2 {
-  display: block; 
-  margin-top: 2rem; 
-  margin-left: 1rem; 
-  width: 20rem; 
+.social-login1,
+.social-login2 {
+  display: block;
+  margin-top: 2rem;
+  margin-left: 1rem;
+  width: 20rem;
   height: auto;
 }
 
