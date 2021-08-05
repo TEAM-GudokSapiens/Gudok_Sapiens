@@ -1,6 +1,8 @@
 <div class="top-header navbar navbar-expand-lg mt-4 navbar-light container">
-  <h1 class="top-header-title">
-    구독사피엔스
+  <h1>
+    <a href="{% url 'services:main' %}" class="top-header-title text-dark">
+      구독사피엔스
+    </a>
   </h1>
   <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
     aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -11,7 +13,36 @@
     <a class="d-block nav-link hover text-dark" href="">커뮤니티</a><!-- 커뮤니티 -->
     <div class="navbar-brand d-flex justify-content-between ">
       <a class="nav-link hover text-dark under-nav" href="">나에게 맞는 서비스찾기</a><!-- 나에게맞는서비스찾기 -->
-      <a class="btn btn-outline-dark rounded-pill col-3 d-flex flex-column justify-content-center align-items-center ml-3" href="">로그인</a><!-- 로그인 -->
+      <span>
+        {% if user.is_authenticated %}
+        <!--로그인상태-->
+        <a href="{% url 'users:logout' %}"
+          class="btn btn-outline-dark rounded-pill col-3 d-flex flex-column justify-content-center align-items-center ml-3">로그아웃</a>
+        <a href="{% url 'users:detail' user.id %}"
+          class="btn btn-outline-dark rounded-pill col-3 d-flex flex-column justify-content-center align-items-center ml-3">유저정보</a>
+        {% else %}
+        <!--로그아웃상태-->
+        <a href="{% url 'users:login' %}"
+          class="btn btn-outline-dark rounded-pill col-10 d-flex flex-column justify-content-center align-items-center ml-3">로그인</a>
+        {% endif %}
+      </span>
     </div>
   </div>
 </div>
+
+
+{% comment %}
+<div class="navbar">
+  <a href="">전체보기</a><!-- 전체보기 -->
+  <a href="">라이프스타일</a><!-- 라이프스타일 -->
+  <a href="{% url 'services:foods_list' %}">음식</a><!-- 음식 -->
+  <a href="">음식</a>
+  <a href="">컨텐츠</a><!-- 컨텐츠 -->
+  <a href="">뉴스레터</a><!-- 뉴스레터 -->
+  <form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_table }}
+    <input type="submit" value="검색" class="btn btn-primary btn-sm">
+  </form>
+</div>
+{% endcomment %}

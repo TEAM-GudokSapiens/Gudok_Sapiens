@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+<div style="text-align: center; max-width: 30rem; margin: 3rem auto;">
+  <div>
+    <h4 class="logo">
+      회원 탈퇴를 진행하시겠습니까?
+    </h4>
+  </div>
+  <form action="{% url 'users:delete' pk=target_user.pk %}" method="post">
+    {% csrf_token %}
+    <input type="submit" class="btn btn-danger rounded-pill col-6 mt-3" value="즉시 탈퇴">
+  </form>
+</div>
+{% endblock %}

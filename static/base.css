@@ -85,7 +85,8 @@ body {
 } */
 
 .top-header-title {
-  font-family: "KOTRA_SONGEULSSI";
+  text-decoration: none !important;
+  font-family: 'KOTRA_SONGEULSSI';
   font-size: 2rem;
 }
 
@@ -189,4 +190,28 @@ body {
 }
 .review-content {
   margin: 15px 0px 5px 15px;
+}
+}
+
+.forms {
+  margin: 3rem auto;
+  font-family: 'GmarketSansTTFMedium';
+}
+
+.form-logo {
+  margin-bottom: 3rem;
+  font-family: 'GmarketSansTTFMedium';
+  font-size: 1.6rem;
+}
+
+.social-login1, .social-login2 {
+  display: block; 
+  margin-top: 2rem; 
+  margin-left: 1rem; 
+  width: 20rem; 
+  height: auto;
+}
+
+.social-login2 {
+  margin-top: 0.5rem;
 }
