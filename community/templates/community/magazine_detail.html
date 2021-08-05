@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {{ magazine.update_counter }}
+    <h3>{{ magazine.title }}</h3>
+    조회수 : {{ magazine.hits }} <br>
+    <hr>
+    <img src="{{ magazine.img.url }}" style="width: 450px;"> <br>
+    {{ magazine.intro }} <br> <!--한줄소개-->
+    {{ magazine.content }} <br> <!--내용-->
+    작성일: {{ magazine.created_at  | date:"Y/m/d" }} <br>
+    <hr>
+    <a href="{%url 'community:magazine'%}">목록으로 돌아가기</a>
+  
+{% endblock %}

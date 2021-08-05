@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {{ notice.update_counter }}
+    <h3>{{ notice.title }}</h3>
+    조회수 : {{ notice.hits }} <br>
+    <hr>
+    {{ notice.content }} <br>
+    {{ notice.img }} <br>
+    작성일: {{ notice.created_at  | date:"Y/m/d" }} <br>
+    <hr>
+    <a href="{%url 'community:notice'%}">목록으로 돌아가기</a>
+  
+{% endblock %}
