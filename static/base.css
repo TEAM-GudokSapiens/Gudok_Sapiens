@@ -2,26 +2,13 @@
 }
 .service-container {
   width: 35vw;
-  height: 1000px;
   font-family: "GmarketSansTTFLight";
-  /* border: 1px solid rgb(215, 215, 215); */
+  max-height: fit-content;
   margin-top: 13px;
 }
-.page-menu div {
-  width: 100vw;
-  text-align: center;
-  height: 6vh;
-  line-height: 6vh;
-  font-size: 2em;
-  border: 1px solid rgb(215, 215, 215);
-}
-.page-menu a {
-  text-decoration: none; /* 링크의 밑줄 제거 */
-  color: inherit; /* 링크의 색상 제거 */
-}
-.page-menu a:hover {
-  text-decoration: none; /* 링크의 밑줄 제거 */
-}
+/* .nav-link: {
+  background-color: aquamarine;
+} */
 .service-name {
   font-size: 5rem;
 }
@@ -71,7 +58,7 @@
   width: 23.8vw;
   height: auto;
   position: fixed;
-  top: 53%;
+  top: 65%;
   right: 20.2%;
   padding: 10px 20px;
   /* min-width: fit-content; */

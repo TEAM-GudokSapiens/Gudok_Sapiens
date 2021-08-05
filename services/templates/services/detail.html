@@ -54,38 +54,55 @@
                     <div class="service-intro">{{service.intro}}</div>
                     <div class="service-content">{{service.content}}</div>
                 </div>
-                <div class="page-menu d-flex justify-content-around">
-                    <div class=""><a href="" class="text-secondary">가격</a></div>
-                    <div class=""><a href="" class="text-secondary">리뷰</a></div>
-                    <div class=""><a href="" class="text-secondary">정보</a></div>
-                </div>
-                <div class="price-tab">
-                    <div class="tab-title">서비스 최저가</div>
-                    <p class="tab-content">{{service.price}}원 (한달 기준)</p>
-                </div>
-
-                <div class="review-tab">
-                    <div class="tab-title d-inline">리뷰</div>
-                    <div class="review-count d-inline">1,982,410개</div>
-                    <div class="review-content">
-                        <div class="title-block mb-3">
-                            <div class="d-inline">피로그래머🌱</div>
-                            <div class="review-date d-inline">2021/08/04</div>
-                        </div>
-                        <div class="content-block">
-                            <img src="{{ service.img1.url }}" class="review-img" />
-                            <p class="d-inline">반신반의하며 구독해봤는데 넘나 좋은 것..</p>
+                <!-- tab -->
+                <ul class="nav nav-pills mb-3 d-flex justify-content-around" id="pills-tab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active btn" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">가격
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link btn" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">리뷰</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link btn" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">정보</button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                        <div class="price-tab">
+                            <div class="tab-title">서비스 최저가</div>
+                            <p class="tab-content">{{service.price}}원 (한달 기준)</p>
                         </div>
                     </div>
-                    <hr>
+                    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                        <div class="review-tab">
+                            <div class="tab-title d-inline">리뷰</div>
+                            <div class="review-count d-inline">1,982,410개</div>
+                            <div class="review-content">
+                                <div class="title-block mb-3">
+                                    <div class="d-inline">피로그래머🌱</div>
+                                    <div class="review-date d-inline">2021/08/04</div>
+                                </div>
+                                <div class="content-block">
+                                    <img src="{{ service.img1.url }}" class="review-img" />
+                                    <p class="d-inline">반신반의하며 구독해봤는데 넘나 좋은 것..</p>
+                                </div>
+                            </div>
+                            <hr>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                        <div class="info-tab">
+                            <div class="tab-title">회사 정보</div>
+                            <p class="tab-content">회사명: XXX</p>
+                            <p class="tab-content">회사 주소: XXX</p>
+                            <p class="tab-content">고객센터: XXX</p>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="info-tab">
-                    <div class="tab-title">회사 정보</div>
-                    <p class="tab-content">회사명: XXX</p>
-                    <p class="tab-content">회사 주소: XXX</p>
-                    <p class="tab-content">고객센터: XXX</p>
-                </div>
+                <!-- tabend -->
+
         </div>
         <div class="fixing-box">
             <div class="keywords">
