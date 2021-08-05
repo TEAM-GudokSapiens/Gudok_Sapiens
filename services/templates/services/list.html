@@ -1,3 +1,40 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+
 {% block content %}
+<div class="navbar">
+  <a href="{% url 'services:services_list' %}">전체보기</a><!-- 전체보기 -->
+  {% for category in categories %}
+    <a href="{% url 'services:category_list' category.slug %}">{{ category.name }}</a>
+  {% endfor %}
+   <form method="GET" action="{% url 'services:search' %}"  >
+    {% csrf_token %}
+        <input type='text' name='search_key' value="{{ search_key }}" placeholder='Search' />
+        <input type='submit' value="Search" />
+    </form>
+</div>
+
+<div class="album py-5 bg-light">
+    <div class="container"> 
+        <div class="flex row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for service in services  %}
+                <a href="{% url 'services:services_detail' service.id %}"> 
+                    <div class="col">
+                        <div class='card'>
+                            <div class='card-img-top'>
+                            {% if service.img %}
+                                <img src="{{ service.img.url }}" width='250px' />
+                            {% endif %}
+                            </div>
+                            <div class='card-body'>
+                            </div>
+                            {{ service.name }}
+                            {{ service.intro }}
+                        </div>
+                    </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
 {% endblock %}
+
+

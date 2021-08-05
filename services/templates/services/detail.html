@@ -1,21 +1,78 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="d-flex flex-column align-items-center">
-    <div class="img-container">
-        {% if service.img %}
-            <img src="{{ service.img.url }}" width='600px' height="400px"/>
-        {% endif %}
-    </div>
-    <div class="service-content">
-        <h1>{{service.name}}</h1>
-        <p>{{service.intro}}</p>
-        <p>{{service.content}}</p>
-    </div>
-    <div class="page-menu d-flex justify-content-around">
-        <div class="mr-3 ml-3"><a href="">가격</a></div>
-        <div class="mr-3 ml-3"><a href="">리뷰</a></div>
-        <div class="mr-3 ml-3"><a href="">SNS</a></div>
-        <div class="mr-3 ml-3"><a href="">정보</a></div>
+<div class="d-flex justify-content-center">
+    <div class="detail-container mt-3">
+        <div class="img-container d-flex justify-content-around">
+            <div class="main-img-container">
+                <img src="{{ service.img1.url }}" class="main-img"/>
+            </div>
+            <div class="img-sub-container d-flex flex-column">
+                <div>
+                    <img src="{{ service.img2.url }}" class="second-img" />
+                </div>
+                <div class="sub-img d-flex justify-content-around">
+                    <div>
+                        <img src="{{ service.img3.url }}" />
+                    </div>
+                    <div>
+                        <img src="{{ service.img4.url }}" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="service-container">
+                <div class="service-box pl-4">
+                    <div class="service-name">{{service.name}}</div>
+                    <div class="service-intro">{{service.intro}}</div>
+                    <div class="service-content">{{service.content}}</div>
+                </div>
+                <div class="page-menu d-flex justify-content-around">
+                    <div class=""><a href="" class="text-secondary">가격</a></div>
+                    <div class=""><a href="" class="text-secondary">리뷰</a></div>
+                    <div class=""><a href="" class="text-secondary">정보</a></div>
+                </div>
+                <div class="price-tab">
+                    <div class="tab-title">서비스 최저가</div>
+                    <p class="tab-content">{{service.price}}원 (한달 기준)</p>
+                </div>
+
+                <div class="review-tab">
+                    <div class="tab-title d-inline">리뷰</div>
+                    <div class="review-count d-inline">1,982,410개</div>
+                    <div class="review-content">
+                        <div class="title-block mb-3">
+                            <div class="d-inline">피로그래머🌱</div>
+                            <div class="review-date d-inline">2021/08/04</div>
+                        </div>
+                        <div class="content-block">
+                            <img src="{{ service.img.url }}" class="review-img" />
+                            <p class="d-inline">반신반의하며 구독해봤는데 넘나 좋은 것..</p>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+
+                <div class="info-tab">
+                    <div class="tab-title">회사 정보</div>
+                    <p class="tab-content">회사명: XXX</p>
+                    <p class="tab-content">회사 주소: XXX</p>
+                    <p class="tab-content">고객센터: XXX</p>
+                </div>
+        </div>
+        <div class="fixing-box">
+            <div class="keywords">
+                <div>#음식</div>
+                <div>#재미</div>
+                <div>#영화</div>
+                <div>#키워드</div>
+            </div>
+            <div class="fix-name">{{service.name}}</div>
+            <div class="fix-intro">{{service.intro}}</div>
+            <div class="fix-stars">⭐️⭐️⭐️⭐️⭐️</div>
+            <div class="fix-link"><a href="">찜</a> /
+                <a href="">공유</a>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

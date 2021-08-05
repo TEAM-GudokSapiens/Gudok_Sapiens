@@ -30,11 +30,32 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'bootstrap4',
     'users',
     'services',
-    'bootstrap4',
-    'common',
+    'community',
+    'common',    
+    'reviews',
+    'comment',
+    'likes',
+
+    'django.contrib.sites',  # 사이트,url정보 관리 해주는 기능
+    'allauth',  # 설치한앱
+    'allauth.account',  # 소셜로그인한 계정관리
+    'allauth.socialaccount',  # 소셜account 정보관리
+    'allauth.socialaccount.providers.naver',  # 네이버 소셜로그인
+    'allauth.socialaccount.providers.google',
 ]
+
+AUTH_USER_MODEL = "users.User"
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',  # 기본장고 유저
+    'allauth.account.auth_backends.AuthenticationBackend',  # 소셜로그인 인증체계
+]
+
+SITE_ID = 1
+LOGIN_REDIRECT_URL = '/'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
