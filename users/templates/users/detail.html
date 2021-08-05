@@ -1,13 +1,22 @@
 {% extends 'base.html' %}
+{% load bootstrap4 %}
+
 {% block content %}
-
-<p>이름: {{ request.user.name }} </p>
-<p>닉네임: {{ request.user.nickname }}</p>
-<p>이메일: {{ request.user.email }}</p>
-<p>전화번호: {{ request.user.phonenum }}</p>
-<hr>
-<a href="{% url 'users:change_pw' %}">비밀번호 변경</a>
-
-
-
+<div class="forms text-center col-lg-3 col-md-4 col-sm-6 col-10">
+  <div>
+    <h2 class="form-logo">
+      회원 정보 변경
+    </h2>
+  </div>
+  <form action="{% url 'users:detail' pk=target_user.pk %}" method="post">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <input type="submit" class="btn btn-dark rounded-pill col-8 mt-3">
+  </form>
+  <a href="{% url 'users:delete' pk=user.pk %}">
+    <p>
+      회원 탈퇴
+    </p>
+  </a>
+</div>
 {% endblock %}

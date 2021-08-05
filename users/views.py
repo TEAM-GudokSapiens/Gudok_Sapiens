@@ -1,10 +1,13 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.views import View
+from django.http.response import HttpResponseRedirect
+from django.shortcuts import render, redirect
 from django.contrib import auth
 from django.contrib.auth.models import User
-from django.contrib.auth.hashers import check_password
+from django.urls import reverse, reverse_lazy
 from .forms import SignupForm
 from .models import User
+from django.views.generic import UpdateView, DeleteView
+from users.forms import UpdateForm
+
 
 # 회원가입
 
@@ -46,28 +49,42 @@ def logout(request):
 # 유저정보
 
 
-def detail(request, pk):
-    return render(request, 'users/detail.html')
+class UpdateView(UpdateView):
+    model = User
+    context_object_name = 'target_user'
+    form_class = UpdateForm
+    success_url = reverse_lazy('services:main')
+    template_name = 'users/detail.html'
 
-# 비밀번호 바꾸기
+    def get(self, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            return super().get(*args, **kwargs)
+        else:
+            return HttpResponseRedirect(reverse('users:login'))
+
+    def post(self, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            return super().get(*args, **kwargs)
+        else:
+            return HttpResponseRedirect(reverse('users:login'))
+
+# 회원탈퇴
 
 
-def change_pw(request):
-    context = {}
-    if request.method == "POST":
-        current_password = request.POST.get("origin_password")
-        user = request.user
-        if check_password(current_password, user.password):
-            new_password = request.POST.get("password1")
-            password_confirm = request.POST.get("password2")
-            if new_password == password_confirm:  # 변경성공
-                user.set_password(new_password)
-                user.save()
-                auth.login(request, user)
-                return redirect("services:main")
-            else:
-                context.update({'error': "새로운 비밀번호를 다시 확인해주세요."})
-    else:
-        context.update({'error': "현재 비밀번호가 일치하지 않습니다."})
+class DeleteView(DeleteView):
+    model = User
+    context_object_name = 'target_user'
+    success_url = reverse_lazy('users:login')
+    template_name = 'users/delete.html'
 
-    return render(request, 'users/change_pw.html', context)
+    def get(self, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            return super().get(*args, **kwargs)
+        else:
+            return HttpResponseRedirect(reverse('users:login'))
+
+    def post(self, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            return super().get(*args, **kwargs)
+        else:
+            return HttpResponseRedirect(reverse('users:login'))

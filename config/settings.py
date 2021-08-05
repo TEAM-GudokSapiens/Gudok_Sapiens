@@ -30,10 +30,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'bootstrap4',
     'users',
     'services',
-    'bootstrap4',
-    'common',
+    'community',
+    'common',    
+    'reviews',
+    'comment',
+    'likes',
 
     'django.contrib.sites',  # 사이트,url정보 관리 해주는 기능
     'allauth',  # 설치한앱

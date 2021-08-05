@@ -6,5 +6,5 @@ from .models import Review
 
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
-    list_display = ['target_service', 'user', 'title']
+    list_display = ['target', 'user', 'title']
     list_display_links = ['title']

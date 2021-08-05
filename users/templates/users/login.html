@@ -1,23 +1,35 @@
 {% extends 'base.html' %}
+
 {% block content %}
-<h3>로그인</h3>
-<hr>
-<form method="POST">
-    {% csrf_token %}
-    Username:
-    <br>
-    <input name="username" type="text" />
-    <br>
-    Password:
-    <br>
-    <input name="password" type="password" />
-    <br><br>
-    <p>비밀번호 찾기</p>
-    <p><a href="{% url 'users:signup' %}">회원가입</a></p>
-    <input class="btn btn-primary" type="submit" value="로그인">
-    <a href="/accounts/google/login/?process=login">구글로그인</a>
-    <a href="/accounts/naver/login/?process=login">네이버로그인</a>
-</form>
+<div class="forms text-center col-lg-3 col-md-4 col-sm-6 col-10">
+    <div>
+        <h2 class="form-logo">
+            로그인
+        </h2>
+    </div>
+    <form method="POST">
+        {% csrf_token %}
+        아이디
+        <br>
+        <input name="username" type="text" class="form-control"/>
+        <br>
+        비밀번호
+        <br>
+        <input name="password" type="password" class="form-control"/>
+        <br>
+        <div class="d-flex justify-content-between">   
+            <span>비밀번호 찾기</span>
+            <span><a href="{% url 'users:signup' %}">회원가입</a></span>
+        </div>
 
+        <input class="btn btn-dark rounded-pill col-8 mt-3" type="submit" value="로그인">
+
+        <a class="social-login1" href="/accounts/google/login/?process=login">
+            <img src="https://artmusee.com/images/google_login.png" alt="구글 로그인" style="width: 100%;">
+        </a>
+        <a class="social-login2" href="/accounts/naver/login/?process=login">
+            <img src="https://img1.daumcdn.net/thumb/R720x0.q80/?scode=mtistory2&fname=http%3A%2F%2Fcfile24.uf.tistory.com%2Fimage%2F99580C465C3D7D130CF754" alt="네이버 로그인" style="width: 100%;">
+        </a>
+    </form>
+</div>
 {% endblock %}
-

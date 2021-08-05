@@ -1,3 +1,217 @@
+body {
+}
+.service-container {
+  width: 35vw;
+  height: 1000px;
+  font-family: "GmarketSansTTFLight";
+  /* border: 1px solid rgb(215, 215, 215); */
+  margin-top: 13px;
+}
+.page-menu div {
+  width: 100vw;
+  text-align: center;
+  height: 6vh;
+  line-height: 6vh;
+  font-size: 2em;
+  border: 1px solid rgb(215, 215, 215);
+}
+.page-menu a {
+  text-decoration: none; /* 링크의 밑줄 제거 */
+  color: inherit; /* 링크의 색상 제거 */
+}
+.page-menu a:hover {
+  text-decoration: none; /* 링크의 밑줄 제거 */
+}
+.service-name {
+  font-size: 5rem;
+}
+.service-intro {
+  font-size: 1.4rem;
+  padding-bottom: 10px;
+}
 .service-content {
-  background-color: rgb(193, 237, 184);
+  font-size: 1.2rem;
+  padding-bottom: 10px;
+}
+.img-container {
+  width: 60vw;
+  height: 40vh;
+}
+.main-img-container {
+  width: 35vw;
+}
+.img-sub-container {
+  width: 25vw;
+  height: auto;
+}
+.sub-img img {
+  width: 100%;
+  height: 100%;
+}
+.sub-img div {
+  width: 49.4%;
+}
+.sub-img {
+  padding-left: 15px;
+  height: 20vh;
+}
+.second-img {
+  width: 100%;
+  height: 20vh;
+  padding: 0px 0px 15px 15px;
+}
+.main-img {
+  width: 100%;
+  height: 40vh;
+}
+
+.fixing-box {
+  font-family: "KOTRA_SONGEULSSI";
+  /* border: 1px solid rgb(215, 215, 215); */
+  width: 23.8vw;
+  height: auto;
+  position: fixed;
+  top: 53%;
+  right: 20.2%;
+  padding: 10px 20px;
+  /* min-width: fit-content; */
+}
+/* font-size: 1.5em; */
+@import url("./reset.css");
+@import url("./font.css");
+
+/* .top-header {
+  margin: 1rem 0 0 1rem;
+} */
+
+.top-header-title {
+  text-decoration: none !important;
+  font-family: 'KOTRA_SONGEULSSI';
+  font-size: 2rem;
+}
+
+.top-header-links {
+  font-family: "GmarketSansTTFLight";
+  font-size: 1.2rem;
+}
+
+@media screen and (max-width: 768px) {
+  .top-header-title {
+    font-size: 1.5rem;
+  }
+  .top-header-links,
+  .under-nav {
+    font-size: 0.8rem;
+  }
+  .service-container {
+    width: 80vw;
+  }
+  .img-container {
+    width: 100vw;
+  }
+  .fixing-box {
+    display: none;
+  }
+  .detail-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .main-img-container {
+    width: 90%;
+    padding-bottom: 15px;
+  }
+  .img-container {
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+  }
+  .sub-img-container {
+    height: auto;
+  }
+  .img-sub-container {
+    width: 90vw;
+    height: auto;
+  }
+  .service-content {
+    font-size: 1rem;
+  }
+  .sub-img,
+  .second-img {
+    padding: 0px 0px 15px 0px;
+    height: 30vh;
+  }
+}
+@media screen and (max-width: 1150px) {
+  .service-content {
+    font-size: 1.1rem;
+  }
+}
+.keywords {
+  margin: 10px 0px;
+}
+.keywords div {
+  display: inline;
+}
+.fix-name {
+  font-size: 2.3rem;
+  font-weight: bolder;
+  margin-bottom: 10px;
+}
+.fix-intro,
+.fix-stars {
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+}
+.fix-link {
+  text-align: right;
+}
+.tab-title {
+  font-family: "KOTRA_SONGEULSSI";
+  font-size: 2rem;
+  font-weight: bolder;
+  margin: 15px;
+}
+.tab-content {
+  padding-left: 15px;
+  font-size: 1.1rem;
+}
+.review-img {
+  width: 200px;
+  height: 200px;
+  display: inline;
+}
+.review-count,
+.review-date {
+  float: right;
+}
+.review-count {
+  padding-top: 15px;
+}
+.review-content {
+  margin: 15px 0px 5px 15px;
+}
+}
+
+.forms {
+  margin: 3rem auto;
+  font-family: 'GmarketSansTTFMedium';
+}
+
+.form-logo {
+  margin-bottom: 3rem;
+  font-family: 'GmarketSansTTFMedium';
+  font-size: 1.6rem;
+}
+
+.social-login1, .social-login2 {
+  display: block; 
+  margin-top: 2rem; 
+  margin-left: 1rem; 
+  width: 20rem; 
+  height: auto;
+}
+
+.social-login2 {
+  margin-top: 0.5rem;
 }

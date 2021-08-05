@@ -1,0 +1,25 @@
+@font-face {
+  font-family: 'KOTRA_SONGEULSSI';
+  src: url('./assets/KOTRA_SONGEULSSI.ttf')  format('truetype');  /* Window */
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'GmarketSansTTFBold';
+  src: url('./assets/GmarketSansTTFBold.ttf')  format('truetype');  /* Window */
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'GmarketSansTTFMedium';
+  src: url('./assets/GmarketSansTTFMedium.ttf')  format('truetype');  /* Window */
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'GmarketSansTTFLight';
+  src: url('./assets/GmarketSansTTFLight.ttf')  format('truetype');  /* Window */
+  font-weight: normal;
+  font-style: normal;
+}
