@@ -1,3 +1,5 @@
+from django import forms
+from django.db.models import Q
 from django.shortcuts import get_object_or_404, render,redirect
 from django.core.paginator import Paginator
 from datetime import date,datetime,timedelta
@@ -86,3 +88,34 @@ def board_delete(request,pk):
     post=Board.objects.get(id=pk)
     post.delete()
     return redirect('community:board')
+
+
+# 자유게시판 검색기능
+
+def search(request):
+    notice = Notice.objects.all()
+    magazine = Magazine.objects.all()
+    board = Board.objects.all()
+    query = request.GET.get('search_key')
+    if query:
+        notice_results = Notice.objects.filter(Q(title__icontains=query) | Q(
+            content__icontains=query)).distinct()
+        magazine_results = Magazine.objects.filter(Q(title__icontains=query) | Q(
+            content__icontains=query)).distinct()
+        board_results = Board.objects.filter(Q(title__icontains=query) | Q(
+            content__icontains=query)).distinct()
+    else:
+        results = []
+    ctx = {
+        'notice_results': notice_results,
+        'notice' : notice,
+
+        'magazine_results': magazine_results,
+        'magazine': magazine,
+
+        'board_results': board_results,
+        'board' : board,
+
+        'query': query,
+    }
+    return render(request, 'community/search.html', context=ctx)
