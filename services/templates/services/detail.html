@@ -95,9 +95,30 @@
                             </div>
                             <hr>
                             {% endfor %}
+                            <!-- <form class="container">
+                                <div class="form-group">
+                                  <label for="title">제목</label>
+                                  <input name="title" type="text" class="form-control review-title"  placeholder="제목을 입력하세요">
+                                </div>
+                                <div class="form-group">
+                                  <label for="content">내용</label>
+                                  <textarea name="content" class="form-control review-content" placeholder="내용을 입력하세요" rows="3"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="content">별점</label>
+                                    <input name="star" type="text" class="form-control review-stars" placeholder="제목을 입력하세요">
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="content">사용 기한</label>
+                                    <input name="period" type="text" class="form-control review-period" placeholder="제목을 입력하세요">
+                                </div>
+                                <button type="button" class="btn btn-primary" id="article-create-btn" onclick="onClickSubmit(
+                                    {{ service.id }})">제출</button>
+                              </form> -->
                             <div>
                                 <input class="addReview" type="text" placeholder="댓글 달기...">
-                                <button onclick="onClickSubmit({{ service.id }})">게시</button>
+                                <button type="button" onclick="onClickSubmit(
+                                    {{ service.id }})">제출</button>
                             </div>
                         </div>
                     </div>
@@ -134,15 +155,23 @@
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
-    const onClickSubmit=async(id)=>{
+    const onClickSubmit=async(service_id)=>{  
         const url='/reviews/submit_ajax/';
+        const title='title'
+        const content='content'
+        const stars=6
+        const period=5
+        // const title=document.querySelector(`.review-title`).value
+        // const content=document.querySelector(`.review-content`).value
+        // const stars=document.querySelector(`.review-stars`).value
+        // const period=document.querySelector(`.review-period`).value
         const {data}=await axios.post(url,{
-            id
+            service_id ,title, content, stars, period
         });
         submitHandleResponse(data.service_id, data.review_id, data.content);
     };
     const submitHandleResponse=(service_id, review_id, content)=>{
-
+        console.log('submitHandleResponse')
     };
 </script>
 {% endblock %}

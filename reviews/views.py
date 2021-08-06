@@ -13,10 +13,10 @@ def submit_ajax(request):
     service_id = req['service_id']
     title = req['title']
     content = req['content']
-    score = req['score']
+    score = req['stars']
     period = req['period']
     service = Service.objects.get(id=service_id)
     review = Review.objects.create(target=service, user=request.user,
-                                   title=title, content=content, score=score, preiod=period)
+                                   title=title, content=content, score=score, period=period)
     review.save()
     return JsonResponse({'service_id': service_id, 'review_id': review.id, 'content': review.content})
