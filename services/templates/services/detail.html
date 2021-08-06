@@ -5,7 +5,6 @@
         <div class="img-container d-flex justify-content-around">
             <div class="main-img-container">
                 <img src="{{ service.img1.url }}" class="main-img"/>
-                
                 <!-- carousel -->
                 <div id="carouselControls" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
@@ -32,7 +31,6 @@
                       </button>
                   </div>
                 <!-- carousel end -->
-
             </div>
             <div class="img-sub-container d-flex flex-column">
                 <div>
@@ -76,21 +74,20 @@
                     </div>
                     <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                         <div class="review-tab">
-                            <div class="tab-title d-inline">리뷰</div>
-                            <div class="review-count d-inline">{{service.review_set.all.count}}개</div>
-
+                            <span class="tab-title ">리뷰</span>
+                            <span class="review-count ">{{service.review_set.all.count}}개</span>
                             {% for review in service.review_set.all %}
                             <div class="review-container">
                                 <div class="title-block mb-3">
-                                    <div class="d-inline">{{review.user}}🌱</div>
-                                    <div class="review-date d-inline">{{review.updated_at}}</div>
+                                    <span class="">{{review.user}}🌱</span>
+                                    <span class="review-date">{{review.updated_at}}</span>
                                 </div>
                                 <div class="content-block">
                                     {% if review.photo %}
                                     <img src="{{ review.photo.url }}" class="review-img" />
                                     {% endif %}
-                                    <p class="d-inline">{{review.title}}</p>
-                                    <p class="d-inline">{{review.content}}</p>
+                                    <span class="">{{review.title}}</span>
+                                    <span class="">{{review.content}}</span>
                                 </div>
                             </div>
                             <hr>
@@ -111,15 +108,14 @@
                                   <div class="form-group">
                                     <label for="period">사용 기한</label>
                                     <input name="period" type="text" class="form-control review-period" placeholder="제목을 입력하세요">
-                                </div>
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="photo">후기 사진</label>
+                                    <input name="photo" type="file" class="form-control review-photo" placeholder="제목을 입력하세요">
+                                  </div>
                                 <button type="button" class="btn btn-primary" id="article-create-btn" onclick="onClickSubmit(
                                     {{ service.id }})">제출</button>
                               </form>
-                            <!-- <div>
-                                <input class="addReview" type="text" placeholder="댓글 달기...">
-                                <button type="button" onclick="onClickSubmit(
-                                    {{ service.id }})">제출</button>
-                            </div> -->
                         </div>
                     </div>
                     <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
@@ -131,9 +127,7 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- tabend -->
-
         </div>
         <div class="fixing-box">
             <div class="keywords">
@@ -152,7 +146,6 @@
     </div>
 </div>
 
-
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
     const onClickSubmit=async(service_id)=>{  
@@ -161,14 +154,31 @@
         const content=document.querySelector(`.review-content`).value
         const score=document.querySelector(`.review-score`).value
         const period=document.querySelector(`.review-period`).value
-        console.log(content)
+        const photo=document.querySelector(`.review-photo`).files[0].fileName
+        console.log(photo)
         const {data}=await axios.post(url,{
-            service_id ,title, content, score, period
+            service_id ,title, content, score, period,photo
         });
-        submitHandleResponse(data.service_id, data.review_id, data.content);
+        submitHandleResponse(data.service_id, data.review_id, data.review_title,
+        data.review_content,data.review_score,data.review_period,data.review_updated_at,data.review_photo);
     };
-    const submitHandleResponse=(service_id, review_id, content)=>{
-        console.log('submitHandleResponse')
+    const submitHandleResponse=(service_id, review_id,review_title,review_content,
+    review_score,review_period,review_updated_at,review_photo)=>{
+            const element=document.querySelector(`.review-container`);
+            element.innerHTML+=`
+            <div class="title-block mb-3">
+                <span class="">${review_id}🌱</span>
+                <span class="review-date">${review_updated_at}</span>
+            </div>
+            <div class="content-block">
+                {% if review_photo %}
+                <img src="{{ review_photo }}" class="review-img"/>
+                {% endif %}
+                <span class="">${review_title}</span>
+                <span class="">>${review_content}</span>
+            </div>`;
+            // const input=document.querySelector(`.post_${post_id} .submit-text`);
+            // input.value=null;
     };
 </script>
 {% endblock %}
