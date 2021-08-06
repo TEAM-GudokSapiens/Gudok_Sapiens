@@ -18,6 +18,7 @@
     <div>
         <h5><a href="{%url 'community:board_detail' board.id%}" >{{ board.title }}</a></h5>
         <h6>{{ board.created_at | date:"Y/m/d" }}</h6>
+        <p>좋아요 : {{ board.like.count }}</p>
         <p>조회수 : {{ board.hits }}</p>
         <hr>
     </div>

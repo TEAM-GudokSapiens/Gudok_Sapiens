@@ -1,5 +1,7 @@
+import json
 from django import forms
 from django.db.models import Q
+from django.http import HttpResponse,JsonResponse
 from django.shortcuts import get_object_or_404, render,redirect
 from django.core.paginator import Paginator
 from datetime import date,datetime,timedelta
@@ -7,6 +9,7 @@ from datetime import date,datetime,timedelta
 from .models import *
 from .forms import BoardForm
 from users.models import User
+
 
 # 공지사항
 
@@ -90,7 +93,31 @@ def board_delete(request,pk):
     return redirect('community:board')
 
 
-# 자유게시판 검색기능
+# 자유게시판 좋아요기능
+
+def likes(request): 
+    if request.is_ajax(): 
+        board_id = request.GET['board_id']
+        post = Board.objects.get(id=board_id) 
+				
+        if not request.user.is_authenticated: 
+            message = "로그인을 해주세요" 
+            context = {'like_count' : post.like.count(),"message":message}
+            return HttpResponse(json.dumps(context), content_type='application/json')
+
+        user = request.user 
+        if post.like.filter(id = user.id).exists(): 
+            post.like.remove(user) 
+            message = "좋아요 취소" 
+        else: 
+            post.like.add(user) 
+            message = "좋아요" 
+        
+        context = {'like_count' : post.like.count(),"message":message}
+        return HttpResponse(json.dumps(context), content_type='application/json')  
+
+
+# 검색기능
 
 def search(request):
     notice = Notice.objects.all()
