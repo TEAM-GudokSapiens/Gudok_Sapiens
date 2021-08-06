@@ -77,18 +77,28 @@
                     <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                         <div class="review-tab">
                             <div class="tab-title d-inline">리뷰</div>
-                            <div class="review-count d-inline">1,982,410개</div>
+                            <div class="review-count d-inline">{{service.review_set.all.count}}개</div>
+
+                            {% for review in service.review_set.all %}
                             <div class="review-content">
                                 <div class="title-block mb-3">
-                                    <div class="d-inline">피로그래머🌱</div>
-                                    <div class="review-date d-inline">2021/08/04</div>
+                                    <div class="d-inline">{{review.user}}🌱</div>
+                                    <div class="review-date d-inline">{{review.updated_at}}</div>
                                 </div>
                                 <div class="content-block">
-                                    <img src="{{ service.img1.url }}" class="review-img" />
-                                    <p class="d-inline">반신반의하며 구독해봤는데 넘나 좋은 것..</p>
+                                    {% if review.photo %}
+                                    <img src="{{ review.photo.url }}" class="review-img" />
+                                    {% endif %}
+                                    <p class="d-inline">{{review.title}}</p>
+                                    <p class="d-inline">{{review.content}}</p>
                                 </div>
                             </div>
                             <hr>
+                            {% endfor %}
+                            <div>
+                                <input class="addReview" type="text" placeholder="댓글 달기...">
+                                <button onclick="onClickSubmit({{ service.id }})">게시</button>
+                            </div>
                         </div>
                     </div>
                     <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
@@ -120,4 +130,19 @@
         </div>
     </div>
 </div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    const onClickSubmit=async(id)=>{
+        const url='/reviews/submit_ajax/';
+        const {data}=await axios.post(url,{
+            id
+        });
+        submitHandleResponse(data.service_id, data.review_id, data.content);
+    };
+    const submitHandleResponse=(service_id, review_id, content)=>{
+
+    };
+</script>
 {% endblock %}
