@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @import url("./reset.css");
 @import url("./font.css");
 
@@ -12,6 +13,9 @@
   background-color: rgb(203, 105, 228) !important;
   border-color: rgb(203, 105, 228) !important;
   box-shadow: 10px 10px 2px 1px rgba(0, 0, 255, .2) !important;
+=======
+.detail-container {
+>>>>>>> 9fc1c648dcb21d1d3ace5123449f23ca1df31517
 }
 
 .service-container {
@@ -219,7 +223,7 @@
 .review-count {
   padding-top: 15px;
 }
-.review-content {
+.review-container {
   margin: 15px 0px 5px 15px;
 }
 

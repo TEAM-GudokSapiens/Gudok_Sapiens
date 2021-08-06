@@ -1,27 +1,27 @@
 from django.shortcuts import render
+import json
+from django.views.decorators.csrf import csrf_exempt
+from django.http.response import JsonResponse
 from .models import Review
-from django.urls import reverse, reverse_lazy
-from django.views.generic import CreateView
-from reviews.forms import ReviewCreateForm
+from services.models import Service
 
 
-class ReviewCreateView(CreateView):
-    model = Review
-    form_class = ReviewCreateForm
-    success_url = reverse_lazy('services:services_detail')
-    template_name = 'reviews/create.html'
+# Create your views here.
 
-    def form_valid(self, form):
-        temp_review = form.save(commit=False)
-        temp_review.target = self.object.service
-        temp_review.user = self.request.user
-        # temp_review.target = form.data.get('target')
 
-        return super().form_valid(form)
-
-    def get_success_url(self):
-        return reverse('services:services_detail', kwargs={'pk': self.object.target.id})
-
-# def create(request):
-#     ctx = {"create": create}
-#     return render(request, 'revieews/create.html', context=ctx)
+@csrf_exempt
+def submit_ajax(request):
+    req = json.loads(request.body)
+    service_id = req['service_id']
+    title = req['title']
+    content = req['content']
+    score = req['score']
+    period = req['period']
+    photo = req['photo']
+    service = Service.objects.get(id=service_id)
+    review = Review.objects.create(target=service, user=request.user, photo=photo,
+                                   title=title, content=content, score=score, period=period)
+    review.save()
+    return JsonResponse({'service_id': service_id, 'review_id': review.id,
+                         'review_title': review.title, 'review_content': review.content, 'review_score': review.score,
+                         'review_period': review.period, 'review_updated_at': review.updated_at, 'review_photo': review.photo.url})
