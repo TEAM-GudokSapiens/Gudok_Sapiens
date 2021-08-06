@@ -80,7 +80,7 @@
                             <div class="review-count d-inline">{{service.review_set.all.count}}개</div>
 
                             {% for review in service.review_set.all %}
-                            <div class="review-content">
+                            <div class="review-container">
                                 <div class="title-block mb-3">
                                     <div class="d-inline">{{review.user}}🌱</div>
                                     <div class="review-date d-inline">{{review.updated_at}}</div>
@@ -95,31 +95,31 @@
                             </div>
                             <hr>
                             {% endfor %}
-                            <!-- <form class="container">
+                            <form class="container">
                                 <div class="form-group">
                                   <label for="title">제목</label>
                                   <input name="title" type="text" class="form-control review-title"  placeholder="제목을 입력하세요">
                                 </div>
                                 <div class="form-group">
                                   <label for="content">내용</label>
-                                  <textarea name="content" class="form-control review-content" placeholder="내용을 입력하세요" rows="3"></textarea>
+                                  <textarea name="content" type="text" class="form-control review-content" placeholder="내용을 입력하세요"></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label for="content">별점</label>
-                                    <input name="star" type="text" class="form-control review-stars" placeholder="제목을 입력하세요">
+                                    <label for="star">별점</label>
+                                    <input name="star" type="text" class="form-control review-score" placeholder="제목을 입력하세요">
                                   </div>
                                   <div class="form-group">
-                                    <label for="content">사용 기한</label>
+                                    <label for="period">사용 기한</label>
                                     <input name="period" type="text" class="form-control review-period" placeholder="제목을 입력하세요">
                                 </div>
                                 <button type="button" class="btn btn-primary" id="article-create-btn" onclick="onClickSubmit(
                                     {{ service.id }})">제출</button>
-                              </form> -->
-                            <div>
+                              </form>
+                            <!-- <div>
                                 <input class="addReview" type="text" placeholder="댓글 달기...">
                                 <button type="button" onclick="onClickSubmit(
                                     {{ service.id }})">제출</button>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
@@ -157,16 +157,13 @@
 <script>
     const onClickSubmit=async(service_id)=>{  
         const url='/reviews/submit_ajax/';
-        const title='title'
-        const content='content'
-        const stars=6
-        const period=5
-        // const title=document.querySelector(`.review-title`).value
-        // const content=document.querySelector(`.review-content`).value
-        // const stars=document.querySelector(`.review-stars`).value
-        // const period=document.querySelector(`.review-period`).value
+        const title=document.querySelector(`.review-title`).value
+        const content=document.querySelector(`.review-content`).value
+        const score=document.querySelector(`.review-score`).value
+        const period=document.querySelector(`.review-period`).value
+        console.log(content)
         const {data}=await axios.post(url,{
-            service_id ,title, content, stars, period
+            service_id ,title, content, score, period
         });
         submitHandleResponse(data.service_id, data.review_id, data.content);
     };

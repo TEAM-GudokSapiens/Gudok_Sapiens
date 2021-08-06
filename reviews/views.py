@@ -13,7 +13,7 @@ def submit_ajax(request):
     service_id = req['service_id']
     title = req['title']
     content = req['content']
-    score = req['stars']
+    score = req['score']
     period = req['period']
     service = Service.objects.get(id=service_id)
     review = Review.objects.create(target=service, user=request.user,
