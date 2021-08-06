@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Service, Category, SubCategory
+from .models import *
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     pass
@@ -12,4 +12,12 @@ class SubCategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['id', 'name','intro', 'tag_list']
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).prefetch_related('tags')
+    
+    def tag_list(self, obj):
+        return ', '.join(o.name for o in obj.tags.all())
+
+

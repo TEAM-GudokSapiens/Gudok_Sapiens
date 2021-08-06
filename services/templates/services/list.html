@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load taggit_templatetags2_tags %}
 
 {% block content %}
 <div class="navbar">
@@ -6,7 +7,7 @@
   {% for category in categories %}
     <a href="{% url 'services:category_list' category.slug %}">{{ category.name }}</a>
   {% endfor %}
-   <form method="GET" action="{% url 'services:search' %}"  >
+   <form method="GET" action="{ %url 'services:search' %}"  >
     {% csrf_token %}
         <input type='text' name='search_key' value="{{ search_key }}" placeholder='Search' />
         <input type='submit' value="Search" />
