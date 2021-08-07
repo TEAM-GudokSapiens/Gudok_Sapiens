@@ -11,13 +11,13 @@ urlpatterns = [
     path('notice/<int:pk>/detail/', views.notice_detail, name='notice_detail'),
 
     path('magazine/', views.magazine, name='magazine'),
-    path('magazine/<int:pk>/detail/', views.magazine_detail, name='magazine_detail'),
+    path('magazine/<int:pk>/detail/',
+         views.magazine_detail, name='magazine_detail'),
 
     path('board/', views.board, name='board'),
     path('board/create/', views.board_create, name='board_create'),
     path('board/<int:pk>/detail/', views.board_detail, name='board_detail'),
-    path('board/<int:pk>/delete/',views.board_delete,name='board_delete'),
+    path('board/<int:pk>/delete/', views.board_delete, name='board_delete'),
+    path('reply/', views.reply, name='reply'),
 
-    
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-

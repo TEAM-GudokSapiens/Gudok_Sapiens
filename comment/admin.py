@@ -3,4 +3,12 @@ from .models import *
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    pass
+        list_display = (
+        'target', 
+        'content',
+        'user',
+        'created_at',
+        'updated_at',
+    )
+search_fields = ('target', 'user_email', 'content',)
+
