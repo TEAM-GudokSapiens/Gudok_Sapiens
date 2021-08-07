@@ -59,7 +59,7 @@
                                 <strong>{{ comment.user }}</strong>
                                 {% endif %}
                                 {% if comment.created_string == False %}
-                                <span style="float:right; color:gray;">{{ comment.created_at|date:'m월 d일' }}</span>
+                                <span style="float:right; color:gray;">{{ comment.created_at|date:'Y년 m월 d일' }}</span>
                                 {% else %}
                                 <span style="float:right; color:gray;">{{ comment.created_string }}</span>
                                 {% endif %}
@@ -104,7 +104,7 @@
                                 var reply_user = "{{ comment.user }}";
                                 var reply_created = "{{ comment.created_string }}";
                                 if (reply_created == 'False') {
-                                    reply_created = "{{ comment.created_at|date:'m월 d일' }}"
+                                    reply_created = "{{ comment.created_at|date:'Y년 m월 d일' }}"
                                 };
                                 var reply_content = "{{ comment.content }}";
 
@@ -121,7 +121,7 @@
                                 var reply_user = "{{ comment.user }}";
                                 var reply_created = "{{ comment.created_string }}";
                                 if (reply_created == 'False') {
-                                    reply_created = "{{ comment.created_at|date:'m월 d일' }}"
+                                    reply_created = "{{ comment.created_at|date:'Y년 m월 d일' }}"
                                 };
                                 var reply_content = "{{ comment.content }}";
 
@@ -143,7 +143,7 @@
                                 // }
                                 var reply_created = "{{ comment.created_string }}";
                                 if (reply_created == 'False') {
-                                reply_created = "{{ comment.created_at|date:'m월 d일' }}"
+                                reply_created = "{{ comment.created_at|date:'Y년 m월 d일' }}"
                                 };
                                 var reply_content = "{{ comment.content }}";
 
@@ -163,7 +163,7 @@
                                 // }
                                 var reply_created = "{{ comment.created_string }}";
                                 if (reply_created == 'False') {
-                                reply_created = "{{ comment.created_at|date:'m월 d일' }}"
+                                reply_created = "{{ comment.created_at|date:'Y년 m월 d일' }}"
                                 };
                                 var reply_content = "{{ comment.content }}";
 

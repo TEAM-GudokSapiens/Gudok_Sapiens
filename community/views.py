@@ -126,7 +126,7 @@ def comment_delete_view(request, pk):
     comment_id = request.POST.get('comment_id')
     target_comment = Comment.objects.get(pk=comment_id)
 
-    if request.user == target_comment.writer or request.user.level == '1' or request.user.level == '0':
+    if request.user == target_comment.user or request.user.level == '1' or request.user.level == '0':
         target_comment.deleted = True
         target_comment.save()
         target.save()
