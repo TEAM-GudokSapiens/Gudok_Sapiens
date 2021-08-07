@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load taggit_templatetags2_tags %}
 
 {% block content %}
 <div class="navbar">
@@ -6,13 +7,38 @@
   {% for category in categories %}
     <a href="{% url 'services:category_list' category.slug %}">{{ category.name }}</a>
   {% endfor %}
-   <form method="GET" action="{% url 'services:search' %}"  >
+   <form method="GET" action="{ %url 'services:search' %}"  >
     {% csrf_token %}
         <input type='text' name='search_key' value="{{ search_key }}" placeholder='Search' />
         <input type='submit' value="Search" />
     </form>
 </div>
 
+<div>
+    <ul>
+        <li>
+            <a href="{% url 'services:services_list' %}">전체보기</a><!-- 전체보기 -->
+        </il>
+        {% for category in categories %}
+        <li>
+            <a href="{% url 'services:category_list' category.slug %}">{{ category.name }}</a>
+            {% if category_slug == category.slug  %}
+                <ul>
+                {% if sub_category_list %}
+                    {% for sub_category in sub_category_list  %}
+                        <li>
+                            <a href="{% url 'services:sub_category_list' category.slug sub_category.slug %}">{{ sub_category.name }}</a>
+                        </li>
+                    {% endfor %}
+                {% endif %}
+                </ul>
+            {% endif %}
+        </il>
+        {% endfor %}
+    </ul>
+</div>
+
+{% comment %} 본문 내용 서비스 나열 {% endcomment %}
 <div class="album py-5 bg-light">
     <div class="container"> 
         <div class="flex row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
@@ -21,8 +47,8 @@
                     <div class="col">
                         <div class='card'>
                             <div class='card-img-top'>
-                            {% if service.img %}
-                                <img src="{{ service.img.url }}" width='250px' />
+                            {% if service.img1 %}
+                                <img src="{{ service.img1.url }}" width='250px' />
                             {% endif %}
                             </div>
                             <div class='card-body'>
@@ -35,6 +61,52 @@
         </div>
     </div>
 </div>
+
+<br/>
+
+{% comment %} 하단 페이지 넘기기 기능 {% endcomment %}
+<div>
+    <ul class="pagination justify-content-center">
+        <!-- 이전페이지 -->
+        {% if services.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ services.previous_page_number }}">이전</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+        </li>
+        {% endif %}
+        <!-- 페이지리스트 -->
+        {% for page_number in services.paginator.page_range %}
+        {% if page_number >= services.number|add:-2 and page_number <= services.number|add:2 %}
+            {% if page_number == services.number %}
+            <li class="page-item active" aria-current="page">
+                <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+            </li>
+            {% else %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+            </li>
+            {% endif %}
+        {% endif %}
+        {% endfor %}
+        <!-- 다음페이지 -->
+        {% if services.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ services.next_page_number }}">다음</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+        </li>
+        {% endif %}
+    </ul>
+    <!-- 페이징처리 끝 -->
+
+
+</div>
+
 {% endblock %}
 
 
