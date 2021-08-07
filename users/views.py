@@ -1,4 +1,4 @@
-from django.http.response import HttpResponseRedirect
+from django.http.response import HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.contrib import auth
 from django.contrib.auth.models import User
@@ -49,7 +49,7 @@ def logout(request):
 # 유저정보
 
 
-class UpdateView(UpdateView):
+class AccountUpdateView(UpdateView):
     model = User
     context_object_name = 'target_user'
     form_class = UpdateForm
@@ -57,34 +57,34 @@ class UpdateView(UpdateView):
     template_name = 'users/detail.html'
 
     def get(self, *args, **kwargs):
-        if self.request.user.is_authenticated:
+        if self.request.user.is_authenticated and self.get_object() == self.request.user:
             return super().get(*args, **kwargs)
         else:
-            return HttpResponseRedirect(reverse('users:login'))
+            return HttpResponseForbidden()
 
     def post(self, *args, **kwargs):
-        if self.request.user.is_authenticated:
+        if self.request.user.is_authenticated and self.get_object() == self.request.user:
             return super().get(*args, **kwargs)
         else:
-            return HttpResponseRedirect(reverse('users:login'))
+            return HttpResponseForbidden()
 
 # 회원탈퇴
 
 
-class DeleteView(DeleteView):
+class AccountDeleteView(DeleteView):
     model = User
     context_object_name = 'target_user'
     success_url = reverse_lazy('users:login')
     template_name = 'users/delete.html'
 
     def get(self, *args, **kwargs):
-        if self.request.user.is_authenticated:
+        if self.request.user.is_authenticated and self.get_object() == self.request.user:
             return super().get(*args, **kwargs)
         else:
-            return HttpResponseRedirect(reverse('users:login'))
+            return HttpResponseForbidden()
 
     def post(self, *args, **kwargs):
-        if self.request.user.is_authenticated:
+        if self.request.user.is_authenticated and self.get_object() == self.request.user:
             return super().get(*args, **kwargs)
         else:
-            return HttpResponseRedirect(reverse('users:login'))
+            return HttpResponseForbidden()

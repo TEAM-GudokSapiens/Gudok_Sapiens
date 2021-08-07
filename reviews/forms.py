@@ -1,8 +1,8 @@
-from django.forms import ModelForm
+from django import forms
 from .models import Review
 
 
-class ReviewCreateForm(ModelForm):
+class ReviewCreateForm(forms.ModelForm):
     class Meta:
         model = Review
-        fields = ['title', 'content', 'score', 'period']
+        fields = ['photo', 'title', 'content', 'score', 'period']
