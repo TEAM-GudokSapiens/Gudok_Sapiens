@@ -1,21 +1,24 @@
+import json
+from django import forms
+from django.db.models import Q
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.core.paginator import Paginator
 from datetime import date, datetime, timedelta
-
 from .models import *
 from .forms import BoardForm
 from users.models import User
-from django.http import HttpResponse
-import json
 from django.core import serializers
 from django.core.serializers.json import DjangoJSONEncoder
 from users.decorators import *
+
+
 # 공지사항
 
 
 def notice(request):
     notices = Notice.objects.order_by('-created_at')
-    paginator = Paginator(notices, 15)  # 한페이지에 15개씩
+    paginator = Paginator(notices, 10)  # 한페이지에 10개씩
 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -134,3 +137,58 @@ def comment_delete_view(request, pk):
             'comment_id': comment_id,
         }
         return HttpResponse(json.dumps(data, cls=DjangoJSONEncoder), content_type="application/json")
+
+# 자유게시판 좋아요기능
+
+
+def likes(request):
+    if request.is_ajax():
+        board_id = request.GET['board_id']
+        post = Board.objects.get(id=board_id)
+
+        if not request.user.is_authenticated:
+            message = "로그인을 해주세요"
+            context = {'like_count': post.like.count(), "message": message}
+            return HttpResponse(json.dumps(context), content_type='application/json')
+
+        user = request.user
+        if post.like.filter(id=user.id).exists():
+            post.like.remove(user)
+            message = "좋아요 취소"
+        else:
+            post.like.add(user)
+            message = "좋아요"
+
+        context = {'like_count': post.like.count(), "message": message}
+        return HttpResponse(json.dumps(context), content_type='application/json')
+
+
+# 검색기능
+
+def search(request):
+    notice = Notice.objects.all()
+    magazine = Magazine.objects.all()
+    board = Board.objects.all()
+    query = request.GET.get('search_key')
+    if query:
+        notice_results = Notice.objects.filter(Q(title__icontains=query) | Q(
+            content__icontains=query)).distinct()
+        magazine_results = Magazine.objects.filter(Q(title__icontains=query) | Q(
+            content__icontains=query)).distinct()
+        board_results = Board.objects.filter(Q(title__icontains=query) | Q(
+            content__icontains=query)).distinct()
+    else:
+        results = []
+    ctx = {
+        'notice_results': notice_results,
+        'notice': notice,
+
+        'magazine_results': magazine_results,
+        'magazine': magazine,
+
+        'board_results': board_results,
+        'board': board,
+
+        'query': query,
+    }
+    return render(request, 'community/search.html', context=ctx)

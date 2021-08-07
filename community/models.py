@@ -49,11 +49,16 @@ class Board(models.Model):
     img = models.ImageField(verbose_name='사진',
                             blank=True, upload_to="%Y/%m/%d")
     hits = models.PositiveIntegerField(verbose_name='조회수', default=0)
+    like = models.ManyToManyField(User, related_name='likes',blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.title
+
+    @property
+    def like_count(self):
+        return self.like_user_set.count()
 
     @property
     def update_counter(self):
