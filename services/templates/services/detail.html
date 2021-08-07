@@ -54,15 +54,15 @@
                 </div>
                 <!-- tab -->
                 <ul class="nav nav-pills mb-3 d-flex justify-content-around" id="pills-tab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active btn" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">가격
+                    <li class="nav-item col-4" role="presentation">
+                        <button  class="nav-link active btn col-12" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">가격
                         </button>
                     </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link btn" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">리뷰</button>
+                    <li class="nav-item col-4" role="presentation">
+                        <button class="nav-link btn col-12" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">리뷰</button>
                     </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link btn" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">정보</button>
+                    <li class="nav-item col-4" role="presentation">
+                        <button class="nav-link btn col-12" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">정보</button>
                     </li>
                 </ul>
                 <div class="tab-content" id="pills-tabContent">
@@ -113,7 +113,7 @@
                                     <label for="photo">후기 사진</label>
                                     <input name="photo" type="file" class="form-control review-photo" placeholder="제목을 입력하세요">
                                   </div>
-                                <button type="button" class="btn btn-primary" id="article-create-btn" onclick="onClickSubmit(
+                                <button type="button" class="btn btn-primary col-12" id="article-create-btn" onclick="onClickSubmit(
                                     {{ service.id }})">제출</button>
                               </form>
                         </div>
@@ -154,7 +154,7 @@
         const content=document.querySelector(`.review-content`).value
         const score=document.querySelector(`.review-score`).value
         const period=document.querySelector(`.review-period`).value
-        const photo=document.querySelector(`.review-photo`).files[0].fileName
+        const photo=document.querySelector(`.review-photo`).value.replace('C:\\fakepath\\','');
         console.log(photo)
         const {data}=await axios.post(url,{
             service_id ,title, content, score, period,photo

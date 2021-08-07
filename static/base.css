@@ -1,5 +1,29 @@
-.detail-container {
+@import url("./reset.css");
+@import url("./font.css");
+
+.nav-link.btn {
+  background-color: white !important;
+  color: inherit !important;
 }
+.btn-primary.btn {
+  color: white !important;
+  border-color: rgb(203, 105, 228) !important;
+  background-color: rgb(203, 105, 228) !important;
+}
+.btn-primary.btn:active,
+.btn-primary.btn:hover,
+.btn-primary.btn:focus {
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 255, .2) !important;
+}
+.nav-link.btn:active,
+.nav-link.btn:hover,
+.nav-link.btn:focus {
+  color: white !important;
+  background-color: rgb(203, 105, 228) !important;
+  border-color: rgb(203, 105, 228) !important;
+  box-shadow: 10px 10px 2px 1px rgba(0, 0, 255, .2) !important;
+}
+
 .service-container {
   width: 35vw;
   font-family: "GmarketSansTTFLight";
@@ -64,8 +88,7 @@
   /* min-width: fit-content; */
 }
 /* font-size: 1.5em; */
-@import url("./reset.css");
-@import url("./font.css");
+
 
 /* .top-header {
   margin: 1rem 0 0 1rem;
@@ -86,8 +109,7 @@
   .top-header-title {
     font-size: 1.5rem;
   }
-  .top-header-links,
-  .under-nav {
+  .top-header-links a {
     font-size: 0.8rem;
   }
   .service-container {

@@ -12,12 +12,12 @@ class Review(models.Model):
         "users.User", related_name='review', on_delete=models.CASCADE, verbose_name='유저'
     )
     photo = models.ImageField(
-        verbose_name='리뷰사진', blank=True, upload_to='%Y/%m/%d')
+        verbose_name='리뷰사진', blank=True, upload_to='')
     title = models.CharField(verbose_name='리뷰제목', max_length=50)
     content = models.TextField(verbose_name='내용', validators=[
         MinLengthValidator(15)])
     like = models.OneToOneField(
-        Like, on_delete=models.PROTECT, verbose_name='좋아요',blank=True,null=True)
+        Like, on_delete=models.PROTECT, verbose_name='좋아요', blank=True, null=True)
     score = models.PositiveSmallIntegerField(verbose_name='별점', validators=[
         MinValueValidator(0), MaxValueValidator(10)])
     period = models.PositiveSmallIntegerField(verbose_name='사용기간')
