@@ -8,7 +8,7 @@
       리뷰쓰기
     </h2>
   </div>
-  <form action="{% url 'reviews:create' %}" method="post">
+  <form action="{% url 'reviews:create' service_pk %}" method="post">
     {% csrf_token %}
     {% bootstrap_form form %}
     <input type="submit" class="btn btn-dark rounded-pill col-6 mt-3">

@@ -66,7 +66,9 @@ def reviews_create(request, pk):
     else:
         form = ReviewCreateForm()
 
-    ctx = {"form": form}
+    ctx = {"form": form,
+           "service_pk": pk}
+
     return render(request, "reviews/create.html", ctx)
 
 
