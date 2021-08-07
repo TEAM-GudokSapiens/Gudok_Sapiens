@@ -7,14 +7,14 @@ from django.contrib.auth.forms import UserCreationForm
 class SignupForm(UserCreationForm):
     class Meta:
         model = get_user_model()
-        fields = ('username', 'email', 'nickname', 'name',
+        fields = ('user_id', 'email', 'nickname', 'name',
                   'gender', 'phonenum', 'password1', 'password2')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.fields['username'].label = '아이디'
-        self.fields['username'].help_text = '20자 이하 문자, 숫자 그리고 @/./+/-/_만 가능합니다.'
+        self.fields['user_id'].label = '아이디'
+        self.fields['user_id'].help_text = '20자 이하 문자, 숫자 그리고 @/./+/-/_만 가능합니다.'
         self.fields['email'].label = '이메일'
         self.fields['name'].label = '이름'
         self.fields['nickname'].label = '닉네임'
@@ -26,15 +26,15 @@ class SignupForm(UserCreationForm):
 class UpdateForm(UserCreationForm):
     class Meta:
         model = get_user_model()
-        fields = ('username', 'email', 'name', 'nickname',
+        fields = ('user_id', 'email', 'name', 'nickname',
                   'gender', 'phonenum', 'password1', 'password2')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.fields['username'].label = '아이디'
-        self.fields['username'].disabled = True
-        self.fields['username'].help_text = False
+        self.fields['user_id'].label = '아이디'
+        self.fields['user_id'].disabled = True
+        self.fields['user_id'].help_text = False
         self.fields['email'].label = '이메일'
         self.fields['email'].disabled = True
         self.fields['name'].disabled = True

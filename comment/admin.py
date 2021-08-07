@@ -1,14 +1,16 @@
 from django.contrib import admin
-from .models import *
+from .models import Comment
+
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-        list_display = (
-        'target', 
+    list_display = (
+        'target',
         'content',
         'user',
         'created_at',
-        'updated_at',
+        'deleted',
     )
-search_fields = ('target', 'user_email', 'content',)
 
+
+search_fields = ('target__title', 'user__email', 'content',)

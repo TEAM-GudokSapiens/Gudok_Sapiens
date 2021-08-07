@@ -90,21 +90,3 @@ def board_delete(request, pk):
     post = Board.objects.get(id=pk)
     post.delete()
     return redirect('community:board')
-
-
-def reply(request):
-    jsonObject = json.loads(request.body)
-
-    reply = Comment.objects.create(
-        user=jsonObject.get('user'),
-        target=jsonObject.get('target'),
-        content=jsonObject.get('content'))
-    reply.save()
-
-    context = {
-        'name': reply.user.name,
-        'content': reply.content,
-        'createDate': reply.createdDate,
-        'updateDate': reply.updatedDate
-    }
-    return JsonResponse(context)
