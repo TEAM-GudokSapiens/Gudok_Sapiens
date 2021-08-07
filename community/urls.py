@@ -18,5 +18,8 @@ urlpatterns = [
     path('board/create/', views.board_create, name='board_create'),
     path('board/<int:pk>/detail/', views.board_detail, name='board_detail'),
     path('board/<int:pk>/delete/', views.board_delete, name='board_delete'),
+    path('comment/<int:pk>/write/', views.comment_write_view, name='comment_write'),
+    path('comment/<int:pk>/delete/',
+         views.comment_delete_view, name='comment_delete'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

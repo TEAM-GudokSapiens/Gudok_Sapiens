@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     {{ board.update_counter }}
     <h3>{{ board.title }}</h3>
     작성일: {{ board.created_at  | date:"Y/m/d" }} <br>
@@ -19,39 +20,367 @@
     <a href="{%url 'community:board'%}">목록으로 </a> <br>
 
     <!--로그인한 사람 == 작성자 일때만 삭제가능-->
-    {% if user.username == board.user.username %}
+    {% if user.user_id == board.user.user_id %}
     <a href="{% url 'community:board_delete' board.id %}">삭제하기</a>
     {% endif %}
     
-    <textarea class="commentContent" placeholder="
-    저작권 등 다른 사람의 권리를 침해하거나 명예를 훼손하는 게시물은 이용약관 및 관련 법률에 의해 제재를 받을 수 있습니다. 건전한 토론문화와 양질의 댓글 문화를 위해, 타인에게 불쾌감을 주는 욕설 또는 특정 계층/민족, 종교 등을 비하하는 단어들은 표시가 제한됩니다."></textarea>
-    <input type="button" class="btnReply" value="등록">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    <script>
-        let btnReply = document.querySelector('.btnReply')
-        btnReply.addEventListener('click', e => {
-            
-            let content = document.querySelector('.commentContent').value;
-            let param = {
-                'user': '{{ target.user.id }}',
-                'target': '{{ target.id }}',
-                'content': content,
-            }
+    <!--댓글-->
+    <div class="card" style="width: 100%;">
+        <div class="card-header">
+            <div class="col-md-12">
+                {% csrf_token %}
+                <div class="form-group row">
+                    <textarea class="form-control" id="content_id" rows="3" placeholder="댓글을 입력해주세요." style="margin-top:6px;"></textarea>
+                </div>
+                <div class="text-right" style="float:right">
+                    <button id="comment_write" class="btn btn-sm" style="background-color: #d14040f2; color: white; font-size: 15px; margin-top:-5px; margin-right:-12px;">댓글달기</button>
+                </div>
+            </div>
+            <br>
+            {% if comments %}
+            <div id="hide_more_button"><strong><a id=hide_button_count style="color:black;">&nbsp;댓글 접기 &middot;&nbsp;{{ comment_count }}개의 댓글<br></a></strong></div>
+            <div id="show_more_button" style="display:none;"><strong><a id=show_button_count style="color:black;">&nbsp;댓글 펼치기 &middot;&nbsp;{{ comment_count }}개의 댓글<br></a></strong></div>
+            {% else %}
+            <div id="hide_more_button"><strong><a id=hide_button_count style="color:black;"><br></a></strong></div>
+            <div id="show_more_button" style="display:none;"><strong><a id=show_button_count style="color:black;"><br></a></strong></div>
+            {% endif %}
+            <hr>
+            <div id="more_comment">
+                {% if comments %}
+                    {% for comment in comments %}
+                    <div id='{{ comment.id }}'>
+                        {% if comment.deleted and comment.reply == 0 %}
+                        <span style="color:gray;">삭제된 댓글입니다.</span><hr>
+                        {% else %}
+                            {% if comment.reply == 0 %}
+                                {% if comment.user == board.user %}
+                                <strong>{{ comment.user }}&nbsp;<span style="color:gray";>(글쓴이)</span></strong>
+                                {% else  %}
+                                <strong>{{ comment.user }}</strong>
+                                {% endif %}
+                                {% if comment.created_string == False %}
+                                <span style="float:right; color:gray;">{{ comment.created_at|date:'m월 d일' }}</span>
+                                {% else %}
+                                <span style="float:right; color:gray;">{{ comment.created_string }}</span>
+                                {% endif %}
+                                {% if comment.user == request.user or request.user.level == '0' or request.user.level == '1' %}
+                                <div>
+                                    <div style="white-space:pre-wrap; text-align:left;">{{ comment.content }}</div>
+                                    <div style="text-align: right; margin:-20px 0px -10px 0;">
+                                        <a style="color: #d14040f2;" onclick="createReplyArea('{{comment.id}}');">답글달기</a>&nbsp;&middot;&nbsp;
+                                        <a style="color: #d14040f2;" onclick="commentDelete('{{comment.id}}');">댓글삭제</a>
+                                    </div>
+                                </div>
+                                <hr>
+                                {% else %}
+                                <div>
+                                    <div style="white-space:pre-wrap; text-align:left;">{{ comment.content }}</div>
+                                    <div style="text-align: right; margin:-20px 0px -10px 0;">
+                                        <a style="color: #d14040f2;" onclick="createReplyArea('{{comment.id}}');">답글달기</a>
+                                    </div>
+                                </div>
+                                <hr>
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                    <div class='{{ comment.id }}'></div>
+                    {% endfor %}
+                    <!--답글 표시 부분-->
+                    {% for comment in replys %}
+                    {% if comment.deleted and comment.reply != 0 %}
+                    <script type="text/javascript">
+                        var comment_id = "{{ comment.reply }}";
+                        $('.'+comment_id).append(
+                            '<div style="display:grid; grid-template-columns: 0.03fr 0.97fr"><div style="color:gray;"><i class="fa fa-reply fa-rotate-180 fa-lg"></i></div><div><span style="color:gray;">삭제된 답글입니다.</span></div></div><hr>'
+                        );
+                    </script>
+                    {% else %}
+                        {% if comment.user == board.user %}
+                            {% if comment.user == request.user or request.user.level == '0' or request.user.level == '1' %}
+                            <script type="text/javascript">
+                                var reply_id = "{{ comment.id }}";
+                                var comment_id = "{{ comment.reply }}";
+                                var reply_user = "{{ comment.user }}";
+                                var reply_created = "{{ comment.created_string }}";
+                                if (reply_created == 'False') {
+                                    reply_created = "{{ comment.created_at|date:'m월 d일' }}"
+                                };
+                                var reply_content = "{{ comment.content }}";
 
+                                $('.'+comment_id).append(
+                                    '<div style="display:grid; grid-template-columns: 0.03fr 0.97fr"><div style="color:gray;"><i class="fa fa-reply fa-rotate-180 fa-lg"></i></div><div><div id='+reply_id+'><strong>'+reply_user+'&nbsp;<span style="color:gray";>'+'(글쓴이)'+'</span></strong>'+
+                                    '<span style="float:right; color:gray;">'+reply_created+'</span>'+
+                                    '<div><div style="white-space:pre-wrap; text-align:left;">'+reply_content+'</div><div style="text-align:right; margin:-20px 0px -10px 0;"><a style="color: #d14040f2;" onclick="replyDelete('+reply_id+');">답글삭제</a></div></div></div></div></div><hr>'
+                                );
+                            </script>
+                            {% else %}
+                            <script type="text/javascript">
+                                var reply_id = "{{ comment.id }}";
+                                var comment_id = "{{ comment.reply }}";
+                                var reply_user = "{{ comment.user }}";
+                                var reply_created = "{{ comment.created_string }}";
+                                if (reply_created == 'False') {
+                                    reply_created = "{{ comment.created_at|date:'m월 d일' }}"
+                                };
+                                var reply_content = "{{ comment.content }}";
+
+                                $('.'+comment_id).append(
+                                    '<div style="display:grid; grid-template-columns: 0.03fr 0.97fr"><div style="color:gray;"><i class="fa fa-reply fa-rotate-180 fa-lg"></i></div><div><div id='+reply_id+'><strong>'+reply_user+'&nbsp;<span style="color:gray";>'+'(글쓴이)'+'</span></strong>'+
+                                    '<span style="float:right; color:gray;">'+reply_created+'</span>'+
+                                    '<div><div style="white-space:pre-wrap; text-align:left;">'+reply_content+'</div><div style="text-align:right;"></div></div></div></div></div><hr>'
+                                );
+                            </script>
+                            {% endif %}
+                        {% else %}
+                            {% if comment.user == request.user or request.user.level == '0' or request.user.level == '1' %}
+                            <script type="text/javascript">
+                                var reply_id = "{{ comment.id }}";
+                                var comment_id = "{{ comment.reply }}";
+                                var reply_user = "{{ comment.user }}";
+                                // if(reply_user == "None") {
+                                //     reply_user = "탈퇴한 사용자입니다.";
+                                // }
+                                var reply_created = "{{ comment.created_string }}";
+                                if (reply_created == 'False') {
+                                reply_created = "{{ comment.created_at|date:'m월 d일' }}"
+                                };
+                                var reply_content = "{{ comment.content }}";
+
+                                $('.'+comment_id).append(
+                                    '<div style="display:grid; grid-template-columns: 0.03fr 0.97fr"><div style="color:gray;"><i class="fa fa-reply fa-rotate-180 fa-lg"></i></div><div><div id='+reply_id+'><strong>'+reply_user+'</strong>'+
+                                    '<span style="float:right; color:gray;">'+reply_created+'</span>'+
+                                    '<div><div style="white-space:pre-wrap; text-align:left;">'+reply_content+'</div><div style="text-align:right; margin:-20px 0px -10px 0;"><a style="color: #d14040f2;" onclick="replyDelete('+reply_id+');">답글삭제</a></div></div></div></div></div><hr>'
+                                );
+                            </script>
+                            {% else %}
+                            <script type="text/javascript">
+                                var reply_id = "{{ comment.id }}";
+                                var comment_id = "{{ comment.reply }}";
+                                var reply_user = "{{ comment.user }}";
+                                // if(reply_user == "None") {
+                                //     reply_user = "탈퇴한 사용자입니다.";
+                                // }
+                                var reply_created = "{{ comment.created_string }}";
+                                if (reply_created == 'False') {
+                                reply_created = "{{ comment.created_at|date:'m월 d일' }}"
+                                };
+                                var reply_content = "{{ comment.content }}";
+
+                                $('.'+comment_id).append(
+                                    '<div style="display:grid; grid-template-columns: 0.03fr 0.97fr"><div style="color:gray;"><i class="fa fa-reply fa-rotate-180 fa-lg"></i></div><div><div id='+reply_id+'><strong>'+reply_user+'</strong>'+
+                                    '<span style="float:right; color:gray;">'+reply_created+'</span>'+
+                                    '<div><div style="white-space:pre-wrap; text-align:left;">'+reply_content+'</div><div style="text-align:right;"></div></div></div></div></div><hr>'
+                                );
+                            </script>
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
+                    {% endfor %}
+
+                {% endif %}
+                <input type="hidden" id="comment_user" value={{request.user}}>
+                <div id="comment_list"></div>
+            </div>
+        </div>
+    </div>
+
+<!-- 댓글 ajax -->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('img').css('width', '100%');
+
+        $('#comment_write').click(function () {
+            var content= $("#content_id").val();
+            var user= $("#comment_user").val();
             $.ajax({
-                url: "{% url 'community:reply' %}",
-                type: 'POST',
-                headers: {
-                    'X-CSRFTOKEN' : '{{ csrf_token}}'
+                type: "POST",
+                url: "{% url 'community:comment_write' board.id %}",
+                dataType: "json",
+                data: {
+                    'user': user,
+                    'content': content,
+                    'reply': '0',
+                    'csrfmiddlewaretoken': '{{csrf_token}}',
                 },
-                data : JSON.stringify(param),
-                success:function(data){
-                    console.log(data)
+                success: function (response) {
+                    console.log("성공")
+                    if (response.self_comment) {
+                        $('#comment_list').append(
+                           '<div><div id='+response.comment_id+'><strong>'+response.user+'&nbsp;<span style="color:gray";>'+response.self_comment+'</span></strong>'+
+                           '<span style="float:right; color:#d14040f2;">'+response.created+'</span>'+
+                           '<div><div style="white-space:pre-wrap; text-align:left;">'+response.content+'</div><div style="text-align:right; margin:-20px 0px -10px 0;"><a style="color: #d14040f2;" onclick="createReplyArea('+response.comment_id+');">답글달기</a>&nbsp;&middot;&nbsp;<a style="color: #d14040f2;" onclick="commentDelete('+response.comment_id+');">댓글삭제</a></div></div><hr></div><div class='+response.comment_id+'></div>'
+                        );
+                    }
+                    else{
+                        $('#comment_list').append(
+                            '<div><div id='+response.comment_id+'><strong>'+response.user+'</strong>'+
+                            '<span style="float:right; color:#d14040f2;">'+response.created+'</span>'+
+                            '<div><div style="white-space:pre-wrap; text-align:left;">'+response.content+'</div><div style="text-align:right; margin:-20px 0px -10px 0;"><a style="color: #d14040f2;" onclick="createReplyArea('+response.comment_id+');">답글달기</a>&nbsp;&middot;&nbsp;<a style="color: #d14040f2;" onclick="commentDelete('+response.comment_id+');">댓글삭제</a></div></div><hr></div><div class='+response.comment_id+'></div>'
+                        );
+                    }
+                    $('#content_id').val("");
+                    $('#hide_button_count').replaceWith('<a id=hide_button_count style="color:black;">&nbsp;댓글 접기 &middot;&nbsp;'+response.comment_count+'개의 댓글</a>')
+                    $('#show_button_count').replaceWith('<a id=show_button_count style="color:black;">&nbsp;댓글 펼치기 &middot;&nbsp;'+response.comment_count+'개의 댓글</a>')
                 },
-                error: function(){
-                    alert('변경불가');
+                error: function () {
+                    if ($('#content_id').val()=="") {
+                        alert('댓글을 입력해주세요.');
+                    }
+                },
+            })
+        });
+    });
+    
+    $('#hide_more_button').click(function(){
+        $('#more_comment').hide();
+        $('#show_more_button').show();
+        $('#hide_more_button').hide();
+    });
+    $('#show_more_button').click(function(){
+        $('#more_comment').show();
+        $('#show_more_button').hide();
+        $('#hide_more_button').show();
+    });
+
+    function commentDelete(value) {
+        var comment_id = value;
+        var delete_warning = confirm('댓글을 삭제하시겠습니까?');
+        if (delete_warning == true) {
+            $.ajax({
+                type: "POST",
+                url: "{% url 'community:comment_delete' board.id %}",
+                dataType: "json",
+                data: {
+                    'comment_id': comment_id,
+                    'csrfmiddlewaretoken': '{{csrf_token}}',
+                },
+                success: function (response) {
+                    console.log("성공")
+                    $('#'+response.comment_id).replaceWith('<span style="color:gray;">삭제된 댓글입니다.</span><hr>');
+                    $('#hide_button_count').replaceWith('<a id=hide_button_count style="color:black;">&nbsp;댓글 접기 &middot;&nbsp;'+response.comment_count+'개의 댓글</a>');
+                    $('#show_button_count').replaceWith('<a id=show_button_count style="color:black;">&nbsp;댓글 펼치기 &middot;&nbsp;'+response.comment_count+'개의 댓글</a>');
+                },
+                error: function () {
+                    alert('본인 댓글이 아닙니다.');
+                },
+            });
+        }
+    }
+
+    function replyDelete(value) {
+        var comment_id = value;
+        var delete_warning = confirm('답글을 삭제하시겠습니까?');
+        if (delete_warning == true) {
+            $.ajax({
+                type: "POST",
+                url: "{% url 'community:comment_delete' board.id %}",
+                dataType: "json",
+                data: {
+                    'comment_id': comment_id,
+                    'csrfmiddlewaretoken': '{{csrf_token}}',
+                },
+                success: function (response) {
+                    console.log("성공")
+                    $('#'+response.comment_id).replaceWith('<span style="color:gray;">삭제된 답글입니다.</span>');
+                    $('#hide_button_count').replaceWith('<a id=hide_button_count style="color:black;">&nbsp;댓글 접기 &middot;&nbsp;'+response.comment_count+'개의 댓글</a>');
+                    $('#show_button_count').replaceWith('<a id=show_button_count style="color:black;">&nbsp;댓글 펼치기 &middot;&nbsp;'+response.comment_count+'개의 댓글</a>');
+                },
+                error: function () {
+                    alert('본인 댓글이 아닙니다.');
+                },
+            });
+        }
+    }
+
+    function createReplyArea(value) {
+        var comment_id = value;
+        $('.'+comment_id).append(
+            // '<div id="layer"><textarea class="form-control" id="reply_content" rows="2" placeholder="답글을 입력해주세요." style="float: left; max-width: 85%; margin-top:7px;" autofocus></textarea><button onclick="replyWrite('+comment_id+');" class="btn btn-md" style="font-size:15px; background-color:#d14040f2; color:white; width: 11%; margin-left: 10px; height:62px;">답글달기</button><hr></div>'
+            '<div id="layer"><div class="row"><div class="col-10"><textarea class="form-control" id="reply_content" rows="2" placeholder="답글을 입력해주세요." style="float: left; width: 103%; margin-top:5px;" autofocus></textarea></div><div class="col-md-auto"><button onclick="replyWrite('+comment_id+');" class="btn btn-md" style="font-size:15px; background-color:#d14040f2; color:white; height:60px;">답글달기</button></div></div><hr></div>'
+        );
+    }
+
+    function deleteReplyArea($targetObj) {
+        var isIn = true;
+        var $objArr = Array();
+        var opts = {
+            left: 99999, right: 0, top: 99999, bottom: 0
+        }
+        if( $targetObj ) {
+            if( $targetObj.length == 1 ) {
+                $objArr.push( $targetObj );
+            } else {
+                $objArr = $targetObj;
+            }
+            $.each($objArr, function(i, $obj) {          
+                var obj_position = $obj.offset();
+                obj_position.right = parseInt( obj_position.left ) + ( $obj.width() );
+                obj_position.bottom = parseInt( obj_position.top ) + parseInt( $obj.height() );
+                
+                if( obj_position.left < opts.left ) opts.left = obj_position.left;
+                if( obj_position.right > opts.right ) opts.right = obj_position.right;
+                if( obj_position.top < opts.top ) opts.top = obj_position.top;
+                if( obj_position.bottom > opts.bottom ) opts.bottom = obj_position.bottom;
+            }); 
+            if(( opts.left <= event.pageX && event.pageX <= opts.right )&& ( opts.top <= event.pageY && event.pageY <= opts.bottom )) {
+                isIn = false;
+            }
+        }
+        return isIn;
+    }
+
+    $(function(){
+        $(document).mousedown(function(e){
+            if( deleteReplyArea ($("#layer"))) {
+                $("#layer").remove();
+            }
+        });
+    });
+
+
+    function replyWrite(value) {
+        var comment_id = value;
+        var content= $("#reply_content").val();
+        var user= $("#comment_user").val();
+        $.ajax({
+            type: "POST",
+            url: "{% url 'community:comment_write' board.id %}",
+            dataType: "json",
+            data: {
+                'user': user,
+                'content': content,
+                'reply': comment_id,
+                'csrfmiddlewaretoken': '{{csrf_token}}',
+            },
+            success: function (response) {
+                console.log("성공")
+                if (response.self_comment) {
+                    $('.'+comment_id).append(
+                        '<div style="display:grid; grid-template-columns: 0.03fr 0.97fr"><div style="color:gray;"><i class="fa fa-reply fa-rotate-180 fa-lg"></i></div><div><div id='+response.comment_id+'><strong>'+response.user+'&nbsp;<span style="color:gray";>'+response.self_comment+'</span></strong>'+
+                        '<span style="float:right; color:#d14040f2;">'+response.created+'</span>'+
+                        '<div><div style="white-space:pre-wrap; text-align:left;">'+response.content+'</div><div style="text-align:right; margin:-20px 0px -10px 0;"><a style="color: #d14040f2;" onclick="replyDelete('+response.comment_id+');">답글삭제</a></div></div></div></div></div><hr>'
+                    );
                 }
-                })
+                else{
+                    $('.'+comment_id).append(
+                        '<div style="display:grid; grid-template-columns: 0.03fr 0.97fr"><div style="color:gray;"><i class="fa fa-reply fa-rotate-180 fa-lg"></i></div><div><div id='+response.comment_id+'><strong>'+response.user+'</strong>'+
+                        '<span style="float:right; color:#d14040f2;">'+response.created+'</span>'+
+                        '<div><div style="white-space:pre-wrap; text-align:left;">'+response.content+'</div><div style="text-align:right; margin:-20px 0px -10px 0;"><a style="color: #d14040f2;" onclick="replyDelete('+response.comment_id+');">답글삭제</a></div></div></div></div></div><hr>'
+                    );
+                }
+                $("#layer").remove();
+                $('#hide_button_count').replaceWith('<a id=hide_button_count style="color:black;">&nbsp;댓글 접기 &middot;&nbsp;'+response.comment_count+'개의 댓글</a>')
+                $('#show_button_count').replaceWith('<a id=show_button_count style="color:black;">&nbsp;댓글 펼치기 &middot;&nbsp;'+response.comment_count+'개의 댓글</a>')
+            },
+            error: function () {
+                if ($('#reply_content').val()=="") {
+                    alert('답글을 입력해주세요.');
+                }
+            },
         })
-    </script>
+    };
+
+    
+</script>
     {% endblock %}

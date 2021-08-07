@@ -5,8 +5,11 @@ from datetime import date, datetime, timedelta
 from .models import *
 from .forms import BoardForm
 from users.models import User
-from django.http.response import JsonResponse
+from django.http import HttpResponse
 import json
+from django.core import serializers
+from django.core.serializers.json import DjangoJSONEncoder
+from users.decorators import *
 # 공지사항
 
 
@@ -90,3 +93,44 @@ def board_delete(request, pk):
     post = Board.objects.get(id=pk)
     post.delete()
     return redirect('community:board')
+
+# 댓글쓰기
+
+
+@login_message_required
+def comment_write_view(request, pk):
+    target = get_object_or_404(Board, id=pk)
+    user = request.POST.get('user')
+    content = request.POST.get('content')
+    if content:
+        comment = Comment.objects.create(
+            target=target, content=content, user=request.user)
+        target.save()
+        data = {
+            'user': user,
+            'content': content,
+            'created_at': '방금 전',
+            'comment_id': comment.id
+        }
+        if request.user == target.user:
+            data['self_comment'] = '(글쓴이)'
+
+        return HttpResponse(json.dumps(data, cls=DjangoJSONEncoder), content_type="application/json")
+
+# 댓글 삭제
+
+
+@login_message_required
+def comment_delete_view(request, pk):
+    target = get_object_or_404(Board, id=pk)
+    comment_id = request.POST.get('comment_id')
+    target_comment = Comment.objects.get(pk=comment_id)
+
+    if request.user == target_comment.writer or request.user.level == '1' or request.user.level == '0':
+        target_comment.deleted = True
+        target_comment.save()
+        target.save()
+        data = {
+            'comment_id': comment_id,
+        }
+        return HttpResponse(json.dumps(data, cls=DjangoJSONEncoder), content_type="application/json")

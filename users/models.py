@@ -68,4 +68,4 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'user_id'
 
     def __str__(self):
-        return self.username
+        return self.user_id
