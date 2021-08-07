@@ -15,7 +15,7 @@ from users.models import User
 
 def notice(request):
     notices = Notice.objects.order_by('-created_at')
-    paginator = Paginator(notices, 15) #한페이지에 15개씩
+    paginator = Paginator(notices, 10) #한페이지에 15개씩
 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
