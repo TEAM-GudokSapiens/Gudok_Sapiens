@@ -34,7 +34,7 @@ INSTALLED_APPS = [
     'users',
     'services',
     'community',
-    'common',    
+    'common',
     'reviews',
     'comment',
     'likes',

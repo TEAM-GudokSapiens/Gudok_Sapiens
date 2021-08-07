@@ -12,4 +12,5 @@ urlpatterns = [
     path('services/', include('services.urls', namespace="services")),
     path('reviews/', include('reviews.urls', namespace="reviews")),
     path('accounts/', include('allauth.urls')),
+    path('community/', include('community.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

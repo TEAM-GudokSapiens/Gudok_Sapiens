@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+    {% for magazine in page_obj.object_list %}
+    <div>
+        <img src="{{ magazine.img.url }}" style="width: 450px;"><br>
+        <h5><a href="{%url 'community:magazine_detail' magazine.id%}" >{{ magazine.title }}</a></h5>
+        {{ magazine.intro }} <br>
+        {{ magazine.created_at | date:"Y/m/d" }} <br>
+        조회수 : {{ magazine.hits }} <br>
+        <hr>
+    </div>
+    {%endfor%}
+    
+    {% if page_obj.has_previous %}
+        <a href="?page=1">처음으로</a>
+        <a href="?page={{ page_obj.previous_page_number }}">이전으로</a>
+    {% endif %}
+    
+    <span class="current">
+         {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+    </span>
+    
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">다음으로</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">맨뒤로</a>
+    {% endif %}
+
+{% endblock %}

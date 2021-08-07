@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+    {% for notice in page_obj.object_list %}
+    <div>
+        <h5><a href="{%url 'community:notice_detail' notice.id%}" >{{ notice.title }}</a></h5>
+        <h6>{{ notice.created_at | date:"Y/m/d" }}</h6>
+        <p>조회수 : {{ notice.hits }}</p>
+        <hr>
+    </div>
+    {%endfor%}
+    
+    {% if page_obj.has_previous %}
+        <a href="?page=1">처음으로</a>
+        <a href="?page={{ page_obj.previous_page_number }}">이전으로</a>
+    {% endif %}
+    
+    <span class="current">
+         {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+    </span>
+    
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">다음으로</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">맨뒤로</a>
+    {% endif %}
+
+{% endblock %}

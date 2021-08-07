@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {{ notice.update_counter }}
+    
+    <!--제목-->
+    <h3>{{ notice.title }}</h3>
+    조회수 : {{ notice.hits }} <br>
+    <hr>
+    <!--사진-->
+    {% if board.img %}
+    <img src="{{ notice.img.url }}" style="width: 450px;"> <br>
+    {% else %}
+    <p></p>
+    {% endif %}
+
+    <!--내용-->
+    {{ notice.content }} <br>
+
+    작성일: {{ notice.created_at  | date:"Y/m/d" }} <br>
+    <hr>
+    <a href="{%url 'community:notice'%}">목록으로 돌아가기</a>
+  
+{% endblock %}
