@@ -12,7 +12,6 @@ from services.models import Service
 # from services.models import Service
 
 
-# Create your views here.
 # def review_create(request):
 #     if not request.user.is_authenticated:  # 로그인이 안되어있을 경우
 #         return redirect('/users/login')
@@ -21,21 +20,18 @@ from services.models import Service
 #         form = ReviewCreateForm(request.POST, request.FILES)
 #         print(form)
 #         if form.is_valid():
-#             target_id = request.session.get('target')
 #             user_id = request.session.get('user')
-#             target = request.target
 #             user = request.user
 #             new_review = Review(
 #                 photo=form.cleaned_data['photo'],
 #                 title=form.cleaned_data['title'],
 #                 content=form.cleaned_data['content'],
-#                 target=target,
 #                 user=user
 #             )
 #             new_review.save()
 #             return redirect('services:services_detail')
 #         else:
-#             form = ReviewCreateForm(request.post)
+#             form = ReviewCreateForm(request.POST)
 
 #     else:  # get
 #         form = ReviewCreateForm()
@@ -43,23 +39,35 @@ from services.models import Service
 #         return render(request, template_name='reviews/create.html', context=ctx)
 
 
-class ReviewCreateView(CreateView):
-    model = Review
-    form_class = ReviewCreateForm
-    success_url = reverse_lazy('services:services_detail')
-    template_name = 'reviews/create.html'
+# class ReviewCreateView(CreateView, pk):
+#     model = Review
+#     form_class = ReviewCreateForm
+#     success_url = reverse_lazy('services:services_detail')
+#     template_name = 'reviews/create.html'
 
-    def form_valid(self, form):
-        # temp_review = form.save(commit=False)
-        # temp_review.target = form.cleand_data['target']
-        # temp_review.user = self.request.user
-        form.instance.user = self.request.user
-        form.instance.target = Service.objects.get(pk=2)
+#     def form_valid(self, form):
+#         form.instance.user = self.request.user
+#         form.instance.target = Service.objects.get(pk=pk)
 
-        return super(ReviewCreateView, self).form_valid(form)
+#         return super(ReviewCreateView, self).form_valid(form)
 
-    def get_success_url(self):
-        return reverse('services:services_detail', kwargs={'pk': self.object.target.id})
+#     def get_success_url(self):
+#         return reverse('services:services_detail', kwargs={'pk': self.object.target.id})
+
+def reviews_create(request, pk):
+    if request.method == "POST":
+        form = ReviewCreateForm(request.POST)
+        if form.is_valid():
+            review_form = form.save(commit=False)
+            review_form.user = request.user
+            review_form.target = Service.objects.get(pk=pk)
+            review_form.save()
+            return redirect("services:services_list")
+    else:
+        form = ReviewCreateForm()
+
+    ctx = {"form": form}
+    return render(request, "reviews/create.html", ctx)
 
 
 # @csrf_exempt

@@ -51,10 +51,9 @@ def logout(request):
 
 class AccountUpdateView(UpdateView):
     model = User
-    context_object_name = 'target_user'
     form_class = UpdateForm
     success_url = reverse_lazy('services:main')
-    template_name = 'users/detail.html'
+    template_name = 'users/update.html'
 
     def get(self, *args, **kwargs):
         if self.request.user.is_authenticated and self.get_object() == self.request.user:
@@ -64,7 +63,7 @@ class AccountUpdateView(UpdateView):
 
     def post(self, *args, **kwargs):
         if self.request.user.is_authenticated and self.get_object() == self.request.user:
-            return super().get(*args, **kwargs)
+            return super().post(*args, **kwargs)
         else:
             return HttpResponseForbidden()
 
@@ -73,7 +72,6 @@ class AccountUpdateView(UpdateView):
 
 class AccountDeleteView(DeleteView):
     model = User
-    context_object_name = 'target_user'
     success_url = reverse_lazy('users:login')
     template_name = 'users/delete.html'
 
@@ -85,6 +83,6 @@ class AccountDeleteView(DeleteView):
 
     def post(self, *args, **kwargs):
         if self.request.user.is_authenticated and self.get_object() == self.request.user:
-            return super().get(*args, **kwargs)
+            return super().post(*args, **kwargs)
         else:
             return HttpResponseForbidden()

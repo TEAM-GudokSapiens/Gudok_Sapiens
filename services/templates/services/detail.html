@@ -100,7 +100,7 @@
                             </div>
                         </div>
                         {% endfor %}
-                        <a href="{% url 'reviews:create' %}">
+                        <a href="{% url 'reviews:create' service.id %}">
                             <div class="btn btn-dark col-12">
                                 리뷰 쓰러가기
                             </div>

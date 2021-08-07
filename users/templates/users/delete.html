@@ -8,7 +8,7 @@
       회원 탈퇴를 진행하시겠습니까?
     </h4>
   </div>
-  <form action="{% url 'users:delete' pk=target_user.pk %}" method="post">
+  <form action="{% url 'users:delete' pk=user.pk %}" method="post">
     {% csrf_token %}
     <input type="submit" class="btn btn-danger rounded-pill col-6 mt-3" value="즉시 탈퇴">
   </form>

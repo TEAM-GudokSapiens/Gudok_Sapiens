@@ -10,7 +10,7 @@ class Review(models.Model):
         "users.User", related_name='review', on_delete=models.CASCADE, verbose_name='유저'
     )
     photo = models.ImageField(
-        verbose_name='리뷰사진', blank=True, upload_to='%Y/%m/%d')
+        verbose_name='리뷰사진', blank=True, null=True, upload_to='%Y/%m/%d')
     title = models.CharField(verbose_name='리뷰제목', max_length=50)
     content = models.TextField(verbose_name='내용', validators=[
         MinLengthValidator(15)])
