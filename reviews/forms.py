@@ -13,8 +13,8 @@ REVIEW_POINT_CHOICES = (
 class ReviewCreateForm(forms.ModelForm):
     class Meta:
         model = Review
-        fields = ['target', 'photo', 'title', 'content', 'score', 'period']
+        fields = ['photo', 'title', 'content', 'score', 'period']
         widgets = {
-            'target': forms.HiddenInput(),
+            # 'target': forms.HiddenInput(),
             'score': forms.Select(choices=REVIEW_POINT_CHOICES)
         }

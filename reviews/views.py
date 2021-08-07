@@ -56,13 +56,13 @@ from services.models import Service
 
 def reviews_create(request, pk):
     if request.method == "POST":
-        form = ReviewCreateForm(request.POST)
+        form = ReviewCreateForm(request.POST, request.FILES)
         if form.is_valid():
             review_form = form.save(commit=False)
             review_form.user = request.user
             review_form.target = Service.objects.get(pk=pk)
             review_form.save()
-            return redirect("services:services_list")
+            return redirect("services:services_detail", pk)
     else:
         form = ReviewCreateForm()
 

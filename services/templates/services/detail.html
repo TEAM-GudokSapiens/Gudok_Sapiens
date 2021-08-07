@@ -83,9 +83,9 @@
                     <div class="review-tab">
                         <div>
                             <span class="tab-title">리뷰</span>
-                            <span class="review-count ">{{service.review_set.all.count}}개</span>
+                            <span class="review-count ">{{service.review.all.count}}개</span>
                         </div>
-                        {% for review in service.review_set.all %}
+                        {% for review in service.review.all %}
                         <div class="review-container">
                             <div class="title-block mb-3">
                                 <span class="">{{review.user}}🌱</span>
@@ -93,14 +93,13 @@
                             </div>
                             <div class="content-block">
                                 {% if review.photo %}
-                                <img src="{{ review.photo.url }}" class="review-img" />
+                                    <img src="{{ review.photo.url }}" class="review-img" />
                                 {% endif %}
                                 <span class="">{{review.title}}</span>
                                 <span class="">{{review.content}}</span>
                             </div>
                         </div>
                         {% endfor %}
-                        {{ service.id }}
                         <a href="{% url 'reviews:create' service.id %}">
                             <div class="btn btn-dark col-12">
                                 리뷰 쓰러가기
