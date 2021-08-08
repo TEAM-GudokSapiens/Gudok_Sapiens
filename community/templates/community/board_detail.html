@@ -89,9 +89,10 @@
                                 <strong>{{ comment.user }}</strong>
                                 {% endif %}
                                 {% if comment.created_string == False %}
-                                <span style="float:right; color:gray;">{{ comment.created_at|date:'Y년 m월 d일' }}</span>
+                                <span style="float:right;">{{ comment.created_at|date:'m월 d일' }}</span>
                                 {% else %}
-                                <span style="float:right; color:gray;">{{ comment.created_string }}</span>
+                                <span style="float:right;">{{ comment.created_string }}</span>
+                                {% endif %}
                                 {% endif %}
                                 {% if comment.user == request.user or request.user.level == '0' or request.user.level == '1' %}
                                 <div>
@@ -112,7 +113,6 @@
                                 <hr>
                                 {% endif %}
                             {% endif %}
-                        {% endif %}
                     </div>
                     <div class='{{ comment.id }}'></div>
                     {% endfor %}
@@ -134,7 +134,7 @@
                                 var reply_user = "{{ comment.user }}";
                                 var reply_created = "{{ comment.created_string }}";
                                 if (reply_created == 'False') {
-                                    reply_created = "{{ comment.created_at|date:'Y년 m월 d일' }}"
+                                    reply_created = "{{ comment.created_at|date:'m월 d일' }}"
                                 };
                                 var reply_content = "{{ comment.content }}";
 
@@ -151,7 +151,7 @@
                                 var reply_user = "{{ comment.user }}";
                                 var reply_created = "{{ comment.created_string }}";
                                 if (reply_created == 'False') {
-                                    reply_created = "{{ comment.created_at|date:'Y년 m월 d일' }}"
+                                    reply_created = "{{ comment.created_at|date:'m월 d일' }}"
                                 };
                                 var reply_content = "{{ comment.content }}";
 
@@ -234,18 +234,17 @@
                     'csrfmiddlewaretoken': '{{csrf_token}}',
                 },
                 success: function (response) {
-                    console.log("성공")
                     if (response.self_comment) {
                         $('#comment_list').append(
                            '<div><div id='+response.comment_id+'><strong>'+response.user+'&nbsp;<span style="color:gray";>'+response.self_comment+'</span></strong>'+
-                           '<span style="float:right; color:#d14040f2;">'+response.created+'</span>'+
+                           '<span style="float:right; color:#d14040f2;">'+response.created_at+'</span>'+
                            '<div><div style="white-space:pre-wrap; text-align:left;">'+response.content+'</div><div style="text-align:right; margin:-20px 0px -10px 0;"><a style="color: #d14040f2;" onclick="createReplyArea('+response.comment_id+');">답글달기</a>&nbsp;&middot;&nbsp;<a style="color: #d14040f2;" onclick="commentDelete('+response.comment_id+');">댓글삭제</a></div></div><hr></div><div class='+response.comment_id+'></div>'
                         );
                     }
                     else{
                         $('#comment_list').append(
                             '<div><div id='+response.comment_id+'><strong>'+response.user+'</strong>'+
-                            '<span style="float:right; color:#d14040f2;">'+response.created+'</span>'+
+                            '<span style="float:right; color:#d14040f2;">'+response.created_at+'</span>'+
                             '<div><div style="white-space:pre-wrap; text-align:left;">'+response.content+'</div><div style="text-align:right; margin:-20px 0px -10px 0;"><a style="color: #d14040f2;" onclick="createReplyArea('+response.comment_id+');">답글달기</a>&nbsp;&middot;&nbsp;<a style="color: #d14040f2;" onclick="commentDelete('+response.comment_id+');">댓글삭제</a></div></div><hr></div><div class='+response.comment_id+'></div>'
                         );
                     }
@@ -286,7 +285,6 @@
                     'csrfmiddlewaretoken': '{{csrf_token}}',
                 },
                 success: function (response) {
-                    console.log("성공")
                     $('#'+response.comment_id).replaceWith('<span style="color:gray;">삭제된 댓글입니다.</span><hr>');
                     $('#hide_button_count').replaceWith('<a id=hide_button_count style="color:black;">&nbsp;댓글 접기 &middot;&nbsp;'+response.comment_count+'개의 댓글</a>');
                     $('#show_button_count').replaceWith('<a id=show_button_count style="color:black;">&nbsp;댓글 펼치기 &middot;&nbsp;'+response.comment_count+'개의 댓글</a>');
@@ -311,7 +309,6 @@
                     'csrfmiddlewaretoken': '{{csrf_token}}',
                 },
                 success: function (response) {
-                    console.log("성공")
                     $('#'+response.comment_id).replaceWith('<span style="color:gray;">삭제된 답글입니다.</span>');
                     $('#hide_button_count').replaceWith('<a id=hide_button_count style="color:black;">&nbsp;댓글 접기 &middot;&nbsp;'+response.comment_count+'개의 댓글</a>');
                     $('#show_button_count').replaceWith('<a id=show_button_count style="color:black;">&nbsp;댓글 펼치기 &middot;&nbsp;'+response.comment_count+'개의 댓글</a>');
@@ -384,18 +381,17 @@
                 'csrfmiddlewaretoken': '{{csrf_token}}',
             },
             success: function (response) {
-                console.log("성공")
                 if (response.self_comment) {
                     $('.'+comment_id).append(
                         '<div style="display:grid; grid-template-columns: 0.03fr 0.97fr"><div style="color:gray;"><i class="fa fa-reply fa-rotate-180 fa-lg"></i></div><div><div id='+response.comment_id+'><strong>'+response.user+'&nbsp;<span style="color:gray";>'+response.self_comment+'</span></strong>'+
-                        '<span style="float:right; color:#d14040f2;">'+response.created+'</span>'+
+                        '<span style="float:right; color:#d14040f2;">'+response.created_at+'</span>'+
                         '<div><div style="white-space:pre-wrap; text-align:left;">'+response.content+'</div><div style="text-align:right; margin:-20px 0px -10px 0;"><a style="color: #d14040f2;" onclick="replyDelete('+response.comment_id+');">답글삭제</a></div></div></div></div></div><hr>'
                     );
                 }
                 else{
                     $('.'+comment_id).append(
                         '<div style="display:grid; grid-template-columns: 0.03fr 0.97fr"><div style="color:gray;"><i class="fa fa-reply fa-rotate-180 fa-lg"></i></div><div><div id='+response.comment_id+'><strong>'+response.user+'</strong>'+
-                        '<span style="float:right; color:#d14040f2;">'+response.created+'</span>'+
+                        '<span style="float:right; color:#d14040f2;">'+response.created_at+'</span>'+
                         '<div><div style="white-space:pre-wrap; text-align:left;">'+response.content+'</div><div style="text-align:right; margin:-20px 0px -10px 0;"><a style="color: #d14040f2;" onclick="replyDelete('+response.comment_id+');">답글삭제</a></div></div></div></div></div><hr>'
                     );
                 }
