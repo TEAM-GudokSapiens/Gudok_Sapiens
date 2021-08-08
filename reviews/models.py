@@ -4,9 +4,9 @@ from django.core.validators import MinValueValidator, MaxValueValidator, MinLeng
 
 class Review(models.Model):
     target = models.ForeignKey(
-        "services.Service", related_name='review_target', on_delete=models.CASCADE, verbose_name='서비스')
+        "services.Service", related_name='review', on_delete=models.CASCADE, verbose_name='서비스')
     user = models.ForeignKey(
-        "users.User", related_name='review_user', on_delete=models.CASCADE, verbose_name='유저'
+        "users.User", related_name='review', on_delete=models.CASCADE, verbose_name='유저'
     )
     photo = models.ImageField(
         verbose_name='리뷰사진', blank=True, null=True, upload_to='%Y/%m/%d')

@@ -97,6 +97,8 @@
                                 {% endif %}
                                 <span class="">{{review.title}}</span>
                                 <span class="">{{review.content}}</span>
+                                <a href="{% url 'likes:likes_helps' review.id %}">도움이 돼요!</a>
+                                <span>{{ review.reviews_help.all.count }}</span>
                             </div>
                         </div>
                         {% endfor %}
@@ -153,7 +155,7 @@
             </div>
             <div class="fix-name">{{service.name}}</div>
             <div class="fix-intro">{{service.intro}}</div>
-            <div class="fix-stars">⭐️⭐️⭐️⭐️⭐️</div>
+            <div class="fix-stars">⭐️⭐️⭐️⭐️⭐️ {{ service.review.score }}</div>
             <div class="fix-link"><a href="">찜{{ number_of_dibs }}</a> /
                 <a href="">공유</a>
             </div>

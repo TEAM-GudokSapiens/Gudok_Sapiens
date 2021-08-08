@@ -100,3 +100,15 @@ def dibs_list(request):
         'services': services,
         }
     return render(request, 'users/dibs_list.html', context=ctx)
+
+def reviews_list(request):
+    reviews_list = Service.objects.filter(review__user=request.user.id ).distinct()
+    # 한 페이지 당 담을 수 있는 객체 수를 정할 수 있음
+    paginator = Paginator(reviews_list, 10)
+    page = request.GET.get('page')
+    services = paginator.get_page(page)
+
+    ctx = {
+        'services': services,
+        }
+    return render(request, 'users/dibs_list.html', context=ctx)

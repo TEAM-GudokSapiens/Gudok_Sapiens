@@ -64,6 +64,7 @@ def services_detail(request, pk):
     service = Service.objects.get(id=pk)
     number_of_dibs = service.dib_set.all().count()
     ctx = {'service': service, 'number_of_dibs':number_of_dibs }
+    print(service.review)
     return render(request, 'services/detail.html', context=ctx)
 
 def search(request):
