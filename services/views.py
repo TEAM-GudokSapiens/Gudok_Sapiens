@@ -90,7 +90,6 @@ def services_tags(request):
             'services':services,
             'categories':categories,
         }
-           
         return render(request, 'services/list.html', context=ctx)
     else:
         return render(request, 'services/tags_list.html')

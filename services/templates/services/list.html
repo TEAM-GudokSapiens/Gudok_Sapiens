@@ -2,6 +2,7 @@
 {% load taggit_templatetags2_tags %}
 
 {% block content %}
+<!--- 대분류 카테고리 표기-->
 <div class="navbar">
   <a href="{% url 'services:services_list' %}">전체보기</a><!-- 전체보기 -->
   {% for category in categories %}
@@ -14,6 +15,7 @@
     </form>
 </div>
 
+<!--- 세부 카테고리 표기-->
 <div>
     <ul>
         <li>
@@ -42,7 +44,8 @@
 <div class="album py-5 bg-light">
     <div class="container"> 
         <div class="flex row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            {% for service in services  %}
+            {% if services %}
+                {% for service in services  %}
                 <a href="{% url 'services:services_detail' service.id %}"> 
                     <div class="col">
                         <div class='card'>
@@ -57,7 +60,15 @@
                             {{ service.intro }}
                         </div>
                     </div>
-            {% endfor %}
+                {% endfor %}
+            {% else %}
+
+                <div>
+                    <h5>조건에 맞는 구독 서비스가 없습니다.</h5> 
+                </div>
+
+            {% endif %}
+            
         </div>
     </div>
 </div>

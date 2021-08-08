@@ -12,7 +12,7 @@
     <a class="d-block nav-link text-dark" href="">홈</a><!-- 홈 -->
     <a class="d-block nav-link hover text-dark" href="">커뮤니티</a><!-- 커뮤니티 -->
     <div class="navbar-brand d-flex justify-content-between ">
-      <a class="nav-link hover text-dark under-nav" href="">나에게 맞는 서비스찾기</a><!-- 나에게맞는서비스찾기 -->
+      <a class="nav-link hover text-dark under-nav" href="{% url 'services:services_tags' %}">나에게 맞는 서비스찾기</a><!-- 나에게맞는서비스찾기 -->
       <span>
         {% if user.is_authenticated %}
         <!--로그인상태-->
