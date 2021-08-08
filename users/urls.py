@@ -10,4 +10,5 @@ urlpatterns = [
     path('logout/', view=views.logout, name='logout'),
     path('update/<int:pk>', AccountUpdateView.as_view(), name='update'),
     path('delete/<int:pk>', AccountDeleteView.as_view(), name='delete'),
+    path('dibs_list/',view=views.dibs_list, name='dibs_list'),
 ]

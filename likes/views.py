@@ -13,4 +13,8 @@ def likes_dibs(request, pk):
     else:
         pass
 
-    return redirect('services:services_list')
+# 직전 url를 설정하기 
+    previous_url = request.META.get('HTTP_REFERER')
+
+    return redirect(previous_url)
+    

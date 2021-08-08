@@ -2,43 +2,6 @@
 {% load taggit_templatetags2_tags %}
 
 {% block content %}
-<!--- 대분류 카테고리 표기-->
-<div class="navbar">
-  <a href="{% url 'services:services_list' %}">전체보기</a><!-- 전체보기 -->
-  {% for category in categories %}
-    <a href="{% url 'services:category_list' category.slug %}">{{ category.name }}</a>
-  {% endfor %}
-   <form method="GET" action="{ %url 'services:search' %}"  >
-    {% csrf_token %}
-        <input type='text' name='search_key' value="{{ search_key }}" placeholder='Search' />
-        <input type='submit' value="Search" />
-    </form>
-</div>
-
-<!--- 세부 카테고리 표기-->
-<div>
-    <ul>
-        <li>
-            <a href="{% url 'services:services_list' %}">전체보기</a><!-- 전체보기 -->
-        </il>
-        {% for category in categories %}
-        <li>
-            <a href="{% url 'services:category_list' category.slug %}">{{ category.name }}</a>
-            {% if category_slug == category.slug  %}
-                <ul>
-                {% if sub_category_list %}
-                    {% for sub_category in sub_category_list  %}
-                        <li>
-                            <a href="{% url 'services:sub_category_list' category.slug sub_category.slug %}">{{ sub_category.name }}</a>
-                        </li>
-                    {% endfor %}
-                {% endif %}
-                </ul>
-            {% endif %}
-        </il>
-        {% endfor %}
-    </ul>
-</div>
 
 {% comment %} 본문 내용 서비스 나열 {% endcomment %}
 <div class="album py-5 bg-light">
@@ -65,7 +28,7 @@
             {% else %}
 
                 <div>
-                    <h5>조건에 맞는 구독 서비스가 없습니다.</h5> 
+                    <h5>찜한 구독 서비스가 없습니다.</h5> 
                 </div>
 
             {% endif %}

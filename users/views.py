@@ -7,6 +7,8 @@ from .forms import SignupForm
 from .models import User
 from django.views.generic import UpdateView, DeleteView
 from users.forms import UpdateForm
+from services.models import Service
+from django.core.paginator import Paginator
 
 
 # 회원가입
@@ -86,3 +88,15 @@ class AccountDeleteView(DeleteView):
             return super().post(*args, **kwargs)
         else:
             return HttpResponseForbidden()
+
+def dibs_list(request):
+    services_list = Service.objects.filter(dib__users=request.user.id )
+    # 한 페이지 당 담을 수 있는 객체 수를 정할 수 있음
+    paginator = Paginator(services_list, 10)
+    page = request.GET.get('page')
+    services = paginator.get_page(page)
+
+    ctx = {
+        'services': services,
+        }
+    return render(request, 'users/dibs_list.html', context=ctx)
