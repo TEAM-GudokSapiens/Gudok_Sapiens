@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+    <div class="community_navbar"> <!--확인차 넣어둔 커뮤니티 navbar-->
+        <span><a href="{%url 'community:notice'%}">공지사항 </a></span>
+        <span><a href="{%url 'community:magazine'%}">매거진 </a></span>
+        <span><a href="{%url 'community:board'%}">자유게시판 </a></span>
+        <form method="GET" action="{% url 'community:search' %}">
+            {% csrf_token %}
+                <input type='text' name='search_key' value="{{ search_key }}" placeholder='Search' />
+                <input type='submit' value="Search" />
+        </form>
+        <hr>
+    </div>
+    <!--------------------------------------------------------------------->
+    {% for board in page_obj.object_list %}
+    <div>
+        <h5><a href="{%url 'community:board_detail' board.id%}" >{{ board.title }}</a></h5>
+        <h6>{{ board.created_at | date:"Y/m/d" }}</h6>
+        <p>작성자 : {{ board.user }} </p>
+        <p>좋아요 : {{ board.like.count }}</p>
+        <p>조회수 : {{ board.hits }}</p>
+        <hr>
+    </div>
+    {%endfor%}
+
+    <a href="{%url 'community:board_create' %}" >글작성</a>
+    <br>
+
+    {% if page_obj.has_previous %}
+        <a href="?page=1">처음으로</a>
+        <a href="?page={{ page_obj.previous_page_number }}">이전으로</a>
+    {% endif %}
+    
+    <span class="current">
+         {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+    </span>
+    
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">다음으로</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">맨뒤로</a>
+    {% endif %}
+
+{% endblock %}

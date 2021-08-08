@@ -44,9 +44,8 @@
 <div class="album py-5 bg-light">
     <div class="container"> 
         <div class="flex row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            {% if services %}
-                {% for service in services  %}
-                <a href="{% url 'services:services_detail' service.id %}"> 
+            {% for service in services  %}
+                <a href="{% url 'services:services_detail' pk=service.pk %}"> 
                     <div class="col">
                         <div class='card'>
                             <div class='card-img-top'>

@@ -1,27 +1,41 @@
-body {
+@import url("./reset.css");
+@import url("./font.css");
+
+.nav-link.btn {
+  background-color: white !important;
+  color: inherit !important;
 }
+
+.btn-primary.btn {
+  color: white !important;
+  border-color: rgb(203, 105, 228) !important;
+  background-color: rgb(203, 105, 228) !important;
+}
+.btn-primary.btn:active,
+.btn-primary.btn:hover,
+.btn-primary.btn:focus {
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 255, .2) !important;
+}
+
+.nav-link.btn:active,
+.nav-link.btn:hover,
+.nav-link.btn:focus {
+  color: white !important;
+  background-color: rgb(203, 105, 228) !important;
+  border-color: rgb(203, 105, 228) !important;
+  box-shadow: 10px 10px 2px 1px rgba(0, 0, 255, .2) !important;
+}
+
+
 .service-container {
   width: 35vw;
-  height: 1000px;
   font-family: "GmarketSansTTFLight";
-  /* border: 1px solid rgb(215, 215, 215); */
+  max-height: fit-content;
   margin-top: 13px;
 }
-.page-menu div {
-  width: 100vw;
-  text-align: center;
-  height: 6vh;
-  line-height: 6vh;
-  font-size: 2em;
-  border: 1px solid rgb(215, 215, 215);
-}
-.page-menu a {
-  text-decoration: none; /* 링크의 밑줄 제거 */
-  color: inherit; /* 링크의 색상 제거 */
-}
-.page-menu a:hover {
-  text-decoration: none; /* 링크의 밑줄 제거 */
-}
+/* .nav-link: {
+  background-color: aquamarine;
+} */
 .service-name {
   font-size: 5rem;
 }
@@ -71,14 +85,13 @@ body {
   width: 23.8vw;
   height: auto;
   position: fixed;
-  top: 53%;
+  top: 65%;
   right: 20.2%;
   padding: 10px 20px;
   /* min-width: fit-content; */
 }
 /* font-size: 1.5em; */
-@import url("./reset.css");
-@import url("./font.css");
+
 
 /* .top-header {
   margin: 1rem 0 0 1rem;
@@ -86,7 +99,7 @@ body {
 
 .top-header-title {
   text-decoration: none !important;
-  font-family: 'KOTRA_SONGEULSSI';
+  font-family: "KOTRA_SONGEULSSI";
   font-size: 2rem;
 }
 
@@ -99,15 +112,11 @@ body {
   .top-header-title {
     font-size: 1.5rem;
   }
-  .top-header-links,
-  .under-nav {
+  .top-header-links a {
     font-size: 0.8rem;
   }
   .service-container {
     width: 80vw;
-  }
-  .img-container {
-    width: 100vw;
   }
   .fixing-box {
     display: none;
@@ -117,35 +126,70 @@ body {
     flex-direction: column;
     align-items: center;
   }
+
   .main-img-container {
     width: 90%;
     padding-bottom: 15px;
   }
   .img-container {
+    width: 90vw;
     flex-direction: column;
     align-items: center;
     height: auto;
   }
-  .sub-img-container {
+  .img-sub-container {
     height: auto;
   }
-  .img-sub-container {
-    width: 90vw;
+  .img-sub-container div,
+  .sub-img div {
+    /* width: 90vw;
+    height: auto; */
+    display: none;
+  }
+  .sub-img {
     height: auto;
   }
   .service-content {
     font-size: 1rem;
   }
-  .sub-img,
-  .second-img {
-    padding: 0px 0px 15px 0px;
-    height: 30vh;
+  .carousel-item img {
+    height: 40vh;
+    /* width: 90vw; */
   }
 }
 @media screen and (max-width: 1150px) {
   .service-content {
     font-size: 1.1rem;
   }
+
+  .img-sub-container {
+    height: 0px;
+    width: 0px;
+  }
+  .img-sub-container div,
+  .sub-img div {
+    /* width: 90vw;
+    height: auto; */
+    display: none;
+  }
+  .sub-img {
+    height: auto;
+  }
+  .main-img-container {
+    width: auto;
+  }
+  .main-img {
+    display: none;
+  }
+}
+@media screen and (min-width: 1150px) {
+  .carousel {
+    display: none;
+  }
+}
+.carousel-item img {
+  height: 40vh;
+  width: 60vw;
 }
 .keywords {
   margin: 10px 0px;
@@ -188,27 +232,27 @@ body {
 .review-count {
   padding-top: 15px;
 }
-.review-content {
+.review-container {
   margin: 15px 0px 5px 15px;
-}
 }
 
 .forms {
   margin: 3rem auto;
-  font-family: 'GmarketSansTTFMedium';
+  font-family: "GmarketSansTTFMedium";
 }
 
 .form-logo {
   margin-bottom: 3rem;
-  font-family: 'GmarketSansTTFMedium';
+  font-family: "GmarketSansTTFMedium";
   font-size: 1.6rem;
 }
 
-.social-login1, .social-login2 {
-  display: block; 
-  margin-top: 2rem; 
-  margin-left: 1rem; 
-  width: 20rem; 
+.social-login1,
+.social-login2 {
+  display: block;
+  margin-top: 2rem;
+  margin-left: 1rem;
+  width: 20rem;
   height: auto;
 }
 

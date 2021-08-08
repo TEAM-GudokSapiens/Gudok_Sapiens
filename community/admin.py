@@ -3,7 +3,7 @@ from .models import *
 
 @admin.register(Notice)
 class NoticeAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('title','created_at','updated_at')
 @admin.register(Magazine)
 class MagazineAdmin(admin.ModelAdmin):
     pass

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="community_navbar"> <!--확인차 넣어둔 커뮤니티 navbar-->
+        <span><a href="{%url 'community:notice'%}">공지사항 </a></span>
+        <span><a href="{%url 'community:magazine'%}">매거진 </a></span>
+        <span><a href="{%url 'community:board'%}">자유게시판 </a></span>
+        <form method="GET" action="{% url 'community:search' %}">
+            {% csrf_token %}
+                <input type='text' name='search_key' value="{{ search_key }}" placeholder='Search' />
+                <input type='submit' value="Search" />
+        </form>
+        <hr>
+    </div>
+    <!--------------------------------------------------------------------->
+    
+    <p style="display:none" >{{ notice.update_counter }}</p>
+    
+    <!--제목-->
+    <h3>{{ notice.title }}</h3>
+    조회수 : {{ notice.hits }} <br>
+    <hr>
+    <!--사진-->
+    {% if board.img %}
+    <img src="{{ notice.img.url }}" style="width: 450px;"> <br>
+    {% else %}
+    <p></p>
+    {% endif %}
+
+    <!--내용-->
+    {{ notice.content }} <br>
+
+    작성일: {{ notice.created_at  | date:"Y/m/d" }} <br>
+    <hr>
+    <a href="{%url 'community:notice'%}">목록으로 돌아가기</a>
+  
+{% endblock %}

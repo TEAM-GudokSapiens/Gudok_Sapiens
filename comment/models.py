@@ -22,7 +22,7 @@ from django.core.validators import MinLengthValidator
 
 class Comment(models.Model):
     target = models.ForeignKey(
-        "community.Board", related_name='comment',on_delete=models.CASCADE, verbose_name='게시글')
+        "community.Board", related_name='comment', on_delete=models.CASCADE, verbose_name='게시글')
     user = models.ForeignKey(
         "users.User", related_name='comment', on_delete=models.CASCADE, verbose_name='유저'
     )
@@ -30,3 +30,12 @@ class Comment(models.Model):
         MinLengthValidator(15)])
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    deleted = models.BooleanField(default=False, verbose_name='삭제여부')
+
+    def __str__(self):
+        return self.content
+
+    class Meta:
+        db_table = '자유게시판 댓글'
+        verbose_name = '자유게시판 댓글'
+        verbose_name_plural = '자유게시판 댓글'
