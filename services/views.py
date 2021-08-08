@@ -62,7 +62,8 @@ def sub_category_list(request, category_slug, sub_category_slug):
 
 def services_detail(request, pk):
     service = Service.objects.get(id=pk)
-    ctx = {'service': service}
+    number_of_dibs = service.dib_set.all().count()
+    ctx = {'service': service, 'number_of_dibs':number_of_dibs }
     return render(request, 'services/detail.html', context=ctx)
 
 def search(request):

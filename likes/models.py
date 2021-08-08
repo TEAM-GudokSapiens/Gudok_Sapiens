@@ -1,10 +1,6 @@
 from django.db import models
-from users.models import User
-
-class Like(models.Model):
-    active=models.SmallIntegerField(verbose_name='좋아요여부', default=0)
-    users = models.ManyToManyField(
-        "users.User", related_name='review_likes')
-    # Foregin key랑 고민중 ajax까지 해보고 최종 결정
+class Dib(models.Model):
+    service = models.ForeignKey(
+        "services.Service", on_delete=models.CASCADE, db_column="service_id")
+    users = models.ForeignKey("users.User", related_name='users_dibs', on_delete=models.CASCADE, db_column="user_id")
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)

@@ -1,3 +1,6 @@
 from django.contrib import admin
+from .models import Dib
 
-# Register your models here.
+@admin.register(Dib)
+class DibAdmin(admin.ModelAdmin):
+    pass

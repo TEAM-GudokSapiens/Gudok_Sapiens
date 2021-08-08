@@ -1,5 +1,5 @@
 from django.db import models
-from likes.models import Like
+from users.models import User
 from taggit.managers import TaggableManager
 
 class Category(models.Model):
@@ -54,22 +54,4 @@ class Service(models.Model):
     link = models.URLField(verbose_name='서비스 홈페이지', max_length=200)
     tags = TaggableManager(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    # dibs = models.OneToOneField(
-    #     Like, on_delete=models.PROTECT, verbose_name='찜',blank=True,null=True)
 
-    # def get_total_dibs(self):
-    #     return self.dibs.users.count()
-
-
-# class Dib(models.Model):
-#     service = models.OneToOneField(
-#         Service, related_name="dibs", on_delete=models.CASCADE)
-#     users = models.ManyToManyField(
-#         User, related_name='requirement_service_dibs')
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
-
-
-# class Tag(models.Model):
-#     service = models.ManyToManyField(
-#         Service, related_name='tags')

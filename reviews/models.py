@@ -1,7 +1,7 @@
 from django.db import models
 from services.models import Service
 from users.models import User
-from likes.models import Like
+# from likes.models import Like
 from django.core.validators import MinValueValidator, MaxValueValidator, MinLengthValidator
 
 
@@ -16,8 +16,8 @@ class Review(models.Model):
     title = models.CharField(verbose_name='리뷰제목', max_length=50)
     content = models.TextField(verbose_name='내용', validators=[
         MinLengthValidator(15)])
-    like = models.OneToOneField(
-        Like, on_delete=models.PROTECT, verbose_name='좋아요',blank=True,null=True)
+    # like = models.OneToOneField(
+    #     Like, on_delete=models.PROTECT, verbose_name='좋아요',blank=True,null=True)
     score = models.PositiveSmallIntegerField(verbose_name='별점', validators=[
         MinValueValidator(0), MaxValueValidator(10)])
     period = models.PositiveSmallIntegerField(verbose_name='사용기간')
