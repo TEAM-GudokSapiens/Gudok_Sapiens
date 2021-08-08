@@ -7,6 +7,12 @@ from .forms import SignupForm
 from .models import User
 from django.views.generic import UpdateView, DeleteView
 from users.forms import UpdateForm
+from .forms import LoginForm
+from django.contrib.auth import login, authenticate
+from django.views.generic import FormView
+from django.utils.decorators import method_decorator
+from .decorators import *
+from django.contrib.auth import logout
 
 
 # 회원가입
@@ -17,7 +23,8 @@ def signup(request):
         form = SignupForm(request.POST)
         if form.is_valid():
             user = form.save()
-            return redirect('users:login')
+            login(request, user, backend="django.contrib.auth.backends.ModelBackend")
+            return redirect('services:main')
     else:
         form = SignupForm()
     ctx = {'form': form}
@@ -26,25 +33,29 @@ def signup(request):
 # 로그인
 
 
-def login(request):
-    if request.method == "POST":
-        username = request.POST['username']
-        password = request.POST['password']
-        user = auth.authenticate(request, username=username, password=password)
-        if user is not None:
-            auth.login(request, user)
-            return redirect('services:main')
-        else:
-            return render(request, 'users/login.html', {'error': 'username or password is incorrect'})
-    else:
-        return render(request, 'users/login.html')
+@method_decorator(logout_message_required, name='dispatch')
+class LoginView(FormView):
+    template_name = 'users/login.html'
+    form_class = LoginForm
+    success_url = '/services/main/'
 
+    def form_valid(self, form):
+        user_id = form.cleaned_data.get("user_id")
+        password = form.cleaned_data.get("password")
+        user = authenticate(self.request, username=user_id, password=password)
+
+        if user is not None:
+            self.request.session['user_id'] = user_id
+            login(self.request, user,
+                  backend="django.contrib.auth.backends.ModelBackend")
+
+        return super().form_valid(form)
 # 로그아웃
 
 
-def logout(request):
-    auth.logout(request)
-    return redirect('services:main')
+def logout_view(request):
+    logout(request)
+    return redirect('/')
 
 # 유저정보
 
