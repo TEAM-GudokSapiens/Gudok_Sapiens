@@ -50,6 +50,7 @@ class Board(models.Model):
                             blank=True, upload_to="%Y/%m/%d")
     hits = models.PositiveIntegerField(verbose_name='조회수', default=0)
     like = models.ManyToManyField(User, related_name='likes',blank=True)
+    comments = models.PositiveIntegerField(verbose_name='댓글수', null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

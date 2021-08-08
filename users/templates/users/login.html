@@ -9,14 +9,42 @@
     </div>
     <form method="POST">
         {% csrf_token %}
-        아이디
-        <br>
-        <input name="username" type="text" class="form-control"/>
-        <br>
-        비밀번호
-        <br>
-        <input name="password" type="password" class="form-control"/>
-        <br>
+        <div class="mb-4 md-form">
+            <label name="label_user_id" for="{{ form.user_id.id_for_label }}"><i class="fas fa-user"></i>&nbsp;&nbsp;{{ form.user_id.label }}</label>
+            {{ form.user_id }}
+            <script type="text/javascript">
+                if (document.getElementsByName('user_id')[0].value != '') {
+                    document.getElementsByName('label_user_id')[0].setAttribute('class', 'active');
+                }
+            </script>
+            {% if form.user_id.errors %}
+            <script type="text/javascript">
+                document.getElementsByName('user_id')[0].setAttribute('class',
+                    'form-control is-invalid')
+            </script>
+            {% for error in form.user_id.errors %}
+            <div class="invalid-feedback">
+                {{ error }}
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="mb-4 md-form">
+            <label for="{{ form.password.id_for_label }}"><i class="fas fa-lock"></i>&nbsp;&nbsp;{{ form.password.label }}</label>
+            {{ form.password }}
+
+            {% if form.password.errors %}
+            <script type="text/javascript">
+                document.getElementsByName('password')[0].setAttribute('class', 'form-control is-invalid')
+            </script>
+            {% for error in form.password.errors %}
+            <div class="invalid-feedback">
+                {{ error }}
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
         <div class="d-flex justify-content-between">   
             <span>비밀번호 찾기</span>
             <span><a href="{% url 'users:signup' %}">회원가입</a></span>

@@ -138,6 +138,59 @@ def comment_delete_view(request, pk):
         }
         return HttpResponse(json.dumps(data, cls=DjangoJSONEncoder), content_type="application/json")
 
+
+# 댓글 카운트
+
+def free_detail_view(request, pk):
+    comment = Comment.objects.filter(post=pk).order_by('created_at')
+    comment_count = comment.exclude(deleted=True).count()
+
+    context = {
+        'comments': comment,
+        'comment_count': comment_count,
+    }
+
+def comment_write_view(request, pk):
+    post = get_object_or_404(Board, id=pk)
+    user = request.POST.get('user')
+    content = request.POST.get('content')
+    if content:
+        comment = Comment.objects.create(post=post, content=content, user=request.user)
+        comment_count = Comment.objects.filter(post=pk).exclude(deleted=True).count()
+        post.comments = comment_count
+        post.save()
+
+        data = {
+            'user': user,
+            'content': content,
+            'created_at': '방금 전',
+            'comment_count': comment_count,
+            'comment_id': comment.id
+        }
+        if request.user == post.user:
+            data['self_comment'] = '(글쓴이)'
+        
+        return HttpResponse(json.dumps(data, cls=DjangoJSONEncoder), content_type = "application/json")
+
+
+def comment_delete_view(request, pk):
+    post = get_object_or_404(Board, id=pk)
+    comment_id = request.POST.get('comment_id')
+    target_comment = Comment.objects.get(pk = comment_id)
+
+    if request.user == target_comment.user or request.user.level == '1' or request.user.level == '0':
+        target_comment.deleted = True
+        target_comment.save()
+        comment_count = Comment.objects.filter(post=pk).exclude(deleted=True).count()
+        post.comments = comment_count
+        post.save()
+        data = {
+            'comment_id': comment_id,
+            'comment_count': comment_count,
+        }
+        return HttpResponse(json.dumps(data, cls=DjangoJSONEncoder), content_type = "application/json")
+
+
 # 자유게시판 좋아요기능
 
 
@@ -192,3 +245,6 @@ def search(request):
         'query': query,
     }
     return render(request, 'community/search.html', context=ctx)
+
+
+
