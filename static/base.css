@@ -22,7 +22,7 @@
 .nav-link.btn:focus {
   color: white !important;
   background-color: rgb(203, 105, 228) !important;
-  border-color: rgb(203, 105, 228) !important;
+  border-color: rgb(204, 165, 214) !important;
   box-shadow: 10px 10px 2px 1px rgba(0, 0, 255, 0.2) !important;
 }
 
@@ -109,7 +109,7 @@
   font-size: 1.2rem;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 930px) {
   .top-header-title {
     font-size: 1.5rem;
   }
@@ -117,17 +117,21 @@
     font-size: 0.8rem;
   }
   .service-container {
-    width: 80vw;
+    width: 100%;
   }
   .fixing-box {
-    display: none;
+    width: 100%;
+    display: block;
+    position: static;
   }
   .detail-container {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
-
+  .main-img {
+    display: none;
+  }
   .main-img-container {
     width: 90%;
     padding-bottom: 15px;
@@ -158,11 +162,13 @@
     /* width: 90vw; */
   }
 }
-@media screen and (max-width: 1150px) {
+@media screen and (min-width: 769px) and (max-width: 1150px) {
   .service-content {
     font-size: 1.1rem;
   }
-
+  .img-container {
+    width: 60vw;
+  }
   .img-sub-container {
     height: 0px;
     width: 0px;
@@ -177,7 +183,7 @@
     height: auto;
   }
   .main-img-container {
-    width: auto;
+    width: 100%;
   }
   .main-img {
     display: none;
@@ -190,7 +196,7 @@
 }
 .carousel-item img {
   height: 40vh;
-  width: 60vw;
+  width: 100%;
 }
 .keywords {
   margin: 10px 0px;
@@ -222,9 +228,19 @@
   font-size: 1.1rem;
 }
 .review-img {
-  width: 200px;
-  height: 200px;
-  display: inline;
+  width: 15vw;
+  margin-right: 20px;
+}
+.review-img img {
+  width: 100%;
+  height: 100%;
+}
+.review-content {
+  /* display: inilne; */
+}
+.content-block {
+  display: flex;
+  justify-content: flex-start;
 }
 .review-count,
 .review-date {

@@ -24,11 +24,9 @@
                         </div>
                     </div>
                     <button class="carousel-control-prev btn" data-bs-target="#carouselControls" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Previous</span>
                     </button>
                     <button class="carousel-control-next btn" data-bs-target="#carouselControls" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Next</span>
                     </button>
                 </div>
@@ -46,6 +44,20 @@
                         <img src="{{ service.img4.url }}" />
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="fixing-box">
+            <div class="keywords">
+                <div>#음식</div>
+                <div>#재미</div>
+                <div>#영화</div>
+                <div>#키워드</div>
+            </div>
+            <div class="fix-name">{{service.name}}</div>
+            <div class="fix-intro">{{service.intro}}</div>
+            <div class="fix-stars">⭐️⭐️⭐️⭐️⭐️</div>
+            <div class="fix-link"><a href="">찜</a> /
+                <a href="">공유</a>
             </div>
         </div>
         <div class="service-container">
@@ -83,9 +95,9 @@
                     <div class="review-tab">
                         <div>
                             <span class="tab-title">리뷰</span>
-                            <span class="review-count ">{{service.review.all.count}}개</span>
+                            <span class="review-count ">{{service.get_review_count}}개</span>
                         </div>
-                        {% for review in service.review.all %}
+                        {% for review in service.get_review %}
                         <div class="review-container">
                             <div class="title-block mb-3">
                                 <span class="">{{review.user}}🌱</span>
@@ -93,19 +105,23 @@
                             </div>
                             <div class="content-block">
                                 {% if review.photo %}
-                                    <img src="{{ review.photo.url }}" class="review-img" />
+                                <div class="review-img">
+                                    <img src="{{ review.photo.url }}" />
+                                </div>
                                 {% endif %}
-                                <span class="">{{review.title}}</span>
-                                <span class="">{{review.content}}</span>
+                                <div class="review-content">
+                                    <div class="">{{review.title}}</div>
+                                    <div class="">{{review.content}}</div>
+                                </div>
                             </div>
                         </div>
+                        <hr>
                         {% endfor %}
                         <!-- <a href="{% url 'reviews:create' service.id %}">
                             <div class="btn btn-dark col-12">
                                 리뷰 쓰러가기
                             </div>
                         </a> -->
-                        <hr>
                         <form 
                         action="{% url 'reviews:submit_ajax' service.id %}"
                         enctype="multipart/form-data"
@@ -126,20 +142,6 @@
                 </div>
             </div>
             <!-- tabend -->
-        </div>
-        <div class="fixing-box">
-            <div class="keywords">
-                <div>#음식</div>
-                <div>#재미</div>
-                <div>#영화</div>
-                <div>#키워드</div>
-            </div>
-            <div class="fix-name">{{service.name}}</div>
-            <div class="fix-intro">{{service.intro}}</div>
-            <div class="fix-stars">⭐️⭐️⭐️⭐️⭐️</div>
-            <div class="fix-link"><a href="">찜</a> /
-                <a href="">공유</a>
-            </div>
         </div>
     </div>
 </div>
