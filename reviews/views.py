@@ -73,7 +73,7 @@ def reviews_create(request, pk):
 
 
 @csrf_exempt
-def submit_ajax(request):
+def submit_ajax(request, pk):
     # req = json.loads(request.body)
     # service_id = req['service_id']
     # title = req['title']
@@ -85,18 +85,16 @@ def submit_ajax(request):
     # review = Review.objects.create(target=service, user=request.user, photo=photo,
     #                                title=title, content=content, score=score, period=period)
     # review.save()
-    print('--------------------------')
     if request.method == "POST":
-        print('**')
         form = ReviewCreateForm(request.POST, request.FILES)
         if form.is_valid():
             review_form = form.save(commit=False)
             review_form.user = request.user
-            review_form.target = Service.objects.get(pk=1)
+            review_form.target = Service.objects.get(pk=pk)
             review_form.save()
-            return JsonResponse({'service_id': 1, 'review_id': review_form.id,
-                                 'review_title': review_form.title, 'review_content': review_form.content, 'review_score': review_form.score,
-                                 'review_period': review_form.period, 'review_updated_at': review_form.updated_at, 'review_photo': review_form.photo.url})
+            return redirect("services:services_detail", pk)
+        else:
+            pass
             # return JsonResponse({'service_id': service_id, 'review_id': review.id,
             #              'review_title': review.title, 'review_content': review.content, 'review_score': review.score,
             #              'review_period': review.period, 'review_updated_at': review.updated_at, 'review_photo': review.photo.url})

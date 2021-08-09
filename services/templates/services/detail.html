@@ -105,40 +105,14 @@
                                 리뷰 쓰러가기
                             </div>
                         </a> -->
-                        <!-- <form class="container">
-                                <div class="form-group">
-                                  <label for="title">제목</label>
-                                  <input name="title" type="text" class="form-control review-title"  placeholder="제목을 입력하세요">
-                                </div>
-                                <div class="form-group">
-                                  <label for="content">내용</label>
-                                  <textarea name="content" type="text" class="form-control review-content" placeholder="내용을 입력하세요"></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label for="star">별점</label>
-                                    <input name="star" type="text" class="form-control review-score" placeholder="제목을 입력하세요">
-                                  </div>
-                                  <div class="form-group">
-                                    <label for="period">사용 기한</label>
-                                    <input name="period" type="text" class="form-control review-period" placeholder="제목을 입력하세요">
-                                  </div>
-                                  <div class="form-group">
-                                    <label for="photo">후기 사진</label>
-                                    <input name="photo" type="file" class="form-control review-photo" placeholder="제목을 입력하세요">
-                                  </div>
-                                <button type="button" class="btn btn-primary col-12" id="article-create-btn" onclick="onClickSubmit(
-                                    {{ service.id }})">제출</button>
-                              </form> -->
-                              <form 
-                                action="{% url 'reviews:submit_ajax' %}"
-                                enctype="multipart/form-data"
-                                id="review_create_form" method="POST"
-                                novalidate="">
-                                {% csrf_token %}
-                                {% bootstrap_form form %}
-                                <input type="submit" onclick="" />
-                            </form>
-
+                        <form 
+                        action="{% url 'reviews:submit_ajax' service.id %}"
+                        enctype="multipart/form-data"
+                        id="review_create_form" method="POST">
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+                        <input type="submit" onclick="" />
+                    </form>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
@@ -150,9 +124,7 @@
                     </div>
                 </div>
             </div>
-
             <!-- tabend -->
-
         </div>
         <div class="fixing-box">
             <div class="keywords">
@@ -170,7 +142,7 @@
         </div>
     </div>
 </div>
-
+<!-- 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
     const onClickSubmit=async(service_id)=>{  
@@ -207,5 +179,5 @@
             // const input=document.querySelector(`.post_${post_id} .submit-text`);
             // input.value=null;
     };
-</script>
+</script> -->
 {% endblock %}
