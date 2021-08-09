@@ -1,15 +1,23 @@
 from django.shortcuts import redirect, render
 from .models import *
+from community.models import Magazine
 from django.contrib import messages
 from django.db.models import Q, Count
 from django.core.paginator import Paginator
 from taggit.models import Tag 
 
+# 전체 보기 페이지
 def main(request):
-    ctx = {"main": main}
+    magazine_list = Magazine.objects.all()
+    # 찜을 많이 받은 서비스를 우선적으로 배치 
+    # 추후에 별점 순으로 변경할 수 있음
+    services = Service.objects.annotate(num_dibs=Count('dib')).order_by('-num_dibs')
+    ctx = {
+        'magazine_list':magazine_list,
+        'services': services,
+    }
     return render(request, 'services/main.html', context=ctx)
 
-# 전체 보기 페이지
 def services_list(request):
     services_list = Service.objects.all()
     categories = Category.objects.all()
@@ -95,4 +103,3 @@ def services_tags(request):
         return render(request, 'services/list.html', context=ctx)
     else:
         return render(request, 'services/tags_list.html')
-    

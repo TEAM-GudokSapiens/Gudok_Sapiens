@@ -54,4 +54,3 @@ class Service(models.Model):
     link = models.URLField(verbose_name='서비스 홈페이지', max_length=200)
     tags = TaggableManager(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
-
