@@ -8,10 +8,11 @@ from datetime import date, datetime, timedelta
 from .models import *
 from .forms import BoardForm
 from users.models import User
+from comment.models import Comment
 from django.core import serializers
 from django.core.serializers.json import DjangoJSONEncoder
 from users.decorators import *
-
+from django.contrib.auth.views import LogoutView
 
 # 공지사항
 
@@ -87,9 +88,52 @@ def board_create(request):
         return render(request, template_name='community/board_create.html', context=ctx)
 
 
+@login_message_required
 def board_detail(request, pk):
     board = get_object_or_404(Board, pk=pk)
-    return render(request, 'community/board_detail.html', {'board': board})
+    session_cookie = request.session['user_id']
+    cookie_name = F'bord_hits:{session_cookie}'
+    comments = Comment.objects.filter(target=pk).order_by('created_at')
+    # comment_count = comment.count()
+    comment_count = comments.exclude(deleted=True).count()
+    reply = comments.exclude(reply='0')
+
+    if request.user == board.user:
+        board_auth = True
+    else:
+        board_auth = False
+
+    ctx = {
+        'board': board,
+        'board_auth': board_auth,
+        'comments': comments,
+        'comment_count': comment_count,
+        'replys': reply,
+    }
+    response = render(request, 'community/board_detail.html', ctx)
+
+    if request.COOKIES.get(cookie_name) is not None:
+        cookies = request.COOKIES.get(cookie_name)
+        cookies_list = cookies.split('|')
+        if str(pk) not in cookies_list:
+            response.set_cookie(cookie_name, cookies + f'|{pk}', expires=None)
+            board.hits += 1
+            board.save()
+            return response
+    else:
+        response.set_cookie(cookie_name, pk, expires=None)
+        board.hits += 1
+        board.save()
+        return response
+    return render(request, 'community/board_detail.html', ctx)
+# def board_detail(request, pk):
+#     # board = get_object_or_404(Board, pk=pk)
+#     # comments = Comment.objects.filter(target=pk).order_by('created_at')
+#     # comment_count = comments.exclude(deleted=True).count()
+#     # reply = comments.exclude(reply='0')
+#     # ctx = {'board': board, 'comments': comments,
+#     #        'comment_count': comment_count, 'replys': reply, }
+#     # return render(request, 'community/board_detail.html', context=ctx)
 
 
 def board_delete(request, pk):
@@ -101,19 +145,26 @@ def board_delete(request, pk):
 
 
 @login_message_required
-def comment_write_view(request, pk):
+def comment_write(request, pk):
     target = get_object_or_404(Board, id=pk)
     user = request.POST.get('user')
     content = request.POST.get('content')
+    reply = request.POST.get('reply')
     if content:
         comment = Comment.objects.create(
-            target=target, content=content, user=request.user)
+            target=target, content=content, user=request.user, reply=reply)
+        comment_count = Comment.objects.filter(
+            target=pk).exclude(deleted=True).count()
+        target.comments = comment_count
         target.save()
+        comment.save()
         data = {
             'user': user,
             'content': content,
             'created_at': '방금 전',
-            'comment_id': comment.id
+            'comment_count': comment_count,
+            'comment_id': comment.id,
+            'reply': reply
         }
         if request.user == target.user:
             data['self_comment'] = '(글쓴이)'
@@ -121,6 +172,64 @@ def comment_write_view(request, pk):
         return HttpResponse(json.dumps(data, cls=DjangoJSONEncoder), content_type="application/json")
 
 # 댓글 삭제
+
+
+@login_message_required
+def comment_delete(request, pk):
+    target = get_object_or_404(Board, id=pk)
+    comment_id = request.POST.get('comment_id')
+    target_comment = Comment.objects.get(pk=comment_id)
+
+    if request.user == target_comment.user or request.user.level == '1' or request.user.level == '0':
+        target_comment.deleted = True
+        target_comment.save()
+        comment_count = Comment.objects.filter(
+            target=pk).exclude(deleted=True).count()
+        target.comments = comment_count
+        target.save()
+        data = {
+            'comment_id': comment_id,
+            'comment_count': comment_count,
+        }
+        return HttpResponse(json.dumps(data, cls=DjangoJSONEncoder), content_type="application/json")
+
+
+# 댓글 카운트
+
+def free_detail_view(request, pk):
+    comment = Comment.objects.filter(target=pk).order_by('created_at')
+    comment_count = comment.exclude(deleted=True).count()
+
+    context = {
+        'comments': comment,
+        'comment_count': comment_count,
+    }
+
+
+@login_message_required
+def comment_write_view(request, pk):
+    target = get_object_or_404(Board, id=pk)
+    user = request.POST.get('user')
+    content = request.POST.get('content')
+    if content:
+        comment = Comment.objects.create(
+            target=target, content=content, user=request.user)
+        comment_count = Comment.objects.filter(
+            target=pk).exclude(deleted=True).count()
+        target.comments = comment_count
+        target.save()
+
+        data = {
+            'user': user,
+            'content': content,
+            'created_at': '방금 전',
+            'comment_count': comment_count,
+            'comment_id': comment.id
+        }
+        if request.user == target.user:
+            data['self_comment'] = '(글쓴이)'
+
+        return HttpResponse(json.dumps(data, cls=DjangoJSONEncoder), content_type="application/json")
 
 
 @login_message_required
@@ -132,11 +241,16 @@ def comment_delete_view(request, pk):
     if request.user == target_comment.user or request.user.level == '1' or request.user.level == '0':
         target_comment.deleted = True
         target_comment.save()
+        comment_count = Comment.objects.filter(
+            target=pk).exclude(deleted=True).count()
+        target.comments = comment_count
         target.save()
         data = {
             'comment_id': comment_id,
+            'comment_count': comment_count,
         }
         return HttpResponse(json.dumps(data, cls=DjangoJSONEncoder), content_type="application/json")
+
 
 # 자유게시판 좋아요기능
 
@@ -144,22 +258,22 @@ def comment_delete_view(request, pk):
 def likes(request):
     if request.is_ajax():
         board_id = request.GET['board_id']
-        post = Board.objects.get(id=board_id)
+        target = Board.objects.get(id=board_id)
 
         if not request.user.is_authenticated:
             message = "로그인을 해주세요"
-            context = {'like_count': post.like.count(), "message": message}
+            context = {'like_count': target.like.count(), "message": message}
             return HttpResponse(json.dumps(context), content_type='application/json')
 
         user = request.user
-        if post.like.filter(id=user.id).exists():
-            post.like.remove(user)
+        if target.like.filter(id=user.id).exists():
+            target.like.remove(user)
             message = "좋아요 취소"
         else:
-            post.like.add(user)
+            target.like.add(user)
             message = "좋아요"
 
-        context = {'like_count': post.like.count(), "message": message}
+        context = {'like_count': target.like.count(), "message": message}
         return HttpResponse(json.dumps(context), content_type='application/json')
 
 

@@ -21,9 +21,9 @@ urlpatterns = [
     path('board/<int:pk>/delete/', views.board_delete, name='board_delete'),
     path('board/like/', views.likes, name="likes"),
 
-    path('comment/<int:pk>/write/', views.comment_write_view, name='comment_write'),
+    path('comment/<int:pk>/write/', views.comment_write, name='comment_write'),
     path('comment/<int:pk>/delete/',
-         views.comment_delete_view, name='comment_delete'),
+         views.comment_delete, name='comment_delete'),
 
     path('search/', views.search, name='search'),
 
