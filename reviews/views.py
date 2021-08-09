@@ -94,7 +94,7 @@ def submit_ajax(request, pk):
             review_form.save()
             return redirect("services:services_detail", pk)
         else:
-            pass
+            return redirect("services:services_detail", pk)
             # return JsonResponse({'service_id': service_id, 'review_id': review.id,
             #              'review_title': review.title, 'review_content': review.content, 'review_score': review.score,
             #              'review_period': review.period, 'review_updated_at': review.updated_at, 'review_photo': review.photo.url})
