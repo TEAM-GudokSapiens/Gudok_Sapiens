@@ -9,11 +9,15 @@
                     {% for magazine in magazine_list  %}
                         {% if forloop.counter  == 1 %}
                         <div class="carousel-item active">
+                            <a href="{% url 'community:magazine_detail' magazine.id %}">
                             <img src="{{ magazine.img.url }}" />
+                            </a>
                         </div>
                         {% else %}
                         <div class="carousel-item">
+                            <a href="{% url 'community:magazine_detail' magazine.id %}">
                             <img src="{{ magazine.img.url }}" />
+                            </a>
                         </div>
                         {% endif %}
                     {% endfor %}
