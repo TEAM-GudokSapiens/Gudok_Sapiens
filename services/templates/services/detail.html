@@ -100,11 +100,11 @@
                             </div>
                         </div>
                         {% endfor %}
-                        <a href="{% url 'reviews:create' service.id %}">
+                        <!-- <a href="{% url 'reviews:create' service.id %}">
                             <div class="btn btn-dark col-12">
                                 리뷰 쓰러가기
                             </div>
-                        </a>
+                        </a> -->
                         <!-- <form class="container">
                                 <div class="form-group">
                                   <label for="title">제목</label>
@@ -129,6 +129,16 @@
                                 <button type="button" class="btn btn-primary col-12" id="article-create-btn" onclick="onClickSubmit(
                                     {{ service.id }})">제출</button>
                               </form> -->
+                              <form 
+                                action="{% url 'reviews:submit_ajax' %}"
+                                enctype="multipart/form-data"
+                                id="review_create_form" method="POST"
+                                novalidate="">
+                                {% csrf_token %}
+                                {% bootstrap_form form %}
+                                <input type="submit" onclick="" />
+                            </form>
+
                     </div>
                 </div>
                 <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
@@ -161,26 +171,27 @@
     </div>
 </div>
 
-<!-- <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
     const onClickSubmit=async(service_id)=>{  
         const url='/reviews/submit_ajax/';
-        const title=document.querySelector(`.review-title`).value
-        const content=document.querySelector(`.review-content`).value
-        const score=document.querySelector(`.review-score`).value
-        const period=document.querySelector(`.review-period`).value
-        const photo=document.querySelector(`.review-photo`).value.replace('C:\\fakepath\\','');
-        console.log(photo)
+        // const title=document.querySelector(`.review-title`).value
+        // const content=document.querySelector(`.review-content`).value
+        // const score=document.querySelector(`.review-score`).value
+        // const period=document.querySelector(`.review-period`).value
+        // const photo=document.querySelector(`.review-photo`).value.replace('C:\\fakepath\\','');
+        // console.log(photo)
         const {data}=await axios.post(url,{
-            service_id ,title, content, score, period,photo
+            service_id
         });
         submitHandleResponse(data.service_id, data.review_id, data.review_title,
         data.review_content,data.review_score,data.review_period,data.review_updated_at,data.review_photo);
     };
     const submitHandleResponse=(service_id, review_id,review_title,review_content,
     review_score,review_period,review_updated_at,review_photo)=>{
-            const element=document.querySelector(`.review-container`);
+            const element=document.querySelector(`.review-tab`);
             element.innerHTML+=`
+            <div class="review-container">
             <div class="title-block mb-3">
                 <span class="">${review_id}🌱</span>
                 <span class="review-date">${review_updated_at}</span>
@@ -191,9 +202,10 @@
                 {% endif %}
                 <span class="">${review_title}</span>
                 <span class="">>${review_content}</span>
+            </div>
             </div>`;
             // const input=document.querySelector(`.post_${post_id} .submit-text`);
             // input.value=null;
-    }; -->
+    };
 </script>
 {% endblock %}
