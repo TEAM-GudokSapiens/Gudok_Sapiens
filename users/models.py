@@ -35,8 +35,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     GENDERS = (
-        ('MALE', 'MALE'),
-        ('FEMALE', 'FEMALE'),
+        ('남자', '남자'),
+        ('여자', '여자'),
     )
     LEVEL_CHOICES = (
         ("3", "Lv3_미인증사용자"),

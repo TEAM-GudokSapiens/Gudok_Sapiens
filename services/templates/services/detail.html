@@ -24,11 +24,9 @@
                         </div>
                     </div>
                     <button class="carousel-control-prev btn" data-bs-target="#carouselControls" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Previous</span>
                     </button>
                     <button class="carousel-control-next btn" data-bs-target="#carouselControls" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Next</span>
                     </button>
                 </div>
@@ -83,9 +81,9 @@
                     <div class="review-tab">
                         <div>
                             <span class="tab-title">리뷰</span>
-                            <span class="review-count ">{{service.review.all.count}}개</span>
+                            <span class="review-count ">{{service.get_review_count}}개</span>
                         </div>
-                        {% for review in service.review.all %}
+                        {% for review in service.get_review %}
                         <div class="review-container">
                             <div class="title-block mb-3">
                                 <span class="">{{review.user}}🌱</span>
@@ -93,44 +91,33 @@
                             </div>
                             <div class="content-block">
                                 {% if review.photo %}
-                                    <img src="{{ review.photo.url }}" class="review-img" />
+                                <div class="review-img">
+                                    <img src="{{ review.photo.url }}" />
+                                </div>
                                 {% endif %}
-                                <span class="">{{review.title}}</span>
-                                <span class="">{{review.content}}</span>
-                                <a href="{% url 'likes:likes_helps' review.id %}">도움이 돼요!</a>
-                                <span>{{ review.reviews_help.all.count }}</span>
+                                <div class="review-content">
+                                    <span class="">{{review.title}}</span>
+                                    <span class="">{{review.content}}</span>
+                                    <a href="{% url 'likes:likes_helps' review.id %}">도움이 돼요!</a>
+                                    <span>{{ review.reviews_help.all.count }}</span>
+                                </div>
                             </div>
                         </div>
+                        <hr>
                         {% endfor %}
-                        <a href="{% url 'reviews:create' service.id %}">
+                        <!-- <a href="{% url 'reviews:create' service.id %}">
                             <div class="btn btn-dark col-12">
                                 리뷰 쓰러가기
                             </div>
-                        </a>
-                        <!-- <form class="container">
-                                <div class="form-group">
-                                  <label for="title">제목</label>
-                                  <input name="title" type="text" class="form-control review-title"  placeholder="제목을 입력하세요">
-                                </div>
-                                <div class="form-group">
-                                  <label for="content">내용</label>
-                                  <textarea name="content" type="text" class="form-control review-content" placeholder="내용을 입력하세요"></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label for="star">별점</label>
-                                    <input name="star" type="text" class="form-control review-score" placeholder="제목을 입력하세요">
-                                  </div>
-                                  <div class="form-group">
-                                    <label for="period">사용 기한</label>
-                                    <input name="period" type="text" class="form-control review-period" placeholder="제목을 입력하세요">
-                                  </div>
-                                  <div class="form-group">
-                                    <label for="photo">후기 사진</label>
-                                    <input name="photo" type="file" class="form-control review-photo" placeholder="제목을 입력하세요">
-                                  </div>
-                                <button type="button" class="btn btn-primary col-12" id="article-create-btn" onclick="onClickSubmit(
-                                    {{ service.id }})">제출</button>
-                              </form> -->
+                        </a> -->
+                        <form 
+                        action="{% url 'reviews:submit_ajax' service.id %}"
+                        enctype="multipart/form-data"
+                        id="review_create_form" method="POST">
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+                        <input type="submit" onclick="" />
+                    </form>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
@@ -142,47 +129,47 @@
                     </div>
                 </div>
             </div>
-
             <!-- tabend -->
 
         </div>
         <div class="fixing-box">
             <div class="keywords">
-                <div>#음식</div>
-                <div>#재미</div>
-                <div>#영화</div>
-                <div>#키워드</div>
+                <div>#태그1</div>
+                <div>#태그2</div>
+                <div>#태그3</div>
+                <div>#태그4</div>
             </div>
             <div class="fix-name">{{service.name}}</div>
             <div class="fix-intro">{{service.intro}}</div>
             <div class="fix-stars">⭐️⭐️⭐️⭐️⭐️ {{ service.review.score }}</div>
-            <div class="fix-link"><a href="">찜{{ number_of_dibs }}</a> /
+            <div class="fix-link"><a href="">찜({{ number_of_dibs }}개)</a> /
                 <a href="">공유</a>
             </div>
         </div>
     </div>
 </div>
-
-<!-- <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<!-- 
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
     const onClickSubmit=async(service_id)=>{  
         const url='/reviews/submit_ajax/';
-        const title=document.querySelector(`.review-title`).value
-        const content=document.querySelector(`.review-content`).value
-        const score=document.querySelector(`.review-score`).value
-        const period=document.querySelector(`.review-period`).value
-        const photo=document.querySelector(`.review-photo`).value.replace('C:\\fakepath\\','');
-        console.log(photo)
+        // const title=document.querySelector(`.review-title`).value
+        // const content=document.querySelector(`.review-content`).value
+        // const score=document.querySelector(`.review-score`).value
+        // const period=document.querySelector(`.review-period`).value
+        // const photo=document.querySelector(`.review-photo`).value.replace('C:\\fakepath\\','');
+        // console.log(photo)
         const {data}=await axios.post(url,{
-            service_id ,title, content, score, period,photo
+            service_id
         });
         submitHandleResponse(data.service_id, data.review_id, data.review_title,
         data.review_content,data.review_score,data.review_period,data.review_updated_at,data.review_photo);
     };
     const submitHandleResponse=(service_id, review_id,review_title,review_content,
     review_score,review_period,review_updated_at,review_photo)=>{
-            const element=document.querySelector(`.review-container`);
+            const element=document.querySelector(`.review-tab`);
             element.innerHTML+=`
+            <div class="review-container">
             <div class="title-block mb-3">
                 <span class="">${review_id}🌱</span>
                 <span class="review-date">${review_updated_at}</span>
@@ -193,9 +180,10 @@
                 {% endif %}
                 <span class="">${review_title}</span>
                 <span class="">>${review_content}</span>
+            </div>
             </div>`;
             // const input=document.querySelector(`.post_${post_id} .submit-text`);
             // input.value=null;
-    }; -->
-</script>
+    };
+</script> -->
 {% endblock %}

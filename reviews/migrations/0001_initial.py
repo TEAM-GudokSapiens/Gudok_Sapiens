@@ -3,7 +3,6 @@
 from django.conf import settings
 import django.core.validators
 from django.db import migrations, models
-import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
@@ -30,5 +29,8 @@ class Migration(migrations.Migration):
                 ('target', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='review_target', to='services.service', verbose_name='서비스')),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='review_user', to=settings.AUTH_USER_MODEL, verbose_name='유저')),
             ],
+            options={
+                'ordering': ['-updated_at'],
+            },
         ),
     ]

@@ -1,11 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="d-flex justify-content-center">
-    <div class="detail-container mt-3">
-        <div class="img-container d-flex justify-content-around">
-            <div id="carouselControls" class="carousel slide" data-bs-ride="carousel">
+            <div style="width: 50%; margin: 0 auto;">
                     <div class="carousel-inner">
+                    <h4><매거진></h4>
                     {% for magazine in magazine_list  %}
                         {% if forloop.counter  == 1 %}
                         <div class="carousel-item active">
@@ -31,11 +29,10 @@
                         <span class="visually-hidden">Next</span>
                     </button>
             </div>
-        </div>
-    <div>
-</div>
+
 <div class="album py-5 bg-light">
-    <div class="container"> 
+    <div class="container">
+        <div><인기서비스></div> 
         <div class="flex row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             {% if services %}
             {% for service in services  %}

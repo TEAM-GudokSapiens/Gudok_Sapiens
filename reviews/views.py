@@ -5,11 +5,11 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.views.generic import CreateView
 from reviews.forms import ReviewCreateForm
 from services.models import Service
-# import json
-# from django.views.decorators.csrf import csrf_exempt
-# from django.http.response import JsonResponse
-# from .models import Review
-# from services.models import Service
+import json
+from django.views.decorators.csrf import csrf_exempt
+from django.http.response import JsonResponse
+from .models import Review
+from services.models import Service
 
 
 # def review_create(request):
@@ -72,19 +72,35 @@ def reviews_create(request, pk):
     return render(request, "reviews/create.html", ctx)
 
 
-# @csrf_exempt
-# def submit_ajax(request):
-#     req = json.loads(request.body)
-#     service_id = req['service_id']
-#     title = req['title']
-#     content = req['content']
-#     score = req['score']
-#     period = req['period']
-#     photo = req['photo']
-#     service = Service.objects.get(id=service_id)
-#     review = Review.objects.create(target=service, user=request.user, photo=photo,
-#                                    title=title, content=content, score=score, period=period)
-#     review.save()
-#     return JsonResponse({'service_id': service_id, 'review_id': review.id,
-#                          'review_title': review.title, 'review_content': review.content, 'review_score': review.score,
-#                          'review_period': review.period, 'review_updated_at': review.updated_at, 'review_photo': review.photo.url})
+@csrf_exempt
+def submit_ajax(request, pk):
+    # req = json.loads(request.body)
+    # service_id = req['service_id']
+    # title = req['title']
+    # content = req['content']
+    # score = req['score']
+    # period = req['period']
+    # photo = req['photo']
+    # service = Service.objects.get(id=service_id)
+    # review = Review.objects.create(target=service, user=request.user, photo=photo,
+    #                                title=title, content=content, score=score, period=period)
+    # review.save()
+    if request.method == "POST":
+        form = ReviewCreateForm(request.POST, request.FILES)
+        if form.is_valid():
+            review_form = form.save(commit=False)
+            review_form.user = request.user
+            review_form.target = Service.objects.get(pk=pk)
+            review_form.save()
+            return redirect("services:services_detail", pk)
+        else:
+            return redirect("services:services_detail", pk)
+            # return JsonResponse({'service_id': service_id, 'review_id': review.id,
+            #              'review_title': review.title, 'review_content': review.content, 'review_score': review.score,
+            #              'review_period': review.period, 'review_updated_at': review.updated_at, 'review_photo': review.photo.url})
+        # else:
+        #     form = ReviewCreateForm()
+        # return render(request, 'services/list.html', {'form': form})
+        # return JsonResponse({'service_id': service_id, 'review_id': 'review.id',
+        #                 'review_title': 'review.title', 'review_content': 'review.content', 'review_score': 'review.score',
+        #                  'review_period': 'review.period', 'review_updated_at': 'review.updated_at', 'review_photo': 'review.photo.url'})

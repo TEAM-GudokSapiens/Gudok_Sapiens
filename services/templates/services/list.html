@@ -8,7 +8,7 @@
   {% for category in categories %}
     <a href="{% url 'services:category_list' category.slug %}">{{ category.name }}</a>
   {% endfor %}
-    <form method="GET" action="{% url 'services:search' %}"  >
+   <form method="GET" action="{% url 'services:search' %}"  >
     {% csrf_token %}
         <input type='text' name='search_key' value="{{ search_key }}" placeholder='Search' />
         <input type='submit' value="Search" />
@@ -19,11 +19,11 @@
 <div>
     <ul>
         <li>
-            <a href="{% url 'services:services_list' %}">전체보기</a><!-- 전체보기 -->
+            <a href="{% url 'services:services_list' %}" style="font-weight: 800;">전체보기</a><!-- 전체보기 -->
         </il>
         {% for category in categories %}
         <li>
-            <a href="{% url 'services:category_list' category.slug %}">{{ category.name }}</a>
+            <a href="{% url 'services:category_list' category.slug %}" style="font-weight: 800;">{{ category.name }}</a>
             {% if category_slug == category.slug  %}
                 <ul>
                 {% if sub_category_list %}
