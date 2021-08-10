@@ -1,5 +1,6 @@
 from django.shortcuts import redirect, render
 from .models import *
+from community.models import Magazine
 from django.contrib import messages
 from django.db.models import Q, Count
 from django.core.paginator import Paginator
@@ -7,8 +8,17 @@ from taggit.models import Tag
 from reviews.forms import ReviewCreateForm
 
 
+# 전체 보기 페이지
 def main(request):
-    ctx = {"main": main}
+    magazine_list = Magazine.objects.all()
+    # 찜을 많이 받은 서비스를 우선적으로 배치
+    # 추후에 별점 순으로 변경할 수 있음
+    services = Service.objects.annotate(
+        num_dibs=Count('dib')).order_by('-num_dibs')
+    ctx = {
+        'magazine_list': magazine_list,
+        'services': services,
+    }
     return render(request, 'services/main.html', context=ctx)
 
 # 전체 보기 페이지
@@ -74,7 +84,9 @@ def sub_category_list(request, category_slug, sub_category_slug):
 def services_detail(request, pk):
     service = Service.objects.get(id=pk)
     review_form = ReviewCreateForm()
-    ctx = {'service': service, 'form': review_form}
+    number_of_dibs = service.dib_set.all().count()
+    ctx = {'service': service, 'form': review_form,
+           'number_of_dibs': number_of_dibs}
     return render(request, 'services/detail.html', context=ctx)
 
 

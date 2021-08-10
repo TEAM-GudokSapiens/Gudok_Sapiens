@@ -22,6 +22,7 @@ class SignupForm(UserCreationForm):
         self.fields['nickname'].label = '닉네임'
         self.fields['gender'].label = '성별'
         self.fields['phonenum'].label = '휴대폰 번호'
+        self.fields['phonenum'].help_text = '-를 빼고 입력해주세요.'
         self.fields['password1'].help_text = '기호, 영어 소문자, 숫자를 혼합하여 10자리 이상'
 
 
@@ -46,6 +47,7 @@ class UpdateForm(UserCreationForm):
         self.fields['gender'].disabled = True
         self.fields['phonenum'].label = '휴대폰 번호'
         self.fields['password1'].help_text = '기호, 영어 소문자, 숫자를 혼합하여 10자리 이상'
+
 
 class LoginForm(forms.Form):
     user_id = forms.CharField(

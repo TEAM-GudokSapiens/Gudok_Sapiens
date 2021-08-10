@@ -13,4 +13,5 @@ urlpatterns = [
     path('reviews/', include('reviews.urls', namespace="reviews")),
     path('accounts/', include('allauth.urls')),
     path('community/', include('community.urls')),
+    path('likes/', include('likes.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

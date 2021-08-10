@@ -46,20 +46,6 @@
                 </div>
             </div>
         </div>
-        <div class="fixing-box">
-            <div class="keywords">
-                <div>#음식</div>
-                <div>#재미</div>
-                <div>#영화</div>
-                <div>#키워드</div>
-            </div>
-            <div class="fix-name">{{service.name}}</div>
-            <div class="fix-intro">{{service.intro}}</div>
-            <div class="fix-stars">⭐️⭐️⭐️⭐️⭐️</div>
-            <div class="fix-link"><a href="">찜</a> /
-                <a href="">공유</a>
-            </div>
-        </div>
         <div class="service-container">
             <div class="service-box pl-4">
                 <div class="service-name">{{service.name}}</div>
@@ -110,8 +96,10 @@
                                 </div>
                                 {% endif %}
                                 <div class="review-content">
-                                    <div class="">{{review.title}}</div>
-                                    <div class="">{{review.content}}</div>
+                                    <span class="">{{review.title}}</span>
+                                    <span class="">{{review.content}}</span>
+                                    <a href="{% url 'likes:likes_helps' review.id %}">도움이 돼요!</a>
+                                    <span>{{ review.reviews_help.all.count }}</span>
                                 </div>
                             </div>
                         </div>
@@ -142,6 +130,21 @@
                 </div>
             </div>
             <!-- tabend -->
+
+        </div>
+        <div class="fixing-box">
+            <div class="keywords">
+                <div>#태그1</div>
+                <div>#태그2</div>
+                <div>#태그3</div>
+                <div>#태그4</div>
+            </div>
+            <div class="fix-name">{{service.name}}</div>
+            <div class="fix-intro">{{service.intro}}</div>
+            <div class="fix-stars">⭐️⭐️⭐️⭐️⭐️ {{ service.review.score }}</div>
+            <div class="fix-link"><a href="">찜({{ number_of_dibs }}개)</a> /
+                <a href="">공유</a>
+            </div>
         </div>
     </div>
 </div>

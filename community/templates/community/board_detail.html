@@ -22,7 +22,7 @@
     <p style="display:none" >{{ board.update_counter }}</p>
     <h3>{{ board.title }}</h3>
     작성자: {{ board.user }} <br>
-    작성일: {{ board.created_at  | date:"Y/m/d" }} <br>s
+    작성일: {{ board.created_at  | date:"Y/m/d" }} <br>
     좋아요
     <div id="{{board.id}}" onclick="post_like(this.id)">
         {%if request.user in board.like.all%}

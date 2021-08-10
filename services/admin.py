@@ -19,5 +19,3 @@ class ServiceAdmin(admin.ModelAdmin):
     
     def tag_list(self, obj):
         return ', '.join(o.name for o in obj.tags.all())
-
-

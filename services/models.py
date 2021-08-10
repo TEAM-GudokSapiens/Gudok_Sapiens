@@ -1,5 +1,5 @@
 from django.db import models
-from likes.models import Like
+from users.models import User
 from taggit.managers import TaggableManager
 from django.core.paginator import Paginator
 
@@ -93,3 +93,4 @@ class Service(models.Model):
 # class Tag(models.Model):
 #     service = models.ManyToManyField(
 #         Service, related_name='tags')
+#     created_at = models.DateTimeField(auto_now_add=True)

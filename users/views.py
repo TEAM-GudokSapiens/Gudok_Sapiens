@@ -1,15 +1,17 @@
-from django.http.response import HttpResponseForbidden, HttpResponseRedirect
+from django.http.response import HttpResponseForbidden
 from django.shortcuts import render, redirect
-from django.contrib import auth
+
 from django.contrib.auth.models import User
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse_lazy
 from .models import User
 from django.views.generic import UpdateView, DeleteView
-from users.forms import UpdateForm,LoginForm,SignupForm
-from django.contrib.auth import login, logout,authenticate
+from users.forms import UpdateForm, LoginForm, SignupForm
+from django.contrib.auth import login, logout, authenticate
 from django.utils.decorators import method_decorator
 from django.views.generic import FormView
 from .decorators import *
+from services.models import Service
+from django.core.paginator import Paginator
 
 
 # 회원가입
@@ -93,3 +95,30 @@ class AccountDeleteView(DeleteView):
             return super().post(*args, **kwargs)
         else:
             return HttpResponseForbidden()
+
+
+def dibs_list(request):
+    services_list = Service.objects.filter(dib__users=request.user.id)
+    # 한 페이지 당 담을 수 있는 객체 수를 정할 수 있음
+    paginator = Paginator(services_list, 10)
+    page = request.GET.get('page')
+    services = paginator.get_page(page)
+
+    ctx = {
+        'services': services,
+    }
+    return render(request, 'users/dibs_list.html', context=ctx)
+
+
+def reviews_list(request):
+    reviews_list = Service.objects.filter(
+        review__user=request.user.id).distinct()
+    # 한 페이지 당 담을 수 있는 객체 수를 정할 수 있음
+    paginator = Paginator(reviews_list, 10)
+    page = request.GET.get('page')
+    services = paginator.get_page(page)
+
+    ctx = {
+        'services': services,
+    }
+    return render(request, 'users/dibs_list.html', context=ctx)
