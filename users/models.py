@@ -2,6 +2,7 @@ from django.core.mail import send_mail
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.utils import timezone
+from django.core.validators import RegexValidator
 
 
 class UserManager(BaseUserManager):
@@ -51,8 +52,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(verbose_name='name', max_length=30, null=True)
     nickname = models.CharField(
         verbose_name='nickname', max_length=30, null=True)
+        
+    phonenumRegex = RegexValidator(regex = r"^\+?1?\d{9,11}$")
     phonenum = models.CharField(
-        verbose_name='phonenum', max_length=30, null=True)
+        verbose_name='phonenum', validators = [phonenumRegex], max_length = 11, null = True)
+
     gender = models.CharField(verbose_name='gender',
                               choices=GENDERS, max_length=30, null=True)
     level = models.CharField(choices=LEVEL_CHOICES,
