@@ -9,11 +9,11 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="top-header-links collapse navbar-collapse justify-content-end" id="navbarCollapse">
-    <a class="d-block nav-link text-dark" href="">홈</a><!-- 홈 -->
+    <a class="d-block nav-link text-dark" href="{%url 'services:services_list'%}">홈</a><!-- 홈 -->
     <a class="d-block nav-link hover text-dark" href="{%url 'community:notice'%}">커뮤니티</a><!-- 커뮤니티 -->
     <div class="navbar-brand d-flex justify-content-between bottom-hedaer-links">
       <a class="nav-link hover text-dark" href="">나에게 맞는 서비스찾기</a><!-- 나에게맞는서비스찾기 -->
-      {% if user.is_authenticated %}
+      {% if request.user.is_authenticated %}
       <!--로그인상태-->
       <a href="{% url 'users:update' pk=user.pk %}"
       class="btn btn-outline-dark rounded-pill col-3 d-flex flex-column justify-content-center align-items-center ml-3 user-info">유저정보</a>

@@ -1,6 +1,8 @@
 from django.db import models
-from likes.models import Like
+from users.models import User
 from taggit.managers import TaggableManager
+from django.core.paginator import Paginator
+
 
 class Category(models.Model):
     name = models.CharField(max_length=150, db_index=True)
@@ -54,6 +56,24 @@ class Service(models.Model):
     link = models.URLField(verbose_name='서비스 홈페이지', max_length=200)
     tags = TaggableManager(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def get_review(self):
+        reviews = self.review.all()
+        return reviews
+
+    def get_review_count(self):
+        counts = self.review.all().count()
+        return counts
+
+    # def get_context_data(self, **kwargs):
+    # context = super(PostDetailView, self).get_context_data(**kwargs)
+    # comments = context['post'].comment_set.all()
+    # paginator = Paginator(comments, per_page=50)
+    # page_number = 1  # get it from query sting or whatever the way you want
+    # page = paginator.page(page_number)
+    # context['comments'] = page
+    # return context
+
     # dibs = models.OneToOneField(
     #     Like, on_delete=models.PROTECT, verbose_name='찜',blank=True,null=True)
 
@@ -73,3 +93,4 @@ class Service(models.Model):
 # class Tag(models.Model):
 #     service = models.ManyToManyField(
 #         Service, related_name='tags')
+#     created_at = models.DateTimeField(auto_now_add=True)
