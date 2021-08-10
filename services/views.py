@@ -7,7 +7,6 @@ from django.core.paginator import Paginator
 from taggit.models import Tag
 from reviews.forms import ReviewCreateForm
 
-
 # 전체 보기 페이지
 def main(request):
     magazine_list = Magazine.objects.all()
@@ -20,9 +19,6 @@ def main(request):
         'services': services,
     }
     return render(request, 'services/main.html', context=ctx)
-
-# 전체 보기 페이지
-
 
 def services_list(request):
     services_list = Service.objects.all()
