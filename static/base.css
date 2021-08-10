@@ -159,7 +159,11 @@
   }
   .carousel-item img {
     height: 40vh;
-    /* width: 90vw; */
+    width: 100%;
+  }
+  .review-img {
+    width: 150px;
+    height: 150px;
   }
 }
 @media screen and (min-width: 769px) and (max-width: 1150px) {
@@ -188,10 +192,18 @@
   .main-img {
     display: none;
   }
+  .review-img {
+    width: 180px;
+    height: 180px;
+  }
 }
 @media screen and (min-width: 1150px) {
   .carousel {
     display: none;
+  }
+  .review-img {
+    width: 15vw;
+    height: 20vh;
   }
 }
 .carousel-item img {
@@ -228,7 +240,6 @@
   font-size: 1.1rem;
 }
 .review-img {
-  width: 15vw;
   margin-right: 20px;
 }
 .review-img img {
@@ -248,9 +259,6 @@
 }
 .review-count {
   padding-top: 15px;
-}
-.review-container {
-  margin: 15px 0px 5px 15px;
 }
 
 .forms {
