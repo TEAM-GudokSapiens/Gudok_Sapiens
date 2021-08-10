@@ -142,7 +142,7 @@
             <div class="fix-name">{{service.name}}</div>
             <div class="fix-intro">{{service.intro}}</div>
             <div class="fix-stars">⭐️⭐️⭐️⭐️⭐️ {{ service.review.score }}</div>
-            <div class="fix-link"><a href="">찜({{ number_of_dibs }}개)</a> /
+            <div class="fix-link"><a href="{% url 'likes:likes_dibs' service.id %}">찜({{ number_of_dibs }}개)</a> /
                 <a href="">공유</a>
             </div>
         </div>
