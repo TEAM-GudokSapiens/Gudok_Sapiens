@@ -91,8 +91,6 @@ def board_create(request):
 @login_message_required
 def board_detail(request, pk):
     board = get_object_or_404(Board, pk=pk)
-    session_cookie = request.session['user_id']
-    cookie_name = F'bord_hits:{session_cookie}'
     comments = Comment.objects.filter(target=pk).order_by('created_at')
     # comment_count = comment.count()
     comment_count = comments.exclude(deleted=True).count()
@@ -110,22 +108,8 @@ def board_detail(request, pk):
         'comment_count': comment_count,
         'replys': reply,
     }
-    response = render(request, 'community/board_detail.html', ctx)
-
-    if request.COOKIES.get(cookie_name) is not None:
-        cookies = request.COOKIES.get(cookie_name)
-        cookies_list = cookies.split('|')
-        if str(pk) not in cookies_list:
-            response.set_cookie(cookie_name, cookies + f'|{pk}', expires=None)
-            board.hits += 1
-            board.save()
-            return response
-    else:
-        response.set_cookie(cookie_name, pk, expires=None)
-        board.hits += 1
-        board.save()
-        return response
     return render(request, 'community/board_detail.html', ctx)
+
 # def board_detail(request, pk):
 #     # board = get_object_or_404(Board, pk=pk)
 #     # comments = Comment.objects.filter(target=pk).order_by('created_at')

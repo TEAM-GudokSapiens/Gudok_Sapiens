@@ -2,7 +2,6 @@
 
 {% block content %}
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-    {{ board.update_counter }}
     <head>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
     </head>
@@ -406,5 +405,29 @@
             },
         })
     };
+
+    function post_like(id) {
+        console.log("hi")
+        $.ajax({
+            url: "{%url 'community:likes'%}", 
+            data: {
+                'board_id': id
+            }, 
+            dataType: "json",
+            success: function (response) {
+                $('#like_count').html(response.like_count+'개') 
+                $('#message').html(response.message) 
+                if (response.message == "좋아요")
+                //좋아요 눌렀을 때 
+                {
+                    $('#heart').attr("class", "fas fa-heart")
+                } else if (response.message == "좋아요 취소")
+                //좋아요 상태에서 다시 눌렀을 때 
+                {
+                    $('#heart').attr("class", "far fa-heart")
+                }
+            }
+        })
+    }
 </script>
 {% endblock %}

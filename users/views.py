@@ -22,7 +22,11 @@ def signup(request):
         form = SignupForm(request.POST)
         if form.is_valid():
             user = form.save()
-            return redirect('users:login')
+            user_id = form.cleaned_data.get('user_id')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=user_id, password=raw_password)
+            login(request, user)
+            return redirect('services:main')
     else:
         form = SignupForm()
     ctx = {'form': form}
