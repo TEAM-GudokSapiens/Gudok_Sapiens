@@ -329,7 +329,18 @@
 }
 .board-content p {
   padding: 0px;
+  margin: 0px;
 }
 .board-title div p {
   text-align: center;
+}
+.board-button {
+  background: #9a30ae;
+  padding: 7px 30px;
+}
+.board-paginator {
+  text-align: center;
+}
+a:hover {
+  text-decoration: none !important;
 }
