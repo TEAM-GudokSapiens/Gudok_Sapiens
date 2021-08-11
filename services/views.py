@@ -13,7 +13,7 @@ def main(request):
     # 찜을 많이 받은 서비스를 우선적으로 배치
     # 추후에 별점 순으로 변경할 수 있음
     services = Service.objects.annotate(
-        num_dibs=Count('dib')).order_by('-num_dibs')
+        num_dibs=Count('dib')).order_by('-num_dibs')[:8]
     ctx = {
         'magazine_list': magazine_list,
         'services': services,
@@ -89,9 +89,17 @@ def services_detail(request, pk):
 def search(request):
     categories = Category.objects.all()
     query = request.GET.get('search_key')
+    search_type = request.GET.get('type')
     if query:
-        results = Service.objects.filter(Q(name__icontains=query) | Q(
+        if search_type == "all":
+            results = Service.objects.filter(Q(name__icontains=query) | Q(
             intro__icontains=query) | Q(content__icontains=query)).distinct()
+        elif search_type == "name":
+            results = Service.objects.filter(name__icontains=query)
+        elif search_type == "intro":
+            results = Service.objects.filter(intro__icontains=query)
+        elif search_type == "content":
+            results = Service.objects.filter(content__icontains=query)
     else:
         results = []
     ctx = {

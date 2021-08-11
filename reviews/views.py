@@ -88,6 +88,7 @@ def submit_ajax(request, pk):
     if request.method == "POST":
         form = ReviewCreateForm(request.POST, request.FILES)
         if form.is_valid():
+            print(form['score'].value())
             review_form = form.save(commit=False)
             review_form.user = request.user
             review_form.target = Service.objects.get(pk=pk)

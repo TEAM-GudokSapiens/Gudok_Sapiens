@@ -98,6 +98,7 @@
                                 <div class="review-content">
                                     <span class="">{{review.title}}</span>
                                     <span class="">{{review.content}}</span>
+                                    <span class="">{{review.score}}</span>
                                     <a href="{% url 'likes:likes_helps' review.id %}">도움이 돼요!</a>
                                     <span>{{ review.reviews_help.all.count }}</span>
                                 </div>

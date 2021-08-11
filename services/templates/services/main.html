@@ -1,34 +1,35 @@
 {% extends "base.html" %}
 {% block content %}
-
+        <div id='carouselMain' class='carousel slide' data-ride='carousel'> 
             <div style="width: 50%; margin: 0 auto;">
-                    <div class="carousel-inner">
+                    <div class="carousel-inner" style=" height: 50vh; min-height: 400px;">
                     <h4><매거진></h4>
                     {% for magazine in magazine_list  %}
                         {% if forloop.counter  == 1 %}
                         <div class="carousel-item active">
                             <a href="{% url 'community:magazine_detail' magazine.id %}">
-                            <img src="{{ magazine.img.url }}" />
+                            <img src="{{ magazine.img.url }}" style="display: block; height: 100vh; line-height: 1; margin: 0 auto; max-width: 100%;" />
                             </a>
                         </div>
                         {% else %}
                         <div class="carousel-item">
                             <a href="{% url 'community:magazine_detail' magazine.id %}">
-                            <img src="{{ magazine.img.url }}" />
+                            <img src="{{ magazine.img.url }}" style="display: block; height: 100vh; line-height: 1; margin: 0 auto; max-width: 100%;" />
                             </a>
                         </div>
                         {% endif %}
                     {% endfor %}
                     </div>
-                    <button class="carousel-control-prev btn" data-bs-target="#carouselControls" data-bs-slide="prev">
+                    <button class="carousel-control-prev" href='#carouselMain' role='button' data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Previous</span>
                     </button>
-                    <button class="carousel-control-next btn" data-bs-target="#carouselControls" data-bs-slide="next">
+                    <button class="carousel-control-next"  href='#carouselMain' role='button' data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Next</span>
                     </button>
             </div>
+        </div>
 
 <div class="album py-5 bg-light">
     <div class="container">
