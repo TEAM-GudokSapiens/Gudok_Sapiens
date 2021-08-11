@@ -18,12 +18,14 @@
 
     <form action="{% url 'community:board_update' board.id%}" method="POST">
         {% csrf_token %}
-        {{form.media}}
-        {{form.as_p}}
-    
-        <br>
+
+        <table>
+            {{ form.media }}    
+            제목 : {{ form.title }} <br><br>
+            {{ form.content }}
+        </table> 
         
-        <input type="submit" value="수정하기">
+        <input type="submit" value="글수정">
         
         </form>
     </form>

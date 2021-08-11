@@ -74,7 +74,6 @@ def board_create(request):
             new_board = Board(
                 title=form.cleaned_data['title'],
                 content=form.cleaned_data['content'],
-                img=form.cleaned_data['img'],
                 user=user
             )
             new_board.save()
