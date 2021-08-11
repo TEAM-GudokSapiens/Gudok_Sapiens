@@ -3,13 +3,13 @@
 
 {% block content %}
 <div class="community-container">
-    <div class="community-navbar col-8"> <!--확인차 넣어둔 커뮤니티 navbar-->
+    <div class="community-navbar col-xs-12 col-sm-8"> <!--확인차 넣어둔 커뮤니티 navbar-->
         <span class="col-3"><a href="{%url 'community:notice'%}" class="text-dark">공지사항 </a></span>
         <span class="col-3"><a href="{%url 'community:magazine'%}" class="text-dark">매거진 </a></span>
         <span class="col-3"><a href="{%url 'community:board'%}" class="text-dark">자유게시판 </a></span>
     </div>
     <!--------------------------------------------------------------------->
-    <div class="community-board col-8 mb-4">
+    <div class="community-board col-xl-8 col-xs-12 mb-4">
         <div class="board-header d-flex justify-content-between pb-3">
             <div class="col-4 p-0">
                 <div class="header-title">자유게시판</div>
@@ -17,12 +17,12 @@
             </div>
             <form class="d-flex col-4 h-75 p-0 align-self-end" method="GET" action="{% url 'community:search' %}">
                 {% csrf_token %}
-                <input type='text' name='search_key' class="" value="{{ search_key }}" placeholder='Search' />
-                <input type='submit' class="" value="Search" />
+                <input type='text' name='search_key' class="w-100 col-8" value="{{ search_key }}" placeholder='Search' />
+                <input type='submit' class="w-100 col-4" value="Search" />
             </form>
         </div>
         <div class="board-content">
-            <div class="board-title d-flex">
+            <div class="board-title col-md-12">
                 <p class="col-6 align-self-center">제목</p>
                 <div class="d-flex col-6 p-0">
                     <p class="col-3 align-self-center">작성자</p>
@@ -32,9 +32,9 @@
                 </div>
             </div>
             {% for board in page_obj.object_list %}
-            <div class="board-title d-flex" style="border-bottom: 1px solid #EEEEEE;">
-                <p class="col-6 align-self-center"><a href="{%url 'community:board_detail' board.id%}" class="text-dark">{{ board.title }}</a></p>
-                <div class="d-flex col-6 p-0">
+            <div class="board-content-title" style="border-bottom: 1px solid #EEEEEE;">
+                <p class="col-md-6 col-sm-12 align-self-center"><a href="{%url 'community:board_detail' board.id%}" class="text-dark">{{ board.title }}</a></p>
+                <div class="board-info col-6 p-0">
                     <p class="col-3 align-self-center">{{ board.user }} </p>
                     <p class="col-3 align-self-center">{{ board.created_at | date:"Y-m-d" }}</p>
                     <p class="col-3 align-self-center">{{ board.like.count }}</p>

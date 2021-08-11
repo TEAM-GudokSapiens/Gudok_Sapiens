@@ -334,15 +334,30 @@
   border-bottom: 1px solid #9a30ae;
   border-top: 1px solid #9a30ae;
 }
-.board-title {
-  border-bottom: 1px solid #cdcdcd;
-  height: 7vh;
-}
 .board-content p {
   padding: 0px;
   margin: 0px;
 }
+.board-title {
+  border-bottom: 1px solid #cdcdcd;
+  height: 7vh;
+  display: flex;
+}
+.board-title p {
+  word-break: break-all;
+}
 .board-title div p {
+  text-align: center;
+}
+.board-content-title {
+  border-bottom: 1px solid #cdcdcd;
+  height: 7vh;
+  display: flex;
+}
+.board-content-title p {
+  word-break: break-all;
+}
+.board-content-title div p {
   text-align: center;
 }
 .board-button {
@@ -352,6 +367,17 @@
 .board-paginator {
   text-align: center;
 }
+.board-info {
+  display: flex;
+}
 a:hover {
   text-decoration: none !important;
+}
+@media screen and (max-width: 765px) {
+  .board-title {
+    display: none;
+  }
+  .board-info {
+    display: none;
+  }
 }
