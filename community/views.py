@@ -61,6 +61,7 @@ def board(request):
     return render(request, 'community/board.html', {'boards': boards, 'page_obj': page_obj})
 
 
+@login_message_required
 def board_create(request):
     if not request.user.is_authenticated:  # 로그인이 안되어있을 경우
         return redirect('/users/login')

@@ -1,6 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
+{% if messages %}
+<div>
+    {% for message in messages %}
+        {{ message.message }}
+    {% endfor %}
+</div>
+{% endif %}
 <div class="forms text-center col-lg-3 col-md-4 col-sm-6 col-10">
     <div>
         <h2 class="form-logo">
