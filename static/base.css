@@ -16,6 +16,16 @@
 .btn-primary.btn:focus {
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 255, 0.2) !important;
 }
+.fix-name {
+  font-size: 2.3rem;
+  font-weight: bolder;
+  margin-bottom: 10px;
+}
+.fix-intro,
+.fix-stars {
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+}
 
 .nav-link.btn:active,
 .nav-link.btn:hover,
@@ -109,6 +119,86 @@
   font-size: 1.2rem;
 }
 
+.carousel-item img {
+  height: 100%;
+  width: 100%;
+}
+.keywords {
+  margin: 10px 0px;
+}
+.keywords div {
+  display: inline;
+}
+.fix-link {
+  text-align: right;
+}
+.tab-title {
+  font-family: "KOTRA_SONGEULSSI";
+  font-size: 2rem;
+  font-weight: bolder;
+  margin-bottom: 20px;
+}
+.tab-content {
+  padding-left: 15px;
+  font-size: 1.1rem;
+}
+.review-img {
+  margin-right: 20px;
+}
+.review-img img {
+  width: 100%;
+  height: 100%;
+}
+.review-content {
+  /* display: inilne; */
+}
+.content-block {
+  /* display: flex;
+  justify-content: flex-start; */
+  word-break: break-all;
+}
+.review-count,
+.review-date {
+}
+.review-count {
+  padding-top: 15px;
+}
+
+.forms {
+  margin: 3rem auto;
+  font-family: "GmarketSansTTFMedium";
+}
+
+.form-logo {
+  margin-bottom: 3rem;
+  font-family: "GmarketSansTTFMedium";
+  font-size: 1.6rem;
+}
+
+.social-login1,
+.social-login2 {
+  display: block;
+  margin-top: 2rem;
+  margin-left: 1rem;
+  width: 20rem;
+  height: auto;
+}
+
+.social-login2 {
+  margin-top: 0.5rem;
+}
+@media screen and (max-width: 600px) {
+  .service-name {
+    font-size: 2.3rem;
+    font-weight: bolder;
+  }
+  .fix-name {
+    font-size: 2rem;
+  }
+  .fix-intro {
+    font-size: 1.3rem;
+  }
+}
 @media screen and (max-width: 930px) {
   .top-header-title {
     font-size: 1.5rem;
@@ -120,7 +210,7 @@
     width: 100%;
   }
   .fixing-box {
-    width: 100%;
+    width: 90vw;
     display: block;
     position: static;
   }
@@ -158,15 +248,17 @@
     font-size: 1rem;
   }
   .carousel-item img {
-    height: 40vh;
     width: 100%;
   }
   .review-img {
     width: 150px;
     height: 150px;
   }
+  .service-container {
+    width: 90vw;
+  }
 }
-@media screen and (min-width: 769px) and (max-width: 1150px) {
+@media screen and (min-width: 931px) and (max-width: 1150px) {
   .service-content {
     font-size: 1.1rem;
   }
@@ -206,81 +298,38 @@
     height: 20vh;
   }
 }
-.carousel-item img {
-  height: 40vh;
-  width: 100%;
-}
-.keywords {
-  margin: 10px 0px;
-}
-.keywords div {
-  display: inline;
-}
-.fix-name {
-  font-size: 2.3rem;
-  font-weight: bolder;
-  margin-bottom: 10px;
-}
-.fix-intro,
-.fix-stars {
-  font-size: 1.4rem;
-  margin-bottom: 10px;
-}
-.fix-link {
-  text-align: right;
-}
-.tab-title {
-  font-family: "KOTRA_SONGEULSSI";
-  font-size: 2rem;
-  font-weight: bolder;
-  margin: 15px;
-}
-.tab-content {
-  padding-left: 15px;
-  font-size: 1.1rem;
-}
-.review-img {
-  margin-right: 20px;
-}
-.review-img img {
-  width: 100%;
-  height: 100%;
-}
-.review-content {
-  /* display: inilne; */
-}
-.content-block {
-  display: flex;
-  justify-content: flex-start;
-}
-.review-count,
-.review-date {
-  float: right;
-}
-.review-count {
-  padding-top: 15px;
-}
 
-.forms {
-  margin: 3rem auto;
-  font-family: "GmarketSansTTFMedium";
+/* board */
+.community-navbar {
+  border: 2px solid #debeff;
+  border-radius: 15px;
+  margin: 25px auto;
+  font-size: 1.2rem;
+  padding: 13px 0;
 }
-
-.form-logo {
-  margin-bottom: 3rem;
-  font-family: "GmarketSansTTFMedium";
-  font-size: 1.6rem;
+.community-board {
+  margin: 70px auto;
 }
-
-.social-login1,
-.social-login2 {
-  display: block;
-  margin-top: 2rem;
-  margin-left: 1rem;
-  width: 20rem;
-  height: auto;
+.community-container {
+  font-family: "GmarketSansTTFLight";
 }
-
-.social-login2 {
-  margin-top: 0.5rem;
+.header-title {
+  font-size: 24px;
+}
+.header-count {
+  font-size: 14px;
+}
+.board-content {
+  border-bottom: 1px solid #9a30ae;
+  border-top: 1px solid #9a30ae;
+}
+.board-title {
+  border-bottom: 1px solid #cdcdcd;
+  height: 7vh;
+}
+.board-content p {
+  padding: 0px;
+}
+.board-title div p {
+  text-align: center;
 }
