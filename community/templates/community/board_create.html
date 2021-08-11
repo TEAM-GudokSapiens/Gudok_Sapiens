@@ -18,10 +18,8 @@
     <form action="{% url 'community:board_create' %}" method="POST" >
         {%csrf_token%}
         <table>
-            작성자 : {{ user.username }}
-            제목 : {{ form.title }} <br>
-            이미지 : {{ form.img }} <br>
-            내용 : {{ form.content }} <br>
+            {{form.media}}    
+            {{form.as_p}}
         </table> 
 
         <input type="submit" value="게시하기">
