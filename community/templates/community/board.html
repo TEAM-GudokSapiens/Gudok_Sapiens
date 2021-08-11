@@ -32,19 +32,21 @@
                 </div>
             </div>
             {% for board in page_obj.object_list %}
-            <div class="board-content-title" style="border-bottom: 1px solid #EEEEEE;">
-                <p class="col-md-6 col-sm-12 align-self-center"><a href="{%url 'community:board_detail' board.id%}" class="text-dark">{{ board.title }}</a></p>
-                <div class="board-info col-6 p-0">
-                    <p class="col-3 align-self-center">{{ board.user }} </p>
-                    <p class="col-3 align-self-center">{{ board.created_at | date:"Y-m-d" }}</p>
-                    <p class="col-3 align-self-center">{{ board.like.count }}</p>
-                    <p class="col-3 align-self-center">{{ board.hits }}</p>
+            <div class="board-content-container" style="border-bottom: 1px solid #EEEEEE;">
+                <p class="col-md-6"><a href="{%url 'community:board_detail' board.id%}" class="text-dark">{{ board.title }}</a></p>
+                <div class="board-info col-md-6 p-0">
+                    <p class="col-md-3">{{ board.user }} </p>
+                    <p class="col-md-3">{{ board.created_at | date:"Y-m-d" }}</p>
+                    <p class="col-md-3">{{ board.like.count }}</p>
+                    <p class="col-md-3">{{ board.hits }}</p>
                 </div>
             </div>
             {%endfor%}
         </div>
-        <div class="pt-4"style="text-align: end;">
-            <a href="{%url 'community:board_create' %}" class="board-button text-light">글작성</a>
+        <div class="pt-4 mb-3">
+            <div class="col-lg-3 col-sm-12" style="text-align: center;">
+                <a href="{%url 'community:board_create' %}" class="board-button text-light w-100 d-block">글작성</a>
+            </div>
         </div>
         <div class="board-paginator">
             {% if page_obj.has_previous %}

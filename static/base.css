@@ -349,15 +349,15 @@
 .board-title div p {
   text-align: center;
 }
-.board-content-title {
+.board-content-container {
   border-bottom: 1px solid #cdcdcd;
   height: 7vh;
   display: flex;
 }
-.board-content-title p {
+.board-content-container p {
   word-break: break-all;
 }
-.board-content-title div p {
+.board-content-container div p {
   text-align: center;
 }
 .board-button {
@@ -373,11 +373,29 @@
 a:hover {
   text-decoration: none !important;
 }
-@media screen and (max-width: 765px) {
+@media screen and (max-width: 767px) {
   .board-title {
     display: none;
   }
-  .board-info {
+  /* .board-info {
     display: none;
+  } */
+  .board-content-container {
+    flex-direction: column;
+    justify-content: space-around;
+  }
+  .board-info {
+    display: flex;
+    justify-content: space-around;
+  }
+}
+@media screen and (min-width: 768px) {
+  .board-info {
+    display: flex;
+    align-items: center;
+  }
+  .board-content-container {
+    display: flex;
+    align-items: center;
   }
 }
