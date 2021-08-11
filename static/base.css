@@ -176,16 +176,27 @@
 }
 
 .social-login1,
-.social-login2 {
+.social-login2,
+.social-login3 {
   display: block;
-  margin-top: 2rem;
-  width: 20rem;
-  height: auto;
-  color: #3c1f15;
+  height: 5vh;
+  line-height: 5vh;
+  margin-top: 15px;
 }
-
+.social-login3 {
+  background-color: #fee500;
+  border-radius: 10px;
+  color: #191919;
+}
 .social-login2 {
-  margin-top: 0.5rem;
+  background-color: #03c75a;
+  border-radius: 10px;
+  color: #ffffff;
+}
+.social-login1 {
+  background-color: #ffffff;
+  border-radius: 10px;
+  color: #000000;
 }
 @media screen and (max-width: 600px) {
   .service-name {
