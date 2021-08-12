@@ -497,6 +497,16 @@ a:hover {
 .board-paginator a {
   padding: 0px 5px;
 }
+.board-menu a {
+  color: #000;
+}
+.board-menu a.active {
+  color: #9a30ae;
+}
+.board-menu a:hover {
+  color: #9a30ae;
+  transition: 0.5s;
+}
 @media screen and (max-width: 767px) {
   .board-title {
     display: none;
