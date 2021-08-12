@@ -7,6 +7,7 @@ from django.db.models import Q, Count, Avg
 from django.core.paginator import Paginator
 from taggit.models import Tag
 from reviews.forms import ReviewCreateForm
+from reviews.models import Review
 
 # 전체 보기 페이지
 def main(request):
@@ -85,12 +86,14 @@ def services_detail(request, pk):
     avg_of_reviews = service.review.aggregate(Avg('score'))['score__avg']
     # num_of_full_stars = int(avg_of_reviews // 1)
     # is_half_star = True if avg_of_reviews % 1 ==0.5 else False 
+    reviews_order_dibs = Review.objects.filter(target_id = pk).annotate(dibs_count = Count('reviews_help')).order_by('-dibs_count')
 
     ctx = {
         'service': service, 
         'form': review_form,
         'number_of_dibs': number_of_dibs,
         'avg_of_reviews':avg_of_reviews,
+        'reviews_order_dibs':reviews_order_dibs,
         }
     return render(request, 'services/detail.html', context=ctx)
 

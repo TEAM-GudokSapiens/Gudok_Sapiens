@@ -101,7 +101,8 @@
                             <span class="tab-title">리뷰</span>
                             <span class="review-count ">{{service.get_review_count}}개</span>
                         </div>
-                        {% for review in service.get_review %}
+                        {% for review in reviews_order_dibs %}
+                        {% comment %} {% for review in service.get_review %} {% endcomment %}
                         <div class="review-container">
                             <div class="title-block mb-3 d-flex justify-content-between">
                                 <span class="">{{review.user}}🌱</span>
