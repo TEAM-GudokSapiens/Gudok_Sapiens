@@ -130,6 +130,16 @@
 .btn-primary.btn:focus {
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 255, 0.2) !important;
 }
+.fix-name {
+  font-size: 2.3rem;
+  font-weight: bolder;
+  margin-bottom: 10px;
+}
+.fix-intro,
+.fix-stars {
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+}
 
 .nav-link.btn:active,
 .nav-link.btn:hover,
@@ -313,6 +323,97 @@
 
 }
 
+.carousel-item img {
+  height: 100%;
+  width: 100%;
+}
+.keywords {
+  margin: 10px 0px;
+}
+.keywords div {
+  display: inline;
+}
+.fix-link {
+  text-align: right;
+}
+.tab-title {
+  font-family: "KOTRA_SONGEULSSI";
+  font-size: 2rem;
+  font-weight: bolder;
+  margin-bottom: 20px;
+}
+.tab-content {
+  padding-left: 15px;
+  font-size: 1.1rem;
+}
+.review-img {
+  margin-right: 20px;
+}
+.review-img img {
+  width: 100%;
+  height: 100%;
+}
+.review-content {
+  /* display: inilne; */
+}
+.content-block {
+  /* display: flex;
+  justify-content: flex-start; */
+  word-break: break-all;
+}
+.review-count,
+.review-date {
+}
+.review-count {
+  padding-top: 15px;
+}
+
+.forms {
+  margin: 3rem auto;
+  font-family: "GmarketSansTTFMedium";
+}
+
+.form-logo {
+  margin-bottom: 3rem;
+  font-family: "GmarketSansTTFMedium";
+  font-size: 1.6rem;
+}
+
+.social-login1,
+.social-login2,
+.social-login3 {
+  display: block;
+  height: 5vh;
+  line-height: 5vh;
+  margin-top: 15px;
+}
+.social-login3 {
+  background-color: #fee500;
+  border-radius: 10px;
+  color: #191919;
+}
+.social-login2 {
+  background-color: #03c75a;
+  border-radius: 10px;
+  color: #ffffff;
+}
+.social-login1 {
+  background-color: #ffffff;
+  border-radius: 10px;
+  color: #000000;
+}
+@media screen and (max-width: 600px) {
+  .service-name {
+    font-size: 2.3rem;
+    font-weight: bolder;
+  }
+  .fix-name {
+    font-size: 2rem;
+  }
+  .fix-intro {
+    font-size: 1.3rem;
+  }
+}
 @media screen and (max-width: 930px) {
   .header-links a {
     font-size: 0.8rem;
@@ -323,7 +424,7 @@
   }
 
   .fixing-box {
-    width: 100%;
+    width: 90vw;
     display: block;
     position: static;
   }
@@ -370,12 +471,17 @@
   }
 
   .carousel-item img {
-    height: 40vh;
-    /* width: 90vw; */
+    width: 100%;
+  }
+  .review-img {
+    width: 150px;
+    height: 150px;
+  }
+  .service-container {
+    width: 90vw;
   }
 }
-
-@media screen and (min-width: 769px) and (max-width: 1150px) {
+@media screen and (min-width: 931px) and (max-width: 1150px) {
   .service-content {
     font-size: 1.1rem;
   }
@@ -407,105 +513,110 @@
   .main-img {
     display: none;
   }
+  .review-img {
+    width: 180px;
+    height: 180px;
+  }
 }
 
 @media screen and (min-width: 1150px) {
   .carousel {
     display: none;
   }
+  .review-img {
+    width: 15vw;
+    height: 20vh;
+  }
 }
 
-.carousel-item img {
-  height: 40vh;
-  width: 100%;
+/* board */
+.community-navbar {
+  border: 2px solid #debeff;
+  border-radius: 15px;
+  margin: 25px auto;
+  font-size: 1.2rem;
+  padding: 13px 0;
 }
-
-.keywords {
-  margin: 10px 0px;
+.community-board {
+  margin: 70px auto;
 }
-
-.keywords div {
-  display: inline;
+.community-container {
+  font-family: "GmarketSansTTFLight";
 }
-
-.fix-name {
-  font-size: 2.3rem;
-  font-weight: bolder;
-  margin-bottom: 10px;
+.header-title {
+  font-size: 24px;
 }
-
-.fix-intro,
-.fix-stars {
-  font-size: 1.4rem;
-  margin-bottom: 10px;
+.header-count {
+  font-size: 14px;
 }
-
-.fix-link {
-  text-align: right;
+.board-content {
+  border-bottom: 1px solid #9a30ae;
+  border-top: 1px solid #9a30ae;
 }
-
-.tab-title {
-  font-family: "KOTRA_SONGEULSSI";
-  font-size: 2rem;
-  font-weight: bolder;
-  margin: 15px;
+.board-content p {
+  padding: 0px;
+  margin: 0px;
 }
-
-.tab-content {
-  padding-left: 15px;
-  font-size: 1.1rem;
-}
-
-.review-img {
-  width: 15vw;
-  margin-right: 20px;
-}
-
-.review-img img {
-  width: 100%;
-  height: 100%;
-}
-
-.content-block {
+.board-title {
+  border-bottom: 1px solid #cdcdcd;
+  height: 7vh;
   display: flex;
-  justify-content: flex-start;
 }
-
-.review-count,
-.review-date {
-  float: right;
+.board-title p {
+  word-break: break-all;
 }
-
-.review-count {
-  padding-top: 15px;
+.board-title div p {
+  text-align: center;
 }
-
-.review-container {
-  margin: 15px 0px 5px 15px;
+.board-content-container {
+  border-bottom: 1px solid #cdcdcd;
+  height: 7vh;
+  display: flex;
 }
-
-.forms {
-  margin: 3rem auto;
-  font-family: "GmarketSansTTFMedium";
+.board-content-container p {
+  word-break: break-all;
 }
-
-.form-logo {
-  margin-bottom: 3rem;
-  font-family: "GmarketSansTTFMedium";
-  font-size: 1.6rem;
+.board-content-container div p {
+  text-align: center;
 }
-
-.social-login1,
-.social-login2 {
-  display: block;
-  margin-top: 2rem;
-  margin-left: 1rem;
-  width: 20rem;
-  height: auto;
+.board-button {
+  background: #9a30ae;
+  padding: 7px 30px;
 }
-
-.social-login2 {
-  margin-top: 0.5rem;
+.board-paginator {
+  text-align: center;
+}
+.board-info {
+  display: flex;
+}
+a:hover {
+  text-decoration: none !important;
+}
+@media screen and (max-width: 767px) {
+  .board-title {
+    display: none;
+  }
+  /* .board-info {
+    display: none;
+  } */
+  .board-content-container {
+    flex-direction: column;
+    justify-content: space-around;
+  }
+  .board-info {
+    display: flex;
+    justify-content: space-around;
+  }
+}
+@media screen and (min-width: 768px) {
+  .board-info {
+    display: flex;
+    align-items: center;
+  }
+  .board-content-container {
+    display: flex;
+    align-items: center;
+  }
 }
 
 @media screen and (max-width: 576px) {

@@ -10,7 +10,7 @@
     <form method="POST">
         {% csrf_token %}
         <div class="mb-4 md-form">
-            <label name="label_user_id" for="{{ form.user_id.id_for_label }}"><i class="fas fa-user"></i>&nbsp;&nbsp;{{ form.user_id.label }}</label>
+            <label name="label_user_id" for="{{ form.user_id.id_for_label }}"><i class="fas fa-user"></i>{{ form.user_id.label }}</label>
             {{ form.user_id }}
             <script type="text/javascript">
                 if (document.getElementsByName('user_id')[0].value != '') {
@@ -31,7 +31,7 @@
         </div>
 
         <div class="mb-4 md-form">
-            <label for="{{ form.password.id_for_label }}"><i class="fas fa-lock"></i>&nbsp;&nbsp;{{ form.password.label }}</label>
+            <label for="{{ form.password.id_for_label }}"><i class="fas fa-lock"></i>{{ form.password.label }}</label>
             {{ form.password }}
 
             {% if form.password.errors %}
@@ -50,13 +50,28 @@
             <span><a href="{% url 'users:signup' %}">회원가입</a></span>
         </div>
 
-        <input class="btn btn-dark rounded-pill col-8 mt-3" type="submit" value="로그인">
+        <input class="btn btn-dark mt-3 w-100 pt-2 pb-2" type="submit" value="로그인" style="border-radius: 10px;">
 
-        <a class="social-login1" href="/accounts/google/login/?process=login">
+        <!-- <a class="social-login1 w-100" href="/accounts/google/login/?process=login">
             <img src="https://artmusee.com/images/google_login.png" alt="구글 로그인" style="width: 100%;">
         </a>
-        <a class="social-login2" href="/accounts/naver/login/?process=login">
+        <a class="social-login2 w-100" href="/accounts/naver/login/?process=login">
             <img src="https://img1.daumcdn.net/thumb/R720x0.q80/?scode=mtistory2&fname=http%3A%2F%2Fcfile24.uf.tistory.com%2Fimage%2F99580C465C3D7D130CF754" alt="네이버 로그인" style="width: 100%;">
+        </a>
+        <a class="social-login2 w-100" href="/accounts/naver/login/?process=login">
+            <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=http%3A%2F%2Fcfile28.uf.tistory.com%2Fimage%2F99BEE8465C3D7D12140EAC" alt="네이버 로그인" style="width: 100%;">
+        </a> -->
+        <a class="social-login1 w-100" href="/accounts/google/login/?process=login">
+            <img src="../../../media/google_logo.png" alt="" style="width: 10%;" class="mr-2">
+            구글로 시작하기
+        </a>
+        <a class="social-login2 w-100" href="/accounts/naver/login/?process=login">
+            <img src="../../../media/naver_logo.png" alt="" style="width: 8%;" class="mr-2">
+            네이버로 시작하기
+        </a>
+        <a class="social-login3 w-100" href="/accounts/naver/login/?process=login">
+            <img src="../../../media/kakao_logo.png" alt="" style="width: 8%;" class="mr-2">
+            카카오로 시작하기
         </a>
     </form>
 </div>
