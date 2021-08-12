@@ -10,18 +10,22 @@
 
 {% block board_content %}
 <div class="board-title col-md-12">
-    <p class="col-6 align-self-center">제목</p>
-    <div class="d-flex col-6 p-0">
-        <p class="col-3 align-self-center">작성일</p>
-        <p class="col-3 align-self-center">조회수</p>
+    <p class="col-8">제목</p>
+    <div class="col-4 p-0">
+        <p class="col-6">작성일</p>
+        <p class="col-6">조회수</p>
     </div>
 </div>
     {% for notice in page_obj.object_list %}
     <div class="board-content-container" style="border-bottom: 1px solid #EEEEEE;">
-        <p class="col-md-6"><a href="{%url 'community:notice_detail' notice.id%}" class="text-dark">{{ notice.title }}</a></p>
-        <div class="board-info col-md-6 p-0">
-            <p class="col-md-3">{{ notice.created_at | date:"Y-m-d" }}</p>
-            <p class="col-md-3">{{ notice.hits }}</p>
+        <p class="col-md-8"><a href="{%url 'community:notice_detail' notice.id%}" class="text-dark">{{ notice.title }}</a></p>
+        <div class="board-info col-md-4 p-0">
+            <p class="col-6">{{ notice.created_at | date:"Y-m-d" }}</p>
+            <p class="col-6">{{ notice.hits }}</p>
+        </div>
+        <div class="board-second-info col-sm-4 p-0">
+            <div class="col-md-12">{{ notice.created_at | date:"Y-m-d" }}</div>
+            <span class="col-6 pl-3">조회수 : {{ notice.hits }}</span>
         </div>
     </div>
     {%endfor%}
