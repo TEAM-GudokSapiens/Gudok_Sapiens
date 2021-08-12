@@ -1,86 +1,73 @@
 {% extends "base.html" %}
 {% block content %}
 
-            <div style="width: 50%; margin: 0 auto;">
-                    <div class="carousel-inner">
-                    <h4><매거진></h4>
-                    {% for magazine in magazine_list  %}
-                        {% if forloop.counter  == 1 %}
-                        <div class="carousel-item active">
-                            <a href="{% url 'community:magazine_detail' magazine.id %}">
-                            <img src="{{ magazine.img.url }}" />
-                            </a>
-                        </div>
-                        {% else %}
-                        <div class="carousel-item">
-                            <a href="{% url 'community:magazine_detail' magazine.id %}">
-                            <img src="{{ magazine.img.url }}" />
-                            </a>
-                        </div>
-                        {% endif %}
-                    {% endfor %}
-                    </div>
-                    <button class="carousel-control-prev btn" data-bs-target="#carouselControls" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next btn" data-bs-target="#carouselControls" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
+<div class="col-8" style="margin: 0 auto;">
+    <div>
+        <div class="carousel-inner">
+            <h4>
+                <매거진>
+            </h4>
+            {% for magazine in magazine_list  %}
+            {% if forloop.counter  == 1 %}
+            <div class="carousel-item active">
+                <a href="{% url 'community:magazine_detail' magazine.id %}">
+                    <img src="{{ magazine.img.url }}" />
+                </a>
             </div>
-
-<div class="album py-5 bg-light">
-    <div class="container">
-        <div><인기서비스></div> 
-        <div class="flex row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            {% if services %}
-            {% for service in services  %}
-                <a href="{% url 'services:services_detail' pk=service.pk %}"> 
+            {% else %}
+            <div class="carousel-item">
+                <a href="{% url 'community:magazine_detail' magazine.id %}">
+                    <img src="{{ magazine.img.url }}" />
+                </a>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        <button class="carousel-control-prev btn" data-bs-target="#carouselControls" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next btn" data-bs-target="#carouselControls" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    
+    <div class="album py-5 bg-light">
+        <div class="container">
+            <div>
+                <인기서비스>
+            </div>
+            <div class="flex row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                {% if services %}
+                {% for service in services  %}
+                <a href="{% url 'services:services_detail' pk=service.pk %}">
                     <div class="col">
                         <div class='card'>
                             <div class='card-img-top'>
-                            {% if service.img1 %}
+                                {% if service.img1 %}
                                 <img src="{{ service.img1.url }}" width='250px' />
-                            {% endif %}
+                                {% endif %}
                             </div>
                             <div class='card-body'>
                             </div>
                             {{ service.name }}
                             {{ service.intro }}
-                             <a href="{% url 'likes:likes_dibs' service.id %}">찜하기</a>
+                            <a href="{% url 'likes:likes_dibs' service.id %}">찜하기</a>
                         </div>
                     </div>
-                {% endfor %}
-            {% else %}
-
-                <div>
-                    <h5>조건에 맞는 구독 서비스가 없습니다.</h5> 
-                </div>
-
-            {% endif %}
-            
+                    {% endfor %}
+                    {% else %}
+    
+                    <div>
+                        <h5>조건에 맞는 구독 서비스가 없습니다.</h5>
+                    </div>
+    
+                    {% endif %}
+    
+            </div>
         </div>
     </div>
 </div>
 
-
-{% comment %} <div>
-    <div class="magazine-container">
-        매거진
-    </div>
-    <span>인기 구독 서비스</span>
-    <div class="main-list">
-        <div class="service-img">
-
-        </div>
-        <div>
-            <span class="service-title">와이즐리</span>
-            <div class="service-star">⭐️⭐️⭐️⭐️⭐️</div>
-        </div>
-        <div class="service-content">
-            면도기, 면도용품 정기구독
-        </div>
-    </div>
-</div> {% endcomment %}
 {% endblock %}
