@@ -56,7 +56,7 @@
             <div class="fix-intro">{{service.intro}}</div>
             <div class="fix-stars">⭐️⭐️⭐️⭐️⭐️ {{ service.review.score }}</div>
             {% if avg_of_reviews %}
-                <div> 평균 ⭐️: {{ avg_of_reviews }} ({{service.get_review_count}} 명) </div>
+                <div> 평균 ⭐️: {{ avg_of_reviews|floatformat:1 }} ({{service.get_review_count}} 명) </div>
             {% else %}
                 <div> 아직 작성한 리뷰가 없습니다. </div>
             {% endif %}

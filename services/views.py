@@ -14,7 +14,7 @@ def main(request):
     # 찜을 많이 받은 서비스를 우선적으로 배치
     # 추후에 별점 순으로 변경할 수 있음
     services = Service.objects.annotate(
-        num_dibs=Count('dib')).order_by('-num_dibs')[:8]
+        num_dibs=Count('dib')).order_by('-num_dibs')[:8].annotate(avg_reviews=Avg('review__score'))
     ctx = {
         'magazine_list': magazine_list,
         'services': services,
@@ -29,13 +29,9 @@ def services_list(request):
     page = request.GET.get('page')
     services = paginator.get_page(page)
 
-    # avg_of_reviews = Service.objects.all().annotate(avg_reviews=Avg('review__score'))
-    # avg_of_reviews = round(avg_of_reviews * 2) / 2
-
     ctx = {
         'services': services,
         'categories': categories,
-        # 'avg_of_reviews':avg_of_reviews,
     }
     return render(request, 'services/list.html', context=ctx)
 
@@ -44,7 +40,7 @@ def services_list(request):
 
 def category_list(request, category_slug):
     services_list = Service.objects.filter(
-        category__slug__contains=category_slug)
+        category__slug__contains=category_slug).annotate(avg_reviews=Avg('review__score'))
     categories = Category.objects.all()
     sub_category_list = SubCategory.objects.filter(
         category__slug__contains=category_slug)
@@ -64,7 +60,7 @@ def category_list(request, category_slug):
 
 def sub_category_list(request, category_slug, sub_category_slug):
     services_list = Service.objects.filter(
-        subcategory__slug__contains=sub_category_slug)
+        subcategory__slug__contains=sub_category_slug).annotate(avg_reviews=Avg('review__score'))
     categories = Category.objects.all()
     sub_category_list = SubCategory.objects.filter(
         category__slug__contains=category_slug)
@@ -87,8 +83,6 @@ def services_detail(request, pk):
     review_form = ReviewCreateForm()
     number_of_dibs = service.dib_set.all().count()
     avg_of_reviews = service.review.aggregate(Avg('score'))['score__avg']
-    if avg_of_reviews:
-        avg_of_reviews = round(avg_of_reviews * 2) / 2
     # num_of_full_stars = int(avg_of_reviews // 1)
     # is_half_star = True if avg_of_reviews % 1 ==0.5 else False 
 
@@ -108,13 +102,13 @@ def search(request):
     if query:
         if search_type == "all":
             results = Service.objects.filter(Q(name__icontains=query) | Q(
-            intro__icontains=query) | Q(content__icontains=query)).distinct()
+            intro__icontains=query) | Q(content__icontains=query)).annotate(avg_reviews=Avg('review__score')).distinct()
         elif search_type == "name":
-            results = Service.objects.filter(name__icontains=query)
+            results = Service.objects.filter(name__icontains=query).annotate(avg_reviews=Avg('review__score'))
         elif search_type == "intro":
-            results = Service.objects.filter(intro__icontains=query)
+            results = Service.objects.filter(intro__icontains=query).annotate(avg_reviews=Avg('review__score'))
         elif search_type == "content":
-            results = Service.objects.filter(content__icontains=query)
+            results = Service.objects.filter(content__icontains=query).annotate(avg_reviews=Avg('review__score'))
     else:
         results = []
     ctx = {
@@ -130,7 +124,7 @@ def services_tags(request):
         categories = Category.objects.all()
         selected = request.POST.getlist('selected')
         services = Service.objects.filter(tags__name__in=selected).annotate(
-            num_tags=Count('tags')).filter(num_tags__gte=len(selected)).distinct()
+            num_tags=Count('tags')).filter(num_tags__gte=len(selected)).annotate(avg_reviews=Avg('review__score')).distinct()
 
         ctx = {
             'services': services,
