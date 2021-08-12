@@ -3,27 +3,9 @@
 {% load bootstrap4 %}
 
 {% block board_navbar %}
-<div class="col-4 p-0">
-    <div class="header-title">매거진</div>
-    <div class="header-count">1,000개의 글</div>
-</div>
-<form class="d-flex col-4 h-75 p-0 align-self-end" method="GET" action="{% url 'community:search' %}">
-    {% csrf_token %}
-    <input type='text' name='search_key' class="w-100 col-8" value="{{ search_key }}" placeholder='Search' />
-    <input type='submit' class="w-100 col-4" value="Search" />
-</form>
 {% endblock %}
 
 {% block board_content %}
-<div class="board-title col-md-12">
-    <p class="col-6 align-self-center">제목</p>
-    <div class="d-flex col-6 p-0">
-        <p class="col-3 align-self-center">작성자</p>
-        <p class="col-3 align-self-center">작성일</p>
-        <p class="col-3 align-self-center">좋아요</p>
-        <p class="col-3 align-self-center">조회수</p>
-    </div>
-</div>
     {% for magazine in page_obj.object_list %}
     <div>
         <img src="{{ magazine.img.url }}" style="width: 450px;"><br>

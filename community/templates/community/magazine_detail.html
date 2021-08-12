@@ -1,13 +1,6 @@
 {% extends "./board_layout.html" %}
 {% load bootstrap4 %}
 
-{% block board_navbar %}
-<div class="col-4 p-0">
-    <div class="header-title">매거진</div>
-    <div class="header-count">1,000개의 글</div>
-</div>
-{% endblock %}
-
 {% block board_content %}
 <p style="display:none">{{ magazine.update_counter }}</p>
 

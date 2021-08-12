@@ -6,11 +6,6 @@
     <div class="header-title">자유게시판</div>
     <div class="header-count">1,000개의 글</div>
 </div>
-<form class="d-flex col-4 h-75 p-0 align-self-end" method="GET" action="{% url 'community:search' %}">
-    {% csrf_token %}
-    <input type='text' name='search_key' class="w-100 col-8" value="{{ search_key }}" placeholder='Search' />
-    <input type='submit' class="w-100 col-4" value="Search" />
-</form>
 {% endblock %}
 
 {% block board_content %}
@@ -25,21 +20,31 @@
 </div>
     {% for board in page_obj.object_list %}
     <div class="board-content-container" style="border-bottom: 1px solid #EEEEEE;">
-        <p class="col-md-6"><a href="{%url 'community:board_detail' board.id%}" class="text-dark">{{ board.title }}</a></p>
+        <p class="col-md-6 col-sm-8">
+            <a href="{%url 'community:board_detail' board.id%}" class="text-dark">{{ board.title }}</a>
+            <span class="board-second-user">작성자 : {{ board.user }}</span>
+        </p>
         <div class="board-info col-md-6 p-0">
             <p class="col-md-3">{{ board.user }} </p>
             <p class="col-md-3">{{ board.created_at | date:"Y-m-d" }}</p>
             <p class="col-md-3">{{ board.like.count }}</p>
             <p class="col-md-3">{{ board.hits }}</p>
         </div>
+        <div class="board-second-info col-md-6 col-sm-4 p-0">
+            <div class="col-md-12">{{ board.created_at | date:"Y-m-d" }}</div>
+            <div>
+                <span class="col-6">좋아요 : {{ board.like.count }}</span>
+                <span class="col-6">조회수 : {{ board.hits }}</span>
+            </div>
+        </div>
     </div>
     {%endfor%}
 {% endblock %}
 
 {% block create_button %}
-<div class="pt-4 mb-3">
+<div class="mb-3">
     {% if request.user.is_authenticated %}
-    <div class="col-lg-3 col-sm-12" style="text-align: center;">
+    <div class="col-sm-3 col-xs-12" style="text-align: center;">
         <a href="{%url 'community:board_create' %}" class="board-button text-light w-100 d-block">글작성</a>
     </div>
     {% endif %}

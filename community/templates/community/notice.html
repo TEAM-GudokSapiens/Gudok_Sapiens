@@ -6,11 +6,6 @@
     <div class="header-title">공지사항</div>
     <div class="header-count">1,000개의 글</div>
 </div>
-<form class="d-flex col-4 h-75 p-0 align-self-end" method="GET" action="{% url 'community:search' %}">
-    {% csrf_token %}
-    <input type='text' name='search_key' class="w-100 col-8" value="{{ search_key }}" placeholder='Search' />
-    <input type='submit' class="w-100 col-4" value="Search" />
-</form>
 {% endblock %}
 
 {% block board_content %}

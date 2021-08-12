@@ -428,7 +428,7 @@
 {% block create_button %}
 <div class="pt-4 mb-3">
     {% if request.user.is_authenticated %}
-    <div class="col-lg-3 col-sm-12" style="text-align: center;">
+    <div class="col-sm-3 col-xs-12" style="text-align: center;">
         <a href="{%url 'community:board_create' %}" class="board-button text-light w-100 d-block">글작성</a>
     </div>
     {% endif %}
