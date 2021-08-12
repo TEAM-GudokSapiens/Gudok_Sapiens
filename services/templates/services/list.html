@@ -56,6 +56,7 @@
         {% endfor %}
     </ul>
 </div>
+{% comment %} {{ avg_reviews }} {% endcomment %}
 {% comment %} 본문 내용 서비스 나열 {% endcomment %}
 <div class="album py-5 bg-light">
     <div class="container"> 
@@ -74,6 +75,7 @@
                             </div>
                             {{ service.name }}
                             {{ service.intro }}
+                            <div> 평균 ⭐️: {{ service.avg_reviews|floatformat:1 }} ({{service.get_review_count}} 명) </div>
                              <a href="{% url 'likes:likes_dibs' service.id %}">찜하기</a>
                         </div>
                     </div>

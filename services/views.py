@@ -22,20 +22,20 @@ def main(request):
     return render(request, 'services/main.html', context=ctx)
 
 def services_list(request):
-    services_list = Service.objects.all()
+    services_list = Service.objects.all().annotate(avg_reviews=Avg('review__score'))
     categories = Category.objects.all()
     # 한 페이지 당 담을 수 있는 객체 수를 정할 수 있음
     paginator = Paginator(services_list, 3)
     page = request.GET.get('page')
     services = paginator.get_page(page)
 
-    avg_of_reviews = Service.objects.annotate(avg_reviews=Avg('review__score'))
+    # avg_of_reviews = Service.objects.all().annotate(avg_reviews=Avg('review__score'))
     # avg_of_reviews = round(avg_of_reviews * 2) / 2
 
     ctx = {
         'services': services,
         'categories': categories,
-        'avg_of_reviews':avg_of_reviews,
+        # 'avg_of_reviews':avg_of_reviews,
     }
     return render(request, 'services/list.html', context=ctx)
 
