@@ -439,6 +439,9 @@
   padding: 0px;
   margin: 0px;
 }
+.board-content-container p a {
+  font-family: "GmarketSansTTFMedium";
+}
 .board-title {
   border-bottom: 1px solid #cdcdcd;
   height: 7vh;
@@ -465,6 +468,7 @@
 
 .board-content-container p {
   word-break: break-all;
+  padding-left: 15px;
 }
 .board-content-container div p {
   text-align: center;
@@ -551,6 +555,9 @@ a:hover {
   }
   .fix-intro {
     font-size: 1.3rem;
+  }
+  .board-button {
+    font-size: 0.7rem;
   }
 }
 @media screen and (max-width: 930px) {

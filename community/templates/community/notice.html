@@ -18,8 +18,8 @@
 </div>
     {% for notice in page_obj.object_list %}
     <div class="board-content-container" style="border-bottom: 1px solid #EEEEEE;">
-        <p class="col-md-8"><a href="{%url 'community:notice_detail' notice.id%}" class="text-dark">{{ notice.title }}</a></p>
-        <div class="board-info col-md-4 p-0">
+        <p class="col-8"><a href="{%url 'community:notice_detail' notice.id%}" class="text-dark">{{ notice.title }}</a></p>
+        <div class="board-info col-4 p-0">
             <p class="col-6">{{ notice.created_at | date:"Y-m-d" }}</p>
             <p class="col-6">{{ notice.hits }}</p>
         </div>
