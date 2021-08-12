@@ -1,4 +1,5 @@
 from django import forms
+from django.forms.widgets import NumberInput
 
 class StarWidget(forms.TextInput):
     input_type = 'rating'
@@ -23,3 +24,6 @@ class StarWidget(forms.TextInput):
                 'step': 0.5,
             })
             return attrs
+
+class RangeInput(NumberInput):
+    input_type = "range"

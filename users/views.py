@@ -16,7 +16,6 @@ from django.core.paginator import Paginator
 
 # 회원가입
 
-
 def signup(request):
     if request.method == "POST":
         form = SignupForm(request.POST)

@@ -272,7 +272,7 @@
   width: 23.8vw;
   height: auto;
   position: fixed;
-  top: 65%;
+  top: 50%;
   right: 20.2%;
   padding: 10px 20px;
   /* min-width: fit-content; */
@@ -650,3 +650,86 @@ a:hover {
     font-size: 1rem;
   }
 }
+
+.range{
+  height:80px;
+  width: 380px;
+  background: blue;
+  border-radius: 10px;
+  padding: 0 65px 0 45px
+}
+
+.range .field{
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.range .sliderValue{
+  position: relative;
+  width: 100%;
+}
+
+.range .sliderValue span{
+  position: absolute;
+  height: 45px;
+  width: 45px;
+  color: white;
+  font-weight: 500;
+  top: -20px;
+  transform: translateX(-50%);
+  line-height: 55px;
+  z-index: 2;
+}
+.range .sliderValue span:after{
+  position: absolute;
+  content: "";
+  height: 45px;
+  width: 45px;  
+  background: red;
+  left: 3%;
+  transform: translateX(-25%) rotate(45deg);
+  border: 3px solid white;
+  z-index: -1;
+  border-top-left-radius: 50%;
+  border-top-right-radius: 50%;
+  border-bottom-left-radius: 50%;
+}
+
+.range .field .value{
+  position: absolute;
+  font-size: 18px;
+  font-weight: 600;
+  color: #f7f7ff;
+}
+
+.range .field .value .left{
+  left: -43px;
+}
+
+.range .field .value .right{
+  right: -20px;
+}
+
+.range .field input{
+  -webkit-appearance: none;
+  height: 3px;
+  width: 100%;
+  background: #ddd;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+}
+
+.range .field input::-webkit-slider-thumb{  
+  -webkit-appearance: none;
+  height: 20px;
+  width: 20px;
+  background: red;
+  border-radius: 50%;
+  border: 1px solid red;
+  cursor: pointer;
+}
+

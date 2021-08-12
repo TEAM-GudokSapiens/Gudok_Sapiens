@@ -56,8 +56,12 @@
             <div class="fix-name">{{service.name}}</div>
             <div class="fix-intro">{{service.intro}}</div>
             <div class="fix-stars">⭐️⭐️⭐️⭐️⭐️ {{ service.review.score }}</div>
-            <div class="fix-link"><a href="">찜({{ number_of_dibs }}개)</a> /
-                <a href="">공유</a>
+            <div> 평균 ⭐️: {{ avg_of_reviews }} ({{service.get_review_count}} 명) </div>
+            <div class="fix-link">
+                <a href="{% url 'likes:likes_dibs' service.id %}">찜({{ number_of_dibs }}개)</a> /
+                <a @click="onClickFacebook">
+                    페이스북 공유하기
+                </a>
             </div>
         </div>
         <div class="service-container">
@@ -84,6 +88,7 @@
                         aria-selected="false">정보</button>
                 </li>
             </ul>
+
             <div class="tab-content" id="pills-tabContent">
                 <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                     <div class="price-tab">
@@ -97,7 +102,7 @@
                             <span class="tab-title">리뷰</span>
                             <span class="review-count ">{{service.get_review_count}}개</span>
                         </div>
-                        {% for review in service.get_review %}
+                        {% for review in page_obj %}
                         <div class="review-container">
                             <div class="title-block mb-3 d-flex justify-content-between">
                                 <span class="">{{review.user}}🌱</span>
@@ -121,10 +126,42 @@
                         </div>
                         <hr>
                         {% endfor %}
+                                            
+                        {% if page_obj.has_previous %}
+                            <a href="?page=1">처음으로</a>
+                            <a href="?page={{ page_obj.previous_page_number }}">이전으로</a>
+                        {% endif %}
+
+                        <span class="current">
+                            {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+                        </span>
+
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}">다음으로</a>
+                            <a href="?page={{ page_obj.paginator.num_pages }}">맨뒤로</a>
+                        {% endif %}
+
                         {% if request.user.is_authenticated %}
                         <form action="{% url 'reviews:submit_ajax' service.id %}" enctype="multipart/form-data" id="review_create_form" method="POST">
-                            {% csrf_token %}
-                            {% bootstrap_form form %}
+                            {% csrf_token %}    
+
+                            제목 <br> {{ form.title }} <br> <br>
+                            내용 <br> {{ form.content }} <br> <br>
+                            사진 <br> {{ form.photo }} <br> <br>
+                            별점 <br> {{ form.score }} <br> <br>
+                            사용기간(개월) <br> 
+                            <div class="range">
+                                <div class="sliderValue">
+                                    <span>50</span>
+                                </div>
+                                <div class="field">
+                                    <div class="value left">0</div>
+                                    <input type="range" name="period" min="0" max="100" value="50" steps="1">
+                                    <div class="value right">100</div>
+                                </div>
+                            </div>
+                            
+                            <br><br>
                             <input type="submit" onclick="" />
                         </form>
                         {% endif %}
@@ -141,23 +178,18 @@
             </div>
             <!-- tabend -->
         </div>
-        <div class="fixing-box">
-            <div class="keywords">
-                <div>#태그1</div>
-                <div>#태그2</div>
-                <div>#태그3</div>
-                <div>#태그4</div>
-            </div>
-            <div class="fix-name">{{service.name}}</div>
-            <div class="fix-intro">{{service.intro}}</div>
-            <div class="fix-stars">⭐️⭐️⭐️⭐️⭐️ {{ service.review.score }}</div>
-            <div> 평균 ⭐️: {{ avg_of_reviews }} ({{service.get_review_count}} 명) </div>
-            <div class="fix-link"><a href="{% url 'likes:likes_dibs' service.id %}">찜({{ number_of_dibs }}개)</a> /
-                <a href="">공유</a>
-            </div>
-        </div>
+
     </div>
 </div>
+<script>
+    const slideValue = document.querySelector("span");
+    const inputSlider = document.querySelector("input");
+    inputSlider.onintput = (()=>{
+        let value = inputSlider.value;
+        slideValue.textContent = value;
+    });
+
+</script>
 <!-- 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
