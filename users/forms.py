@@ -7,6 +7,19 @@ from django.contrib.auth.hashers import check_password
 
 
 class SignupForm(UserCreationForm):
+    def __init__(self, *args, **kwargs):
+        super(SignupForm, self).__init__(*args, **kwargs)
+
+        self.fields['user_id'].label = '아이디'
+        self.fields['user_id'].widget.attrs.update({
+            'class': 'form-control',
+            'autofocus': False
+        })
+        self.fields['password1'].label = '비밀번호'
+        self.fields['password1'].widget.attrs.update({
+            'class': 'form-control',
+        })
+
     class Meta:
         model = get_user_model()
         fields = ('user_id', 'email', 'nickname', 'name',
@@ -24,6 +37,14 @@ class SignupForm(UserCreationForm):
         self.fields['phonenum'].label = '휴대폰 번호'
         self.fields['phonenum'].help_text = '-를 빼고 입력해주세요.'
         self.fields['password1'].help_text = '기호, 영어 소문자, 숫자를 혼합하여 10자리 이상'
+
+    def save(self, commit=True):
+        user = super(SignupForm, self).save(commit=False)
+        user.level = '2'
+        user.is_active = False
+        user.save()
+
+        return user
 
 
 class UpdateForm(UserCreationForm):
