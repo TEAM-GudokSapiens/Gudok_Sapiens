@@ -320,10 +320,15 @@
     margin-bottom: 10px;
   }
 }
-
+.carousel-item {
+  height: 100%;
+}
 .carousel-item img {
   height: 100%;
   width: 100%;
+}
+.carousel-inner {
+  height: 39vh;
 }
 .keywords {
   margin: 10px 0px;
@@ -511,6 +516,10 @@ a:hover {
   .board-paginator {
     font-size: 0.9rem;
   }
+  .board-menu {
+    display: flex;
+    justify-content: space-around;
+  }
 }
 @media screen and (min-width: 768px) {
   .board-info {
@@ -522,6 +531,13 @@ a:hover {
   }
   .board-second-user {
     display: none;
+  }
+  .board-menu {
+    display: flex;
+    justify-content: flex-start;
+  }
+  .board-menu span {
+    margin: 0px 30px;
   }
 }
 
