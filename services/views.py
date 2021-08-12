@@ -87,14 +87,15 @@ def services_detail(request, pk):
     review_form = ReviewCreateForm()
     number_of_dibs = service.dib_set.all().count()
     avg_of_reviews = service.review.aggregate(Avg('score'))['score__avg']
-    avg_of_reviews = round(avg_of_reviews * 2) / 2
+    if avg_of_reviews:
+        avg_of_reviews = round(avg_of_reviews * 2) / 2
     # num_of_full_stars = int(avg_of_reviews // 1)
     # is_half_star = True if avg_of_reviews % 1 ==0.5 else False 
 
     ctx = {
         'service': service, 
         'form': review_form,
-        'number''_of_dibs': number_of_dibs,
+        'number_of_dibs': number_of_dibs,
         'avg_of_reviews':avg_of_reviews,
         }
     return render(request, 'services/detail.html', context=ctx)
