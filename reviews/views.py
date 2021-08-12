@@ -1,3 +1,4 @@
+from users.decorators import login_message_required
 from django.shortcuts import render
 from .models import Review
 from django.urls import reverse, reverse_lazy
@@ -71,7 +72,7 @@ def reviews_create(request, pk):
 
     return render(request, "reviews/create.html", ctx)
 
-
+@login_message_required
 @csrf_exempt
 def submit_ajax(request, pk):
     # req = json.loads(request.body)

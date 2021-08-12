@@ -29,9 +29,13 @@ def services_list(request):
     page = request.GET.get('page')
     services = paginator.get_page(page)
 
+    avg_of_reviews = Service.objects.annotate(avg_reviews=Avg('review__score'))
+    # avg_of_reviews = round(avg_of_reviews * 2) / 2
+
     ctx = {
         'services': services,
         'categories': categories,
+        'avg_of_reviews':avg_of_reviews,
     }
     return render(request, 'services/list.html', context=ctx)
 
