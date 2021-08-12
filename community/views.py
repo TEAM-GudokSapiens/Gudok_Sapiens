@@ -75,7 +75,6 @@ def board_create(request):
             new_board = Board(
                 title=form.cleaned_data['title'],
                 content=form.cleaned_data['content'],
-                img=form.cleaned_data['img'],
                 user=user
             )
             new_board.save()
@@ -125,6 +124,22 @@ def board_delete(request, pk):
     post = Board.objects.get(id=pk)
     post.delete()
     return redirect('community:board')
+
+def board_update(request, pk):
+        board = get_object_or_404(Board, pk=pk)
+ 
+        # 입력된 내용 처리 -> POST
+        if request.method == 'POST':
+                form = BoardForm(request.POST or None, instance=board)
+                if form.is_valid(): # 잘입력된지 체크
+                        post = form.save(commit=False)
+                        post.save() # 저장하기
+                        return redirect('/community/board/'+str(board.id)+'/detail/')
+ 
+        # 빈 페이지 띄워주는 기능 -> GET
+        else :
+                form = BoardForm(instance=board)
+                return render(request, 'community/board_update.html', {'board':board,'form':form})
 
 # 댓글쓰기
 

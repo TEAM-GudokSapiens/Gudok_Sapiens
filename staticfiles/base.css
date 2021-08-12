@@ -1,0 +1,278 @@
+@import url("./reset.css");
+@import url("./font.css");
+
+.nav-link.btn {
+  background-color: white !important;
+  color: inherit !important;
+}
+
+.btn-primary.btn {
+  color: white !important;
+  border-color: rgb(203, 105, 228) !important;
+  background-color: rgb(203, 105, 228) !important;
+}
+.btn-primary.btn:active,
+.btn-primary.btn:hover,
+.btn-primary.btn:focus {
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 255, 0.2) !important;
+}
+
+.nav-link.btn:active,
+.nav-link.btn:hover,
+.nav-link.btn:focus {
+  color: white !important;
+  background-color: rgb(203, 105, 228) !important;
+  border-color: rgb(204, 165, 214) !important;
+  box-shadow: 10px 10px 2px 1px rgba(0, 0, 255, 0.2) !important;
+}
+
+.service-container {
+  width: 35vw;
+  font-family: "GmarketSansTTFLight";
+  max-height: fit-content;
+  margin-top: 13px;
+}
+/* .nav-link: {
+  background-color: aquamarine;
+} */
+.service-name {
+  font-size: 5rem;
+}
+.service-intro {
+  font-size: 1.4rem;
+  padding-bottom: 10px;
+}
+.service-content {
+  font-size: 1.2rem;
+  padding-bottom: 10px;
+}
+.service-box {
+  word-break: break-all;
+}
+.img-container {
+  width: 60vw;
+  height: 40vh;
+}
+.main-img-container {
+  width: 35vw;
+}
+.img-sub-container {
+  width: 25vw;
+  height: auto;
+}
+.sub-img img {
+  width: 100%;
+  height: 100%;
+}
+.sub-img div {
+  width: 49.4%;
+}
+.sub-img {
+  padding-left: 15px;
+  height: 20vh;
+}
+.second-img {
+  width: 100%;
+  height: 20vh;
+  padding: 0px 0px 15px 15px;
+}
+.main-img {
+  width: 100%;
+  height: 40vh;
+}
+
+.fixing-box {
+  font-family: "KOTRA_SONGEULSSI";
+  /* border: 1px solid rgb(215, 215, 215); */
+  width: 23.8vw;
+  height: auto;
+  position: fixed;
+  top: 65%;
+  right: 20.2%;
+  padding: 10px 20px;
+  /* min-width: fit-content; */
+}
+/* font-size: 1.5em; */
+
+/* .top-header {
+  margin: 1rem 0 0 1rem;
+} */
+
+.top-header-title {
+  text-decoration: none !important;
+  font-family: "KOTRA_SONGEULSSI";
+  font-size: 2rem;
+}
+
+.top-header-links {
+  font-family: "GmarketSansTTFLight";
+  font-size: 1.2rem;
+}
+
+@media screen and (max-width: 930px) {
+  .top-header-title {
+    font-size: 1.5rem;
+  }
+  .top-header-links a {
+    font-size: 0.8rem;
+  }
+  .service-container {
+    width: 100%;
+  }
+  .fixing-box {
+    width: 100%;
+    display: block;
+    position: static;
+  }
+  .detail-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .main-img {
+    display: none;
+  }
+  .main-img-container {
+    width: 90%;
+    padding-bottom: 15px;
+  }
+  .img-container {
+    width: 90vw;
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+  }
+  .img-sub-container {
+    height: auto;
+  }
+  .img-sub-container div,
+  .sub-img div {
+    /* width: 90vw;
+    height: auto; */
+    display: none;
+  }
+  .sub-img {
+    height: auto;
+  }
+  .service-content {
+    font-size: 1rem;
+  }
+  .carousel-item img {
+    height: 40vh;
+    /* width: 90vw; */
+  }
+}
+@media screen and (min-width: 769px) and (max-width: 1150px) {
+  .service-content {
+    font-size: 1.1rem;
+  }
+  .img-container {
+    width: 60vw;
+  }
+  .img-sub-container {
+    height: 0px;
+    width: 0px;
+  }
+  .img-sub-container div,
+  .sub-img div {
+    /* width: 90vw;
+    height: auto; */
+    display: none;
+  }
+  .sub-img {
+    height: auto;
+  }
+  .main-img-container {
+    width: 100%;
+  }
+  .main-img {
+    display: none;
+  }
+}
+@media screen and (min-width: 1150px) {
+  .carousel {
+    display: none;
+  }
+}
+.carousel-item img {
+  height: 40vh;
+  width: 100%;
+}
+.keywords {
+  margin: 10px 0px;
+}
+.keywords div {
+  display: inline;
+}
+.fix-name {
+  font-size: 2.3rem;
+  font-weight: bolder;
+  margin-bottom: 10px;
+}
+.fix-intro,
+.fix-stars {
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+}
+.fix-link {
+  text-align: right;
+}
+.tab-title {
+  font-family: "KOTRA_SONGEULSSI";
+  font-size: 2rem;
+  font-weight: bolder;
+  margin: 15px;
+}
+.tab-content {
+  padding-left: 15px;
+  font-size: 1.1rem;
+}
+.review-img {
+  width: 15vw;
+  margin-right: 20px;
+}
+.review-img img {
+  width: 100%;
+  height: 100%;
+}
+.review-content {
+  /* display: inilne; */
+}
+.content-block {
+  display: flex;
+  justify-content: flex-start;
+}
+.review-count,
+.review-date {
+  float: right;
+}
+.review-count {
+  padding-top: 15px;
+}
+.review-container {
+  margin: 15px 0px 5px 15px;
+}
+
+.forms {
+  margin: 3rem auto;
+  font-family: "GmarketSansTTFMedium";
+}
+
+.form-logo {
+  margin-bottom: 3rem;
+  font-family: "GmarketSansTTFMedium";
+  font-size: 1.6rem;
+}
+
+.social-login1,
+.social-login2 {
+  display: block;
+  margin-top: 2rem;
+  margin-left: 1rem;
+  width: 20rem;
+  height: auto;
+}
+
+.social-login2 {
+  margin-top: 0.5rem;
+}

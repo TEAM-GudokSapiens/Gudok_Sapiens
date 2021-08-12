@@ -40,12 +40,17 @@ INSTALLED_APPS = [
     'likes',
     'taggit',
     'taggit_templatetags2',
+
     'django.contrib.sites',  # 사이트,url정보 관리 해주는 기능
     'allauth',  # 설치한앱
     'allauth.account',  # 소셜로그인한 계정관리
     'allauth.socialaccount',  # 소셜account 정보관리
     'allauth.socialaccount.providers.naver',  # 네이버 소셜로그인
     'allauth.socialaccount.providers.google',
+
+    
+    'ckeditor',
+    'ckeditor_uploader',
 ]
 
 TAGGIT_CASE_INSENSITIVE = True #태그의 대소문자 구분하지 않음
@@ -156,3 +161,6 @@ ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
+
+CKEDITOR_UPLOAD_PATH = 'uploads/'
+CKEDITOR_IMAGE_BACKEND = "pillow"

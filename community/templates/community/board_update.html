@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+    <div class="community_navbar"> <!--확인차 넣어둔 커뮤니티 navbar-->
+        <span><a href="{%url 'community:notice'%}">공지사항 </a></span>
+        <span><a href="{%url 'community:magazine'%}">매거진 </a></span>
+        <span><a href="{%url 'community:board'%}">자유게시판 </a></span>
+        <form method="GET" action="{% url 'community:search' %}">
+            {% csrf_token %}
+                <input type='text' name='search_key' value="{{ search_key }}" placeholder='Search' />
+                <input type='submit' value="Search" />
+        </form>
+        <hr>
+    </div>
+    <!--------------------------------------------------------------------->
+
+
+    <form action="{% url 'community:board_update' board.id%}" method="POST">
+        {% csrf_token %}
+
+        <table>
+            {{ form.media }}    
+            제목 : {{ form.title }} <br><br>
+            {{ form.content }}
+        </table> 
+        
+        <input type="submit" value="글수정">
+        
+        </form>
+    </form>
+
+{% endblock %}
