@@ -140,3 +140,13 @@ def services_tags(request):
         return render(request, 'services/list.html', context=ctx)
     else:
         return render(request, 'services/tags_list.html')
+
+def same_tag_list(request, tag):
+    services = Service.objects.filter(tags__name = tag)
+    categories = Category.objects.all()
+
+    ctx = {
+        'services': services,
+        'categories': categories,
+    }
+    return render(request, 'services/list.html', context=ctx)

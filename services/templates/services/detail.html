@@ -49,7 +49,7 @@
         <div class="fixing-box">
             <div class="keywords">
                 {% for tag in service.tags.all  %}
-                <div><a>#{{ tag.name }}</a></div>
+                <div><a href="{% url 'services:same_tag_list' tag.name %}">#{{ tag.name }}</a></div>
                 {% endfor %}
             </div>
             <div class="fix-name">{{service.name}}</div>
