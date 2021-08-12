@@ -1,12 +1,32 @@
-<div class="footer-container">
-  <div>
-    <span>공지사항</span>
-    <span>제휴문의</span>
-    <span>서비스 소개</span>
+<div class="footer-section col-8">
+  <div class="footer-header col-lg-4">
+    <h4>구독사피엔스</h4>
+    <span>슬기로운 구독형 인간</span>
   </div>
-  <div>
-    <h4>
-      구독사피엔스
-    </h4>
+  <div class="footer-box col-lg-4">
+    <div class="footer-1 col-lg-6">
+      <h5>ABOUT US</h5>
+      <a href="" class="text-dark">서비스 소개</a>
+    </div>
+    <div class="footer-2 col-lg-6">
+      <h5>카테고리</h5>
+      <a href="" class="text-dark">라이프스타일</a>
+      <a href="" class="text-dark">음식</a>
+      <a href="" class="text-dark">컨텐츠</a>
+      <a href="" class="text-dark">뉴스레터</a>
+    </div>
   </div>
+  <div class="footer-box col-lg-4">
+    <div class="footer-3 col-lg-6">
+      <h5>커뮤니티</h5>
+      <a href="{% url 'community:notice' %}" class="text-dark">공지사항</a>
+      <a href="{% url 'community:magazine' %}" class="text-dark">매거진</a>
+      <a href="{% url 'community:board' %}" class="text-dark">자유게시판</a>
+    </div>
+    <div class="footer-4 col-lg-6">
+      <h5>입점문의</h5>
+      <a href="" class="text-dark">서비스 등록 신청</a>
+    </div>
+  </div>
+
 </div>

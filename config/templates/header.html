@@ -1,29 +1,51 @@
-<div class="top-header navbar navbar-expand-lg mt-4 navbar-light container">
+<div class="header-container navbar navbar-expand-lg navbar-light col-8">
   <h1>
-    <a href="{% url 'services:main' %}" class="top-header-title text-dark">
+    <a href="{% url 'services:main' %}" class="header-title text-dark">
       구독사피엔스
     </a>
   </h1>
-  <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
     aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="top-header-links collapse navbar-collapse justify-content-end" id="navbarCollapse">
-    <a class="d-block nav-link text-dark" href="{%url 'services:services_list'%}">홈</a><!-- 홈 -->
-    <a class="d-block nav-link hover text-dark" href="{%url 'community:notice'%}">커뮤니티</a><!-- 커뮤니티 -->
-    <div class="navbar-brand d-flex justify-content-between bottom-hedaer-links">
-      <a class="nav-link hover text-dark" href="">나에게 맞는 서비스찾기</a><!-- 나에게맞는서비스찾기 -->
+  <div class="header-links collapse navbar-collapse justify-content-end" id="navbarCollapse">
+    <a class="d-block nav-link text-dark" href="{% url 'services:services_list' %}">홈</a><!-- 홈 -->
+    <a class="d-block nav-link hover text-dark" href="{% url 'community:notice' %}">커뮤니티</a><!-- 커뮤니티 -->
+    <div class="header-second-links navbar-brand d-flex justify-content-between">
+      <a class="nav-link hover text-dark justify-content-center align-self-center" href="{% url 'services:services_tags' %}">나에게 맞는 서비스찾기</a><!-- 나에게맞는서비스찾기 -->
       {% if request.user.is_authenticated %}
       <!--로그인상태-->
-      <a href="{% url 'users:update' pk=user.pk %}"
-      class="btn btn-outline-dark rounded-pill col-3 d-flex flex-column justify-content-center align-items-center ml-3 user-info">유저정보</a>
-      <a href="{% url 'users:logout' %}"
-        class="btn btn-outline-dark rounded-pill col-3 d-flex flex-column justify-content-center align-items-center ml-2 mr-5 logout">로그아웃</a>
+      <div class="user-dropdown">
+        <div class="profile" onclick="menuToggle();">
+          <img src="https://dazedimg-dazedgroup.netdna-ssl.com/1284/azure/dazed-prod/1290/9/1299926.jpg" alt="user profile image">
+        </div>
+        <div class="menu">
+            <span>'{{ user.nickname }}'님 환영합니다!</span>
+          <ul>
+            <li>
+              <img src="https://image.flaticon.com/icons/png/512/618/618631.png" alt="">
+              <a href="{% url 'users:update' pk=user.pk %}">내 정보</a>
+            </li>
+            <li>
+              <img src="https://image.flaticon.com/icons/png/512/1250/1250678.png" alt="">
+              <a href="{% url 'users:logout' %}">로그아웃</a>
+            </li>
+          </ul>
+        </div>
+      </div>
       {% else %}
       <!--로그아웃상태-->
       <a href="{% url 'users:login' %}"
-        class="btn btn-outline-dark rounded-pill col-4 d-flex flex-column justify-content-center align-items-center ml-3">로그인</a>
+        class="btn btn-outline-dark rounded-pill col-3 d-flex flex-column justify-content-center align-items-center ml-3">로그인</a>
       {% endif %}
     </div>
   </div>
 </div>
+
+
+<script>
+  function menuToggle(){
+    const toggleMenu = document.querySelector('.menu');
+    toggleMenu.classList.toggle('active')
+  }
+</script>
