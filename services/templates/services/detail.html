@@ -150,17 +150,19 @@
                             사진 <br> {{ form.photo }} <br> <br>
                             별점 <br> {{ form.score }} <br> <br>
                             사용기간(개월) <br> 
-                            <div class="range">
-                                <div class="sliderValue">
-                                    <span>50</span>
-                                </div>
-                                <div class="field">
-                                    <div class="value left">0</div>
-                                    <input type="range" name="period" min="0" max="100" value="50" steps="1">
-                                    <div class="value right">100</div>
+                            <div class="period">
+                                <div class="range">
+                                    <div class="sliderValue">
+                                        <span class="period_select">50</span>
+                                    </div>
+                                    <div class="field">
+                                        <div class="value left">0</div>
+                                        <input class="period_choice" type="range" name="period" min="0" max="100" value="50" steps="1">
+                                        <div class="value right" >100</div>
+                                    </div>
                                 </div>
                             </div>
-                            
+                                
                             <br><br>
                             <input type="submit" onclick="" />
                         </form>
@@ -182,11 +184,16 @@
     </div>
 </div>
 <script>
-    const slideValue = document.querySelector("span");
-    const inputSlider = document.querySelector("input");
-    inputSlider.onintput = (()=>{
+    const slideValue = document.querySelector(".period_select");
+    const inputSlider = document.querySelector(".period_choice");
+    inputSlider.oninput = (()=>{
         let value = inputSlider.value;
         slideValue.textContent = value;
+        slideValue.style.left = value + "%";
+        slideValue.classList.add("show");
+    });
+    inputSlider.onblur = (()=>{
+        slideValue.classList.remove("show");
     });
 
 </script>

@@ -651,6 +651,15 @@ a:hover {
   }
 }
 
+/* 사용기간 range바 부분!! */
+
+.period{
+  display: grid;
+  height: 100%;
+  text-align: center;
+  place-items: center;
+}
+
 .range{
   height:80px;
   width: 380px;
@@ -678,10 +687,17 @@ a:hover {
   width: 45px;
   color: white;
   font-weight: 500;
-  top: -20px;
-  transform: translateX(-50%);
+  top: -25px;
+  transform: translateX(-50%) scale(0);
+  transform-origin: bottom ;
+  transition: transform 0.3s ease-in-out;
   line-height: 55px;
   z-index: 2;
+}
+
+.range .sliderValue span.show{
+  transform: translateX(-50%) scale(1);
+  
 }
 .range .sliderValue span:after{
   position: absolute;
@@ -690,7 +706,7 @@ a:hover {
   width: 45px;  
   background: red;
   left: 3%;
-  transform: translateX(-25%) rotate(45deg);
+  transform: translateX(-5%) rotate(45deg);
   border: 3px solid white;
   z-index: -1;
   border-top-left-radius: 50%;
@@ -705,12 +721,12 @@ a:hover {
   color: #f7f7ff;
 }
 
-.range .field .value .left{
-  left: -43px;
+.range .field .value.left{
+  left: -22px;
 }
 
-.range .field .value .right{
-  right: -20px;
+.range .field .value.right{
+  right: -40px;
 }
 
 .range .field input{
@@ -725,11 +741,12 @@ a:hover {
 
 .range .field input::-webkit-slider-thumb{  
   -webkit-appearance: none;
-  height: 20px;
-  width: 20px;
+  height: 15px;
+  width: 15px;
   background: red;
   border-radius: 50%;
   border: 1px solid red;
   cursor: pointer;
 }
+
 
