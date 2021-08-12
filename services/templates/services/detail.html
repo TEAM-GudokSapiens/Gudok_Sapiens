@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "board_layout.html" %}
 {% load bootstrap4 %}
 
 {% block content %}
@@ -56,7 +56,8 @@
             <div class="fix-name">{{service.name}}</div>
             <div class="fix-intro">{{service.intro}}</div>
             <div class="fix-stars">⭐️⭐️⭐️⭐️⭐️ {{ service.review.score }}</div>
-            <div class="fix-link"><a href="">찜({{ number_of_dibs }}개)</a> /
+            <div> 평균 ⭐️: {{ avg_of_reviews }} ({{service.get_review_count}} 명) </div>
+            <div class="fix-link"><a href="{% url 'likes:likes_dibs' service.id %}">찜({{ number_of_dibs }}개)</a> /
                 <a href="">공유</a>
             </div>
         </div>
@@ -140,21 +141,6 @@
                 </div>
             </div>
             <!-- tabend -->
-        </div>
-        <div class="fixing-box">
-            <div class="keywords">
-                <div>#태그1</div>
-                <div>#태그2</div>
-                <div>#태그3</div>
-                <div>#태그4</div>
-            </div>
-            <div class="fix-name">{{service.name}}</div>
-            <div class="fix-intro">{{service.intro}}</div>
-            <div class="fix-stars">⭐️⭐️⭐️⭐️⭐️ {{ service.review.score }}</div>
-            <div> 평균 ⭐️: {{ avg_of_reviews }} ({{service.get_review_count}} 명) </div>
-            <div class="fix-link"><a href="{% url 'likes:likes_dibs' service.id %}">찜({{ number_of_dibs }}개)</a> /
-                <a href="">공유</a>
-            </div>
         </div>
     </div>
 </div>
