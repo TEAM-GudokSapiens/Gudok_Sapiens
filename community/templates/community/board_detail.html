@@ -1,5 +1,10 @@
 {% extends './board_layout.html' %}
-
+{% block board_navbar %}
+<div class="col-4 p-0">
+    <div class="header-title">자유게시판</div>
+    <div class="header-count">1,000개의 글</div>
+</div>
+{% endblock %}
 {% block board_content %}
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <head>
@@ -418,4 +423,14 @@
         })
     }
 </script>
+{% endblock %}
+
+{% block create_button %}
+<div class="pt-4 mb-3">
+    {% if request.user.is_authenticated %}
+    <div class="col-lg-3 col-sm-12" style="text-align: center;">
+        <a href="{%url 'community:board_create' %}" class="board-button text-light w-100 d-block">글작성</a>
+    </div>
+    {% endif %}
+</div>
 {% endblock %}

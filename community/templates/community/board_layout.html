@@ -19,31 +19,11 @@
                 {% block board_content %}
                 {% endblock %}
         </div>
-        <div class="pt-4 mb-3">
-            {% if request.user.is_authenticated %}
-            <div class="col-lg-3 col-sm-12" style="text-align: center;">
-                <a href="{%url 'community:board_create' %}" class="board-button text-light w-100 d-block">글작성</a>
-            </div>
-            {% endif %}
-        </div>
-        <div class="board-paginator">
-            {% if page_obj.has_previous %}
-            <a href="?page=1" class="text-dark">처음으로</a>
-            <a href="?page={{ page_obj.previous_page_number }}" class="text-dark">&lt&lt</a>
-            {% endif %}
+        {% block create_button %}
+        {% endblock %}
 
-            <span class="current">
-                {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
-            </span>
-            <!-- {% for page_num in boards.paginator.page_range %}
-                <a href="?page=1">{{page_num}}</a>
-            {% endfor %} -->
-
-            {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}" class="text-dark">&gt&gt</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}" class="text-dark">맨뒤로</a>
-            {% endif %}
-        </div>
+        {% block board_paginator %}
+        {% endblock %}
     </div>
 
 </div>

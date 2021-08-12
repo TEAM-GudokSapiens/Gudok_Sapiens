@@ -1,22 +1,13 @@
-{% extends 'base.html' %}
+{% extends './board_layout.html' %}
 
-{% block content %}
-    <div class="community_navbar"> <!--확인차 넣어둔 커뮤니티 navbar-->
-        <span><a href="{%url 'community:notice'%}">공지사항 </a></span>
-        <span><a href="{%url 'community:magazine'%}">매거진 </a></span>
-        <span><a href="{%url 'community:board'%}">자유게시판 </a></span>
-        <form method="GET" action="{% url 'community:search' %}">
-            {% csrf_token %}
-                <input type='text' name='search_key' value="{{ search_key }}" placeholder='Search' />
-                <input type='submit' value="Search" />
-        </form>
-        <hr>
-    </div>
-    <!--------------------------------------------------------------------->
+{% block board_navbar %}
+<div class="col-4 p-0">
+    <div class="header-title">'{{ query }}' 검색 결과입니다.</div>
+    <div class="header-count">1,000개의 글</div>
+</div>
+{% endblock %}
 
-{% if query %}
-<h5 style="color: gray; ">&nbsp;'{{ query }}' 검색 결과입니다.</h5>
-{% endif %}
+{% block board_content %}
 
 <div class="album py-5 bg-light" >
     <div class="container"> 

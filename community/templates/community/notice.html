@@ -1,22 +1,54 @@
 {% extends "./board_layout.html" %}
 {% load bootstrap4 %}
 
-            {% block board_navbar %}
-            <div class="col-4 p-0">
-                <div class="header-title">공지사항</div>
-                <div class="header-count">1,000개의 글</div>
-            </div>
-            {% endblock %}
+{% block board_navbar %}
+<div class="col-4 p-0">
+    <div class="header-title">공지사항</div>
+    <div class="header-count">1,000개의 글</div>
+</div>
+<form class="d-flex col-4 h-75 p-0 align-self-end" method="GET" action="{% url 'community:search' %}">
+    {% csrf_token %}
+    <input type='text' name='search_key' class="w-100 col-8" value="{{ search_key }}" placeholder='Search' />
+    <input type='submit' class="w-100 col-4" value="Search" />
+</form>
+{% endblock %}
 
-            {% block board_content %}
-                {% for notice in page_obj.object_list %}
-                <div class="board-content-container" style="border-bottom: 1px solid #EEEEEE;">
-                    <p class="col-md-6"><a href="{%url 'community:notice_detail' notice.id%}" class="text-dark">{{ notice.title }}</a></p>
-                    <div class="board-info col-md-6 p-0">
-                        <p class="col-md-3">{{ notice.created_at | date:"Y-m-d" }}</p>
-                        <p class="col-md-3">{{ notice.hits }}</p>
-                    </div>
-                </div>
-                {%endfor%}
-            {% endblock %}
-       
+{% block board_content %}
+<div class="board-title col-md-12">
+    <p class="col-6 align-self-center">제목</p>
+    <div class="d-flex col-6 p-0">
+        <p class="col-3 align-self-center">작성일</p>
+        <p class="col-3 align-self-center">조회수</p>
+    </div>
+</div>
+    {% for notice in page_obj.object_list %}
+    <div class="board-content-container" style="border-bottom: 1px solid #EEEEEE;">
+        <p class="col-md-6"><a href="{%url 'community:notice_detail' notice.id%}" class="text-dark">{{ notice.title }}</a></p>
+        <div class="board-info col-md-6 p-0">
+            <p class="col-md-3">{{ notice.created_at | date:"Y-m-d" }}</p>
+            <p class="col-md-3">{{ notice.hits }}</p>
+        </div>
+    </div>
+    {%endfor%}
+{% endblock %}
+
+{% block board_paginator %}
+<div class="board-paginator">
+    {% if page_obj.has_previous %}
+    <a href="?page=1" class="text-dark">처음으로</a>
+    <a href="?page={{ page_obj.previous_page_number }}" class="text-dark">&lt&lt</a>
+    {% endif %}
+
+    <span class="current">
+        {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+    </span>
+    <!-- {% for page_num in boards.paginator.page_range %}
+                    <a href="?page=1">{{page_num}}</a>
+                {% endfor %} -->
+
+    {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}" class="text-dark">&gt&gt</a>
+    <a href="?page={{ page_obj.paginator.num_pages }}" class="text-dark">맨뒤로</a>
+    {% endif %}
+</div>
+{% endblock %}
