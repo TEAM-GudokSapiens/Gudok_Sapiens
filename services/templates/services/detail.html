@@ -121,11 +121,13 @@
                         </div>
                         <hr>
                         {% endfor %}
+                        {% if request.user.is_authenticated %}
                         <form action="{% url 'reviews:submit_ajax' service.id %}" enctype="multipart/form-data" id="review_create_form" method="POST">
                             {% csrf_token %}
                             {% bootstrap_form form %}
                             <input type="submit" onclick="" />
                         </form>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
