@@ -486,6 +486,12 @@
 a:hover {
   text-decoration: none !important;
 }
+.page-item {
+  display: inline;
+}
+.board-paginator a {
+  padding: 0px 5px;
+}
 @media screen and (max-width: 767px) {
   .board-title {
     display: none;
@@ -501,6 +507,9 @@ a:hover {
   }
   .board-content {
     font-size: 0.8rem;
+  }
+  .board-paginator {
+    font-size: 0.9rem;
   }
 }
 @media screen and (min-width: 768px) {
@@ -688,5 +697,8 @@ a:hover {
   }
   .board-content {
     font-size: 0.6rem;
+  }
+  .board-paginator {
+    font-size: 0.7rem;
   }
 }
