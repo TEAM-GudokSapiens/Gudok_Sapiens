@@ -1,8 +1,9 @@
+from django.db.models.fields import DecimalField
 from django.shortcuts import redirect, render
 from .models import *
 from community.models import Magazine
 from django.contrib import messages
-from django.db.models import Q, Count
+from django.db.models import Q, Count, Avg
 from django.core.paginator import Paginator
 from taggit.models import Tag
 from reviews.forms import ReviewCreateForm
@@ -13,7 +14,7 @@ def main(request):
     # 찜을 많이 받은 서비스를 우선적으로 배치
     # 추후에 별점 순으로 변경할 수 있음
     services = Service.objects.annotate(
-        num_dibs=Count('dib')).order_by('-num_dibs')
+        num_dibs=Count('dib')).order_by('-num_dibs')[:8]
     ctx = {
         'magazine_list': magazine_list,
         'services': services,
@@ -28,9 +29,13 @@ def services_list(request):
     page = request.GET.get('page')
     services = paginator.get_page(page)
 
+    avg_of_reviews = Service.objects.annotate(avg_reviews=Avg('review__score'))
+    # avg_of_reviews = round(avg_of_reviews * 2) / 2
+
     ctx = {
         'services': services,
         'categories': categories,
+        'avg_of_reviews':avg_of_reviews,
     }
     return render(request, 'services/list.html', context=ctx)
 
@@ -81,17 +86,34 @@ def services_detail(request, pk):
     service = Service.objects.get(id=pk)
     review_form = ReviewCreateForm()
     number_of_dibs = service.dib_set.all().count()
-    ctx = {'service': service, 'form': review_form,
-           'number_of_dibs': number_of_dibs}
+    avg_of_reviews = service.review.aggregate(Avg('score'))['score__avg']
+    avg_of_reviews = round(avg_of_reviews * 2) / 2
+    # num_of_full_stars = int(avg_of_reviews // 1)
+    # is_half_star = True if avg_of_reviews % 1 ==0.5 else False 
+
+    ctx = {
+        'service': service, 
+        'form': review_form,
+        'number''_of_dibs': number_of_dibs,
+        'avg_of_reviews':avg_of_reviews,
+        }
     return render(request, 'services/detail.html', context=ctx)
 
 
 def search(request):
     categories = Category.objects.all()
     query = request.GET.get('search_key')
+    search_type = request.GET.get('type')
     if query:
-        results = Service.objects.filter(Q(name__icontains=query) | Q(
+        if search_type == "all":
+            results = Service.objects.filter(Q(name__icontains=query) | Q(
             intro__icontains=query) | Q(content__icontains=query)).distinct()
+        elif search_type == "name":
+            results = Service.objects.filter(name__icontains=query)
+        elif search_type == "intro":
+            results = Service.objects.filter(intro__icontains=query)
+        elif search_type == "content":
+            results = Service.objects.filter(content__icontains=query)
     else:
         results = []
     ctx = {

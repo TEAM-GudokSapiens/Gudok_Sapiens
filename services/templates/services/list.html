@@ -10,10 +10,27 @@
   {% endfor %}
    <form method="GET" action="{% url 'services:search' %}"  >
     {% csrf_token %}
+    <div class="form-row">
+    <div class="col" style="margin-top: 10px;">
+        <select style="width: 6em;" class="custom-select custom-select-md" name="type">
+            <option value="all">전체</option>
+            <option value="name">제목</option>
+            <option value="intro">한줄 소개</option>
+            <option value="content">내용</option>
+        </select>
+    </div>
+    <div class="col" style="margin-top: 10px;">
         <input type='text' name='search_key' value="{{ search_key }}" placeholder='Search' />
+    </div>
+    <div class="col">
         <input type='submit' value="Search" />
+    </div>
+    </div>
+
     </form>
 </div>
+
+
 
 <!--- 세부 카테고리 표기-->
 <div>
@@ -39,7 +56,7 @@
         {% endfor %}
     </ul>
 </div>
-
+{{ avg_of_reviews }}
 {% comment %} 본문 내용 서비스 나열 {% endcomment %}
 <div class="album py-5 bg-light">
     <div class="container"> 
