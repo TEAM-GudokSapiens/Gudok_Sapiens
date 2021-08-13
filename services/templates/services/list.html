@@ -156,7 +156,6 @@
             if (requestDib.status < 400) {
                 const {id} = JSON.parse(requestDib.response)
                 const element = document.querySelector(`.service-id-${id} .dib`);
-                //TODO: 전체 찜 갯수도 ajax구현
                 
                 if (element.innerHTML == `찜하기`) {
                     element.innerHTML = `안찜하기`;
