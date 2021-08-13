@@ -34,16 +34,16 @@
         <div class="detail-box-content">
             {{ board.content | safe }}
         </div>
-        <div id="{{board.id}}" onclick="post_like(this.id)" class="detail-box-likes">
-            {%if request.user in board.like.all%}
-            <!-- 로그인 한 유저가 좋아요를 누른 유저일때  -->
-            <!-- <i id="heart" class="fas fa-heart mr-3"></i> -->
-            ❤️
-            {%else%}
-            <!-- 로그인 한 유저가 좋아요를 누른 유저가 아닐 때  -->
-            <!-- <i id="heart" class="far fa-heart mr-3"></i> -->
-            🤍
-            {%endif%}
+        <div class="detail-box-likes mb-4">
+            <div id="{{board.id}}" onclick="post_like(this.id)">
+                {%if request.user in board.like.all%}
+                <!-- 로그인 한 유저가 좋아요를 누른 유저일때  -->
+                <i id="heart" class="fas fa-heart"></i>
+                {%else%}
+                <!-- 로그인 한 유저가 좋아요를 누른 유저가 아닐 때  -->
+                <i id="heart" class="far fa-heart"></i>
+                {%endif%}
+            </div>
             <div id="like_count" class="ml-2">{{board.like.count}}</div>
         </div>
 
@@ -54,6 +54,7 @@
     <a href="{% url 'community:board_update' board.id %}">수정하기</a>
     <a href="{% url 'community:board_delete' board.id %}">삭제하기</a>
     {% endif %}
+    
 <!--댓글-->
     <div class="card" style="width: 100%;">
         <div class="card-header">
@@ -415,7 +416,6 @@
     };
 
     function post_like(id) {
-        console.log("hi")
         $.ajax({
             url: "{%url 'community:likes'%}", 
             data: {
@@ -423,7 +423,7 @@
             }, 
             dataType: "json",
             success: function (response) {
-                $('#like_count').html(response.like_count+'개') 
+                $('#like_count').html(response.like_count) 
                 $('#message').html(response.message) 
                 if (response.message == "좋아요")
                 //좋아요 눌렀을 때 
