@@ -10,37 +10,38 @@
     <head>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
     </head>
-    <p style="display:none" >{{ board.update_counter }}</p>
-
-    <h3>{{ board.title }}</h3>
-    
-    작성자: {{ board.user }} <br>
-    작성일: {{ board.created_at  | date:"Y/m/d" }} <br>    
-    조회수 : {{ board.hits }} <br>
-
-    <hr>
-
-    {{ board.content | safe }} <br>
-    
-    <hr>
-
-    좋아요
-    <div id="{{board.id}}" onclick="post_like(this.id)">
-        {%if request.user in board.like.all%}
-        <!-- 로그인 한 유저가 좋아요를 누른 유저일때  -->
-        <i id="heart" class="fas fa-heart"></i>
-        {%else%}
-        <!-- 로그인 한 유저가 좋아요를 누른 유저가 아닐 때  -->
-        <i id="heart" class="far fa-heart"></i>
-        {%endif%}
-        <div id="like_count">{{board.like.count}}개</div>
-    </div>
-
-    <hr>
-    <a href="{%url 'community:board'%}">목록으로 </a> <br>
-
-    <!--로그인한 사람 == 작성자 일때만 수정,삭제가능-->
-    {% if user.user_id == board.user.user_id %}
+    <div class="board-detail-content mb-3">
+        <p style="display:none" >{{ board.update_counter }}</p>
+        
+        <h3>{{ board.title }}</h3>
+        
+        작성자: {{ board.user }} <br>
+        작성일: {{ board.created_at  | date:"Y/m/d" }} <br>    
+        조회수 : {{ board.hits }} <br>
+        
+        <hr>
+        
+        {{ board.content | safe }} <br>
+        
+        <hr>
+        
+        좋아요
+        <div id="{{board.id}}" onclick="post_like(this.id)">
+            {%if request.user in board.like.all%}
+            <!-- 로그인 한 유저가 좋아요를 누른 유저일때  -->
+            <i id="heart" class="fas fa-heart"></i>
+            {%else%}
+            <!-- 로그인 한 유저가 좋아요를 누른 유저가 아닐 때  -->
+            <i id="heart" class="far fa-heart"></i>
+            {%endif%}
+            <div id="like_count">{{board.like.count}}개</div>
+        </div>
+        
+        <hr>
+        <a href="{%url 'community:board'%}">목록으로 </a> <br>
+        
+        <!--로그인한 사람 == 작성자 일때만 수정,삭제가능-->
+        {% if user.user_id == board.user.user_id %}
     <a href="{% url 'community:board_update' board.id %}">수정하기</a>
     <a href="{% url 'community:board_delete' board.id %}">삭제하기</a>
     {% endif %}
@@ -206,6 +207,7 @@
             <div id="comment_list"></div>
         </div>
     </div>
+</div>
 </div>
 
 <script type="text/javascript">

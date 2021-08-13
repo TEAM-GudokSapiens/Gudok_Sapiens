@@ -9,6 +9,7 @@
 {% endblock %}
 
 {% block board_content %}
+<div class="board-content mb-3">
 <div class="board-title col-md-12">
     <p class="col-6 align-self-center">제목</p>
     <div class="d-flex col-6 p-0">
@@ -39,8 +40,8 @@
         </div>
     </div>
     {%endfor%}
+</div>
 {% endblock %}
-
 {% block create_button %}
 <div class="mb-3">
     {% if request.user.is_authenticated %}

@@ -10,6 +10,7 @@
 {% endblock %}
 
 {% block board_content %}
+<div class="board-detail-content mb-3">
     <p style="display:none">{{ notice.update_counter }}</p>
     
     <!--제목-->
@@ -29,4 +30,5 @@
     작성일: {{ notice.created_at | date:"Y/m/d" }} <br>
     <hr>
     <a href="{%url 'community:notice'%}">목록으로 돌아가기</a>
+</div>
 {% endblock %}

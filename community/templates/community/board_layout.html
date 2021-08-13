@@ -22,10 +22,8 @@
             {% block board_navbar %}
             {% endblock %}
         </div>
-        <div class="board-content mb-3">
-                {% block board_content %}
-                {% endblock %}
-        </div>
+        {% block board_content %}
+        {% endblock %}
         {% block create_button %}
         {% endblock %}
 

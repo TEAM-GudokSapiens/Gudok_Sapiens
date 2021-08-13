@@ -7,14 +7,16 @@
 </div>
 {% endblock %}
 {% block board_content %}
-<form action="{% url 'community:board_create' %}" method="POST" >
-    {%csrf_token%}
-    <table>
-        {{ form.media }}    
-        제목 : {{ form.title }} <br><br>
-        {{ form.content }}
-    </table> 
-
-    <input type="submit" value="글작성">
-</form>
+<div class="board-create-content mb-3">
+    <form action="{% url 'community:board_create' %}" method="POST" >
+        {%csrf_token%}
+        <table>
+            {{ form.media }}    
+            제목 : {{ form.title }} <br><br>
+            {{ form.content }}
+        </table> 
+        
+        <input type="submit" value="글작성">
+    </form>
+</div>
 {% endblock %}
