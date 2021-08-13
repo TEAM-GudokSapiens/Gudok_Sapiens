@@ -18,7 +18,7 @@ from django.core.paginator import Paginator
 
 def signup(request):
     if request.method == "POST":
-        form = SignupForm(request.POST)
+        form = SignupForm(request.POST, request.FILES)
         if form.is_valid():
             user = form.save()
             user_id = form.cleaned_data.get('user_id')
