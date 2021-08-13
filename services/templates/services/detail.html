@@ -146,7 +146,11 @@
                             {% csrf_token %}    
 
                             제목 <br> {{ form.title }} <br> <br>
-                            내용 <br> {{ form.content }} <br> <br>
+                            내용 <br> 
+                            <textarea class="content_textarea" name="content" placeholder='15자 이상 입력해주세요'
+                            onkeyup="countLetters();"></textarea> <br> 
+                            <p>현재글자 수 : <span class = "content_count">0</span></p><br>
+
                             사진 <br> {{ form.photo }} <br> <br>
                             별점 <br> {{ form.score }} <br> <br>
                             사용기간(개월) <br> 
@@ -195,6 +199,15 @@
     inputSlider.onblur = (()=>{
         slideValue.classList.remove("show");
     });
+
+    const textarea = document.querySelector('.content_textarea');
+    const count = document.querySelector('.content_count');
+
+    function countLetters(){
+        const text= textarea.value;
+        const textLength = textarea.value.length;
+        count.innerText = `${textLength}`;
+    }
 
 </script>
 <!-- 
