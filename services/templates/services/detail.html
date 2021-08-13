@@ -60,7 +60,14 @@
             {% else %}
                 <div> 아직 작성한 리뷰가 없습니다. </div>
             {% endif %}
-            <div class="fix-link"><a href="{% url 'likes:likes_dibs' service.id %}">찜({{ number_of_dibs }}개)</a> /
+            <div class="dib__counts">찜: {{ number_of_dibs }}</div>
+            <div class="fix-link">
+                {% if service.is_dib %}
+                    <div class="btn btn-primary dib" onclick="onClickDib({{ service.id }})">안찜하기</div>
+                {% else %}
+                    <div class="btn btn-primary dib" onclick="onClickDib({{ service.id }})">찜하기</div>
+                {% endif %}            
+            {% comment %} <a href="{% url 'likes:likes_dibs' service.id %}">찜({{ number_of_dibs }}개)</a> / {% endcomment %}
                 <a href="">공유</a>
             </div>
         </div>
@@ -193,6 +200,54 @@
 </script> -->
 
 <script>  
+<!--찜 기능 ajax --> 
+
+        const requestDib = new XMLHttpRequest();
+
+        const onClickDib = (id) => {
+            
+            requestDib.open('POST','/likes/dibs_ajax/', true);
+            requestDib.setRequestHeader(
+                'Content-type',
+                'application/x-www-form-urlencoded'
+            );
+            requestDib.send(JSON.stringify({id: id}));
+        };
+
+
+        const DibHandleResponse = () => {
+            if (requestDib.status < 400) {
+                const {id} = JSON.parse(requestDib.response)
+                const element = document.querySelector(`.fix-link .dib`);
+                
+                if (element.innerHTML == `찜하기`) {
+                    element.innerHTML = `안찜하기`;
+                    const dibsCounts = document.querySelector(`.dib__counts`);
+                    const dibsCountsHTML = dibsCounts.innerHTML;
+                    const [dibString, num] = dibsCountsHTML.split(' ');
+                    const count = Number(num) + 1;
+                    dibsCounts.innerHTML = `${dibString} ${count}`;
+                    
+                }
+                else {
+                    element.innerHTML = `찜하기`;
+                    const dibsCounts = document.querySelector(`.dib__counts`);
+                    const dibsCountsHTML = dibsCounts.innerHTML;
+                    const [dibString, num] = dibsCountsHTML.split(' ');
+                    const count = Number(num) - 1;
+                    dibsCounts.innerHTML = `${dibString} ${count}`;
+                    
+                }
+
+            }
+        }
+        requestDib.onreadystatechange = () => {
+            if (requestDib.readyState === XMLHttpRequest.DONE) {
+                DibHandleResponse();
+            }
+        } 
+
+<!--도움이 돼요 ajax --> 
         const requestHelp = new XMLHttpRequest();
 
         const onClickHelp = (id) => {

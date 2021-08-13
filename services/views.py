@@ -29,9 +29,9 @@ def main(request):
     return render(request, 'services/main.html', context=ctx)
 
 def services_list(request):
-    services_list = Service.objects.all().annotate(avg_reviews=Avg('review__score')).annotate(is_dib=Exists(
-        Dib.objects.filter(users=request.user, service_id = OuterRef('pk'))
-    ))
+    services_list = Service.objects.all().annotate(avg_reviews=Avg('review__score')).annotate(
+        is_dib=Exists(Dib.objects.filter(users=request.user, service_id = OuterRef('pk')))
+        )
     categories = Category.objects.all()
     # 한 페이지 당 담을 수 있는 객체 수를 정할 수 있음
     paginator = Paginator(services_list, 3)
@@ -88,7 +88,9 @@ def sub_category_list(request, category_slug, sub_category_slug):
 
 
 def services_detail(request, pk):
-    service = Service.objects.get(id=pk)
+    service = Service.objects.annotate(
+        is_dib=Exists(Dib.objects.filter(users=request.user, service_id = OuterRef('pk')))
+        ).get(id=pk)
     review_form = ReviewCreateForm()
     number_of_dibs = service.dib_set.all().count()
     avg_of_reviews = service.review.aggregate(Avg('score'))['score__avg']
