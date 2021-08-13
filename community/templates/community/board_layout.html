@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+<div class="community-container">
+    <div class="community-navbar col-sm-12 col-md-8">
+        <!--확인차 넣어둔 커뮤니티 navbar-->
+        <div class="board-menu col-9">
+            <span class=""><a href="{%url 'community:notice'%}" class="">공지사항 </a></span>
+            <span class=""><a href="{%url 'community:magazine'%}" class="">매거진 </a></span>
+            <span class=""><a href="{%url 'community:board'%}" class="">자유게시판 </a></span>
+        </div>
+        <form class="d-flex col-3 p-0" method="GET" action="{% url 'community:search' %}">
+            {% csrf_token %}
+            <input type='text' name='search_key' class="w-100 col-8" value="{{ search_key }}" placeholder='Search' />
+            <input type='submit' class="w-100 col-4" value="Search" />
+        </form>
+    </div>
+    <!--------------------------------------------------------------------->
+    <!-- <div class="community-board col-xl-8 col-md-8 col-xs-12 mb-4">
+        <div class="board-header d-flex justify-content-between pb-3">
+            {% block board_navbar %}
+            {% endblock %}
+        </div>
+    </div> -->
+    {% block board_content %}
+    {% endblock %}
+</div>
+<script>
+    const currentLocation=location.href;
+    const menuItem=document.querySelectorAll('a');
+    const menuLength=menuItem.length
+    for(let i=0; i<menuLength;i++){
+        if(menuItem[i].href===currentLocation){
+            menuItem[i].className="active"
+        }
+    }
+</script>
+
+{% endblock %}

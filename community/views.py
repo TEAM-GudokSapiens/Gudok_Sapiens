@@ -54,11 +54,11 @@ def magazine_detail(request, pk):
 def board(request):
     boards = Board.objects.order_by('-created_at')
     paginator = Paginator(boards, 10)  # 한페이지에 10개씩
-
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    return render(request, 'community/board.html', {'boards': boards, 'page_obj': page_obj})
+    return render(request, 'community/board.html',
+                  {'boards': boards, 'page_obj': page_obj})
 
 
 @login_message_required
@@ -125,21 +125,22 @@ def board_delete(request, pk):
     post.delete()
     return redirect('community:board')
 
+
 def board_update(request, pk):
-        board = get_object_or_404(Board, pk=pk)
- 
-        # 입력된 내용 처리 -> POST
-        if request.method == 'POST':
-                form = BoardForm(request.POST or None, instance=board)
-                if form.is_valid(): # 잘입력된지 체크
-                        post = form.save(commit=False)
-                        post.save() # 저장하기
-                        return redirect('/community/board/'+str(board.id)+'/detail/')
- 
-        # 빈 페이지 띄워주는 기능 -> GET
-        else :
-                form = BoardForm(instance=board)
-                return render(request, 'community/board_update.html', {'board':board,'form':form})
+    board = get_object_or_404(Board, pk=pk)
+
+    # 입력된 내용 처리 -> POST
+    if request.method == 'POST':
+        form = BoardForm(request.POST or None, instance=board)
+        if form.is_valid():  # 잘입력된지 체크
+            post = form.save(commit=False)
+            post.save()  # 저장하기
+            return redirect('/community/board/'+str(board.id)+'/detail/')
+
+    # 빈 페이지 띄워주는 기능 -> GET
+    else:
+        form = BoardForm(instance=board)
+        return render(request, 'community/board_update.html', {'board': board, 'form': form})
 
 # 댓글쓰기
 
