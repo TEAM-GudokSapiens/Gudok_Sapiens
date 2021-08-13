@@ -157,20 +157,24 @@
                 const {id} = JSON.parse(requestDib.response)
                 const element = document.querySelector(`.service-id-${id} .dib`);
                 //TODO: 전체 찜 갯수도 ajax구현
-                //const dibs_counts = document.querySelector(`.service-id-${id} .dib__counts`).innerHTML;
-                //const [dib, num] = dibs_counts.split(' ');
                 
                 if (element.innerHTML == `찜하기`) {
-                    element.innerHTML = `안찜하기`
-                    //const count = Number(num) + 1;
-                    //dibs_counts = `찜: ${count}`
+                    element.innerHTML = `안찜하기`;
+                    const dibsCounts = document.querySelector(`.service-id-${id} .dib__counts`);
+                    const dibsCountsHTML = dibsCounts.innerHTML;
+                    const [dibString, num] = dibsCountsHTML.split(' ');
+                    const count = Number(num) + 1;
+                    dibsCounts.innerHTML = `${dibString} ${count}`;
                     
                 }
                 else {
-                    element.innerHTML = `안찜하기`;
-                    element.innerHTML == `찜하기`;
-                    //const count = Number(num) -1;
-                    //dibs_counts = `찜: ${count}`
+                    element.innerHTML = `찜하기`;
+                    const dibsCounts = document.querySelector(`.service-id-${id} .dib__counts`);
+                    const dibsCountsHTML = dibsCounts.innerHTML;
+                    const [dibString, num] = dibsCountsHTML.split(' ');
+                    const count = Number(num) - 1;
+                    dibsCounts.innerHTML = `${dibString} ${count}`;
+                    
                 }
 
             }

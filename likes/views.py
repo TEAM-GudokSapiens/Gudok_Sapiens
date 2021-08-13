@@ -42,7 +42,6 @@ def likes_helps(request, pk):
 def dibs_ajax(request):
     req = json.loads(request.body)
     service_id = req['id']
-    print(service_id)
     new_dib, created = Dib.objects.get_or_create(users_id=request.user.id, service_id=service_id)
     # created==True면 이번에 만들었음.
     # created ==False -> not created ==True는 이미 만들어져서 삭제하러 가는 것. 
