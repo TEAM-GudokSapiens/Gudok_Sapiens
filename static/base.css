@@ -505,6 +505,40 @@ a:hover {
   color: #9a30ae;
   transition: 0.5s;
 }
+.detail-first-box,
+.detail-second-box {
+  display: flex;
+  justify-content: space-between;
+}
+.detail-profile {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.detail-box-user {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.detail-first-box {
+  display: flex;
+  align-items: center;
+}
+.detail-board-title {
+  font-size: 1.5rem;
+}
+.detail-board-date {
+  font-size: 1.1rem;
+}
+.detail-box-content {
+  font-size: 1.1rem;
+}
+.detail-box-likes {
+  display: flex;
+  justify-content: center;
+}
 @media screen and (max-width: 767px) {
   .board-title {
     display: none;
