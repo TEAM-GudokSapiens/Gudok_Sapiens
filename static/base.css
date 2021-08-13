@@ -430,10 +430,10 @@
 .community-container {
   font-family: "GmarketSansTTFLight";
 }
-.header-title {
+.board-header-title {
   font-size: 24px;
 }
-.header-count {
+.board-header-count {
   font-size: 14px;
 }
 .board-content {
@@ -466,19 +466,17 @@
 .board-content-container {
   border-bottom: 1px solid #cdcdcd;
   height: auto;
-  padding: 25px 0px;
+  padding: 25px 15px;
   display: flex;
   align-items: center;
 }
-
 .board-content-container p {
   word-break: break-all;
-  padding-left: 15px;
 }
 .board-content-container div p {
   text-align: center;
 }
-.board-button {
+.board-submit {
   background: #9a30ae;
   padding: 7px 30px;
 }
@@ -547,12 +545,12 @@ a:hover {
     justify-content: flex-start;
   }
   .board-menu span {
-    margin: 0px 30px;
+    margin: 0px 20px;
   }
 }
 
 @media screen and (max-width: 576px) {
-  .header-title {
+  .board-header-title {
     font-size: 1.2rem;
   }
   .navbar-toggler {
@@ -591,8 +589,9 @@ a:hover {
   .fix-intro {
     font-size: 1.3rem;
   }
-  .board-button {
+  .board-submit {
     font-size: 0.7rem;
+    width: 100%;
   }
 }
 @media screen and (max-width: 930px) {
@@ -664,6 +663,9 @@ a:hover {
   .community-navbar {
     font-size: 1rem;
   }
+  .board-content {
+    font-size: 0.8rem;
+  }
 }
 @media screen and (min-width: 931px) and (max-width: 1150px) {
   .service-content {
@@ -701,6 +703,9 @@ a:hover {
     width: 180px;
     height: 180px;
   }
+  .board-content {
+    font-size: 0.9rem;
+  }
 }
 @media screen and (min-width: 1150px) {
   .carousel {
@@ -715,10 +720,13 @@ a:hover {
   .community-navbar {
     font-size: 0.8rem;
   }
-  .header-title {
+  .board-header-title {
     font-size: 1rem;
   }
-  .header-count {
+  .header-title {
+    font-size: 1.2rem;
+  }
+  .board-header-count {
     font-size: 0.8rem;
   }
   .board-content {

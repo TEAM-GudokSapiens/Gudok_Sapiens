@@ -3,8 +3,7 @@
 <div class="community-board col-xl-8 col-md-8 col-xs-12 mb-4">
     <div class="board-header d-flex justify-content-between pb-3">
         <div class="col-4 p-0">
-            <div class="header-title">자유게시판</div>
-            <div class="header-count">1,000개의 글</div>
+            <div class="board-header-title">자유게시판</div>
         </div>
     </div>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
@@ -210,7 +209,7 @@
     <div class="pt-4 mb-3">
         {% if request.user.is_authenticated %}
         <div class="col-sm-3 col-xs-12" style="text-align: center;">
-            <a href="{%url 'community:board_create' %}" class="board-button text-light w-100 d-block">글작성</a>
+            <a href="{%url 'community:board_create' %}" class="board-submit text-light w-100 d-block">글작성</a>
         </div>
         {% endif %}
     </div>

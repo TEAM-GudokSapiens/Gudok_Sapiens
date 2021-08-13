@@ -2,29 +2,28 @@
 {% load bootstrap4 %}
 {% block board_navbar %}
 <div class="col-4 p-0">
-    <div class="header-title">자유게시판</div>
-    <div class="header-count">1,000개의 글</div>
+    <div class="board-header-title">자유게시판</div>
+    <div class="board-header-count">1,000개의 글</div>
 </div>
 {% endblock %}
 {% block board_content %}
 <div class="community-board col-xl-6 col-md-6 col-xs-12 mb-4">
     <div class="board-header d-flex justify-content-between pb-3">
         <div class="col-4 p-0">
-            <div class="header-title">자유게시판</div>
-            <div class="header-count">1,000개의 글</div>
+            <div class="board-header-title">자유게시판</div>
         </div>
     </div>
     <div class="board-create-content mb-3">
         <form action="{% url 'community:board_update' board.id%}" method="POST">
             {% csrf_token %}
 
-            <table>
+            <div>
                 {{ form.media }}
-                제목 : {{ form.title }} <br><br>
+                {{ form.title }}
                 {{ form.content }}
-            </table>
+            </div>
 
-            <input type="submit" value="글수정">
+            <input class="board-submit text-light"type="submit" value="글수정" style="border: 0;outline: 0;">
         </form>
     </div>
 </div>
