@@ -11,7 +11,8 @@ from reviews.models import Review
 from django.http.response import JsonResponse
 import json
 from django.views.decorators.csrf import csrf_exempt
-from likes.models import Dib
+from likes.models import Dib, Help
+from django.db.models import Exists, OuterRef
 
 
 # 전체 보기 페이지
@@ -28,7 +29,9 @@ def main(request):
     return render(request, 'services/main.html', context=ctx)
 
 def services_list(request):
-    services_list = Service.objects.all().annotate(avg_reviews=Avg('review__score'))
+    services_list = Service.objects.all().annotate(avg_reviews=Avg('review__score')).annotate(is_dib=Exists(
+        Dib.objects.filter(users=request.user, service_id = OuterRef('pk'))
+    ))
     categories = Category.objects.all()
     # 한 페이지 당 담을 수 있는 객체 수를 정할 수 있음
     paginator = Paginator(services_list, 3)
@@ -91,15 +94,9 @@ def services_detail(request, pk):
     avg_of_reviews = service.review.aggregate(Avg('score'))['score__avg']
     # num_of_full_stars = int(avg_of_reviews // 1)
     # is_half_star = True if avg_of_reviews % 1 ==0.5 else False 
-    reviews_order_help = Review.objects.filter(target_id = pk).annotate(dibs_count = Count('reviews_help')).order_by('-dibs_count')
-
-    test = service.dib_set.values('users_id')
-    for i in test:
-        print(i)
-    if 1 in test:
-        print(True)
-    else:
-        print(False)
+    reviews_order_help = Review.objects.filter(target_id = pk).annotate(dibs_count = Count('reviews_help')).annotate(is_help=Exists(
+        Help.objects.filter(users=request.user, review_id=OuterRef('pk'))
+    )).order_by('-dibs_count')
 
     ctx = {
         'service': service, 
@@ -107,7 +104,6 @@ def services_detail(request, pk):
         'number_of_dibs': number_of_dibs,
         'avg_of_reviews':avg_of_reviews,
         'reviews_order_help':reviews_order_help,
-        'test':test
         }
     return render(request, 'services/detail.html', context=ctx)
 

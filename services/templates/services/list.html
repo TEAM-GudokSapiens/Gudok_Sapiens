@@ -74,11 +74,11 @@
                         {{ service.intro }}
                         <div> 평균 ⭐️: {{ service.avg_reviews|floatformat:1 }} {{service.get_review_count}} 명</div>
                         <div class="dib__counts">찜: {{ service.dib_set.all.count }}</div>
-                        {% comment %} {% if request.user.id in service.dib_set.id %} {% endcomment %}
-                            {% comment %} <div class="btn btn-primary dib" onclick="onClickDib({{ service.id }})">안찜하기</div> {% endcomment %}
-                        {% comment %} {% else %} {% endcomment %}
+                        {% if service.is_dib %}
+                            <div class="btn btn-primary dib" onclick="onClickDib({{ service.id }})">안찜하기</div>
+                        {% else %}
                             <div class="btn btn-primary dib" onclick="onClickDib({{ service.id }})">찜하기</div>
-                        {% comment %} {% endif %} {% endcomment %}
+                        {% endif %}
                     </div>
                 </div>
             </div>

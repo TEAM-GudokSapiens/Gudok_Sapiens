@@ -46,7 +46,6 @@
                 </div>
             </div>
         </div>
-        {{ test }}
         <div class="fixing-box">
             <div class="keywords">
                 {% for tag in service.tags.all  %}
@@ -104,7 +103,7 @@
                         </div>
                         {% for review in reviews_order_help %}
                         {% comment %} {% for review in service.get_review %} {% endcomment %}
-                        <div class="review-container">
+                        <div class="review-container review-id-{{ review.id }}">
                             <div class="title-block mb-3 d-flex justify-content-between">
                                 <span class="">{{review.user}}🌱</span>
                                 <span class="review-date">{{review.updated_at| date:"Y/m/d"}}</span>
@@ -119,7 +118,12 @@
                                     <div class="">{{review.title}}</div>
                                     <div class="">{{review.content}}</div>
                                     <div>
-                                        <a href="{% url 'likes:likes_helps' review.id %}">도움이 돼요!</a>
+                                        {% comment %} <a href="{% url 'likes:likes_helps' review.id %}">도움이 돼요!</a> {% endcomment %}
+                                        {% if review.is_help %}
+                                            <div class="btn help" onclick="onClickHelp({{ review.id }})">이미 눌렀어요</div>                            
+                                        {% else %}
+                                            <div class="btn help" onclick="onClickHelp({{ review.id }})">도움이 돼요</div>                            
+                                        {% endif %}
                                         <span>{{ review.reviews_help.all.count }}</span>
                                     </div>
                                 </div>
@@ -187,4 +191,42 @@
             // input.value=null;
     };
 </script> -->
+
+<script>  
+        const requestHelp = new XMLHttpRequest();
+
+        const onClickHelp = (id) => {
+            
+            requestHelp.open('POST','/likes/help_ajax/', true);
+            requestHelp.setRequestHeader(
+                'Content-type',
+                'application/x-www-form-urlencoded'
+            );
+            requestHelp.send(JSON.stringify({id: id}));
+        };
+
+
+        const HelpHandleResponse = () => {
+            if (requestHelp.status < 400) {
+                const {id} = JSON.parse(requestHelp.response)
+                const element = document.querySelector(`.review-id-${id} .help`);
+                
+                if (element.innerHTML == `도움이 돼요`) {
+                    element.innerHTML = `이미 눌렀어요`
+                    
+                }
+                else {
+                    element.innerHTML = `이미 눌렀어요`;
+                    element.innerHTML == `도움이 돼요`;
+                }
+
+            }
+        }
+        requestHelp.onreadystatechange = () => {
+            if (requestHelp.readyState === XMLHttpRequest.DONE) {
+                HelpHandleResponse();
+            }
+        } 
+</script>  
+
 {% endblock %}

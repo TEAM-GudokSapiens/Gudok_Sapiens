@@ -52,3 +52,17 @@ def dibs_ajax(request):
         pass
     
     return JsonResponse({'id': service_id})
+
+@csrf_exempt
+def help_ajax(request):
+    req = json.loads(request.body)
+    review_id = req['id']
+    new_help, created = Help.objects.get_or_create(users_id=request.user.id, review_id=review_id)
+    # created==True면 이번에 만들었음.
+    # created ==False -> not created ==True는 이미 만들어져서 삭제하러 가는 것. 
+    if not created:
+        new_help.delete()
+    else:
+        pass
+    
+    return JsonResponse({'id': review_id})
