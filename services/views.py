@@ -8,6 +8,11 @@ from django.core.paginator import Paginator
 from taggit.models import Tag
 from reviews.forms import ReviewCreateForm
 from reviews.models import Review
+from django.http.response import JsonResponse
+import json
+from django.views.decorators.csrf import csrf_exempt
+from likes.models import Dib
+
 
 # 전체 보기 페이지
 def main(request):
@@ -86,14 +91,23 @@ def services_detail(request, pk):
     avg_of_reviews = service.review.aggregate(Avg('score'))['score__avg']
     # num_of_full_stars = int(avg_of_reviews // 1)
     # is_half_star = True if avg_of_reviews % 1 ==0.5 else False 
-    reviews_order_dibs = Review.objects.filter(target_id = pk).annotate(dibs_count = Count('reviews_help')).order_by('-dibs_count')
+    reviews_order_help = Review.objects.filter(target_id = pk).annotate(dibs_count = Count('reviews_help')).order_by('-dibs_count')
+
+    test = service.dib_set.values('users_id')
+    for i in test:
+        print(i)
+    if 1 in test:
+        print(True)
+    else:
+        print(False)
 
     ctx = {
         'service': service, 
         'form': review_form,
         'number_of_dibs': number_of_dibs,
         'avg_of_reviews':avg_of_reviews,
-        'reviews_order_dibs':reviews_order_dibs,
+        'reviews_order_help':reviews_order_help,
+        'test':test
         }
     return render(request, 'services/detail.html', context=ctx)
 
@@ -147,3 +161,18 @@ def same_tag_list(request, tag):
         'categories': categories,
     }
     return render(request, 'services/list.html', context=ctx)
+
+# @csrf_exempt
+# def dibs_ajax(request):
+#     req = json.loads(request.body)
+#     print(req)
+#     service_id = req['id']
+#     new_dib, created = Dib.objects.get_or_create(users_id=request.user.id, service_id=service_id)
+#     # created==True면 이번에 만들었음.
+#     # created ==False -> not created ==True는 이미 만들어져서 삭제하러 가는 것. 
+#     if not created:
+#         new_dib.delete()
+#     else:
+#         pass
+
+#     return JsonResponse({'id': service_id})

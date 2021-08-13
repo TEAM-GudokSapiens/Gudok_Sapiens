@@ -12,4 +12,5 @@ urlpatterns = [
     path('detail/<int:pk>/', views.services_detail, name='services_detail'),
     path('tags/', views.services_tags, name='services_tags'),
     path('same_tag_list/<str:tag>', views.same_tag_list, name='same_tag_list'),
+    # path('dibs_ajax/', views.dibs_ajax, name='dibs_ajax'),
 ]

@@ -46,6 +46,7 @@
                 </div>
             </div>
         </div>
+        {{ test }}
         <div class="fixing-box">
             <div class="keywords">
                 {% for tag in service.tags.all  %}
@@ -60,7 +61,7 @@
             {% else %}
                 <div> 아직 작성한 리뷰가 없습니다. </div>
             {% endif %}
-            <div class="fix-link"><a href="">찜({{ number_of_dibs }}개)</a> /
+            <div class="fix-link"><a href="{% url 'likes:likes_dibs' service.id %}">찜({{ number_of_dibs }}개)</a> /
                 <a href="">공유</a>
             </div>
         </div>
@@ -101,7 +102,7 @@
                             <span class="tab-title">리뷰</span>
                             <span class="review-count ">{{service.get_review_count}}개</span>
                         </div>
-                        {% for review in reviews_order_dibs %}
+                        {% for review in reviews_order_help %}
                         {% comment %} {% for review in service.get_review %} {% endcomment %}
                         <div class="review-container">
                             <div class="title-block mb-3 d-flex justify-content-between">
