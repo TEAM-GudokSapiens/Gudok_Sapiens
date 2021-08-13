@@ -47,8 +47,6 @@
             <div id="like_count" class="ml-2">{{board.like.count}}</div>
         </div>
 
-        <a href="{%url 'community:board'%}">목록으로 </a> <br>
-        
         <!--로그인한 사람 == 작성자 일때만 수정,삭제가능-->
         {% if user.user_id == board.user.user_id %}
     <a href="{% url 'community:board_update' board.id %}">수정하기</a>
@@ -62,7 +60,7 @@
                 {% csrf_token %}
                 <div class="comment-box">
                     <textarea class="col-10" id="content_id" rows="2" placeholder="댓글을 입력해주세요."></textarea>
-                    <button id="comment_write" class="col-2">댓글달기</button>
+                    <button id="comment_write" class="col-2 board-submit text-light ml-3" style="border:none; outline:none;">등록</button>
                 </div>
             </div>
             <div class="comment-text">
@@ -217,12 +215,15 @@
             </div>
         </div>
     </div>
-    <div class="pt-4 mb-3">
-        {% if request.user.is_authenticated %}
-        <div class="col-sm-3 col-xs-12" style="text-align: center;">
+    <div class="pt-4 mb-3 d-flex">
+        <div class="col-sm-3 col-xs-6" style="text-align: center;">
+            {% if request.user.is_authenticated %}
             <a href="{%url 'community:board_create' %}" class="board-submit text-light w-100 d-block">글작성</a>
+            {% endif %}
         </div>
-        {% endif %}
+        <div class="col-sm-3 col-xs-6" style="text-align: center;">
+            <a href="{%url 'community:board'%}" class="board-submit text-light w-100 d-block">목록으로 </a>
+        </div>
     </div>
 </div>
 <script type="text/javascript">
@@ -258,8 +259,8 @@
                         );
                     }
                     $('#content_id').val("");
-                    $('#hide_button_count').replaceWith('<a id=hide_button_count style="color:black;">&nbsp;댓글 접기 &middot;&nbsp;'+response.comment_count+'개의 댓글</a>')
-                    $('#show_button_count').replaceWith('<a id=show_button_count style="color:black;">&nbsp;댓글 펼치기 &middot;&nbsp;'+response.comment_count+'개의 댓글</a>')
+                    $('#hide_button_count').replaceWith('<span id="hide_more_button"><a id=hide_button_count ><i class="fas fa-angle-up"></i>댓글 접기</a></span>')
+                    $('#show_button_count').replaceWith('<span id="show_more_button" style="display:none;"><a id=show_button_count><i class="fas fa-angle-down"></i>댓글 펼치기</a></span>')
                 },
                 error: function () {
                     if ($('#content_id').val()=="") {
@@ -295,8 +296,8 @@
                 },
                 success: function (response) {
                     $('#'+response.comment_id).replaceWith('<span style="color:gray;">삭제된 댓글입니다.</span><hr>');
-                    $('#hide_button_count').replaceWith('<a id=hide_button_count style="color:black;">&nbsp;댓글 접기 &middot;&nbsp;'+response.comment_count+'개의 댓글</a>');
-                    $('#show_button_count').replaceWith('<a id=show_button_count style="color:black;">&nbsp;댓글 펼치기 &middot;&nbsp;'+response.comment_count+'개의 댓글</a>');
+                    $('#hide_button_count').replaceWith('<span id="hide_more_button"><a id=hide_button_count ><i class="fas fa-angle-up"></i>댓글 접기</a></span>');
+                    $('#show_button_count').replaceWith('<span id="show_more_button" style="display:none;"><a id=show_button_count><i class="fas fa-angle-down"></i>댓글 펼치기</a></span>');
                 },
                 error: function () {
                     alert('본인 댓글이 아닙니다.');
@@ -319,8 +320,8 @@
                 },
                 success: function (response) {
                     $('#'+response.comment_id).replaceWith('<span style="color:gray;">삭제된 답글입니다.</span>');
-                    $('#hide_button_count').replaceWith('<a id=hide_button_count style="color:black;">&nbsp;댓글 접기 &middot;&nbsp;'+response.comment_count+'개의 댓글</a>');
-                    $('#show_button_count').replaceWith('<a id=show_button_count style="color:black;">&nbsp;댓글 펼치기 &middot;&nbsp;'+response.comment_count+'개의 댓글</a>');
+                    $('#hide_button_count').replaceWith('<span id="hide_more_button"><a id=hide_button_count ><i class="fas fa-angle-up"></i>댓글 접기</a></span>');
+                    $('#show_button_count').replaceWith('<span id="show_more_button" style="display:none;"><a id=show_button_count><i class="fas fa-angle-down"></i>댓글 펼치기</a></span>');
                 },
                 error: function () {
                     alert('본인 댓글이 아닙니다.');
@@ -405,8 +406,8 @@
                     );
                 }
                 $("#layer").remove();
-                $('#hide_button_count').replaceWith('<a id=hide_button_count style="color:black;">&nbsp;댓글 접기 &middot;&nbsp;'+response.comment_count+'개의 댓글</a>')
-                $('#show_button_count').replaceWith('<a id=show_button_count style="color:black;">&nbsp;댓글 펼치기 &middot;&nbsp;'+response.comment_count+'개의 댓글</a>')
+                $('#hide_button_count').replaceWith('<span id="hide_more_button"><a id=hide_button_count ><i class="fas fa-angle-up"></i>댓글 접기</a></span>')
+                $('#show_button_count').replaceWith('<span id="show_more_button" style="display:none;"><a id=show_button_count><i class="fas fa-angle-down"></i>댓글 펼치기</a></span>')
             },
             error: function () {
                 if ($('#reply_content').val()=="") {
