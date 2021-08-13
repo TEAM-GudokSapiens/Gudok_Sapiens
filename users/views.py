@@ -134,11 +134,8 @@ def update_password(request):
         form = PasswordChangeForm(request.user, request.POST)
         if form.is_valid():
             user = form.save()
-            update_session_auth_hash(request, user)  # Important!
-            messages.success(request, 'Your password was successfully updated!')
+            update_session_auth_hash(request, user)  #비밀번호를 자동으로 업데이트해줌! 사이트에 머물수있오
             return redirect('services:main')
-        else:
-            messages.error(request, 'Please correct the error below.')
     else:
         form = PasswordChangeForm(request.user)
     return render(request, 'users/update_password.html', {
