@@ -56,25 +56,26 @@
     {% endif %}
     
 <!--댓글-->
-    <div class="card" style="width: 100%;">
-        <div class="card-header">
+    <div class="" style="width: 100%;">
+        <div class="">
             <div class="col-md-12">
                 {% csrf_token %}
-                <div class="form-group row">
-                    <textarea class="form-control" id="content_id" rows="3" placeholder="댓글을 입력해주세요." style="margin-top:6px;"></textarea>
-                </div>
-                <div class="text-right" style="float:right">
-                    <button id="comment_write" class="btn btn-sm" style="background-color: #d14040f2; color: white; font-size: 15px; margin-top:-5px; margin-right:-12px;">댓글달기</button>
+                <div class="comment-box">
+                    <textarea class="col-10" id="content_id" rows="2" placeholder="댓글을 입력해주세요."></textarea>
+                    <button id="comment_write" class="col-2">댓글달기</button>
                 </div>
             </div>
-            <br>
-            {% if comments %}
-            <div id="hide_more_button"><strong><a id=hide_button_count style="color:black;">&nbsp;댓글 접기 &middot;&nbsp;{{ comment_count }}개의 댓글<br></a></strong></div>
-            <div id="show_more_button" style="display:none;"><strong><a id=show_button_count style="color:black;">&nbsp;댓글 펼치기 &middot;&nbsp;{{ comment_count }}개의 댓글<br></a></strong></div>
-            {% else %}
-            <div id="hide_more_button"><strong><a id=hide_button_count style="color:black;"><br></a></strong></div>
-            <div id="show_more_button" style="display:none;"><strong><a id=show_button_count style="color:black;"><br></a></strong></div>
-            {% endif %}
+            <div class="comment-text">
+                <span>전체 댓글 {{ comment_count }}개</span>
+
+                {% if comments %}
+                <span id="hide_more_button"><a id=hide_button_count ><i class="fas fa-angle-up"></i>댓글 접기</a></span>
+                <span id="show_more_button" style="display:none;"><a id=show_button_count><i class="fas fa-angle-down"></i>댓글 펼치기</a></span>
+                {% else %}
+                <span id="hide_more_button"><a id=hide_button_count><br></a></span>
+                <span id="show_more_button" style="display:none;"><a id=show_button_count></a></span>
+                {% endif %}
+            </div>
             <hr>
             <div id="more_comment">
                 {% if comments %}

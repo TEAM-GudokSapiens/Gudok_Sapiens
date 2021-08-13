@@ -539,6 +539,13 @@ a:hover {
   display: flex;
   justify-content: center;
 }
+.comment-box {
+  display: flex;
+}
+.comment-text {
+  display: flex;
+  justify-content: space-between;
+}
 @media screen and (max-width: 767px) {
   .board-title {
     display: none;
