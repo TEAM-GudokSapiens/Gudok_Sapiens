@@ -57,34 +57,38 @@
             {% endfor %}
     </ul>
 </div>
-{{ avg_of_reviews }}
 {% comment %} 본문 내용 서비스 나열 {% endcomment %}
 <div class="album py-5 bg-light">
     <div class="container">
         <div class="flex row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             {% if services %}
             {% for service in services  %}
-            <a href="{% url 'services:services_detail' pk=service.pk %}">
-                <div class="col">
-                    <div class='card'>
-                        <div class='card-img-top'>
-                            {% if service.img1 %}
-                            <img src="{{ service.img1.url }}" width='250px' />
-                            {% endif %}
-                        </div>
-                        <div class='card-body'>
-                        </div>
+            <div class="col">
+                <div class="card service-id-{{ service.id }}">
+                    <div class='card-img-top'>
+                    {% if service.img1 %}
+                    <a href="{% url 'services:services_detail' pk=service.pk %}"><img src="{{ service.img1.url }}" width='250px' /></a>
+                    {% endif %}
+                    </div>
+                    <div class='card-body'>
                         {{ service.name }}
                         {{ service.intro }}
-                        <a href="{% url 'likes:likes_dibs' service.id %}">찜하기</a>
+                        <div> 평균 ⭐️: {{ service.avg_reviews|floatformat:1 }} {{service.get_review_count}} 명</div>
+                        <div class="dib__counts">찜: {{ service.dib_set.all.count }}</div>
+                        {% if service.is_dib %}
+                            <div class="btn btn-primary dib" onclick="onClickDib({{ service.id }})">안찜하기</div>
+                        {% else %}
+                            <div class="btn btn-primary dib" onclick="onClickDib({{ service.id }})">찜하기</div>
+                        {% endif %}
                     </div>
                 </div>
-                {% endfor %}
-                {% else %}
+            </div>
+            {% endfor %}
 
-                <div>
-                    <h5>조건에 맞는 구독 서비스가 없습니다.</h5>
-                </div>
+            {% else %}
+            <div>
+                <h5>조건에 맞는 구독 서비스가 없습니다.</h5> 
+            </div>
 
                 {% endif %}
 
@@ -133,8 +137,53 @@
         {% endif %}
     </ul>
     <!-- 페이징처리 끝 -->
-
-
 </div>
+<script>  
+
+        const requestDib = new XMLHttpRequest();
+
+        const onClickDib = (id) => {
+            
+            requestDib.open('POST','/likes/dibs_ajax/', true);
+            requestDib.setRequestHeader(
+                'Content-type',
+                'application/x-www-form-urlencoded'
+            );
+            requestDib.send(JSON.stringify({id: id}));
+        };
+
+
+        const DibHandleResponse = () => {
+            if (requestDib.status < 400) {
+                const {id} = JSON.parse(requestDib.response)
+                const element = document.querySelector(`.service-id-${id} .dib`);
+                
+                if (element.innerHTML == `찜하기`) {
+                    element.innerHTML = `안찜하기`;
+                    const dibsCounts = document.querySelector(`.service-id-${id} .dib__counts`);
+                    const dibsCountsHTML = dibsCounts.innerHTML;
+                    const [dibString, num] = dibsCountsHTML.split(' ');
+                    const count = Number(num) + 1;
+                    dibsCounts.innerHTML = `${dibString} ${count}`;
+                    
+                }
+                else {
+                    element.innerHTML = `찜하기`;
+                    const dibsCounts = document.querySelector(`.service-id-${id} .dib__counts`);
+                    const dibsCountsHTML = dibsCounts.innerHTML;
+                    const [dibString, num] = dibsCountsHTML.split(' ');
+                    const count = Number(num) - 1;
+                    dibsCounts.innerHTML = `${dibString} ${count}`;
+                    
+                }
+
+            }
+        }
+        requestDib.onreadystatechange = () => {
+            if (requestDib.readyState === XMLHttpRequest.DONE) {
+                DibHandleResponse();
+            }
+        } 
+</script>  
 
 {% endblock %}

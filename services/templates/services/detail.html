@@ -48,15 +48,26 @@
         </div>
         <div class="fixing-box">
             <div class="keywords">
-                <div>#태그1</div>
-                <div>#태그2</div>
-                <div>#태그3</div>
-                <div>#태그4</div>
+                {% for tag in service.tags.all  %}
+                <div><a href="{% url 'services:same_tag_list' tag.name %}">#{{ tag.name }}</a></div>
+                {% endfor %}
             </div>
             <div class="fix-name">{{service.name}}</div>
             <div class="fix-intro">{{service.intro}}</div>
             <div class="fix-stars">⭐️⭐️⭐️⭐️⭐️ {{ service.review.score }}</div>
-            <div class="fix-link"><a href="">찜({{ number_of_dibs }}개)</a> /
+            {% if avg_of_reviews %}
+                <div> 평균 ⭐️: {{ avg_of_reviews|floatformat:1 }} ({{service.get_review_count}} 명) </div>
+            {% else %}
+                <div> 아직 작성한 리뷰가 없습니다. </div>
+            {% endif %}
+            <div class="dib__counts">찜: {{ number_of_dibs }}</div>
+            <div class="fix-link">
+                {% if service.is_dib %}
+                    <div class="btn btn-primary dib" onclick="onClickDib({{ service.id }})">안찜하기</div>
+                {% else %}
+                    <div class="btn btn-primary dib" onclick="onClickDib({{ service.id }})">찜하기</div>
+                {% endif %}            
+            {% comment %} <a href="{% url 'likes:likes_dibs' service.id %}">찜({{ number_of_dibs }}개)</a> / {% endcomment %}
                 <a href="">공유</a>
             </div>
         </div>
@@ -97,8 +108,9 @@
                             <span class="tab-title">리뷰</span>
                             <span class="review-count ">{{service.get_review_count}}개</span>
                         </div>
-                        {% for review in service.get_review %}
-                        <div class="review-container">
+                        {% for review in reviews_order_help %}
+                        {% comment %} {% for review in service.get_review %} {% endcomment %}
+                        <div class="review-container review-id-{{ review.id }}">
                             <div class="title-block mb-3 d-flex justify-content-between">
                                 <span class="">{{review.user}}🌱</span>
                                 <span class="review-date">{{review.updated_at| date:"Y/m/d"}}</span>
@@ -113,8 +125,13 @@
                                     <div class="">{{review.title}}</div>
                                     <div class="">{{review.content}}</div>
                                     <div>
-                                        <a href="{% url 'likes:likes_helps' review.id %}">도움이 돼요!</a>
-                                        <span>{{ review.reviews_help.all.count }}</span>
+                                        {% comment %} <a href="{% url 'likes:likes_helps' review.id %}">도움이 돼요!</a> {% endcomment %}
+                                        {% if review.is_help %}
+                                            <div class="btn help" onclick="onClickHelp({{ review.id }})">이미 눌렀어요</div>                            
+                                        {% else %}
+                                            <div class="btn help" onclick="onClickHelp({{ review.id }})">도움이 돼요</div>                            
+                                        {% endif %}
+                                        <span class="help__counts" >{{ review.reviews_help.all.count }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -140,21 +157,6 @@
                 </div>
             </div>
             <!-- tabend -->
-        </div>
-        <div class="fixing-box">
-            <div class="keywords">
-                <div>#태그1</div>
-                <div>#태그2</div>
-                <div>#태그3</div>
-                <div>#태그4</div>
-            </div>
-            <div class="fix-name">{{service.name}}</div>
-            <div class="fix-intro">{{service.intro}}</div>
-            <div class="fix-stars">⭐️⭐️⭐️⭐️⭐️ {{ service.review.score }}</div>
-            <div> 평균 ⭐️: {{ avg_of_reviews }} ({{service.get_review_count}} 명) </div>
-            <div class="fix-link"><a href="{% url 'likes:likes_dibs' service.id %}">찜({{ number_of_dibs }}개)</a> /
-                <a href="">공유</a>
-            </div>
         </div>
     </div>
 </div>
@@ -196,4 +198,96 @@
             // input.value=null;
     };
 </script> -->
+
+<script>  
+<!--찜 기능 ajax --> 
+
+        const requestDib = new XMLHttpRequest();
+
+        const onClickDib = (id) => {
+            
+            requestDib.open('POST','/likes/dibs_ajax/', true);
+            requestDib.setRequestHeader(
+                'Content-type',
+                'application/x-www-form-urlencoded'
+            );
+            requestDib.send(JSON.stringify({id: id}));
+        };
+
+
+        const DibHandleResponse = () => {
+            if (requestDib.status < 400) {
+                const {id} = JSON.parse(requestDib.response)
+                const element = document.querySelector(`.fix-link .dib`);
+                
+                if (element.innerHTML == `찜하기`) {
+                    element.innerHTML = `안찜하기`;
+                    const dibsCounts = document.querySelector(`.dib__counts`);
+                    const dibsCountsHTML = dibsCounts.innerHTML;
+                    const [dibString, num] = dibsCountsHTML.split(' ');
+                    const count = Number(num) + 1;
+                    dibsCounts.innerHTML = `${dibString} ${count}`;
+                    
+                }
+                else {
+                    element.innerHTML = `찜하기`;
+                    const dibsCounts = document.querySelector(`.dib__counts`);
+                    const dibsCountsHTML = dibsCounts.innerHTML;
+                    const [dibString, num] = dibsCountsHTML.split(' ');
+                    const count = Number(num) - 1;
+                    dibsCounts.innerHTML = `${dibString} ${count}`;
+                    
+                }
+
+            }
+        }
+        requestDib.onreadystatechange = () => {
+            if (requestDib.readyState === XMLHttpRequest.DONE) {
+                DibHandleResponse();
+            }
+        } 
+
+<!--도움이 돼요 ajax --> 
+        const requestHelp = new XMLHttpRequest();
+
+        const onClickHelp = (id) => {
+            
+            requestHelp.open('POST','/likes/help_ajax/', true);
+            requestHelp.setRequestHeader(
+                'Content-type',
+                'application/x-www-form-urlencoded'
+            );
+            requestHelp.send(JSON.stringify({id: id}));
+        };
+
+
+        const HelpHandleResponse = () => {
+            if (requestHelp.status < 400) {
+                const {id} = JSON.parse(requestHelp.response)
+                const element = document.querySelector(`.review-id-${id} .help`);
+                
+                if (element.innerHTML == `도움이 돼요`) {
+                    element.innerHTML = `이미 눌렀어요`
+                    const dibsCounts = document.querySelector(`.review-id-${id} .help__counts`);
+                    const num = dibsCounts.innerHTML;
+                    const count = Number(num) + 1;
+                    dibsCounts.innerHTML = `${count}`;
+                }
+                else {
+                    element.innerHTML = `도움이 돼요`;
+                    const dibsCounts = document.querySelector(`.review-id-${id} .help__counts`);
+                    const num = dibsCounts.innerHTML;
+                    const count = Number(num) - 1;
+                    dibsCounts.innerHTML = `${count}`;
+                }
+
+            }
+        }
+        requestHelp.onreadystatechange = () => {
+            if (requestHelp.readyState === XMLHttpRequest.DONE) {
+                HelpHandleResponse();
+            }
+        } 
+</script>  
+
 {% endblock %}
