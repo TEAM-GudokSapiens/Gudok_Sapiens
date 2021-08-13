@@ -1,18 +1,18 @@
 from django.http.response import HttpResponseForbidden
 from django.shortcuts import render, redirect
-
-from django.contrib.auth.models import User
 from django.urls import reverse_lazy
-from .models import User
-from django.views.generic import UpdateView, DeleteView
-from users.forms import UpdateForm, LoginForm, SignupForm
-from django.contrib.auth import login, logout, authenticate
-from django.utils.decorators import method_decorator
-from django.views.generic import FormView
-from .decorators import *
-from services.models import Service
+from django.contrib import messages
+from django.contrib.auth import login, logout, authenticate,update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.models import User
 from django.core.paginator import Paginator
+from django.utils.decorators import method_decorator
+from django.views.generic import UpdateView, DeleteView, FormView
 
+from services.models import Service
+from .forms import *
+from .decorators import *
+from .models import *
 
 # 회원가입
 
@@ -125,3 +125,23 @@ def reviews_list(request):
         'services': services,
     }
     return render(request, 'users/dibs_list.html', context=ctx)
+
+
+#비밀번호 변경
+@login_message_required
+def update_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('services:main')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'users/update_password.html', {
+        'form': form
+    })
+
