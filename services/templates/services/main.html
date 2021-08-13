@@ -1,72 +1,171 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="col-8" style="margin: 0 auto;">
-    <div>
-        <div class="carousel-inner">
-            <h4>
-                <매거진>
-            </h4>
+<div class="slider-background col-12">
+    <div class="slider-box col-8">
+        <div class="img-slider col-12">
             {% for magazine in magazine_list  %}
             {% if forloop.counter  == 1 %}
-            <div class="carousel-item active">
-                <a href="{% url 'community:magazine_detail' magazine.id %}">
-                    <img src="{{ magazine.img.url }}" />
-                </a>
+            <div class="img-slide active col-12">
+                <div class="img-box col-8">
+                    <a href="{% url 'community:magazine_detail' magazine.id %}">
+                        <img src="{{ magazine.img.url }}" />
+                    </a>
+                </div>
+                <div class="info col-4">
+                    <h2>{{ magazine.title }}</h2>
+                    <p>{{ magazine.intro }}</p>
+                </div>
             </div>
             {% else %}
-            <div class="carousel-item">
-                <a href="{% url 'community:magazine_detail' magazine.id %}">
-                    <img src="{{ magazine.img.url }}" />
-                </a>
+            <div class="img-slide col-12">
+                <div class="img-box col-8">
+                    <a href="{% url 'community:magazine_detail' magazine.id %}">
+                        <img src="{{ magazine.img.url }}" />
+                    </a>
+                </div>
+                <div class="info col-4">
+                    <h2>{{ magazine.title }}</h2>
+                    <p>{{ magazine.intro }}</p>
+                </div>
             </div>
             {% endif %}
             {% endfor %}
+            <div class="navigation">
+                <div class="slide-btn active"></div>
+                <div class="slide-btn"></div>
+                <div class="slide-btn"></div>
+                <div class="slide-btn"></div>
+                <div class="slide-btn"></div>
+            </div>
         </div>
-        <button class="carousel-control-prev btn" data-bs-target="#carouselControls" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next btn" data-bs-target="#carouselControls" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
     </div>
-    
-    <div class="album py-5 bg-light">
-        <div class="container">
-            <div>
-                <인기서비스>
-            </div>
-            <div class="flex row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                {% if services %}
-                {% for service in services  %}
-                <a href="{% url 'services:services_detail' pk=service.pk %}">
-                    <div class="col">
-                        <div class='card'>
-                            <div class='card-img-top'>
-                                {% if service.img1 %}
-                                <img src="{{ service.img1.url }}" width='250px' />
-                                {% endif %}
-                            </div>
-                            <div class='card-body'>
-                            </div>
-                            {{ service.name }}
-                            {{ service.intro }}
-                            <a href="{% url 'likes:likes_dibs' service.id %}">찜하기</a>
-                        </div>
-                    </div>
-                    {% endfor %}
-                    {% else %}
-    
-                    <div>
-                        <h5>조건에 맞는 구독 서비스가 없습니다.</h5>
-                    </div>
-    
+</div>
+
+
+
+<div class="service-list-section col-8" style="margin: 0 auto;">
+    <h4 class="col-12">
+        인기 구독 서비스
+    </h4>
+    <div class="service-list-box col-12">
+        {% if services %}
+        {% for service in services  %}
+            <div class='service-card card col-3'>
+                <div class='card-img-top'>
+                    {% if service.img1 %}
+                    <a href="{% url 'services:services_detail' pk=service.pk %}">
+                        <img src="{{ service.img1.url }}" width='100%' />
+                    </a>
                     {% endif %}
-    
+                </div>
+                <div>
+                    <div class="d-flex justify-content-between">
+                        <h5><a href="{% url 'services:services_detail' pk=service.pk %}">{{ service.name }}</a></h5>
+                        <sapn><i class="fas fa-star"></i>{{ avg_of_reviews }}({{service.get_review_count}})</sapn>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span class="service-intro">{{ service.intro }}</span>
+                        <span>
+                            <a href="{% url 'likes:likes_dibs' service.id %}" class="heart"><i class="far fa-heart"></i></a>
+                            {{ number_of_dibs }}
+                        </span>
+                    </div>
+                </div>
             </div>
+        {% endfor %}
+        {% else %}
+
+        <div>
+            <h5>조건에 맞는 구독 서비스가 없습니다.</h5>
         </div>
+
+        {% endif %}
+
+    </div>
+</div>
+
+
+<div class="service-list-section col-8" style="margin: 0 auto;">
+    <h4 class="col-12">
+        신규 구독 서비스
+    </h4>
+    <div class="service-list-box col-12">
+        {% if services %}
+        {% for service in services  %}
+            <div class='service-card card col-3'>
+                <div class='card-img-top'>
+                    {% if service.img1 %}
+                    <a href="{% url 'services:services_detail' pk=service.pk %}">
+                        <img src="{{ service.img1.url }}" width='100%' />
+                    </a>
+                    {% endif %}
+                </div>
+                <div>
+                    <div class="d-flex justify-content-between">
+                        <h5><a href="{% url 'services:services_detail' pk=service.pk %}">{{ service.name }}</a></h5>
+                        <sapn><i class="fas fa-star"></i>{{ avg_of_reviews }}({{service.get_review_count}})</sapn>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span class="service-intro">{{ service.intro }}</span>
+                        <span>
+                            <a href="{% url 'likes:likes_dibs' service.id %}" class="heart"><i class="far fa-heart"></i></a>
+                            {{ number_of_dibs }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        {% else %}
+
+        <div>
+            <h5>조건에 맞는 구독 서비스가 없습니다.</h5>
+        </div>
+
+        {% endif %}
+
+    </div>
+</div>
+
+
+<div class="service-list-section col-8" style="margin: 0 auto;">
+    <h4 class="col-12">
+        랜덤 구독 서비스
+    </h4>
+    <div class="service-list-box col-12">
+        {% if services %}
+        {% for service in services  %}
+            <div class='service-card card col-3'>
+                <div class='card-img-top'>
+                    {% if service.img1 %}
+                    <a href="{% url 'services:services_detail' pk=service.pk %}">
+                        <img src="{{ service.img1.url }}" width='100%' />
+                    </a>
+                    {% endif %}
+                </div>
+                <div>
+                    <div class="d-flex justify-content-between">
+                        <h5><a href="{% url 'services:services_detail' pk=service.pk %}">{{ service.name }}</a></h5>
+                        <sapn><i class="fas fa-star"></i>{{ avg_of_reviews }}({{service.get_review_count}})</sapn>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span class="service-intro">{{ service.intro }}</span>
+                        <span>
+                            <a href="{% url 'likes:likes_dibs' service.id %}" class="heart"><i class="far fa-heart"></i></a>
+                            {{ number_of_dibs }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        {% else %}
+
+        <div>
+            <h5>조건에 맞는 구독 서비스가 없습니다.</h5>
+        </div>
+
+        {% endif %}
+
     </div>
 </div>
 
