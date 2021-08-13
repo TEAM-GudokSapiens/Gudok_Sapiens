@@ -19,7 +19,7 @@
         <div class="profile" onclick="menuToggle();">
           {% if request.user.image %}
             <img src="{{ request.user.image.url }}" alt="user profile image">
-          {% else %}            
+          {% else %}
             <img src="https://image.flaticon.com/icons/png/512/618/618631.png" alt="user profile image">
           {% endif %}
         </div>
