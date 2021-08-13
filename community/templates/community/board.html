@@ -1,58 +1,56 @@
 {% extends './board_layout.html' %}
 {% load bootstrap4 %}
 
-{% block board_navbar %}
-<div class="col-4 p-0">
-    <div class="header-title">자유게시판</div>
-    <div class="header-count">1,000개의 글</div>
-</div>
-{% endblock %}
 
 {% block board_content %}
-<div class="board-content mb-3">
-<div class="board-title col-md-12">
-    <p class="col-6 align-self-center">제목</p>
-    <div class="d-flex col-6 p-0">
-        <p class="col-3 align-self-center">작성자</p>
-        <p class="col-3 align-self-center">작성일</p>
-        <p class="col-3 align-self-center">좋아요</p>
-        <p class="col-3 align-self-center">조회수</p>
-    </div>
-</div>
-    {% for board in page_obj.object_list %}
-    <div class="board-content-container" style="border-bottom: 1px solid #EEEEEE;">
-        <p class="col-md-6 col-sm-8">
-            <a href="{%url 'community:board_detail' board.id%}" class="text-dark">{{ board.title }}</a>
-            <span class="board-second-user">작성자 : {{ board.user }}</span>
-        </p>
-        <div class="board-info col-md-6 p-0">
-            <p class="col-md-3">{{ board.user }} </p>
-            <p class="col-md-3">{{ board.created_at | date:"Y-m-d" }}</p>
-            <p class="col-md-3">{{ board.like.count }}</p>
-            <p class="col-md-3">{{ board.hits }}</p>
+<div class="community-board col-xl-8 col-md-8 col-xs-12 mb-4">
+    <div class="board-header d-flex justify-content-between pb-3">
+        <div class="col-4 p-0">
+            <div class="header-title">자유게시판</div>
+            <div class="header-count">1,000개의 글</div>
         </div>
-        <div class="board-second-info col-md-6 col-sm-4 p-0">
-            <div class="col-12">{{ board.created_at | date:"Y-m-d" }}</div>
-            <div class="col-12">
-                <span class="col-6">좋아요 : {{ board.like.count }}</span>
-                <span class="col-6">조회수 : {{ board.hits }}</span>
+    </div>
+    <div class="board-content mb-3">
+        <div class="board-title col-md-12">
+            <p class="col-6 align-self-center">제목</p>
+            <div class="d-flex col-6 p-0">
+                <p class="col-3 align-self-center">작성자</p>
+                <p class="col-3 align-self-center">작성일</p>
+                <p class="col-3 align-self-center">좋아요</p>
+                <p class="col-3 align-self-center">조회수</p>
             </div>
         </div>
+        {% for board in page_obj.object_list %}
+        <div class="board-content-container" style="border-bottom: 1px solid #EEEEEE;">
+            <p class="col-md-6 col-sm-8">
+                <a href="{%url 'community:board_detail' board.id%}" class="text-dark">{{ board.title }}</a>
+                <span class="board-second-user">작성자 : {{ board.user }}</span>
+            </p>
+            <div class="board-info col-md-6 p-0">
+                <p class="col-md-3">{{ board.user }} </p>
+                <p class="col-md-3">{{ board.created_at | date:"Y-m-d" }}</p>
+                <p class="col-md-3">{{ board.like.count }}</p>
+                <p class="col-md-3">{{ board.hits }}</p>
+            </div>
+            <div class="board-second-info col-md-6 col-sm-4 p-0">
+                <div class="col-12">{{ board.created_at | date:"Y-m-d" }}</div>
+                <div class="col-12">
+                    <span class="col-6">좋아요 : {{ board.like.count }}</span>
+                    <span class="col-6">조회수 : {{ board.hits }}</span>
+                </div>
+            </div>
+        </div>
+        {%endfor%}
     </div>
-    {%endfor%}
-</div>
-{% endblock %}
-{% block create_button %}
-<div class="mb-3">
-    {% if request.user.is_authenticated %}
-    <div class="col-sm-3 col-xs-12" style="text-align: center;">
-        <a href="{%url 'community:board_create' %}" class="board-button text-light w-100 d-block">글작성</a>
+    <div class="mb-3">
+        {% if request.user.is_authenticated %}
+        <div class="col-sm-3 col-xs-12" style="text-align: center;">
+            <a href="{%url 'community:board_create' %}" class="board-button text-light w-100 d-block">글작성</a>
+        </div>
+        {% endif %}
     </div>
-    {% endif %}
 </div>
-{% endblock %}
 
-{% block board_paginator %}
 <div class="board-paginator">
     {% if page_obj.has_previous %}
     <a href="?page=1" class="text-dark">처음으로</a>

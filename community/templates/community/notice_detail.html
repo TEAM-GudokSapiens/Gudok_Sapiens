@@ -2,33 +2,34 @@
 {% extends "./board_layout.html" %}
 {% load bootstrap4 %}
 
-{% block board_navbar %}
-<div class="col-4 p-0">
-    <div class="header-title">공지사항</div>
-    <div class="header-count">1,000개의 글</div>
-</div>
-{% endblock %}
-
 {% block board_content %}
-<div class="board-detail-content mb-3">
-    <p style="display:none">{{ notice.update_counter }}</p>
-    
-    <!--제목-->
-    <h3>{{ notice.title }}</h3>
-    조회수 : {{ notice.hits }} <br>
-    <hr>
-    <!--사진-->
-    {% if board.img %}
-    <img src="{{ notice.img.url }}" style="width: 450px;"> <br>
-    {% else %}
-    <p></p>
-    {% endif %}
-    
-    <!--내용-->
-    {{ notice.content }} <br>
-    
-    작성일: {{ notice.created_at | date:"Y/m/d" }} <br>
-    <hr>
-    <a href="{%url 'community:notice'%}">목록으로 돌아가기</a>
+<div class="community-board col-xl-8 col-md-8 col-xs-12 mb-4">
+    <div class="board-header d-flex justify-content-between pb-3">
+        <div class="col-4 p-0">
+        <div class="header-title">공지사항</div>
+        <div class="header-count">1,000개의 글</div>
+        </div>
+    </div>
+    <div class="board-detail-content mb-3">
+        <p style="display:none">{{ notice.update_counter }}</p>
+        
+        <!--제목-->
+        <h3>{{ notice.title }}</h3>
+        조회수 : {{ notice.hits }} <br>
+        <hr>
+        <!--사진-->
+        {% if board.img %}
+        <img src="{{ notice.img.url }}" style="width: 450px;"> <br>
+        {% else %}
+        <p></p>
+        {% endif %}
+        
+        <!--내용-->
+        {{ notice.content }} <br>
+        
+        작성일: {{ notice.created_at | date:"Y/m/d" }} <br>
+        <hr>
+        <a href="{%url 'community:notice'%}">목록으로 돌아가기</a>
+    </div>
 </div>
 {% endblock %}

@@ -17,20 +17,14 @@
         </form>
     </div>
     <!--------------------------------------------------------------------->
-    <div class="community-board col-xl-8 col-md-8 col-xs-12 mb-4">
+    <!-- <div class="community-board col-xl-8 col-md-8 col-xs-12 mb-4">
         <div class="board-header d-flex justify-content-between pb-3">
             {% block board_navbar %}
             {% endblock %}
         </div>
-        {% block board_content %}
-        {% endblock %}
-        {% block create_button %}
-        {% endblock %}
-
-        {% block board_paginator %}
-        {% endblock %}
-    </div>
-
+    </div> -->
+    {% block board_content %}
+    {% endblock %}
 </div>
 <script>
     const currentLocation=location.href;
