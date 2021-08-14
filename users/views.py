@@ -1,33 +1,40 @@
-from django.http.response import HttpResponseForbidden
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.contrib import messages
-from django.contrib.auth import login, logout, authenticate,update_session_auth_hash
+from django.contrib.auth import login, logout, authenticate, update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.forms.utils import ErrorList
-from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.utils.decorators import method_decorator
 from django.views.generic import UpdateView, DeleteView, FormView
-
 from services.models import Service
 from .forms import *
 from .decorators import *
 from services.models import Service
 from django.core.paginator import Paginator
-from django.urls import reverse
-from .mailing import send_mail
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_text
-from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth.tokens import PasswordResetTokenGenerator, default_token_generator
 from django.core.exceptions import PermissionDenied
 from django.core.exceptions import ValidationError
 from django.views.generic import CreateView
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponseRedirect, Http404, HttpResponseForbidden
 from django.views.generic import View
-# 회원가입
 from .models import *
+from django.views.generic import UpdateView, DeleteView
+from users.forms import UpdateForm, LoginForm, SignupForm
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes
+from django.core.mail import EmailMessage
+from django.utils.encoding import force_bytes, force_text
+from django.urls import reverse
+from .helper import send_mail
+from django.utils.encoding import force_bytes, force_text
+from django.contrib.auth.tokens import default_token_generator
+# 회원가입
 
 
 class Signup(CreateView):
@@ -65,7 +72,22 @@ class Signup(CreateView):
             }),
         )
         return redirect(self.get_success_url())
-
+        # message = render_to_string('users/register_email.html',                         {
+        #     'user': self.object,
+        #     'domain': self.request.META['HTTP_HOST'],
+        #     'uid': urlsafe_base64_encode(force_bytes(self.object.pk)).encode().decode(),
+        #     'token': default_token_generator.make_token(self.object),
+        # })
+        # mail_subject = "[구독사피엔스] 회원가입 인증 메일입니다."
+        # user_email = self.object.email
+        # email = EmailMessage(mail_subject, message, to=[user_email])
+        # print(user_email)
+        # email.send()
+        # if email.send() == 0:
+        #     print("실패")
+        # else:
+        #     print("성공")
+        # return redirect(self.get_success_url())
 # def signup(request):
 #     if request.method == "POST":
 #         form = SignupForm(request.POST)
@@ -96,29 +118,24 @@ def register_success(request):
 
     return render(request, 'users/register_success.html')
 
+
 # 이메일 인증 성공시 자동로그인
 
 
 def activate(request, uid64, token):
     try:
         uid = force_text(urlsafe_base64_decode(uid64))
-        user = User.objects.get(pk=uid)
+        current_user = User.objects.get(pk=uid)
     except (TypeError, ValueError, OverflowError, User.DoesNotExist, ValidationError):
         messages.error(request, '메일 인증에 실패했습니다.')
         return redirect('users:login')
 
-    if default_token_generator.check_token(user, token):
-        user.is_active = True
-        user.save()
+    if default_token_generator.check_token(current_user, token):
+        current_user.is_active = True
+        current_user.save()
+
         messages.info(request, '메일 인증이 완료 되었습니다. 회원가입을 축하드립니다!')
         return redirect('users:login')
-        # form = SignupForm(request.POST)
-        # user = form.save()
-        # user_id = form.cleaned_data.get('user_id')
-        # raw_password = form.cleaned_data.get('password1')
-        # user = authenticate(username=user_id, password=raw_password)
-        # login(request, user)
-        # return redirect('services:main')
 
     messages.error(request, '메일 인증에 실패했습니다.')
     return redirect('users:login')
@@ -237,18 +254,18 @@ class AgreementView(View):
             return render(request, 'users/agreement.html')
 
 
-#비밀번호 변경
+# 비밀번호 변경
 @login_message_required
 def update_password(request):
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, request.POST)
         if form.is_valid():
             user = form.save()
-            update_session_auth_hash(request, user)  #비밀번호를 자동으로 업데이트해줌! 사이트에 머물수있오
+            # 비밀번호를 자동으로 업데이트해줌! 사이트에 머물수있오
+            update_session_auth_hash(request, user)
             return redirect('services:main')
     else:
         form = PasswordChangeForm(request.user)
     return render(request, 'users/update_password.html', {
         'form': form
     })
-
