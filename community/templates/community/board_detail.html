@@ -89,7 +89,7 @@
                         {% else %}
                             {% if comment.reply == 0 %}
                                 {% if comment.user == board.user %}
-                                <strong>{{ comment.user }}&nbsp;<span style="color:gray";>(글쓴이)</span></strong>
+                                <strong>{{ comment.user }}&nbsp;<span style="color:gray";></span></strong>
                                 {% else  %}
                                 <strong>{{ comment.user }}</strong>
                                 {% endif %}
@@ -145,7 +145,7 @@
                                 var reply_content = "{{ comment.content }}";
 
                                 $('.'+comment_id).append(
-                                    '<div style="display:grid; grid-template-columns: 0.03fr 0.97fr"><div style="color:gray;"><i class="fa fa-reply fa-rotate-180 fa-lg"></i></div><div><div id='+reply_id+'><strong>'+reply_user+'&nbsp;<span style="color:gray";>'+'(글쓴이)'+'</span></strong>'+
+                                    '<div style="display:grid; grid-template-columns: 0.03fr 0.97fr"><div style="color:gray;"><i class="fa fa-reply fa-rotate-180 fa-lg"></i></div><div><div id='+reply_id+'><strong>'+reply_user+'&nbsp;<span style="color:gray";>'+'</span></strong>'+
                                     '<span style="float:right; color:gray;">'+reply_created+'</span>'+
                                     '<div><div style="white-space:pre-wrap; text-align:left;height: 3vh;">'+reply_content+'</div><div style="text-align:right; margin:-20px 0px -10px 0;"><a style="color: #888888f2;" onclick="replyDelete('+reply_id+');">답글삭제</a></div></div></div></div></div><hr>'
                                 );
@@ -162,7 +162,7 @@
                                 var reply_content = "{{ comment.content }}";
 
                                 $('.'+comment_id).append(
-                                    '<div style="display:grid; grid-template-columns: 0.03fr 0.97fr"><div style="color:gray;"><i class="fa fa-reply fa-rotate-180 fa-lg"></i></div><div><div id='+reply_id+'><strong>'+reply_user+'&nbsp;<span style="color:gray";>'+'(글쓴이)'+'</span></strong>'+
+                                    '<div style="display:grid; grid-template-columns: 0.03fr 0.97fr"><div style="color:gray;"><i class="fa fa-reply fa-rotate-180 fa-lg"></i></div><div><div id='+reply_id+'><strong>'+reply_user+'&nbsp;<span style="color:gray";>'+'</span></strong>'+
                                     '<span style="float:right; color:gray;">'+reply_created+'</span>'+
                                     '<div><div style="white-space:pre-wrap; text-align:left;height: 3vh;">'+reply_content+'</div><div style="text-align:right;"></div></div></div></div></div><hr>'
                                 );
