@@ -27,7 +27,7 @@
             </div>
             <div class="detail-box-hits">
                 <span class="mr-2">조회수 : {{ board.hits }}</span>
-                <div onclick="boardToggle();" style="cursor: pointer; display: inline;"><i class="fas fa-ellipsis-v text-dark"></i></div>
+                <div onclick="boardToggle();" style="cursor: pointer; display: inline;"><i class="more-icon fas fa-ellipsis-v text-dark"></i></div>
             </div>
         </div>
         <div class="detail-menu">
@@ -459,5 +459,23 @@
     const toggleMenu = document.querySelector('.detail-menu');
             toggleMenu.classList.toggle('active')
     }
+    // 다른 영역 클릭시 메뉴 없어짐
+    var body = document.querySelector("body");
+    body.addEventListener('click', clickBodyEvent);
+
+    function clickBodyEvent(event) {
+        console.log('ds');
+        var target=event.target;
+            if(target!=document.querySelector('.more-icon')) {
+                console.log('ddf')
+                const detailMenu = document.querySelector('.detail-menu');
+                detailMenu.classList.remove('active')
+
+                // const detailMenu = document.querySelector('.menu');
+                // detailMenu.classList.remove('active')
+            }
+
+    }
+
 </script>
 {% endblock %}
