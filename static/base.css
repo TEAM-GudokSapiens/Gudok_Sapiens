@@ -3,7 +3,7 @@
 
 * {
   font-family: "Noto Sans KR";
-  color: #333;
+  /* color: #333; */
 }
 
 .header-container {
@@ -786,14 +786,17 @@
   font-family: "GmarketSansTTFLight";
 }
 .board-header-title {
-  font-size: 24px;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
 }
 .board-header-count {
   font-size: 14px;
+  font-weight: 300;
 }
 .board-content {
-  border-bottom: 1px solid #9a30ae;
-  border-top: 1px solid #9a30ae;
+  border-bottom: 1px solid #989898;
+  border-top: 1px solid #989898;
+  font-size: 0.9rem;
 }
 
 .board-content p {
@@ -804,7 +807,9 @@
   font-family: "GmarketSansTTFMedium";
 }
 .board-title {
+  background-color: #f9f9f9;
   border-bottom: 1px solid #cdcdcd;
+  color: #585858;
   height: 7vh;
   display: flex;
   align-items: center;
@@ -823,9 +828,10 @@
 .board-content-container {
   border-bottom: 1px solid #cdcdcd;
   height: auto;
-  padding: 25px 15px;
+  padding: 15px 15px;
   display: flex;
   align-items: center;
+  font-weight: 300;
 }
 .board-content-container p {
   word-break: break-all;
@@ -834,19 +840,25 @@
   text-align: center;
 }
 .board-submit {
-  background: #9a30ae;
+  background: #f3f3f3;
   padding: 7px 30px;
+  color: #585858;
 }
 .board-button {
   min-width: 20%;
-  background: #9a30ae;
+  background: #f3f3f3;
   padding: 7px 30px;
   margin: 0px 10px;
+  color: #585858;
+}
+.board-button a {
+  color: #585858;
 }
 .comment-submit {
-  background: #9a30ae;
+  background: #f3f3f3;
   /* padding: 7px 30px; */
   width: 15%;
+  color: #585858;
 }
 .comment-write {
   width: 83%;
@@ -887,10 +899,19 @@ a:hover {
   color: #9a30ae;
   transition: 0.5s;
 }
+.board-detail-container {
+  font-weight: 300;
+}
 .detail-first-box,
 .detail-second-box {
   display: flex;
   justify-content: space-between;
+}
+.detail-second-box {
+  font-size: 0.9rem;
+  color: #585858;
+  border-bottom: 1px solid #d6d6d6;
+  margin-bottom: 15px;
 }
 .detail-profile {
   width: 30px;
@@ -904,19 +925,15 @@ a:hover {
 }
 .detail-box-content {
   min-height: 30vh;
+  font-size: 1.1rem;
+  color: #585858;
 }
 .detail-first-box {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
 }
 .detail-board-title {
-  font-size: 1.5rem;
-}
-.detail-board-date {
-  font-size: 1.1rem;
-}
-.detail-box-content {
-  font-size: 1.1rem;
+  font-size: 1.4rem;
 }
 .detail-box-likes {
   display: flex;
@@ -933,9 +950,6 @@ a:hover {
 .comment-text {
   display: flex;
   justify-content: space-between;
-}
-.ck-editor__editable {
-  width: 100%;
 }
 
 @media screen and (max-width: 768px) {

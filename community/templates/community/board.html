@@ -3,8 +3,8 @@
 
 
 {% block board_content %}
-<div class="community-board col-xl-8 col-md-8 col-xs-12 mb-4">
-    <div class="board-header d-flex justify-content-between pb-3">
+<div class="community-board col-xl-7 col-md-7 col-xs-12 mb-4">
+    <div class="board-header d-flex justify-content-between pb-2">
         <div class="col-4 p-0">
             <div class="board-header-title">자유게시판</div>
             <div class="board-header-count">1,000개의 글</div>
@@ -45,7 +45,7 @@
     <div class="mb-3">
         {% if request.user.is_authenticated %}
         <div class="col-sm-3 col-xs-12" style="text-align: center;">
-            <a href="{%url 'community:board_create' %}" class="board-submit text-light w-100 d-block">글작성</a>
+            <a href="{%url 'community:board_create' %}" class="board-submit w-100 d-block">글작성</a>
         </div>
         {% endif %}
     </div>
@@ -77,14 +77,5 @@
     <a href="?page={{ page_obj.paginator.num_pages }}" class="text-dark">맨뒤로</a>
     {% endif %}
 </div>
-<script>
-    const currentLocation = location.href;
-    const pageItem = document.querySelectorAll('a');
-    const pageLength = pageItem.length
-    for (let i = 0; i < pageLength; i++) {
-        if (pageItem[i].href === currentLocation) {
-            pageItem[i].className = "active"
-        }
-    }
-</script>
+
 {% endblock %}

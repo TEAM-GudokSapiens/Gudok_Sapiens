@@ -13,11 +13,11 @@
     <div class="board-detail-container mb-3">
         <p style="display: none;" >{{ board.update_counter }}</p>
         
-        <div class="detail-first-box p-2">
+        <div class="detail-first-box p-1">
             <span class="detail-board-title">{{board.title}}</span>
             <span class="detail-board-date">{{ board.created_at | date:"Y/m/d" }}</span>
         </div>
-        <div class="detail-second-box p-2">
+        <div class="detail-second-box p-1">
             <div class="detail-box-user">
                 <div class="detail-profile mr-2">
                     <img src="https://dazedimg-dazedgroup.netdna-ssl.com/1284/azure/dazed-prod/1290/9/1299926.jpg" alt="user profile image"
@@ -27,7 +27,7 @@
             </div>
             <div class="detail-box-hits">
                 <span class="mr-2">조회수 : {{ board.hits }}</span>
-                <div onclick="boardToggle();" style="cursor: pointer; display: inline;"><i class="more-icon fas fa-ellipsis-v text-dark"></i></div>
+                <div onclick="boardToggle();" style="cursor: pointer; display: inline;"><i class="more-icon fas fa-ellipsis-v"></i></div>
             </div>
         </div>
         <div class="detail-menu">
@@ -51,7 +51,6 @@
                 </ul>
                 {% endif %}
         </div>
-        <hr>
         <div class="detail-box-content">
             {{ board.content | safe }}
         </div>
@@ -75,7 +74,7 @@
                 {% csrf_token %}
                 <div class="comment-box col-12 pr-0 pl-0">
                     <textarea class="comment-write" rows="2" placeholder="댓글을 입력해주세요."></textarea>
-                    <button class="comment-submit text-light" style="border:none; outline:none;">등록</button>
+                    <button class="comment-submit" style="border:none; outline:none;">등록</button>
                 </div>
             </div>
             <div class="comment-text">
@@ -233,11 +232,11 @@
     <div class="pt-4 mb-3 d-flex justify-content-center">
         <div class="board-button" style="text-align: center;">
             {% if request.user.is_authenticated %}
-            <a href="{%url 'community:board_create' %}" class="text-light w-100 d-block">글작성</a>
+            <a href="{%url 'community:board_create' %}" class="w-100 d-block">글작성</a>
             {% endif %}
         </div>
         <div class="board-button" style="text-align: center;">
-            <a href="{%url 'community:board'%}" class="text-light w-100 d-block">목록으로 </a>
+            <a href="{%url 'community:board'%}" class="w-100 d-block">목록으로 </a>
         </div>
     </div>
 </div>
