@@ -11,8 +11,6 @@ urlpatterns = [
     path('update/<int:pk>', AccountUpdateView.as_view(), name='update'),
     path('delete/<int:pk>', AccountDeleteView.as_view(), name='delete'),
     path('update/password', views.update_password, name='update_password'),
-
-
     path('dibs_list/', view=views.dibs_list, name='dibs_list'),
     path('reviews_list/', view=views.reviews_list, name='reviews_list'),
     path('registerauth/', views.register_success, name='register_success'),

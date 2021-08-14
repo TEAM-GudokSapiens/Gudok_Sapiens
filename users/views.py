@@ -12,13 +12,10 @@ from .forms import *
 from .decorators import *
 from services.models import Service
 from django.core.paginator import Paginator
-from django.urls import reverse
-# from .mailing import send_mail
-from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_text
-from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth.tokens import PasswordResetTokenGenerator, default_token_generator
 from django.core.exceptions import PermissionDenied
 from django.core.exceptions import ValidationError
 from django.views.generic import CreateView
@@ -27,6 +24,18 @@ from users.forms import UpdateForm, LoginForm, SignupForm
 from django.http import HttpResponseRedirect, Http404, HttpResponseForbidden
 from django.views.generic import View
 from .models import *
+from django.views.generic import UpdateView, DeleteView
+from users.forms import UpdateForm, LoginForm, SignupForm
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes
+from django.core.mail import EmailMessage
+from django.utils.encoding import force_bytes, force_text
+from django.urls import reverse
+from .helper import send_mail
+from django.utils.encoding import force_bytes, force_text
+from django.contrib.auth.tokens import default_token_generator
 # 회원가입
 
 
@@ -67,7 +76,22 @@ class Signup(CreateView):
             }),
         )
         return redirect(self.get_success_url())
-
+        # message = render_to_string('users/register_email.html',                         {
+        #     'user': self.object,
+        #     'domain': self.request.META['HTTP_HOST'],
+        #     'uid': urlsafe_base64_encode(force_bytes(self.object.pk)).encode().decode(),
+        #     'token': default_token_generator.make_token(self.object),
+        # })
+        # mail_subject = "[구독사피엔스] 회원가입 인증 메일입니다."
+        # user_email = self.object.email
+        # email = EmailMessage(mail_subject, message, to=[user_email])
+        # print(user_email)
+        # email.send()
+        # if email.send() == 0:
+        #     print("실패")
+        # else:
+        #     print("성공")
+        # return redirect(self.get_success_url())
 # def signup(request):
 #     if request.method == "POST":
 #         form = SignupForm(request.POST)
