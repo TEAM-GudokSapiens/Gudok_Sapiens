@@ -854,14 +854,22 @@
 .board-button a {
   color: #585858;
 }
-#comment_write {
+#comment_write,
+#reply_write {
   background: #f3f3f3;
-  /* padding: 7px 30px; */
   width: 15%;
   color: #585858;
+  font-weight: 300;
+}
+#reply_write {
+  width: 100%;
+  height: 100%;
 }
 #content_id {
   width: 83%;
+}
+.comment-text {
+  margin: 15px;
 }
 .board-paginator {
   text-align: center;
@@ -944,8 +952,11 @@ a:hover {
   display: flex;
   justify-content: space-between;
 }
-.comment-box textarea {
+.comment-box textarea,
+#reply_content {
   border: 1px solid rgb(205, 205, 205);
+  width: 100%;
+  height: 100%;
 }
 .comment-text {
   display: flex;
