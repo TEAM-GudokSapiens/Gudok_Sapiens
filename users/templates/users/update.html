@@ -10,10 +10,22 @@
   </div>
   <form action="{% url 'users:update' pk=user.pk %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {% bootstrap_form form %}
-    <input type="submit" class="btn btn-dark rounded-pill col-8 mt-3">
+    아이디 <p>{{ form.user_id }}</p> <br>
+    이메일 <p>{{ form.email }}</p><br>
+    이름 <p>{{ form.name }}</p><br>
+    닉네임 <p>{{ form.nickname }}</p><br>
+    프로필 사진 <p>{{ form.image }}</p><br>
+    성별 <p>{{ form.gender }}</p><br>
+    휴대폰 번호 <p>{{ form.phonenum }}</p><br>
+   
+    <input type="submit" class="btn btn-dark rounded-pill col-8 mt-3" >
+
   </form>
-  <a href="{% url 'users:delete' pk=user.pk %}">
+  <a href="{% url 'users:update_password' %}">
+    <p>
+      비밀번호 변경
+    </p>
+  </a>  <a href="{% url 'users:delete' pk=user.pk %}">
     <p>
       회원 탈퇴
     </p>

@@ -1,73 +1,233 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="col-8" style="margin: 0 auto;">
-    <div>
-        <div class="carousel-inner">
-            <h4>
-                <매거진>
-            </h4>
-            {% for magazine in magazine_list  %}
-            {% if forloop.counter  == 1 %}
-            <div class="carousel-item active">
-                <a href="{% url 'community:magazine_detail' magazine.id %}">
-                    <img src="{{ magazine.img.url }}" />
-                </a>
+<nav class="main-navbar navbar navbar-expand-lg navbar-light col-8">
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                전체 카테고리
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#"><i class="fas fa-store"></i>생활용품</a>
+                <a class="dropdown-item" href="#"><i class="fas fa-running"></i>건강/헬스</a>
+                <a class="dropdown-item" href="#"><i class="fas fa-tshirt"></i>의류</a>
+                <a class="dropdown-item" href="#"><i class="fas fa-hand-sparkles"></i>세탁</a>
+                <a class="dropdown-item" href="#"><i class="fas fa-broom"></i>청소</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#"><i class="fas fa-truck"></i>홈배달</a>
+                <a class="dropdown-item" href="#"><i class="fas fa-coffee"></i>음료/커피</a>
+                <a class="dropdown-item" href="#"><i class="fas fa-cocktail"></i>주류</a>
+                <a class="dropdown-item" href="#"><i class="fas fa-seedling"></i>과일/야채</a>
+                <a class="dropdown-item" href="#"><i class="fas fa-capsules"></i>건강식품</a>
+                <a class="dropdown-item" href="#"><i class="fas fa-bread-slice"></i>베이커리</a>
+                <a class="dropdown-item" href="#"><i class="fas fa-hamburger"></i>패스트푸드</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#"><i class="fas fa-photo-video"></i>영상</a>
+                <a class="dropdown-item" href="#"><i class="fas fa-headphones-alt"></i>음악</a>
+                <a class="dropdown-item" href="#"><i class="fas fa-book"></i>도서</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#"><i class="far fa-newspaper"></i>뉴스레터</a>
             </div>
-            {% else %}
-            <div class="carousel-item">
-                <a href="{% url 'community:magazine_detail' magazine.id %}">
-                    <img src="{{ magazine.img.url }}" />
-                </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" href="#">라이프 스타일</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" href="#">음식</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" href="#">컨텐츠</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" href="#">뉴스레터</a>
+        </li>
+    </ul>
+    <form method="GET" action="{% url 'services:search' %}">
+        {% csrf_token %}
+        <div class="main-search">
+            <div class="main-search-icon">
+                <i class="search fa fa-search"></i>
             </div>
-            {% endif %}
-            {% endfor %}
+            <div class="main-search-input">
+                <input type="text" placeholder="서비스 검색" id="main-search-input" name='search_key' value="{{ search_key }}">
+                
+            </div>
+            
         </div>
-        <button class="carousel-control-prev btn" data-bs-target="#carouselControls" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next btn" data-bs-target="#carouselControls" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
+    </form>
+</nav>
+
+<div id="mainCarousel" class="main-carousel carousel slide" data-ride="carousel">
+    <div class="main-carousel-inner carousel-inner">
+        {% for magazine in magazine_list  %}
+        {% if forloop.counter  == 1 %}
+        <div class="main-carousel-item carousel-item active">
+            <a href="{% url 'community:magazine_detail' magazine.id %}">
+                <img src="{{ magazine.img.url }}"
+                    style="display: block; line-height: 1; margin: 0 auto; max-width: 100%;" />
+            </a>
+        </div>
+        {% else %}
+        <div class="main-carousel-item carousel-item">
+            <a href="{% url 'community:magazine_detail' magazine.id %}">
+                <img src="{{ magazine.img.url }}"
+                    style="display: block; line-height: 1; margin: 0 auto; max-width: 100%;" />
+            </a>
+        </div>
+        {% endif %}
+        {% endfor %}
     </div>
-    
-    <div class="album py-5 bg-light">
-        <div class="container">
-            <div>
-                <인기서비스>
-            </div>
-            <div class="flex row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                {% if services %}
-                {% for service in services  %}
+    <a class="main-carousel-control carousel-control-prev" href="#mainCarousel" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="main-carousel-control carousel-control-next" href="#mainCarousel" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+
+
+
+<div class="service-list-section col-8">
+    <h4 class="col-12">
+        금주의 사피엔스's PICK
+    </h4>
+    <div class="service-list-box col-12">
+        {% if services %}
+        {% for service in services  %}
+        <div class='service-card card col-3'>
+            <div class='card-img-top'>
+                {% if service.img1 %}
                 <a href="{% url 'services:services_detail' pk=service.pk %}">
-                    <div class="col">
-                        <div class='card'>
-                            <div class='card-img-top'>
-                                {% if service.img1 %}
-                                <img src="{{ service.img1.url }}" width='250px' />
-                                {% endif %}
-                            </div>
-                            <div class='card-body'>
-                            </div>
-                            {{ service.name }}
-                            {{ service.intro }}
-                            <a href="{% url 'likes:likes_dibs' service.id %}">찜하기</a>
-                        </div>
-                    </div>
-                    {% endfor %}
-                    {% else %}
-    
-                    <div>
-                        <h5>조건에 맞는 구독 서비스가 없습니다.</h5>
-                    </div>
-    
-                    {% endif %}
-    
+                    <img src="{{ service.img1.url }}" />
+                </a>
+                {% endif %}
+            </div>
+            <div>
+                <div class="d-flex justify-content-between">
+                    <h5><a href="{% url 'services:services_detail' pk=service.pk %}">{{ service.name }}</a></h5>
+                    <span class="star"><i class="fas fa-star"></i>{{ avg_of_reviews }}({{service.get_review_count}})</span>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <span class="service-intro">{{ service.intro }}</span>
+                    <span>
+                        <a href="{% url 'likes:likes_dibs' service.id %}" class="heart"><i class="far fa-heart"></i></a>
+                        {{ number_of_dibs }}
+                    </span>
+                </div>
             </div>
         </div>
+        {% endfor %}
+        {% else %}
+
+        <div>
+            <h5>조건에 맞는 구독 서비스가 없습니다.</h5>
+        </div>
+
+        {% endif %}
+
     </div>
 </div>
+
+<div class="promotion-section col-8">
+    <a href="{% url 'services:services_list' %}">
+        <img src="https://waifu2x.booru.pics/outfiles/1cbe314f8a0548193676a0818108512f08bff5bf_s2_n1.png" alt="">
+    </a>
+</div>
+
+
+<div class="service-list-section col-8">
+    <h4 class="col-12">
+        신규 구독 서비스
+    </h4>
+    <div class="service-list-box col-12">
+        {% if services %}
+        {% for service in services  %}
+        <div class='service-card card col-3'>
+            <div class='card-img-top'>
+                {% if service.img1 %}
+                <a href="{% url 'services:services_detail' pk=service.pk %}">
+                    <img src="{{ service.img1.url }}" width='100%' />
+                </a>
+                {% endif %}
+            </div>
+            <div>
+                <div class="d-flex justify-content-between">
+                    <h5><a href="{% url 'services:services_detail' pk=service.pk %}">{{ service.name }}</a></h5>
+                    <span><i class="fas fa-star"></i>{{ avg_of_reviews }}({{service.get_review_count}})</span>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <span class="service-intro">{{ service.intro }}</span>
+                    <span>
+                        <a href="{% url 'likes:likes_dibs' service.id %}" class="heart"><i class="far fa-heart"></i></a>
+                        {{ number_of_dibs }}
+                    </span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+
+        <div>
+            <h5>조건에 맞는 구독 서비스가 없습니다.</h5>
+        </div>
+
+        {% endif %}
+
+    </div>
+</div>
+
+
+<div class="service-list-section col-8">
+    <h4 class="col-12">
+        랜덤 구독 서비스
+    </h4>
+    <div class="service-list-box col-12">
+        {% if services %}
+        {% for service in services  %}
+        <div class='service-card card col-3'>
+            <div class='card-img-top'>
+                {% if service.img1 %}
+                <a href="{% url 'services:services_detail' pk=service.pk %}">
+                    <img src="{{ service.img1.url }}" width='100%' />
+                </a>
+                {% endif %}
+            </div>
+            <div>
+                <div class="d-flex justify-content-between">
+                    <h5><a href="{% url 'services:services_detail' pk=service.pk %}">{{ service.name }}</a></h5>
+                    <span><i class="fas fa-star"></i>{{ avg_of_reviews }}({{service.get_review_count}})</span>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <span class="service-intro">{{ service.intro }}</span>
+                    <span>
+                        <a href="{% url 'likes:likes_dibs' service.id %}" class="heart"><i class="far fa-heart"></i></a>
+                        {{ number_of_dibs }}
+                    </span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+
+        <div>
+            <h5>조건에 맞는 구독 서비스가 없습니다.</h5>
+        </div>
+
+        {% endif %}
+
+    </div>
+</div>
+
+<script>
+    let search = document.querySelector(".search");
+    let clearh = document.querySelector(".clear");
+
+    search.onclick = function(){
+        document.querySelector(".main-search").classList.toggle('active');
+    }
+</script>
 
 {% endblock %}

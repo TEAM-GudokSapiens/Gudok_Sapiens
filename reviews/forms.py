@@ -1,6 +1,6 @@
 from django import forms
 from .models import Review
-from .widgets import StarWidget
+from .widgets import *
 
 REVIEW_POINT_CHOICES = (
     ('1', 1),
@@ -19,6 +19,8 @@ class ReviewCreateForm(forms.ModelForm):
         model = Review
         fields = ['photo', 'title', 'content', 'score', 'period']
         widgets = {
+            'period': RangeInput(
+                attrs={'max': 100}),
             'score': StarWidget,
             'content': forms.Textarea(
                 attrs={'placeholder': '15자 이상 입력해주세요', 'rows': 4, 'cols': 20}),

@@ -14,7 +14,8 @@ class Review(models.Model):
     content = models.TextField(verbose_name='내용', validators=[
         MinLengthValidator(15)])
     score = models.DecimalField(verbose_name='별점', max_digits=2, decimal_places=1)
-    period = models.PositiveSmallIntegerField(verbose_name='사용기간(개월)')
+    period = models.PositiveSmallIntegerField(verbose_name='사용기간(개월)',
+        validators=[MinValueValidator(0), MaxValueValidator(100)])
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

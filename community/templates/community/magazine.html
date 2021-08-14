@@ -2,42 +2,56 @@
 {% load bootstrap4 %}
 
 {% block content %}
-    <div class="community_navbar"> <!--확인차 넣어둔 커뮤니티 navbar-->
-        <span><a href="{%url 'community:notice'%}">공지사항 </a></span>
-        <span><a href="{%url 'community:magazine'%}">매거진 </a></span>
-        <span><a href="{%url 'community:board'%}">자유게시판 </a></span>
-        <form method="GET" action="{% url 'community:search' %}">
-            {% csrf_token %}
-                <input type='text' name='search_key' value="{{ search_key }}" placeholder='Search' />
-                <input type='submit' value="Search" />
-        </form>
-        <hr>
-    </div>
-    <!--------------------------------------------------------------------->
-    
-    {% for magazine in page_obj.object_list %}
-    <div>
-        <img src="{{ magazine.img.url }}" style="width: 450px;"><br>
-        <h5><a href="{%url 'community:magazine_detail' magazine.id%}" >{{ magazine.title }}</a></h5>
-        {{ magazine.intro }} <br>
-        {{ magazine.created_at | date:"Y/m/d" }} <br>
-        조회수 : {{ magazine.hits }} <br>
-        <hr>
-    </div>
-    {%endfor%}
-    
+<div class="community_navbar">
+    <!--확인차 넣어둔 커뮤니티 navbar-->
+    <span><a href="{%url 'community:notice'%}">공지사항 </a></span>
+    <span><a href="{%url 'community:magazine'%}">매거진 </a></span>
+    <span><a href="{%url 'community:board'%}">자유게시판 </a></span>
+    <form method="GET" action="{% url 'community:search' %}">
+        {% csrf_token %}
+        <input type='text' name='search_key' value="{{ search_key }}" placeholder='Search' />
+        <input type='submit' value="Search" />
+    </form>
+    <hr>
+</div>
+<!--------------------------------------------------------------------->
+
+{% for magazine in page_obj.object_list %}
+<div>
+    <img src="{{ magazine.img.url }}" style="width: 450px;"><br>
+    <h5><a href="{%url 'community:magazine_detail' magazine.id%}">{{ magazine.title }}</a></h5>
+    {{ magazine.intro }} <br>
+    {{ magazine.created_at | date:"Y/m/d" }} <br>
+    조회수 : {{ magazine.hits }} <br>
+    <hr>
+</div>
+{%endfor%}
+
+<div class="board-paginator">
     {% if page_obj.has_previous %}
-        <a href="?page=1">처음으로</a>
-        <a href="?page={{ page_obj.previous_page_number }}">이전으로</a>
+    <a href="?page=1" class="text-dark">처음으로</a>
+    <a href="?page={{ page_obj.previous_page_number }}" class="text-dark">&lt&lt</a>
     {% endif %}
-    
-    <span class="current">
-         {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
-    </span>
-    
+
+    {% for page_number in page_obj.paginator.page_range %}
+        {% if page_number >= page_obj.number|add:-4 and page_number <= page_obj.number|add:4 %} 
+            {% if page_number is page_obj.number %} 
+            <li class="page-item active" aria-current="page">
+                <a class="text-dark" href="?page={{ page_number }}">{{ page_number }}</a>
+                </li>
+            {% else %}
+                <li class="page-item">
+                    <a class="text-dark" href="?page={{ page_number }}">{{ page_number }}</a>
+                </li>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+
     {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}">다음으로</a>
-        <a href="?page={{ page_obj.paginator.num_pages }}">맨뒤로</a>
+    <!-- <li>...{{ page_obj.paginator.num_pages }}</li> -->
+    <a href="?page={{ page_obj.next_page_number }}" class="text-dark">&gt&gt</a>
+    <a href="?page={{ page_obj.paginator.num_pages }}" class="text-dark">맨뒤로</a>
     {% endif %}
+</div>
 
 {% endblock %}

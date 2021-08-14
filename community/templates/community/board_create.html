@@ -1,29 +1,25 @@
-{% extends 'base.html' %}
+{% extends "./board_layout.html" %}
 {% load bootstrap4 %}
 
-{% block content %}
-    <div class="community_navbar"> <!--확인차 넣어둔 커뮤니티 navbar-->
-        <span><a href="{%url 'community:notice'%}">공지사항 </a></span>
-        <span><a href="{%url 'community:magazine'%}">매거진 </a></span>
-        <span><a href="{%url 'community:board'%}">자유게시판 </a></span>
-        <form method="GET" action="{% url 'community:search' %}">
-            {% csrf_token %}
-                <input type='text' name='search_key' value="{{ search_key }}" placeholder='Search' />
-                <input type='submit' value="Search" />
-        </form>
-        <hr>
+{% block board_content %}
+<div class="community-board col-xl-6 col-md-6 col-xs-12 mb-4">
+    <div class="board-header d-flex justify-content-between pb-3">
+        <div class="col-4 p-0">
+            <div class="board-header-title">자유게시판</div>
+        </div>
     </div>
-    <!--------------------------------------------------------------------->
-
-    <form action="{% url 'community:board_create' %}" method="POST" >
-        {%csrf_token%}
-        <table>
-            {{ form.media }}    
-            제목 : {{ form.title }} <br><br>
-            {{ form.content }}
-        </table> 
-
-        <input type="submit" value="글작성">
-    </form>
-
+    <div class="board-create-content mb-3">
+        <form action="{% url 'community:board_create' %}" method="POST" >
+            {%csrf_token%}
+            <div>
+                {{ form.media }}    
+                {{ form.title }}
+                {{ form.content }}
+            </div> 
+            <input class="board-submit text-light" type="submit" value="글작성" style="border: 0;outline: 0;">
+        </form>
+    </div>
+</div>
 {% endblock %}
+
+
