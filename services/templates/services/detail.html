@@ -112,13 +112,10 @@
                             <span class="tab-title">리뷰</span>
                             <span class="review-count ">{{service.get_review_count}}개</span>
                         </div>
-                        {% for review in reviews_order_help %} {% comment %}
-                        {% for review in service.get_review %} {% endcomment %} <div
-                            class="review-container review-id-{{ review.id }}">
-                            =======
+                        {% for review in reviews_order_help %}  
+                        <div class="review-container review-id-{{ review.id }}">
                             {% for review in page_obj %}
                             <div class="review-container">
-                                >>>>>>> a8ea0ebdc41f869a556362f44d5d5b7e6e449a6e
                                 <div class="title-block mb-3 d-flex justify-content-between">
                                     <span class="">{{review.user}}🌱</span>
                                     <span class="review-date">{{review.updated_at| date:"Y/m/d"}}</span>
