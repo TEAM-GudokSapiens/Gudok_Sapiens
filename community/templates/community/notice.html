@@ -59,15 +59,5 @@
     <a href="?page={{ page_obj.paginator.num_pages }}" class="">맨뒤로</a>
     {% endif %}
 </div>
-<script>
-    const currentLocation = location.href;
-    const pageItem = document.querySelectorAll('a');
-    const pageLength = pageItem.length
-    for (let i = 0; i < pageLength; i++) {
-        if (pageItem[i].href === currentLocation) {
-            pageItem[i].className = "active"
-        }
-    }
-</script>
 {% endblock %}
     

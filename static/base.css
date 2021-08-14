@@ -705,11 +705,11 @@
 
 /* board */
 .community-navbar {
-  border: 2px solid #debeff;
-  border-radius: 15px;
+  /* border: 2px solid #debeff;
+  border-radius: 15px; */
   margin: 25px auto;
   font-size: 1.2rem;
-  padding: 13px 0;
+  padding: 13px 0px;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -780,6 +780,14 @@
   background: #9a30ae;
   padding: 7px 30px;
 }
+.comment-submit {
+  background: #9a30ae;
+  /* padding: 7px 30px; */
+  width: 15%;
+}
+.comment-write {
+  width: 83%;
+}
 .board-paginator {
   text-align: center;
 }
@@ -824,14 +832,12 @@ a:hover {
 .detail-profile {
   width: 30px;
   height: 30px;
-  margin-right: 10px;
   border-radius: 50%;
   overflow: hidden;
 }
 .detail-box-user {
   display: flex;
   justify-content: center;
-  align-items: center;
 }
 .detail-box-content {
   min-height: 30vh;
