@@ -21,6 +21,7 @@ from django.core.mail import EmailMessage
 from django.utils.encoding import force_bytes, force_text
 from django.urls import reverse
 from .helper import send_mail
+
 import json
 from django.core.serializers.json import DjangoJSONEncoder
 from .forms import *
@@ -143,22 +144,22 @@ class AccountUpdateView(UpdateView):
 
 
 # 회원탈퇴
-class AccountDeleteView(DeleteView):
-    model = User
-    success_url = reverse_lazy('users:login')
-    template_name = 'users/delete.html'
+@login_message_required
+def profile_delete_view(request):
+    if request.method == 'POST':
+        password_form = CheckPasswordForm(request.user, request.POST)
+        
+        if password_form.is_valid():
+            request.user.delete()
+            logout(request)
+            messages.success(request, "회원탈퇴가 완료되었습니다.")
+            return redirect('/users/login/')
+    else:
+        password_form = CheckPasswordForm(request.user)
 
-    def get(self, *args, **kwargs):
-        if self.request.user.is_authenticated and self.get_object() == self.request.user:
-            return super().get(*args, **kwargs)
-        else:
-            return HttpResponseForbidden()
+    return render(request, 'users/delete.html', {'password_form':password_form})
 
-    def post(self, *args, **kwargs):
-        if self.request.user.is_authenticated and self.get_object() == self.request.user:
-            return super().post(*args, **kwargs)
-        else:
-            return HttpResponseForbidden()
+
 
 
 def dibs_list(request):
