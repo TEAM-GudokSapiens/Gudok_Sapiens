@@ -11,6 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http.response import JsonResponse
 from .models import Review
 from services.models import Service
+from django.core.paginator import Paginator
 
 
 # def review_create(request):

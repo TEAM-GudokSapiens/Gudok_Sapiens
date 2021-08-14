@@ -4,28 +4,28 @@
 {% block content %}
 <!--- 대분류 카테고리 표기-->
 <div class="navbar">
-  <a href="{% url 'services:services_list' %}">전체보기</a><!-- 전체보기 -->
-  {% for category in categories %}
+    <a href="{% url 'services:services_list' %}">전체보기</a><!-- 전체보기 -->
+    {% for category in categories %}
     <a href="{% url 'services:category_list' category.slug %}">{{ category.name }}</a>
-  {% endfor %}
-   <form method="GET" action="{% url 'services:search' %}"  >
-    {% csrf_token %}
-    <div class="form-row">
-    <div class="col" style="margin-top: 10px;">
-        <select style="width: 6em;" class="custom-select custom-select-md" name="type">
-            <option value="all">전체</option>
-            <option value="name">제목</option>
-            <option value="intro">한줄 소개</option>
-            <option value="content">내용</option>
-        </select>
-    </div>
-    <div class="col" style="margin-top: 10px;">
-        <input type='text' name='search_key' value="{{ search_key }}" placeholder='Search' />
-    </div>
-    <div class="col">
-        <input type='submit' value="Search" />
-    </div>
-    </div>
+    {% endfor %}
+    <form method="GET" action="{% url 'services:search' %}">
+        {% csrf_token %}
+        <div class="form-row">
+            <div class="col" style="margin-top: 10px;">
+                <select style="width: 6em;" class="custom-select custom-select-md" name="type">
+                    <option value="all">전체</option>
+                    <option value="name">제목</option>
+                    <option value="intro">한줄 소개</option>
+                    <option value="content">내용</option>
+                </select>
+            </div>
+            <div class="col" style="margin-top: 10px;">
+                <input type='text' name='search_key' value="{{ search_key }}" placeholder='Search' />
+            </div>
+            <div class="col">
+                <input type='submit' value="Search" />
+            </div>
+        </div>
 
     </form>
 </div>
@@ -37,61 +37,66 @@
     <ul>
         <li>
             <a href="{% url 'services:services_list' %}" style="font-weight: 800;">전체보기</a><!-- 전체보기 -->
-        </il>
-        {% for category in categories %}
+            </il>
+            {% for category in categories %}
         <li>
             <a href="{% url 'services:category_list' category.slug %}" style="font-weight: 800;">{{ category.name }}</a>
             {% if category_slug == category.slug  %}
-                <ul>
+            <ul>
                 {% if sub_category_list %}
-                    {% for sub_category in sub_category_list  %}
-                        <li>
-                            <a href="{% url 'services:sub_category_list' category.slug sub_category.slug %}">{{ sub_category.name }}</a>
-                        </li>
-                    {% endfor %}
+                {% for sub_category in sub_category_list  %}
+                <li>
+                    <a
+                        href="{% url 'services:sub_category_list' category.slug sub_category.slug %}">{{ sub_category.name }}</a>
+                </li>
+                {% endfor %}
                 {% endif %}
-                </ul>
+            </ul>
             {% endif %}
-        </il>
-        {% endfor %}
+            </il>
+            {% endfor %}
     </ul>
 </div>
-{{ avg_of_reviews }}
 {% comment %} 본문 내용 서비스 나열 {% endcomment %}
 <div class="album py-5 bg-light">
-    <div class="container"> 
+    <div class="container">
         <div class="flex row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             {% if services %}
             {% for service in services  %}
-                <a href="{% url 'services:services_detail' pk=service.pk %}"> 
-                    <div class="col">
-                        <div class='card'>
-                            <div class='card-img-top'>
-                            {% if service.img1 %}
-                                <img src="{{ service.img1.url }}" width='250px' />
-                            {% endif %}
-                            </div>
-                            <div class='card-body'>
-                            </div>
-                            {{ service.name }}
-                            {{ service.intro }}
-                             <a href="{% url 'likes:likes_dibs' service.id %}">찜하기</a>
-                        </div>
+            <div class="col">
+                <div class="card service-id-{{ service.id }}">
+                    <div class='card-img-top'>
+                    {% if service.img1 %}
+                    <a href="{% url 'services:services_detail' pk=service.pk %}"><img src="{{ service.img1.url }}" width='250px' /></a>
+                    {% endif %}
                     </div>
-                {% endfor %}
-            {% else %}
-
-                <div>
-                    <h5>조건에 맞는 구독 서비스가 없습니다.</h5> 
+                    <div class='card-body'>
+                        {{ service.name }}
+                        {{ service.intro }}
+                        <div> 평균 ⭐️: {{ service.avg_reviews|floatformat:1 }} {{service.get_review_count}} 명</div>
+                        <div class="dib__counts">찜: {{ service.dib_set.all.count }}</div>
+                        {% if service.is_dib %}
+                            <div class="btn btn-primary dib" onclick="onClickDib({{ service.id }})">안찜하기</div>
+                        {% else %}
+                            <div class="btn btn-primary dib" onclick="onClickDib({{ service.id }})">찜하기</div>
+                        {% endif %}
+                    </div>
                 </div>
+            </div>
+            {% endfor %}
 
-            {% endif %}
-            
+            {% else %}
+            <div>
+                <h5>조건에 맞는 구독 서비스가 없습니다.</h5> 
+            </div>
+
+                {% endif %}
+
         </div>
     </div>
 </div>
 
-<br/>
+<br />
 
 {% comment %} 하단 페이지 넘기기 기능 {% endcomment %}
 <div>
@@ -109,15 +114,15 @@
         <!-- 페이지리스트 -->
         {% for page_number in services.paginator.page_range %}
         {% if page_number >= services.number|add:-2 and page_number <= services.number|add:2 %}
-            {% if page_number == services.number %}
-            <li class="page-item active" aria-current="page">
-                <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
-            </li>
-            {% else %}
-            <li class="page-item">
-                <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
-            </li>
-            {% endif %}
+        {% if page_number == services.number %}
+        <li class="page-item active" aria-current="page">
+            <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+        </li>
+        {% else %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+        </li>
+        {% endif %}
         {% endif %}
         {% endfor %}
         <!-- 다음페이지 -->
@@ -132,8 +137,53 @@
         {% endif %}
     </ul>
     <!-- 페이징처리 끝 -->
-
-
 </div>
+<script>  
+
+        const requestDib = new XMLHttpRequest();
+
+        const onClickDib = (id) => {
+            
+            requestDib.open('POST','/likes/dibs_ajax/', true);
+            requestDib.setRequestHeader(
+                'Content-type',
+                'application/x-www-form-urlencoded'
+            );
+            requestDib.send(JSON.stringify({id: id}));
+        };
+
+
+        const DibHandleResponse = () => {
+            if (requestDib.status < 400) {
+                const {id} = JSON.parse(requestDib.response)
+                const element = document.querySelector(`.service-id-${id} .dib`);
+                
+                if (element.innerHTML == `찜하기`) {
+                    element.innerHTML = `안찜하기`;
+                    const dibsCounts = document.querySelector(`.service-id-${id} .dib__counts`);
+                    const dibsCountsHTML = dibsCounts.innerHTML;
+                    const [dibString, num] = dibsCountsHTML.split(' ');
+                    const count = Number(num) + 1;
+                    dibsCounts.innerHTML = `${dibString} ${count}`;
+                    
+                }
+                else {
+                    element.innerHTML = `찜하기`;
+                    const dibsCounts = document.querySelector(`.service-id-${id} .dib__counts`);
+                    const dibsCountsHTML = dibsCounts.innerHTML;
+                    const [dibString, num] = dibsCountsHTML.split(' ');
+                    const count = Number(num) - 1;
+                    dibsCounts.innerHTML = `${dibString} ${count}`;
+                    
+                }
+
+            }
+        }
+        requestDib.onreadystatechange = () => {
+            if (requestDib.readyState === XMLHttpRequest.DONE) {
+                DibHandleResponse();
+            }
+        } 
+</script>  
 
 {% endblock %}

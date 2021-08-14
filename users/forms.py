@@ -9,7 +9,7 @@ from django.contrib.auth.hashers import check_password
 class SignupForm(UserCreationForm):
     class Meta:
         model = get_user_model()
-        fields = ('user_id', 'email', 'nickname', 'name',
+        fields = ('user_id', 'email', 'nickname','image', 'name',
                   'gender', 'phonenum', 'password1', 'password2')
 
     def __init__(self, *args, **kwargs):
@@ -20,6 +20,8 @@ class SignupForm(UserCreationForm):
         self.fields['email'].label = '이메일'
         self.fields['name'].label = '이름'
         self.fields['nickname'].label = '닉네임'
+        self.fields['image'].label = '프로필 사진'
+        self.fields['image'].help_text = '자신을 표현할 수 있는 사진을 첨부해 주세요.'
         self.fields['gender'].label = '성별'
         self.fields['phonenum'].label = '휴대폰 번호'
         self.fields['phonenum'].help_text = '-를 빼고 입력해주세요.'
@@ -29,7 +31,7 @@ class SignupForm(UserCreationForm):
 class UpdateForm(UserCreationForm):
     class Meta:
         model = get_user_model()
-        fields = ('user_id', 'email', 'name', 'nickname',
+        fields = ('user_id', 'email', 'name', 'nickname', 'image',
                   'gender', 'phonenum', 'password1', 'password2')
 
     def __init__(self, *args, **kwargs):
@@ -43,6 +45,7 @@ class UpdateForm(UserCreationForm):
         self.fields['name'].disabled = True
         self.fields['name'].label = '이름'
         self.fields['nickname'].label = '닉네임'
+        self.fields['image'].label = '프로필 사진'
         self.fields['gender'].label = '성별'
         self.fields['gender'].disabled = True
         self.fields['phonenum'].label = '휴대폰 번호'

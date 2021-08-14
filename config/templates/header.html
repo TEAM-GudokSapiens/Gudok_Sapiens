@@ -17,17 +17,18 @@
       <!--로그인상태-->
       <div class="user-dropdown">
         <div class="profile" onclick="menuToggle();">
-          <img src="https://dazedimg-dazedgroup.netdna-ssl.com/1284/azure/dazed-prod/1290/9/1299926.jpg" alt="user profile image">
+          {% if request.user.image %}
+            <img src="{{ request.user.image.url }}" alt="user profile image">
+          {% else %}
+            <img src="https://image.flaticon.com/icons/png/512/618/618631.png" alt="user profile image">
+          {% endif %}
         </div>
         <div class="menu">
-            <span>'{{ user.nickname }}'님 환영합니다!</span>
           <ul>
             <li>
-              <img src="https://image.flaticon.com/icons/png/512/618/618631.png" alt="">
               <a href="{% url 'users:update' pk=user.pk %}">내 정보</a>
             </li>
             <li>
-              <img src="https://image.flaticon.com/icons/png/512/1250/1250678.png" alt="">
               <a href="{% url 'users:logout' %}">로그아웃</a>
             </li>
           </ul>
