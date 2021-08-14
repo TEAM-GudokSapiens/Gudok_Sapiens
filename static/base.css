@@ -790,7 +790,6 @@
   font-size: 1.5rem;
 }
 .board-header-count {
-  font-size: 14px;
   font-weight: 300;
 }
 .board-content {
@@ -1047,9 +1046,6 @@ a:hover {
     font-size: 8px;
   }
 
-  .board-header-title {
-    font-size: 1.2rem;
-  }
   .navbar-toggler {
     width: 45px;
   }
@@ -1095,9 +1091,6 @@ a:hover {
 @media screen and (max-width: 470px) {
   .community-navbar {
     font-size: 0.8rem;
-  }
-  .board-header-title {
-    font-size: 1rem;
   }
   .header-title {
     font-size: 1.2rem;
