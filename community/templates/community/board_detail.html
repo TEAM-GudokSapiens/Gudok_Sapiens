@@ -27,8 +27,29 @@
             </div>
             <div class="detail-box-hits">
                 <span class="mr-2">조회수 : {{ board.hits }}</span>
-                <a href=""><i class="fas fa-ellipsis-v text-dark"></i></a>
+                <div onclick="boardToggle();" style="cursor: pointer; display: inline;"><i class="fas fa-ellipsis-v text-dark"></i></div>
             </div>
+        </div>
+        <div class="detail-menu">
+                {% if user.user_id == board.user.user_id %}
+                <ul>
+                    <li>
+                        <a href="{% url 'community:board_update' board.id %}">수정하기</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'community:board_delete' board.id %}">삭제하기</a>
+                    </li>
+                </ul>
+                {% else %}
+                <ul>
+                    <li>
+                        <a href="">신고하기</a>
+                    </li>
+                    <li>
+                        <a href="">차단하기</a>
+                    </li>
+                </ul>
+                {% endif %}
         </div>
         <hr>
         <div class="detail-box-content">
@@ -46,12 +67,6 @@
             </div>
             <div id="like_count" class="ml-2">{{board.like.count}}</div>
         </div>
-
-        <!--로그인한 사람 == 작성자 일때만 수정,삭제가능-->
-        {% if user.user_id == board.user.user_id %}
-    <a href="{% url 'community:board_update' board.id %}">수정하기</a>
-    <a href="{% url 'community:board_delete' board.id %}">삭제하기</a>
-    {% endif %}
     
 <!--댓글-->
     <div class="" style="width: 100%;">
@@ -438,6 +453,11 @@
                 }
             }
         })
+    }
+
+    function boardToggle(){
+    const toggleMenu = document.querySelector('.detail-menu');
+            toggleMenu.classList.toggle('active')
     }
 </script>
 {% endblock %}
