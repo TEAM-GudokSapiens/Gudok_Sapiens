@@ -274,7 +274,7 @@
                     }
                     $('#content_id').val("");
                     $('#hide_button_count').replaceWith('<span id="hide_more_button"><a id=hide_button_count ><i class="fas fa-angle-up"></i>댓글 접기</a></span>')
-                    $('#show_button_count').replaceWith('<span id="show_more_button" style="display:none;"><a id=show_button_count><i class="fas fa-angle-down"></i>댓글 펼치기</a></span>')
+                    $('#show_button_count').replaceWith('<span id="show_more_button""><a id=show_button_count><i class="fas fa-angle-down"></i>댓글 펼치기</a></span>')
                     $('#total_comment').replaceWith('<span>전체 댓글 '+response.comment_count+'개</span>');
                 },
                 error: function () {
