@@ -13,7 +13,7 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 from likes.models import Dib, Help
 from django.db.models import Exists, OuterRef
-
+from config.utils import get_random_services
 from reviews.models import *
 
 # 전체 보기 페이지
@@ -25,9 +25,12 @@ def main(request):
     # 추후에 별점 순으로 변경할 수 있음
     services = Service.objects.annotate(
         num_dibs=Count('dib')).order_by('-num_dibs')[:8].annotate(avg_reviews=Avg('review__score'))
+    random_services = get_random_services(4)
+
     ctx = {
         'magazine_list': magazine_list,
         'services': services,
+        'random_services':random_services,
     }
     return render(request, 'services/main.html', context=ctx)
 
