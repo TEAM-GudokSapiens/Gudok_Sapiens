@@ -78,7 +78,7 @@
                 </div>
             </div>
             <div class="comment-text">
-                <span id="total_comment">전체 댓글 {{ comment_count }}개</span>
+                <span id="total_comment">전체 댓글 <span id="total_comment_num" value="{{comment_count}}">{{ comment_count }}</span>개</span>
 
                 {% if comments %}
                 <span id="hide_more_button"><a id=hide_button_count ><i class="fas fa-angle-up"></i>댓글 접기</a></span>
@@ -245,6 +245,8 @@
         $('img').css('width', '100%');
 
         $('#comment_write').click(function () {
+            var total_comment_num=parseInt($('#total_comment_num').text())+1;
+            console.log(total_comment_num)
             var content= $("#content_id").val();
             var user= $("#comment_user").val();
             $.ajax({
@@ -275,7 +277,7 @@
                     $('#content_id').val("");
                     $('#hide_button_count').replaceWith('<span id="hide_more_button"><a id=hide_button_count ><i class="fas fa-angle-up"></i>댓글 접기</a></span>')
                     $('#show_button_count').replaceWith('<span id="show_more_button""><a id=show_button_count><i class="fas fa-angle-down"></i>댓글 펼치기</a></span>')
-                    $('#total_comment').replaceWith('<span>전체 댓글 '+response.comment_count+'개</span>');
+                    $('#total_comment').replaceWith('<span id="total_comment">전체 댓글 <span id="total_comment_num" value="'+total_comment_num+'">'+total_comment_num+'</span>개</span>');
                 },
                 error: function () {
                     if ($('#content_id').val()=="") {
@@ -298,6 +300,8 @@
     });
 
     function commentDelete(value) {
+        var total_comment_num = parseInt($('#total_comment_num').text()) - 1;
+        console.log(total_comment_num)
         var comment_id = value;
         var delete_warning = confirm('댓글을 삭제하시겠습니까?');
         if (delete_warning == true) {
@@ -313,7 +317,7 @@
                     $('#'+response.comment_id).replaceWith('<span style="color:gray;">삭제된 댓글입니다.</span><hr>');
                     $('#hide_button_count').replaceWith('<span id="hide_more_button"><a id=hide_button_count ><i class="fas fa-angle-up"></i>댓글 접기</a></span>');
                     $('#show_button_count').replaceWith('<span id="show_more_button" style="display:none;"><a id=show_button_count><i class="fas fa-angle-down"></i>댓글 펼치기</a></span>');
-                    $('#total_comment').replaceWith('<span>전체 댓글 ' + response.comment_count + '개</span>');
+                    $('#total_comment').replaceWith('<span id="total_comment">전체 댓글 <span id="total_comment_num" value="' + total_comment_num + '">' + total_comment_num + '</span>개</span>');
                 },
                 error: function () {
                     alert('본인 댓글이 아닙니다.');
@@ -323,6 +327,8 @@
     }
 
     function replyDelete(value) {
+        var total_comment_num = parseInt($('#total_comment_num').text()) - 1;
+        console.log(total_comment_num)
         var comment_id = value;
         var delete_warning = confirm('답글을 삭제하시겠습니까?');
         if (delete_warning == true) {
@@ -338,7 +344,7 @@
                     $('#'+response.comment_id).replaceWith('<span style="color:gray;">삭제된 답글입니다.</span>');
                     $('#hide_button_count').replaceWith('<span id="hide_more_button"><a id=hide_button_count ><i class="fas fa-angle-up"></i>댓글 접기</a></span>');
                     $('#show_button_count').replaceWith('<span id="show_more_button" style="display:none;"><a id=show_button_count><i class="fas fa-angle-down"></i>댓글 펼치기</a></span>');
-                    $('#total_comment').replaceWith('<span>전체 댓글 ' + response.comment_count + '개</span>');
+                    $('#total_comment').replaceWith('<span id="total_comment">전체 댓글 <span id="total_comment_num" value="' + total_comment_num + '">' + total_comment_num + '</span>개</span>');
                 },
                 error: function () {
                     alert('본인 댓글이 아닙니다.');
@@ -394,6 +400,8 @@
 
 
     function replyWrite(value) {
+        var total_comment_num = parseInt($('#total_comment_num').text()) + 1;
+        console.log(total_comment_num)
         var comment_id = value;
         var content= $("#reply_content").val();
         var user= $("#comment_user").val();
@@ -414,7 +422,7 @@
                         '<span style="float:right; color:#d14040f2;">'+response.created_at+'</span>'+
                         '<div><div style="white-space:pre-wrap; text-align:left;">'+response.content+'</div><div style="text-align:right; margin:-20px 0px -10px 0;"><a style="color: #d14040f2;" onclick="replyDelete('+response.comment_id+');">답글삭제</a></div></div></div></div></div><hr>'
                     );
-                    $('#total_comment').replaceWith('<span>전체 댓글 ' + response.comment_count + '개</span>');
+                    $('#total_comment').replaceWith('<span id="total_comment">전체 댓글 <span id="total_comment_num" value="' + total_comment_num + '">' + total_comment_num + '</span>개</span>');
 
                 }
                 else{
@@ -423,13 +431,13 @@
                         '<span style="float:right; color:#d14040f2;">'+response.created_at+'</span>'+
                         '<div><div style="white-space:pre-wrap; text-align:left;">'+response.content+'</div><div style="text-align:right; margin:-20px 0px -10px 0;"><a style="color: #d14040f2;" onclick="replyDelete('+response.comment_id+');">답글삭제</a></div></div></div></div></div><hr>'
                     );
-                    $('#total_comment').replaceWith('<span>전체 댓글 ' + response.comment_count + '개</span>');
+                    $('#total_comment').replaceWith('<span id="total_comment">전체 댓글 <span id="total_comment_num" value="' + total_comment_num + '">' + total_comment_num + '</span>개</span>');
 
                 }
                 $("#layer").remove();
                 $('#hide_button_count').replaceWith('<span id="hide_more_button"><a id=hide_button_count ><i class="fas fa-angle-up"></i>댓글 접기</a></span>')
                 $('#show_button_count').replaceWith('<span id="show_more_button" style="display:none;"><a id=show_button_count><i class="fas fa-angle-down"></i>댓글 펼치기</a></span>')
-                $('#total_comment').replaceWith('<span>전체 댓글 ' + response.comment_count + '개</span>');
+                $('#total_comment').replaceWith('<span id="total_comment">전체 댓글 <span id="total_comment_num" value="' + total_comment_num + '">' + total_comment_num + '</span>개</span>');
             },
             error: function () {
                 if ($('#reply_content').val()=="") {
