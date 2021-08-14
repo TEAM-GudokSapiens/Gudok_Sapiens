@@ -780,6 +780,12 @@
   background: #9a30ae;
   padding: 7px 30px;
 }
+.board-button {
+  min-width: 20%;
+  background: #9a30ae;
+  padding: 7px 30px;
+  margin: 0px 10px;
+}
 .comment-submit {
   background: #9a30ae;
   /* padding: 7px 30px; */

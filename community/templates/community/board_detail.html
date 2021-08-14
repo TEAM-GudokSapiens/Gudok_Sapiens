@@ -215,14 +215,14 @@
             </div>
         </div>
     </div>
-    <div class="pt-4 mb-3 d-flex">
-        <div class="col-sm-3 col-xs-6" style="text-align: center;">
+    <div class="pt-4 mb-3 d-flex justify-content-center">
+        <div class="board-button" style="text-align: center;">
             {% if request.user.is_authenticated %}
-            <a href="{%url 'community:board_create' %}" class="board-submit text-light w-100 d-block">글작성</a>
+            <a href="{%url 'community:board_create' %}" class="text-light w-100 d-block">글작성</a>
             {% endif %}
         </div>
-        <div class="col-sm-3 col-xs-6" style="text-align: center;">
-            <a href="{%url 'community:board'%}" class="board-submit text-light w-100 d-block">목록으로 </a>
+        <div class="board-button" style="text-align: center;">
+            <a href="{%url 'community:board'%}" class="text-light w-100 d-block">목록으로 </a>
         </div>
     </div>
 </div>
