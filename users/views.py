@@ -19,8 +19,6 @@ from django.contrib.auth.tokens import PasswordResetTokenGenerator, default_toke
 from django.core.exceptions import PermissionDenied
 from django.core.exceptions import ValidationError
 from django.views.generic import CreateView
-from django.views.generic import UpdateView, DeleteView
-from users.forms import UpdateForm, LoginForm, SignupForm
 from django.http import HttpResponseRedirect, Http404, HttpResponseForbidden
 from django.views.generic import View
 from .models import *
@@ -66,9 +64,7 @@ class Signup(CreateView):
         send_mail(
             '[구독사피엔스] {}님의 회원가입 인증메일 입니다.'.format(self.object.user_id),
             [self.object.email],
-            recipient_list=None,
-            from_email="david90907@naver.com",
-            html_message=render_to_string('users/register_email.html', {
+            html=render_to_string('users/register_email.html', {
                 'user': self.object,
                 'uid': urlsafe_base64_encode(force_bytes(self.object.pk)).encode().decode(),
                 'domain': self.request.META['HTTP_HOST'],
