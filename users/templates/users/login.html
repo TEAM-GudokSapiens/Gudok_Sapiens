@@ -52,8 +52,9 @@
             {% endfor %}
             {% endif %}
         </div>
-        <div class="d-flex justify-content-between">   
-            <span>비밀번호 찾기</span>
+        <div class="d-flex justify-content-between">  
+            <span> <a href="{% url 'users:recovery_id' %}">아이디 찾기</a></span> 
+            <span>비밀번호 찾기</span> 
             <span><a href="{% url 'users:agreement' %}">회원가입</a></span>
         </div>
 
