@@ -4,8 +4,8 @@ from django.urls import reverse_lazy
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate,update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
-from django.forms.utils import ErrorList
 from django.contrib.auth.models import User
+from django.forms.utils import ErrorList
 from django.core.paginator import Paginator
 from django.utils.decorators import method_decorator
 from django.views.generic import UpdateView, DeleteView, FormView
@@ -21,13 +21,14 @@ from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_text
 from django.contrib.auth.tokens import default_token_generator
-from django.core.exceptions import PermissionDenied
-from django.core.exceptions import ValidationError
+from django.core.exceptions import PermissionDenied, ValidationError
+
 from django.views.generic import CreateView
 from django.http import HttpResponseRedirect, Http404
 from django.views.generic import View
-# 회원가입
 from .models import *
+
+# 회원가입
 
 
 class Signup(CreateView):

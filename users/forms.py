@@ -53,7 +53,7 @@ class UpdateForm(UserCreationForm):
     class Meta:
         model = get_user_model()
         fields = ('user_id', 'email', 'name', 'nickname', 'image',
-                  'gender', 'phonenum', 'password1', 'password2')
+                  'gender', 'phonenum')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -70,8 +70,6 @@ class UpdateForm(UserCreationForm):
         self.fields['gender'].label = '성별'
         self.fields['gender'].disabled = True
         self.fields['phonenum'].label = '휴대폰 번호'
-        self.fields['password1'].help_text = '기호, 영어 소문자, 숫자를 혼합하여 10자리 이상'
-
 
 class LoginForm(forms.Form):
     user_id = forms.CharField(
