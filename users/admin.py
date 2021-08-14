@@ -8,7 +8,8 @@ from django.contrib.auth.models import Group
 
 @admin.register(User)
 class CustomUserAdmin(admin.ModelAdmin):
-    fields = ('user_id', 'email', 'name', 'phonenum', 'gender', 'level', 'image')
+    fields = ('user_id', 'email', 'name', 'phonenum',
+              'gender', 'level', 'is_active')
     list_display = (
         'user_id',
         'name',
