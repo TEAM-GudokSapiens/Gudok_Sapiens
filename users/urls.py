@@ -14,5 +14,6 @@ urlpatterns = [
     path('reviews_list/', view=views.reviews_list, name='reviews_list'),
     path('registerauth/', views.register_success, name='register_success'),
     path('activate/<str:uid64>/<str:token>/', views.activate, name='activate'),
+    path('agreement/', views.AgreementView.as_view(), name='agreement'),
 
 ]

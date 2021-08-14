@@ -20,9 +20,9 @@ from django.utils.encoding import force_bytes, force_text
 from django.contrib.auth.tokens import default_token_generator
 from django.core.exceptions import PermissionDenied
 from django.core.exceptions import ValidationError
-from django.core.exceptions import PermissionDenied
 from django.views.generic import CreateView
 from django.http import HttpResponseRedirect, Http404
+from django.views.generic import View
 # 회원가입
 
 
@@ -32,9 +32,9 @@ class Signup(CreateView):
     form_class = SignupForm
 
     def get(self, request, *args, **kwargs):
-        # if not request.session.get('agreement', False):
-        #     raise PermissionDenied
-        # request.session['agreement'] = False
+        if not request.session.get('agreement', False):
+            raise PermissionDenied
+        request.session['agreement'] = False
         return super().get(request, *args, **kwargs)
 
     def get_success_url(self):
@@ -213,3 +213,21 @@ def reviews_list(request):
         'services': services,
     }
     return render(request, 'users/dibs_list.html', context=ctx)
+
+# 이용약관 동의
+
+
+@method_decorator(logout_message_required, name='dispatch')
+class AgreementView(View):
+    def get(self, request, *args, **kwargs):
+        request.session['agreement'] = False
+        return render(request, 'users/agreement.html')
+
+    def post(self, request, *args, **kwarg):
+        if request.POST.get('agreement1', False) and request.POST.get('agreement2', False) and request.POST.get('register') == 'register':
+            request.session['agreement'] = True
+            return redirect('/users/signup/')
+
+        else:
+            messages.info(request, "약관에 모두 동의해주세요.")
+            return render(request, 'users/agreement.html')
