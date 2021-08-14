@@ -73,12 +73,12 @@
             <div class="col-md-12 p-0">
                 {% csrf_token %}
                 <div class="comment-box col-12 pr-0 pl-0">
-                    <textarea class="comment-write" rows="2" placeholder="댓글을 입력해주세요."></textarea>
-                    <button class="comment-submit" style="border:none; outline:none;">등록</button>
+                    <textarea id="content_id" rows="2" placeholder="댓글을 입력해주세요."></textarea>
+                    <button id="comment_write" style="border:none; outline:none;">등록</button>
                 </div>
             </div>
             <div class="comment-text">
-                <span>전체 댓글 {{ comment_count }}개</span>
+                <span id="total_comment">전체 댓글 {{ comment_count }}개</span>
 
                 {% if comments %}
                 <span id="hide_more_button"><a id=hide_button_count ><i class="fas fa-angle-up"></i>댓글 접기</a></span>
@@ -275,6 +275,7 @@
                     $('#content_id').val("");
                     $('#hide_button_count').replaceWith('<span id="hide_more_button"><a id=hide_button_count ><i class="fas fa-angle-up"></i>댓글 접기</a></span>')
                     $('#show_button_count').replaceWith('<span id="show_more_button" style="display:none;"><a id=show_button_count><i class="fas fa-angle-down"></i>댓글 펼치기</a></span>')
+                    $('#total_comment').replaceWith('<span>전체 댓글 '+response.comment_count+'개</span>');
                 },
                 error: function () {
                     if ($('#content_id').val()=="") {
@@ -312,6 +313,7 @@
                     $('#'+response.comment_id).replaceWith('<span style="color:gray;">삭제된 댓글입니다.</span><hr>');
                     $('#hide_button_count').replaceWith('<span id="hide_more_button"><a id=hide_button_count ><i class="fas fa-angle-up"></i>댓글 접기</a></span>');
                     $('#show_button_count').replaceWith('<span id="show_more_button" style="display:none;"><a id=show_button_count><i class="fas fa-angle-down"></i>댓글 펼치기</a></span>');
+                    $('#total_comment').replaceWith('<span>전체 댓글 ' + response.comment_count + '개</span>');
                 },
                 error: function () {
                     alert('본인 댓글이 아닙니다.');
@@ -336,6 +338,7 @@
                     $('#'+response.comment_id).replaceWith('<span style="color:gray;">삭제된 답글입니다.</span>');
                     $('#hide_button_count').replaceWith('<span id="hide_more_button"><a id=hide_button_count ><i class="fas fa-angle-up"></i>댓글 접기</a></span>');
                     $('#show_button_count').replaceWith('<span id="show_more_button" style="display:none;"><a id=show_button_count><i class="fas fa-angle-down"></i>댓글 펼치기</a></span>');
+                    $('#total_comment').replaceWith('<span>전체 댓글 ' + response.comment_count + '개</span>');
                 },
                 error: function () {
                     alert('본인 댓글이 아닙니다.');
@@ -411,6 +414,8 @@
                         '<span style="float:right; color:#d14040f2;">'+response.created_at+'</span>'+
                         '<div><div style="white-space:pre-wrap; text-align:left;">'+response.content+'</div><div style="text-align:right; margin:-20px 0px -10px 0;"><a style="color: #d14040f2;" onclick="replyDelete('+response.comment_id+');">답글삭제</a></div></div></div></div></div><hr>'
                     );
+                    $('#total_comment').replaceWith('<span>전체 댓글 ' + response.comment_count + '개</span>');
+
                 }
                 else{
                     $('.'+comment_id).append(
@@ -418,10 +423,13 @@
                         '<span style="float:right; color:#d14040f2;">'+response.created_at+'</span>'+
                         '<div><div style="white-space:pre-wrap; text-align:left;">'+response.content+'</div><div style="text-align:right; margin:-20px 0px -10px 0;"><a style="color: #d14040f2;" onclick="replyDelete('+response.comment_id+');">답글삭제</a></div></div></div></div></div><hr>'
                     );
+                    $('#total_comment').replaceWith('<span>전체 댓글 ' + response.comment_count + '개</span>');
+
                 }
                 $("#layer").remove();
                 $('#hide_button_count').replaceWith('<span id="hide_more_button"><a id=hide_button_count ><i class="fas fa-angle-up"></i>댓글 접기</a></span>')
                 $('#show_button_count').replaceWith('<span id="show_more_button" style="display:none;"><a id=show_button_count><i class="fas fa-angle-down"></i>댓글 펼치기</a></span>')
+                $('#total_comment').replaceWith('<span>전체 댓글 ' + response.comment_count + '개</span>');
             },
             error: function () {
                 if ($('#reply_content').val()=="") {
@@ -458,15 +466,13 @@
     const toggleMenu = document.querySelector('.detail-menu');
             toggleMenu.classList.toggle('active')
     }
-    // 다른 영역 클릭시 메뉴 없어짐
+    //다른 영역 클릭시 메뉴 없어짐
     var body = document.querySelector("body");
     body.addEventListener('click', clickBodyEvent);
 
     function clickBodyEvent(event) {
-        console.log('ds');
         var target=event.target;
             if(target!=document.querySelector('.more-icon')) {
-                console.log('ddf')
                 const detailMenu = document.querySelector('.detail-menu');
                 detailMenu.classList.remove('active')
 

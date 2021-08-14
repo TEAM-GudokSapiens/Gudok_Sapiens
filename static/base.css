@@ -854,13 +854,13 @@
 .board-button a {
   color: #585858;
 }
-.comment-submit {
+#comment_write {
   background: #f3f3f3;
   /* padding: 7px 30px; */
   width: 15%;
   color: #585858;
 }
-.comment-write {
+#content_id {
   width: 83%;
 }
 .board-paginator {
