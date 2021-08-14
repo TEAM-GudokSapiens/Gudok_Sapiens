@@ -18,7 +18,7 @@
 }
 
 .header-links,
-.header-second-links>a {
+.header-second-links > a {
   font-size: 0.9rem;
 }
 
@@ -66,7 +66,7 @@
 }
 
 .user-dropdown .menu::before {
-  content: "";
+  content: '';
   position: absolute;
   top: -6px;
   right: 20px;
@@ -94,7 +94,7 @@
 }
 
 .user-dropdown .menu ul li:hover a {
-  color: #000;
+  color: #000
 }
 
 .main-navbar {
@@ -244,7 +244,7 @@
   /* justify-content: space-between; */
   margin: 0 auto 20px auto;
   padding: 30px 0;
-  border-top: 1px solid #debeff;
+  border-top: 1px solid #DEBEFF;
 }
 
 .footer-section h4 {
@@ -335,7 +335,7 @@
 }
 
 .img-slider .img-slide .info {
-  padding: 0 20px 0 0 !important;
+  padding: 0 20px 0 0!important;
 }
 
 .img-slider .img-slide .info h2 {
@@ -405,9 +405,8 @@
   -moz-transform: scale(1);
   -ms-transform: scale(1);
   -o-transform: scale(1);
-  transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out; 
 }
-
 .service-card .card-img-top img:hover {
   transform: scale(1.05);
   -webkit-transform: scale(1.05);
@@ -415,13 +414,12 @@
   -ms-transform: scale(1.05);
   -o-transform: scale(1.05);
 }
-
 .service-card h5 {
   display: flex;
   align-items: center;
 }
 
-.service-card h5 a {
+.service-card h5 a{
   font-size: 0.95rem;
   font-weight: 400;
   color: #000;
@@ -505,41 +503,34 @@
     width: 600px;
     height: 375px;
   }
-
   .img-slider .navigation {
     bottom: 25px;
   }
-
   .img-slider .navigation .slide-btn {
     width: 10px;
     height: 10px;
     margin: 8px;
   }
 }
-
 @media (max-width: 620px) {
   .img-slider {
     width: 400px;
     height: 250px;
   }
-
   .img-slider .navigation {
     bottom: 15px;
   }
-
   .img-slider .navigation .slide-btn {
     width: 8px;
     height: 8px;
     margin: 6px;
   }
 }
-
 @media (max-width: 420px) {
   .img-slider {
     width: 320px;
     height: 200px;
   }
-
   .img-slider .navigation {
     bottom: 10px;
   }
@@ -617,31 +608,15 @@
   width: 23.8vw;
   height: auto;
   position: fixed;
-  top: 50%;
+  top: 65%;
   right: 20.2%;
   padding: 10px 20px;
   /* min-width: fit-content; */
 }
 
-.footer-1,
-.footer-2 {
-  margin-bottom: 10px;
-}
 
-/* 
-detail부분
-.carousel-item {
-  height: 100%;
-}
 
-.carousel-item img {
-  height: 100%;
-  width: 100%;
-}
 
-.carousel-inner {
-  height: 39vh;
-} */
 
 .keywords {
   margin: 10px 0px;
@@ -732,310 +707,6 @@ detail부분
 }
 
 @media screen and (max-width: 600px) {
-
-  /* board */
-  .community-navbar {
-    border: 2px solid #debeff;
-    border-radius: 15px;
-    margin: 25px auto;
-    font-size: 1.2rem;
-    padding: 13px 0;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    text-align: center;
-  }
-
-  .community-navbar span {
-    padding: 0px;
-  }
-
-  .board-second-info span {
-    padding: 0px;
-  }
-
-  .community-board {
-    margin: 70px auto;
-  }
-
-  .community-container {
-    font-family: "GmarketSansTTFLight";
-  }
-
-  .board-header-title {
-    font-size: 24px;
-  }
-
-  .board-header-count {
-    font-size: 14px;
-  }
-
-  .board-content {
-    border-bottom: 1px solid #9a30ae;
-    border-top: 1px solid #9a30ae;
-  }
-
-  .board-content p {
-    padding: 0px;
-    margin: 0px;
-  }
-
-  .board-content-container p a {
-    font-family: "GmarketSansTTFMedium";
-  }
-
-  .board-title {
-    border-bottom: 1px solid #cdcdcd;
-    height: 7vh;
-    display: flex;
-    align-items: center;
-  }
-
-  .board-title p {
-    word-break: break-all;
-  }
-
-  .board-title div {
-    display: flex;
-  }
-
-  .board-title div p {
-    align-items: center;
-    text-align: center;
-  }
-
-  .board-content-container {
-    border-bottom: 1px solid #cdcdcd;
-    height: auto;
-    padding: 25px 15px;
-    display: flex;
-    align-items: center;
-  }
-
-  .board-content-container p {
-    word-break: break-all;
-  }
-
-  .board-content-container div p {
-    text-align: center;
-  }
-
-  .board-submit {
-    background: #9a30ae;
-    padding: 7px 30px;
-  }
-
-  .board-paginator {
-    text-align: center;
-  }
-
-  .board-info {
-    display: flex;
-  }
-
-  a:hover {
-    text-decoration: none !important;
-  }
-
-  .page-item {
-    display: inline;
-  }
-
-  .board-paginator a {
-    padding: 0px 5px;
-  }
-
-  .board-menu a {
-    color: #000;
-  }
-
-  .board-paginator a {
-    color: #000;
-  }
-
-  .board-menu a.active {
-    color: #9a30ae;
-  }
-
-  .board-menu a:hover {
-    color: #9a30ae;
-    transition: 0.5s;
-  }
-
-  .board-paginator a.active {
-    color: #9a30ae;
-  }
-
-  .board-paginator a:hover {
-    color: #9a30ae;
-    transition: 0.5s;
-  }
-
-  .detail-first-box,
-  .detail-second-box {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .detail-profile {
-    width: 30px;
-    height: 30px;
-    margin-right: 10px;
-    border-radius: 50%;
-    overflow: hidden;
-  }
-
-  .detail-box-user {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .detail-box-content {
-    min-height: 30vh;
-  }
-
-  .detail-first-box {
-    display: flex;
-    align-items: center;
-  }
-
-  .detail-board-title {
-    font-size: 1.5rem;
-  }
-
-  .detail-board-date {
-    font-size: 1.1rem;
-  }
-
-  .detail-box-content {
-    font-size: 1.1rem;
-  }
-
-  .detail-box-likes {
-    display: flex;
-    justify-content: center;
-    font-size: 1.5rem;
-  }
-
-  .comment-box {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .comment-box textarea {
-    border: 1px solid rgb(205, 205, 205);
-  }
-
-  .comment-text {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .ck-editor__editable {
-    width: 100%;
-  }
-}
-
-@media screen and (max-width: 767px) {
-  .board-title {
-    display: none;
-  }
-
-  .board-info {
-    display: none;
-  }
-.fixing-box {
-  font-family: "KOTRA_SONGEULSSI";
-  /* border: 1px solid rgb(215, 215, 215); */
-  width: 23.8vw;
-  height: auto;
-  position: fixed;
-  top: 50%;
-  right: 20.2%;
-  padding: 10px 20px;
-  /* min-width: fit-content; */
-}
-
-  .board-second-user {
-    display: flex;
-  }
-
-  .board-content-container {
-    padding: 10px 0px;
-  }
-
-  .board-content {
-    font-size: 0.8rem;
-  }
-
-  .board-paginator {
-    font-size: 0.9rem;
-  }
-
-  .board-menu {
-    display: flex;
-    justify-content: space-around;
-  }
-}
-
-@media screen and (min-width: 768px) {
-  .board-info {
-    display: flex;
-    align-items: center;
-  }
-
-  .board-second-info {
-    display: none;
-  }
-
-  .board-second-user {
-    display: none;
-  }
-
-  .board-menu {
-    display: flex;
-    justify-content: flex-start;
-  }
-
-  .board-menu span {
-    margin: 0px 20px;
-  }
-}
-
-@media screen and (max-width: 576px) {
-  .board-header-title {
-    font-size: 1.2rem;
-  }
-
-  .navbar-toggler {
-    width: 45px;
-  }
-
-  .navbar-toggler-icon {
-    font-size: 0.8rem;
-  }
-
-  .footer-box {
-    flex-direction: column;
-  }
-
-  .footer-header h4 {
-    font-size: 1.6rem;
-  }
-
-  .footer-header span {
-    font-size: 1.2rem;
-  }
-
-  .footer-section h5 {
-    font-size: 1.2rem;
-  }
-
-  .footer-section a {
-    font-size: 1rem;
-  }
-
   .service-name {
     font-size: 2.3rem;
     font-weight: bolder;
@@ -1047,11 +718,6 @@ detail부분
 
   .fix-intro {
     font-size: 1.3rem;
-  }
-
-  .board-submit {
-    font-size: 0.7rem;
-    width: 100%;
   }
 }
 
@@ -1116,14 +782,6 @@ detail부분
   .service-container {
     width: 90vw;
   }
-
-  .community-navbar {
-    font-size: 1rem;
-  }
-
-  .board-content {
-    font-size: 0.8rem;
-  }
 }
 
 @media screen and (min-width: 931px) and (max-width: 1150px) {
@@ -1162,10 +820,6 @@ detail부분
   .review-img {
     width: 180px;
     height: 180px;
-  }
-
-  .board-content {
-    font-size: 0.9rem;
   }
 }
 
@@ -1283,12 +937,12 @@ a:hover {
     height: 30px;
   }
 
-  .main-carousel-control>.carousel-control-prev-icon {
+  .main-carousel-control > .carousel-control-prev-icon {
     width: 10px !important;
     height: 10px !important;
   }
 
-  .main-carousel-control>.carousel-control-next-icon {
+  .main-carousel-control > .carousel-control-next-icon {
     width: 10px !important;
     height: 10px !important;
   }
@@ -1322,129 +976,3 @@ a:hover {
   }
 
 }
-
-@media screen and (max-width: 470px) {
-  .community-navbar {
-    font-size: 0.8rem;
-  }
-
-  .board-header-title {
-    font-size: 1rem;
-  }
-
-  .header-title {
-    font-size: 1.2rem;
-  }
-
-  .board-header-count {
-    font-size: 0.8rem;
-  }
-
-  .board-content {
-    font-size: 0.6rem;
-  }
-
-  .board-paginator {
-    font-size: 0.7rem;
-  }
-}
-
-/* ------------------------ 사용기간 range바 부분!! ----------------------*/
-
-.period{
-  display: grid;
-  height: 100%;
-  text-align: center;
-  place-items: center;
-}
-
-.range{
-  height:80px;
-  width: 380px;
-  background: blue;
-  border-radius: 10px;
-  padding: 0 65px 0 45px
-}
-
-.range .field{
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-}
-
-.range .sliderValue{
-  position: relative;
-  width: 100%;
-}
-
-.range .sliderValue span{
-  position: absolute;
-  height: 45px;
-  width: 45px;
-  color: white;
-  font-weight: 500;
-  top: -25px;
-  transform: translateX(-50%) scale(0);
-  transform-origin: bottom ;
-  transition: transform 0.3s ease-in-out;
-  line-height: 55px;
-  z-index: 2;
-}
-
-.range .sliderValue span.show{
-  transform: translateX(-50%) scale(1);
-  
-}
-.range .sliderValue span:after{
-  position: absolute;
-  content: "";
-  height: 45px;
-  width: 45px;  
-  background: red;
-  left: 3%;
-  transform: translateX(-5%) rotate(45deg);
-  border: 3px solid white;
-  z-index: -1;
-  border-top-left-radius: 50%;
-  border-top-right-radius: 50%;
-  border-bottom-left-radius: 50%;
-}
-
-.range .field .value{
-  position: absolute;
-  font-size: 18px;
-  font-weight: 600;
-  color: #f7f7ff;
-}
-
-.range .field .value.left{
-  left: -22px;
-}
-
-.range .field .value.right{
-  right: -40px;
-}
-
-.range .field input{
-  -webkit-appearance: none;
-  height: 3px;
-  width: 100%;
-  background: #ddd;
-  border-radius: 5px;
-  outline: none;
-  border: none;
-}
-
-.range .field input::-webkit-slider-thumb{  
-  -webkit-appearance: none;
-  height: 15px;
-  width: 15px;
-  background: red;
-  border-radius: 50%;
-  border: 1px solid red;
-  cursor: pointer;
-}
-
-
