@@ -12,7 +12,7 @@ from django.core.paginator import Paginator
 from django.contrib.auth.tokens import PasswordResetTokenGenerator, default_token_generator
 from django.core.exceptions import PermissionDenied
 from django.core.exceptions import ValidationError
-from django.http import HttpResponseRedirect, Http404, HttpResponseForbidden
+from django.http import HttpResponseRedirect, Http404, HttpResponseForbidden, HttpResponse, JsonResponse
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -21,12 +21,13 @@ from django.core.mail import EmailMessage
 from django.utils.encoding import force_bytes, force_text
 from django.urls import reverse
 from .helper import send_mail
-
-import json
+import json, os ,requests
+from django.template import loader
 from django.core.serializers.json import DjangoJSONEncoder
 from .forms import *
 from .models import *
 from .decorators import *
+from .exception import *
 
 
 # 회원가입
@@ -52,12 +53,12 @@ class Signup(CreateView):
     def form_valid(self, form):
         self.object = form.save()
 
-        # 회원가입 인증 메일 발송
-        # ISSUE - https 통신오류 -> http 프로토콜 수정
         send_mail(
-            '[구독사피엔스] {}님의 회원가입 인증메일 입니다.'.format(self.object.user_id),
-            [self.object.email],
-            html=render_to_string('users/register_email.html', {
+            '{}님의 회원가입 인증메일 입니다.'.format(self.object.user_id),
+            recipient_list=[self.object.email],
+            from_email='yysk_915@naver.com',
+            message='',
+            html_message=render_to_string('users/register_email.html', {
                 'user': self.object,
                 'uid': urlsafe_base64_encode(force_bytes(self.object.pk)).encode().decode(),
                 'domain': self.request.META['HTTP_HOST'],
@@ -65,7 +66,7 @@ class Signup(CreateView):
             }),
         )
         return redirect(self.get_success_url())
-        
+
 
 # 회원가입 인증메일 발송 안내 창
 def register_success(request):
@@ -242,3 +243,83 @@ def ajax_find_id_view(request):
     result_id = User.objects.get(name=name, email=email)
        
     return HttpResponse(json.dumps({"result_id": result_id.user_id}, cls=DjangoJSONEncoder), content_type = "application/json")
+
+
+# 카카오 로그인
+def kakao_login(request):
+    try:
+        if request.user.is_authenticated:
+            raise SocialLoginException("User already logged in")
+        client_id = os.environ.get("KAKAO_ID")
+        redirect_uri = "http://127.0.0.1:8000/users/login/kakao/callback/"
+
+        return redirect(
+            f"https://kauth.kakao.com/oauth/authorize?client_id={client_id}&redirect_uri={redirect_uri}&response_type=code"
+        )
+    except KakaoException as error:
+        messages.error(request, error)
+        return redirect("services:main")
+    except SocialLoginException as error:
+        messages.error(request, error)
+        return redirect("services:main")
+        
+def kakao_login_callback(request):
+    try:
+        if request.user.is_authenticated:
+            raise SocialLoginException("User already logged in")
+        code = request.GET.get("code", None)
+        if code is None:
+            KakaoException("Can't get code")
+        client_id = os.environ.get("KAKAO_ID")
+        redirect_uri = "http://127.0.0.1:8000/users/login/kakao/callback/"
+        client_secret = os.environ.get("KAKAO_SECRET")
+        request_access_token = requests.post(
+            f"https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id={client_id}&redirect_uri={redirect_uri}&code={code}&client_secret={client_secret}",
+            headers={"Accept": "application/json"},
+        )
+        access_token_json = request_access_token.json()
+        error = access_token_json.get("error", None)
+        if error is not None:
+            print(error)
+            KakaoException("Can't get access token")
+        access_token = access_token_json.get("access_token")
+        headers = {"Authorization": f"Bearer {access_token}"}
+        profile_request = requests.post(
+            "https://kapi.kakao.com/v2/user/me",
+            headers=headers,
+        )
+        profile_json = profile_request.json()
+
+        nickname = profile_json.get("profile_nickname",None)
+        avatar_url = profile_json.get("profile_image_url", None)
+        email = profile_json.get("email", None)
+        gender = profile_json.get("gender", None)
+
+        user = User.objects.get_or_none(email=email)
+        if user is not None:
+            raise KakaoException                
+        else:
+            user = User.objects.create_user(
+                email=email,
+                username=email,
+                first_name=nickname,
+                gender=gender,
+                login_method=User.LOGIN_KAKAO,
+            )
+
+            if avatar_url is not None:
+                avatar_request = requests.get(avatar_url)
+                user.avatar.save(
+                    f"{nickname}-avatar", ContentFile(avatar_request.content)
+                )
+            user.set_unusable_password()
+            user.save()
+        messages.success(request, f"{user.email} signed up and logged in with Kakao")
+        login(request, user)
+        return redirect(reverse("core:home"))
+    except KakaoException as error:
+        messages.error(request, error)
+        return redirect(reverse("core:home"))
+    except SocialLoginException as error:
+        messages.error(request, error)
+        return redirect(reverse("core:home"))

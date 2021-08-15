@@ -18,5 +18,10 @@ urlpatterns = [
     path('agreement/', views.AgreementView.as_view(), name='agreement'),
     path('recovery/id/', views.RecoveryIdView.as_view(), name='recovery_id'),
     path('recovery/id/find/', views.ajax_find_id_view, name='ajax_id'),  
-
+    path("login/kakao/", views.kakao_login, name="kakao-login"),
+    path(
+        "login/kakao/callback/",
+        views.kakao_login_callback,
+        name="kakao-callback",
+    ),
 ]

@@ -24,6 +24,10 @@ class SignupForm(UserCreationForm):
         model = get_user_model()
         fields = ('user_id', 'email', 'nickname','image', 'name',
                   'gender', 'phonenum', 'password1', 'password2')
+        widgets = {
+            'user_id': forms.Textarea(
+                attrs={'placeholder': '15자 이상 입력해주세요', 'rows': 1 }),
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

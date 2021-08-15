@@ -172,8 +172,8 @@ def comment_write(request, pk):
 
         return HttpResponse(json.dumps(data, cls=DjangoJSONEncoder), content_type="application/json")
 
-# 댓글 삭제
 
+# 댓글 삭제
 
 @login_message_required
 def comment_delete(request, pk):
@@ -254,7 +254,6 @@ def comment_delete_view(request, pk):
 
 
 # 자유게시판 좋아요기능
-
 
 def likes(request):
     if request.is_ajax():

@@ -61,7 +61,8 @@ INSTALLED_APPS = [
     'allauth.account',  # 소셜로그인한 계정관리
     'allauth.socialaccount',  # 소셜account 정보관리
     'allauth.socialaccount.providers.naver',  # 네이버 소셜로그인
-    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.google', 
+    'allauth.socialaccount.providers.kakao',
 
 
     'ckeditor',
