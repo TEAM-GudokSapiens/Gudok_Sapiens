@@ -260,7 +260,7 @@
                 success: function (response) {
                     if (response.self_comment) {
                         $('#comment_list').append(
-                           '<div><div id='+response.comment_id+'><strong>'+response.user+'&nbsp;<span style="color:gray";>'+response.self_comment+'</span></strong>'+
+                           '<div><div id='+response.comment_id+'><strong>'+response.user+'<span style="color:gray";>'+response.self_comment+'</span></strong>'+
                            '<span style="float:right; color:#888888f2;">'+response.created_at+'</span>'+
                            '<div><div style="white-space:pre-wrap; text-align:left;height: 3vh;">'+response.content+'</div><div style="text-align:right; margin:-20px 0px -10px 0;"><a style="color: #888888f2;" onclick="createReplyArea('+response.comment_id+');">답글달기</a>&nbsp;&middot;&nbsp;<a style="color: #888888f2;" onclick="commentDelete('+response.comment_id+');">댓글삭제</a></div></div><hr></div><div class='+response.comment_id+'></div>'
                         );
