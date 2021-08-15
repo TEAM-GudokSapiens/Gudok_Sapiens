@@ -791,6 +791,9 @@ a:hover {
 #cke_id_content {
   width: 100% !important;
 }
+#cke_1_contents {
+  height: 50vh !important;
+}
 .detail-first-box {
   display: flex;
   align-items: flex-end;
@@ -816,6 +819,12 @@ a:hover {
 .comment-text {
   display: flex;
   justify-content: space-between;
+}
+.dibs-list-container {
+  margin: 0 auto;
+  padding: 0 !important;
+}
+.dibs-list-container h3 {
 }
 
 @media screen and (max-width: 1200px) {
