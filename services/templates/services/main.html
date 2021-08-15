@@ -175,9 +175,18 @@
         </div>
 
         {% endif %}
+    
 
     </div>
 </div>
+
+{% comment %} 찜 많은 순으로 카테고리별 정렬  {% endcomment %}
+{% for category in categories %}
+        <h3> {{ category }} </h3>
+            {% for service in category.get_services_by_category  %}
+                {{ service.name }}
+            {% endfor %}
+{% endfor %}
 
 
 <div class="service-list-section col-8">

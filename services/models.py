@@ -2,6 +2,7 @@ from django.db import models
 from users.models import User
 from taggit.managers import TaggableManager
 from django.core.paginator import Paginator
+from django.db.models import Count
 
 
 class Category(models.Model):
@@ -9,6 +10,11 @@ class Category(models.Model):
     slug = models.SlugField(max_length=150, unique=True, db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
+    @property
+    def get_services_by_category(self):
+        return Service.objects.annotate(
+        num_dibs=Count('dib')).order_by('-num_dibs').filter(category__name=self.name)
 
     def __str__(self):
         return self.name

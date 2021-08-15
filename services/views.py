@@ -26,11 +26,13 @@ def main(request):
     services = Service.objects.annotate(
         num_dibs=Count('dib')).order_by('-num_dibs')[:8].annotate(avg_reviews=Avg('review__score'))
     random_services = get_random_services(4)
+    categories = Category.objects.all()
 
     ctx = {
         'magazine_list': magazine_list,
         'services': services,
         'random_services':random_services,
+        'categories':categories,
     }
     return render(request, 'services/main.html', context=ctx)
 
