@@ -188,6 +188,10 @@ def same_tag_list(request, tag):
     }
     return render(request, 'services/list.html', context=ctx)
 
+
+def service_intro(request):
+    return render(request, 'services/service_intro.html')
+
 # @csrf_exempt
 # def dibs_ajax(request):
 #     req = json.loads(request.body)
