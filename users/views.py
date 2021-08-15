@@ -71,7 +71,7 @@ class Signup(CreateView):
 def register_success(request):
     if not request.session.get('register_auth', False):
         raise PermissionDenied
-    request.session['register_auth'] = False
+    request.session['register_auth'] = False    
 
     return render(request, 'users/register_success.html')
 
@@ -142,6 +142,21 @@ class AccountUpdateView(UpdateView):
             return HttpResponseForbidden()
 
 
+# 비밀번호 변경
+@login_message_required
+def update_password(request):
+    if request.method == 'POST':
+        password_change_form = PasswordChangeForm(request.user, request.POST)
+        if password_change_form.is_valid():
+            user = password_change_form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, "비밀번호를 성공적으로 변경하였습니다.")
+            return redirect('services:main')
+    else:
+        password_change_form = PasswordChangeForm(request.user)
+        
+    return render(request, 'users/update_password.html', {'password_change_form':password_change_form})
+
 
 # 회원탈퇴
 @login_message_required
@@ -206,21 +221,7 @@ class AgreementView(View):
             return render(request, 'users/agreement.html')
 
 
-# 비밀번호 변경
-@login_message_required
-def update_password(request):
-    if request.method == 'POST':
-        form = PasswordChangeForm(request.user, request.POST)
-        if form.is_valid():
-            user = form.save()
-            # 비밀번호를 자동으로 업데이트해줌! 사이트에 머물수있오
-            update_session_auth_hash(request, user)
-            return redirect('services:main')
-    else:
-        form = PasswordChangeForm(request.user)
-    return render(request, 'users/update_password.html', {
-        'form': form
-    })
+
 
 
 # 아이디 찾기
@@ -232,7 +233,7 @@ class RecoveryIdView(View):
     def get(self, request):
         if request.method=='GET':
             form = self.recovery_id(None)
-        return render(request, self.template_name, { 'form':form })
+        return render(request, self.template_name, { 'form':form, })
 
 
 def ajax_find_id_view(request):
