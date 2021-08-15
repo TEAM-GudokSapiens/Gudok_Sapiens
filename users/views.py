@@ -59,12 +59,12 @@ class Signup(CreateView):
     def form_valid(self, form):
         self.object = form.save()
 
-        # 회원가입 인증 메일 발송
-        # ISSUE - https 통신오류 -> http 프로토콜 수정
         send_mail(
-            '[구독사피엔스] {}님의 회원가입 인증메일 입니다.'.format(self.object.user_id),
-            [self.object.email],
-            html=render_to_string('users/register_email.html', {
+            '{}님의 회원가입 인증메일 입니다.'.format(self.object.user_id),
+            recipient_list=[self.object.email],
+            from_email='david90907@naver.com',
+            message='',
+            html_message=render_to_string('users/register_email.html', {
                 'user': self.object,
                 'uid': urlsafe_base64_encode(force_bytes(self.object.pk)).encode().decode(),
                 'domain': self.request.META['HTTP_HOST'],
