@@ -19,12 +19,13 @@ from django.contrib.auth.views import LogoutView
 
 def notice(request):
     notices = Notice.objects.order_by('-created_at')
+    notices_count = Notice.objects.all().count()
     paginator = Paginator(notices, 10)  # 한페이지에 10개씩
 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    return render(request, 'community/notice.html', {'notices': notices, 'page_obj': page_obj})
+    return render(request, 'community/notice.html', {'notices': notices, 'notices_count': notices_count, 'page_obj': page_obj})
 
 
 def notice_detail(request, pk):
@@ -53,12 +54,13 @@ def magazine_detail(request, pk):
 
 def board(request):
     boards = Board.objects.order_by('-created_at')
+    boards_count = Board.objects.all().count()
     paginator = Paginator(boards, 10)  # 한페이지에 10개씩
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
     return render(request, 'community/board.html',
-                  {'boards': boards, 'page_obj': page_obj})
+                  {'boards': boards, 'boards_count': boards_count, 'page_obj': page_obj})
 
 
 @login_message_required
