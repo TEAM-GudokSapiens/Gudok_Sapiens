@@ -641,6 +641,11 @@
   border-top: 1px solid #989898;
   font-size: 0.9rem;
 }
+.board-form input {
+  width: 100%;
+  border: 1px solid #d0d0d0;
+  margin-bottom: 0.5rem;
+}
 .board-submit-box {
   display: flex;
   justify-content: flex-end;
@@ -690,6 +695,7 @@
   padding: 0.5rem 2.2rem;
   color: #585858;
   font-weight: 300;
+  width: auto !important;
 }
 .board-button {
   min-width: 20%;
@@ -985,6 +991,9 @@ a:hover {
   .board-menu {
     display: flex;
     justify-content: space-around;
+  }
+  .board-submit {
+    width: 100% !important;
   }
 
   .main-carousel-control {

@@ -9,7 +9,7 @@
         </div>
     </div>
     <div class="board-create-content mb-3">
-        <form action="{% url 'community:board_create' %}" method="POST" >
+        <form action="{% url 'community:board_create' %}" method="POST" class="board-form" >
             {%csrf_token%}
             <div>
                 {{ form.media }}    

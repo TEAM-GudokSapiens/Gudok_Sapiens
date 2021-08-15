@@ -14,7 +14,7 @@
         </div>
     </div>
     <div class="board-create-content mb-3">
-        <form action="{% url 'community:board_update' board.id%}" method="POST">
+        <form action="{% url 'community:board_update' board.id%}" method="POST" class="board-form">
             {% csrf_token %}
 
             <div>
