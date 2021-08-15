@@ -112,10 +112,9 @@
                             <span class="tab-title">리뷰</span>
                             <span class="review-count ">{{service.get_review_count}}개</span>
                         </div>
-                        {% for review in reviews_order_help %}  
+                        {% for review in reviews_order_help %}
+                        {% for review in page_obj %}                          
                         <div class="review-container review-id-{{ review.id }}">
-                            {% for review in page_obj %}
-                            <div class="review-container">
                                 <div class="title-block mb-3 d-flex justify-content-between">
                                     <span class="">{{review.user}}🌱</span>
                                     <span class="review-date">{{review.updated_at| date:"Y/m/d"}}</span>
@@ -144,6 +143,7 @@
                             </div>
                             <hr>
                             {% endfor %}
+                            {% endfor %}
 
                             {% if page_obj.has_previous %}
                             <a href="?page=1">처음으로</a>
@@ -158,6 +158,8 @@
                             <a href="?page={{ page_obj.next_page_number }}">다음으로</a>
                             <a href="?page={{ page_obj.paginator.num_pages }}">맨뒤로</a>
                             {% endif %}
+
+
 
                             {% if request.user.is_authenticated %}
                             <form action="{% url 'reviews:submit_ajax' service.id %}" enctype="multipart/form-data"
@@ -364,4 +366,4 @@
         }
     </script>
 
-{% endblock %}
+{% endblock content %}
