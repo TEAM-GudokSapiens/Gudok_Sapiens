@@ -11,6 +11,7 @@ from services.models import Service
 from .forms import *
 from .decorators import *
 from services.models import Service
+from reviews.models import Review
 from django.core.paginator import Paginator
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -223,17 +224,16 @@ def dibs_list(request):
 
 
 def reviews_list(request):
-    reviews_list = Service.objects.filter(
-        review__user=request.user.id).distinct()
+    reviews_list = Review.objects.filter(user=request.user.id)
     # 한 페이지 당 담을 수 있는 객체 수를 정할 수 있음
     paginator = Paginator(reviews_list, 10)
     page = request.GET.get('page')
-    services = paginator.get_page(page)
+    reviews = paginator.get_page(page)
 
     ctx = {
-        'services': services,
+        'reviews': reviews,
     }
-    return render(request, 'users/dibs_list.html', context=ctx)
+    return render(request, 'users/reviews_list.html', context=ctx)
 
 # 이용약관 동의
 
