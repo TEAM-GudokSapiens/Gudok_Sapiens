@@ -260,9 +260,11 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+!**/migrations/__init__.py
+!_migrations/__init__.py
+migrations/*
+*/*/migrations/*
+_migrations/*
+
 # End of https://www.toptal.com/developers/gitignore/api/windows,visualstudiocode,python,django
 
-**/migrations/**
-!**/migrations
-!**/migrations/__init__.py
-**/**/migrations
