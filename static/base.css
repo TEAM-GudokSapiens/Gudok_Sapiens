@@ -940,6 +940,14 @@ a:hover {
   font-size: 1.1rem;
   color: #585858;
 }
+.detail-box-content img {
+  height: auto !important;
+  width: auto !important;
+  max-width: 100% !important;
+}
+#cke_id_content {
+  width: 100% !important;
+}
 .detail-first-box {
   display: flex;
   align-items: flex-end;
