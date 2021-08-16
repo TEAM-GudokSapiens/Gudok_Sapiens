@@ -3,11 +3,11 @@
 
 
 {% block board_content %}
-<div class="community-board col-xl-8 col-md-8 col-xs-12 mb-4">
-    <div class="board-header d-flex justify-content-between pb-3">
+<div class="community-board col-xl-7 col-md-7 col-xs-12 mb-4">
+    <div class="board-header d-flex justify-content-between pb-2">
         <div class="col-4 p-0">
         <div class="board-header-title">공지사항</div>
-        <div class="board-header-count">1,000개의 글</div>
+        <div class="board-header-count">{{notices_count}}개의 글</div>
         </div>
     </div>
     <div class="board-content mb-3">
@@ -59,15 +59,5 @@
     <a href="?page={{ page_obj.paginator.num_pages }}" class="">맨뒤로</a>
     {% endif %}
 </div>
-<script>
-    const currentLocation = location.href;
-    const pageItem = document.querySelectorAll('a');
-    const pageLength = pageItem.length
-    for (let i = 0; i < pageLength; i++) {
-        if (pageItem[i].href === currentLocation) {
-            pageItem[i].className = "active"
-        }
-    }
-</script>
 {% endblock %}
     

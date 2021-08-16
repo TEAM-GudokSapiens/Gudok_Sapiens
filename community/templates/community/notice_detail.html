@@ -9,30 +9,28 @@
         <div class="board-header-title">공지사항</div>
         </div>
     </div> -->
-    <div class="board-detail-content mb-3">
+    <div class="board-detail-container mb-3">
         <p style="display:none">{{ notice.update_counter }}</p>
         
         <!--제목-->
-        <div class="detail-first-box p-2">
+        <div class="detail-first-box p-1">
             <span class="detail-board-title">{{notice.title}}</span>
             <span class="detail-board-date">{{ notice.created_at | date:"Y/m/d" }}</span>
         </div>
         <div class="detail-second-box p-2">
             <div class="detail-box-user">
                 <div class="detail-profile">
-                    <img src="https://dazedimg-dazedgroup.netdna-ssl.com/1284/azure/dazed-prod/1290/9/1299926.jpg"
-                        alt="user profile image" style="width: 100%; height: 100%;">
+                    <i class="fas fa-user-cog w-100"></i>
                 </div>
                 <span>관리자</span>
             </div>
             <div class="detail-box-hits">
                 <span class="mr-2">조회수 {{ notice.hits }}</span>
-                <a href=""><i class="fas fa-ellipsis-v text-dark"></i></a>
+                <!-- <a href=""><i class="fas fa-ellipsis-v"></i></a> -->
             </div>
         </div>
-        <hr>
         <!--사진-->
-        {% if board.img %}
+        {% if notice.img %}
         <img src="{{ notice.img.url }}" style="width: 450px;">
         {% endif %}
         
@@ -40,7 +38,9 @@
         <div class="detail-box-content">
             {{ notice.content | safe }}
         </div>
-        <a href="{%url 'community:notice'%}">목록으로 돌아가기</a>
+        <div class="board-button col-md-2 ml-0" style="text-align: center;">
+            <a href="{%url 'community:notice'%}" class="w-100 d-block">목록으로 </a>
+        </div>
     </div>
 </div>
 {% endblock %}

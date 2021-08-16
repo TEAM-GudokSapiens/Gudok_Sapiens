@@ -160,9 +160,8 @@ def search(request):
             results = Service.objects.filter(content__icontains=query).annotate(
                 avg_reviews=Avg('review__score'))
         else:
-            results = Service.objects.filter(Q(name__icontains=query) | Q(
-            intro__icontains=query) | Q(content__icontains=query)).annotate(avg_reviews=Avg('review__score')).distinct()
-       
+            results = Service.objects.filter(Q(name__icontains=query) | Q(intro__icontains=query) | Q(
+                content__icontains=query)).annotate(avg_reviews=Avg('review__score')).distinct()
     else:
         results = []
     ctx = {

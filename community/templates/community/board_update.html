@@ -14,7 +14,7 @@
         </div>
     </div>
     <div class="board-create-content mb-3">
-        <form action="{% url 'community:board_update' board.id%}" method="POST">
+        <form action="{% url 'community:board_update' board.id%}" method="POST" class="board-form">
             {% csrf_token %}
 
             <div>
@@ -22,8 +22,9 @@
                 {{ form.title }}
                 {{ form.content }}
             </div>
-
-            <input class="board-submit text-light"type="submit" value="글수정" style="border: 0;outline: 0;">
+            <div class="board-submit-box">
+                <input class="board-submit"type="submit" value="글수정" style="border: 0;outline: 0;">
+            </div>
         </form>
     </div>
 </div>
