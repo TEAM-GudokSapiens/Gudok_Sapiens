@@ -26,7 +26,7 @@ class SignupForm(UserCreationForm):
                   'gender', 'phonenum', 'password1', 'password2')
         widgets = {
             'user_id': forms.Textarea(
-                attrs={'placeholder': '15자 이상 입력해주세요', 'rows': 1 }),
+                attrs={'placeholder': '5자 이상 15자 이하 문자', 'rows': 1 }),
         }
 
     def __init__(self, *args, **kwargs):
@@ -58,6 +58,10 @@ class UpdateForm(UserCreationForm):
         model = get_user_model()
         fields = ('user_id', 'email', 'name', 'nickname', 'image',
                   'gender', 'phonenum', 'password1', 'password2')
+        widgets = {
+            'user_id': forms.Textarea(
+                attrs={'placeholder': '5자 이상 15자 이하 문자', 'rows': 1 }),
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

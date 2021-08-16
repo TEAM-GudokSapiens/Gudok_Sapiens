@@ -1,14 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{% if messages %}
-<div>
-    {% for message in messages %}
-        {{ message.message }}
-    {% endfor %}
-</div>
-{% endif %}
+
 <div class="forms text-center col-lg-3 col-md-4 col-sm-6 col-10">
+    {% if messages %}
+    <div>
+        {% for message in messages %}
+        <script>alert('{{ message.message }}')</script>
+        {% endfor %}
+    </div>
+    {% endif %}
+    
     <div>
         <h2 class="form-logo">
             로그인
@@ -77,7 +79,7 @@
             <img src="../../../media/naver_logo.png" alt="" style="width: 8%;" class="mr-2">
             네이버로 시작하기
         </a>
-        <a class="social-login3 w-100" href="{% url 'users:kakao-login' %}">
+        <a class="social-login3 w-100" href="">
             <img src="../../../media/kakao_logo.png" alt="" style="width: 8%;" class="mr-2">
             카카오로 시작하기
         </a>
