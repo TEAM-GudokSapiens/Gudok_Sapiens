@@ -5,20 +5,29 @@
 <meta name="viewport" content="width=570, user-scalable=yes">
 {% endblock %}
 
+
+
 {% block content %}
-<div class="container">
-    <div class="row justify-content-md-center">
-        <div style="position: absolute; top: 50%; height: 778.98px; margin-top: -389.49px;">
-            <div class="card" style="width: 40rem;">
+<style>
+    textarea:focus, button:focus, button[type]:focus, .uneditable-input:focus {
+    border-color: rgb(255, 255, 255);
+    box-shadow: 0 1px 1px rgba(229, 103, 23, 0.075) inset, 0 0 8px rgb(255, 255, 255);
+    outline: 0 none;
+}
+</style>
+
+
+        <div class="col-lg-7 col-sm-8" style="display: flex; flex-direction: column; align-items: center; width: 100%; margin: 3rem auto;">
+            <h3 style="margin-bottom: 3rem; text-align: center; font-size: 1.5rem;">
+                이용약관 동의
+            </h3>
+            <div class="card col-10" style="margin-bottom: 5rem;">
                 <div class="card-body">
-                    <div class="text-center">
-                        <img src="{% static 'img/logo2.jpg' %}" style="width: 30%; margin-top:10px; margin-bottom: -30px;">
-                    </div>
                     <div class="row mt-5">
                         <div class="col-12">
-                            <p style="font-weight: bold;"><i class="fas fa-check"></i> 이용약관</p>
+                            <p style="font-size: 1rem; font-weight: bold;"><i class="fas fa-check"></i> 이용약관</p>
                             <div class="z-depth-1"
-                                style="font-size: 13px; background-color: white; border:1px solid #ddd; height:195px;overflow:auto;padding:5px;">
+                                style="font-size: 0.8rem; background-color: white; border:1px solid #ddd; height:13.9rem; overflow:auto; padding:0.35rem;">
                                 <dl>
                                     <dt>
                                         시행일자: 2021년 08월 14일
@@ -336,16 +345,16 @@
                             <form action="" , method="POST">
                                 {% csrf_token %}
                                 <div class="col-12 text-right">
-                                    <label style="padding-top: 10px;">
+                                    <label style="padding-top: 0.71rem;">
                                         <input type="checkbox" name="agreement1" />
-                                        <span style="font-weight: bold;">이용약관에 동의합니다.</span>
+                                        <span style="font-size: 1rem; font-weight: bold;">이용약관에 동의합니다.</span>
                                     </label>
                                     <!-- <strong><input type="checkbox" name="agreement1"> 이용약관에 동의합니다.</strong> -->
                                 </div>
                                 <br>
-                                <p style="font-weight: bold;"><i class="fas fa-check"></i> 개인정보 수집 및 이용</p>
+                                <p style="font-size: 1rem; font-weight: bold;"><i class="fas fa-check"></i> 개인정보 수집 및 이용</p>
                                 <div class="z-depth-1"
-                                    style="font-size: 13px; background-color: white; border:1px solid #ddd; height:195px;overflow:auto;padding:5px;">
+                                    style="font-size: 0.8rem; background-color: white; border:1px solid #ddd; height:195px;overflow:auto;padding:5px;">
                                     <dl>
                                         <dt>
                                             시행일자: 2020년 03월 01일
@@ -539,9 +548,10 @@
                                 </div>
                             </div>
 
-                            <div class="col-12 text-center">
-                                <button type="submit" name="register" style="opacity: 90%; font-size: 16px;"
-                                    class="btn btn-red" value="register">회원가입</button>
+                            <div class="col-12 text-center" style="margin-top: 3rem; margin-bottom: 1rem;">
+                                <button type="submit" name="register" style="opacity: 90%; font-size: 1.1rem; border: none; background-color: #fff;"
+                                    value="register">가입하기</button>
+                                    
                             </div>
                         </form>
                     </div>

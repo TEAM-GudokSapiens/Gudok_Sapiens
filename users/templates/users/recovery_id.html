@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+<style>
+    input:focus,
+    input[type]:focus,
+    .uneditable-input:focus {
+      border-color: rgb(131, 131, 131);
+      box-shadow: none;
+      outline: 0 none;
+    }
+</style>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<div class="forms col-lg-3 col-md-4 col-sm-6 col-10">
+    <div>
+        <h4 class="form-logo">
+          아이디 찾기
+        </h4>
+        <hr style="border-color: #000">
+    </div>
+    {% csrf_token %}
+    <div style="margin-bottom: 0.8rem;">
+        이름
+        {{ form.name }}
+    </div>
+    <div>
+        이메일
+        {{ form.email }}
+    </div>
+
+
+    <small>
+        등록하신 이름과 이메일주소가 일치해야 합니다.
+    </small>
+    
+    <div id="result_id"></div>
+    
+    <div style="text-align: center;">
+        <button id="find_id" name="recovery_id" class="btn btn-dark col-12 mt-3 mb-5" style="padding: 0.6rem 0;">아이디찾기</button>
+        <a href="{% url 'users:login' %}" class="text-dark"> 로그인 하러가기</a>
+    </div>
+
+</div>
+    
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#find_id').click(function () {
+            var name = $("#form_name").val();
+            var email = $("#form_email").val();
+
+            $.ajax({
+                type: "POST",
+                url: "/users/recovery/id/find/",
+                dataType: "json",
+                data: {
+                    'name': name,
+                    'email': email,
+                    'csrfmiddlewaretoken': '{{csrf_token}}',
+                },
+                success: function (response) {
+                    $('#result_id').replaceWith(
+                        '<div id="result_id"><hr><div style="text-align:center;"><span style="font-size: 16px;">입력된 정보로 가입된 아이디는 </span><span style="font-size: 20px; font-weight: bold;" id="result_id">' + response.result_id +
+                        '</span><span style="font-size: 16px;"> 입니다.</span></div><hr></div>')
+                },
+                error: function () {
+                    if (name == "" || email == "") {
+                        alert('이름와 이메일을 입력해주세요.');
+                    } else {
+                        alert('입력하신 정보가 일치하지 않거나 존재하지 않습니다.');
+                    }
+                },
+            });
+        })
+    });
+</script>
+
+{% endblock %}

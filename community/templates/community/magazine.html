@@ -2,28 +2,41 @@
 {% load bootstrap4 %}
 
 {% block content %}
-<div class="community_navbar">
-    <!--확인차 넣어둔 커뮤니티 navbar-->
-    <span><a href="{%url 'community:notice'%}">공지사항 </a></span>
-    <span><a href="{%url 'community:magazine'%}">매거진 </a></span>
-    <span><a href="{%url 'community:board'%}">자유게시판 </a></span>
-    <form method="GET" action="{% url 'community:search' %}">
+<nav class="main-navbar navbar navbar-expand-lg navbar-light col-7">
+    <ul class="navbar-nav mr-auto">
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" href="{% url 'community:notice' %}" style="padding-left: 0 !important;">공지사항</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" href="{% url 'community:magazine' %}">매거진</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" href="{% url 'community:board' %}">자유게시판</a>
+        </li>
+    </ul>
+    <form method="GET" action="{% url 'services:search' %}">
         {% csrf_token %}
-        <input type='text' name='search_key' value="{{ search_key }}" placeholder='Search' />
-        <input type='submit' value="Search" />
+        <div class="main-search">
+            <div class="main-search-icon">
+                <i class="search fa fa-search"></i>
+            </div>
+            <div class="main-search-input">
+                <input type="text" placeholder="서비스 검색" id="main-search-input" name='search_key' value="{{ search_key }}">
+                
+            </div>
+            
+        </div>
     </form>
-    <hr>
-</div>
+</nav>
 <!--------------------------------------------------------------------->
+<h3 class="magazine-header col-7">
+    매거진
+</h3>
 
 {% for magazine in page_obj.object_list %}
-<div>
-    <img src="{{ magazine.img.url }}" style="width: 450px;"><br>
-    <h5><a href="{%url 'community:magazine_detail' magazine.id%}">{{ magazine.title }}</a></h5>
-    {{ magazine.intro }} <br>
-    {{ magazine.created_at | date:"Y/m/d" }} <br>
-    조회수 : {{ magazine.hits }} <br>
-    <hr>
+<div class="magazine-box col-7">
+    <a href="{%url 'community:magazine_detail' magazine.id%}"><img src="{{ magazine.img.url }}"></a>
 </div>
 {%endfor%}
 
@@ -54,4 +67,13 @@
     {% endif %}
 </div>
 
+
+<script>
+    let search = document.querySelector(".search");
+    let clearh = document.querySelector(".clear");
+
+    search.onclick = function(){
+        document.querySelector(".main-search").classList.toggle('active');
+    }
+</script>
 {% endblock %}

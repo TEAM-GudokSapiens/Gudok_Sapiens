@@ -42,7 +42,7 @@
         </div>
         {%endfor%}
     </div>
-    <div class="mb-3">
+    <div class="mb-3 board-submit-box">
         {% if request.user.is_authenticated %}
         <div class="col-sm-3 col-xs-12" style="text-align: center;">
             <a href="{%url 'community:board_create' %}" class="board-submit text-light w-100 d-block">글작성</a>
@@ -77,14 +77,4 @@
     <a href="?page={{ page_obj.paginator.num_pages }}" class="text-dark">맨뒤로</a>
     {% endif %}
 </div>
-<script>
-    const currentLocation = location.href;
-    const pageItem = document.querySelectorAll('a');
-    const pageLength = pageItem.length
-    for (let i = 0; i < pageLength; i++) {
-        if (pageItem[i].href === currentLocation) {
-            pageItem[i].className = "active"
-        }
-    }
-</script>
 {% endblock %}
