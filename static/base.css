@@ -481,6 +481,8 @@
 
 .board-second-info {
   display: none;
+}
+
 .search-result-box {
   margin: 3.57rem auto 15rem auto;
   padding: 0 !important;
@@ -497,7 +499,7 @@
 }
 
 .search-result-box hr {
-  margin: 0.25rem 0 1.3rem 0!important;
+  margin: 0.25rem 0 1.3rem 0 !important;
 }
 
 .search-result-box > strong > span {
@@ -513,10 +515,8 @@
   padding: 0 !important;
 }
 
-
-
 .magazine-header {
-  margin: 3.57rem auto; 
+  margin: 3.57rem auto;
   text-align: center;
 }
 
@@ -545,7 +545,7 @@
   display: flex;
 }
 
-.magazine-detail-box-head  h3 {
+.magazine-detail-box-head h3 {
   margin-bottom: 0;
   padding: 4px 0 0 0 !important;
   font-weight: 400;
@@ -577,7 +577,7 @@
 
 .service-intro-section {
   margin: 0 auto;
-  padding: 0!important;
+  padding: 0 !important;
 }
 
 .service-intro-header {
@@ -622,7 +622,6 @@
 .service-intro-naming h5 {
   font-size: 3rem;
 }
-
 
 .service-intro-naming > div > p {
   font-size: 1.5rem;
@@ -670,7 +669,6 @@
 }
 
 .service-intro-our h5 {
-
   font-size: 2rem;
   margin-bottom: 1rem;
 }
@@ -678,8 +676,6 @@
 .service-intro-our {
   line-height: 1.5rem;
 }
-
-
 
 @media screen and (max-width: 1200px) {
   html {
