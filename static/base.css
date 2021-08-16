@@ -374,6 +374,7 @@
   display: flex;
   flex-direction: column;
   margin-bottom: 1rem;
+  text-align: start;
 }
 
 .update-form > div > span {
@@ -1397,4 +1398,99 @@ a:hover {
 
 .sa-up {
   transform: translate(0, 5rem);
+}
+
+.period {
+  display: grid;
+  height: 100%;
+  text-align: center;
+  place-items: center;
+}
+
+.range {
+  height: 80px;
+  width: 380px;
+  background: blue;
+  border-radius: 10px;
+  padding: 0 65px 0 45px;
+}
+
+.range .field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.range .sliderValue {
+  position: relative;
+  width: 100%;
+}
+
+.range .sliderValue span {
+  position: absolute;
+  height: 45px;
+  width: 45px;
+  color: white;
+  font-weight: 500;
+  top: -25px;
+  transform: translateX(-50%) scale(0);
+  transform-origin: bottom;
+  transition: transform 0.3s ease-in-out;
+  line-height: 55px;
+  z-index: 2;
+}
+
+.range .sliderValue span.show {
+  transform: translateX(-50%) scale(1);
+}
+.range .sliderValue span:after {
+  position: absolute;
+  content: "";
+  height: 45px;
+  width: 45px;
+  background: red;
+  left: 3%;
+  transform: translateX(-5%) rotate(45deg);
+  border: 3px solid white;
+  z-index: -1;
+  border-top-left-radius: 50%;
+  border-top-right-radius: 50%;
+  border-bottom-left-radius: 50%;
+}
+
+.range .field .value {
+  position: absolute;
+  font-size: 18px;
+  font-weight: 600;
+  color: #f7f7ff;
+}
+
+.range .field .value.left {
+  left: -22px;
+}
+
+.range .field .value.right {
+  right: -40px;
+}
+
+.range .field input {
+  -webkit-appearance: none;
+  height: 3px;
+  width: 100%;
+  background: #ddd;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+}
+
+.range .field input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 15px;
+  width: 15px;
+  background: red;
+  border-radius: 50%;
+  border: 1px solid red;
+  cursor: pointer;
 }
