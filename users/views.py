@@ -1,3 +1,4 @@
+from django.db.models.expressions import RawSQL
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.contrib import messages
@@ -43,11 +44,9 @@ class Signup(CreateView):
         return super().get(request, *args, **kwargs)
 
     def get_success_url(self):
-        # messages.success(self.request, "회원가입 성공.")
         self.request.session['register_auth'] = True
         messages.success(
             self.request, '회원님의 입력한 Email 주소로 인증 메일이 발송되었습니다. 인증 후 로그인이 가능합니다.')
-        # return settings.LOGIN_URL
         return reverse('users:register_success')
 
     def form_valid(self, form):
@@ -103,17 +102,21 @@ class LoginView(FormView):
     template_name = 'users/login.html'
     form_class = LoginForm
     success_url = '/services/main/'
+    ctx = {}
 
     def form_valid(self, form):
         user_id = form.cleaned_data.get("user_id")
         password = form.cleaned_data.get("password")
         user = authenticate(self.request, username=user_id, password=password)
 
-        if user is not None:
+        if user is not None:            
             self.request.session['user_id'] = user_id
-            login(self.request, user,
-                  backend="django.contrib.auth.backends.ModelBackend")
-
+            if user.is_active: 
+                login(self.request, user) 
+            else:    
+                ctx.update({'messages': "회원님의 입력한 Email 주소로 인증 메일이 발송되었습니다. 인증 후 로그인이 가능합니다."})
+                return render(self.request, 'users/login.html', ctx)                 
+           
         return super().form_valid(form)
 
 
@@ -243,3 +246,4 @@ def ajax_find_id_view(request):
     result_id = User.objects.get(name=name, email=email)
        
     return HttpResponse(json.dumps({"result_id": result_id.user_id}, cls=DjangoJSONEncoder), content_type = "application/json")
+
