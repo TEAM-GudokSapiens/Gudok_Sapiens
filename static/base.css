@@ -842,8 +842,14 @@ a:hover {
   font-weight: 300;
 }
 .my-review-img {
-  width: 64%;
+  width: 50%;
+  /* height: 20vh; */
+  max-height: 20vh;
+}
+.my-review-target-img {
+  width: 100%;
   height: 20vh;
+  margin-top: 1.7rem;
 }
 .my-review-box img {
   width: 100%;
@@ -854,16 +860,27 @@ a:hover {
   display: flex;
   flex-direction: column;
   /* padding: 0 !important; */
+  max-height: 40vh;
 }
 .my-review-score {
   display: flex;
   flex-direction: column;
+  color: #808080;
+  font-size: 0.9rem;
+  margin-bottom: 0.3rem;
 }
 .my-review-content {
   display: flex;
   justify-content: space-between;
+  max-height: 10vh;
+  overflow: auto;
+  font-size: 0.9rem;
+  color: #808080;
 }
-
+.my-review-title {
+  margin: 0.3rem 0;
+  color: #585858;
+}
 @media screen and (max-width: 1200px) {
   html {
     font-size: 14px;

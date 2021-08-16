@@ -37,29 +37,30 @@
             <div class="my-review-first-section col-lg-4">
                 <!-- <div>서비스 이름: {{review.target.name}}</div> -->
                 {% if review.target.img1 %}
-                <a href="{% url 'services:services_detail' pk=review.target.id %}" class="my-review-img">
+                <a href="{% url 'services:services_detail' pk=review.target.id %}" class="my-review-target-img">
                     <img src="{{ review.target.img1.url }}" />
                 </a>
                 {% endif %}
+                <span class="my-review-title">{{review.target.name}}</span>
+                <span class="my-review-content">{{review.target.intro}}</span>
             </div>
             <div class="my-review-second-section col-xl-8 col-12">
                 <div class="my-review-content">
                     <div class="my-review-score">
-                        <span>{{review.updated_at| date:"Y/m/d"}}</span>
-                        <span>{{review.period}}개월 사용</span>
+                        <span>{{review.updated_at| date:"Y/m/d"}} | {{review.period}}개월 사용</span>
                     </div>
                     <span>⭐️⭐️⭐️⭐️⭐️</span>
                     <!-- <span>{{review.score}}</span> -->
                     
                 </div>
-                {% if review.photo %}
-                <a href="{% url 'services:services_detail' pk=review.target.id %}"
-                class="my-review-img">
-                    <img src="{{ review.photo.url }}" />
-                </a>
-                {% endif %}
-                <span>{{review.title}}</span>
-                <span>{{review.content}}</span>
+                    {% if review.photo %}
+                    <a href="{% url 'services:services_detail' pk=review.target.id %}"
+                    class="my-review-img">
+                        <img src="{{ review.photo.url }}" />
+                    </a>
+                    {% endif %}
+                <span class="my-review-title">{{review.title}}</span>
+                <span class="my-review-content">{{review.content}}</span>
                 
             </div>
         </div>
