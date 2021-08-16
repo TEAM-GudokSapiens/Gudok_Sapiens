@@ -12,13 +12,13 @@
   <form action="{% url 'users:update' pk=user.pk %}" method="post" enctype="multipart/form-data" class="sign-up-form">
     {% load widget_tweaks %}
     {% csrf_token %}
-    <div>{{ form.user_id.label }}{{ form.user_id |add_class:"form-input" }} <span>{{ form.user_id.help_text }}</span> </div>
-    <div>{{ form.email.label }}{{ form.email |add_class:"form-input" }}</div>
-    <div>{{ form.name.label }}{{ form.name |add_class:"form-input" }}</div>
-    <div>{{ form.nickname.label }}{{ form.nickname |add_class:"form-input" }}</div>
-    <div>{{ form.image.label }}{{ form.image |add_class:"form-input" }} <span>{{ form.image.help_text }}</span></div>
-    <div>{{ form.gender.label }}{{ form.gender |add_class:"form-input" }}</div>
-    <div>{{ form.phonenum.label }}{{ form.phonenum |add_class:"form-input" }} <span>{{ form.phonenum.help_text }}</span> </div>
+    <div>{{ form.user_id.label }}{{ form.user_id |add_class:"ud-form-input" }}</div>
+    <div>{{ form.email.label }}{{ form.email |add_class:"ud-form-input" }}</div>
+    <div>{{ form.name.label }}{{ form.name |add_class:"ud-form-input" }}</div>
+    <div>{{ form.nickname.label }}{{ form.nickname |add_class:"ud-form-input" }} <span>{{ form.nickname.help_text }}</span></div>
+    <div>{{ form.image.label }}{{ form.image |add_class:"ud-form-input" }} <span>{{ form.image.help_text }}</span></div>
+    <div>{{ form.gender.label }}{{ form.gender |add_class:"ud-form-input" }}</div>
+    <div>{{ form.phonenum.label }}{{ form.phonenum |add_class:"ud-form-input" }} <span>{{ form.phonenum.help_text }}</span> </div>
     <input type="submit" class="btn btn-dark col-12 mt-4 mb-5" style="padding: 0.6rem 0;">
   </form>
   <a href="{% url 'users:update_password' %}" style="text-align: center; color: #444;">

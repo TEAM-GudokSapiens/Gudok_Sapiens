@@ -52,10 +52,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(verbose_name='name', max_length=30, null=True)
     nickname = models.CharField(
         verbose_name='nickname', max_length=30, null=True)
-        
-    phonenumRegex = RegexValidator(regex = r"^\+?1?\d{9,11}$")
+
+    phonenumRegex = RegexValidator(regex=r"^\+?1?\d{9,11}$")
     phonenum = models.CharField(
-        verbose_name='phonenum', validators = [phonenumRegex], max_length = 11, null = True)
+        verbose_name='phonenum', validators=[phonenumRegex], max_length=11, null=True)
     image = models.ImageField(
         verbose_name='image', blank=True, null=True, upload_to='%Y/%m/%d')
     gender = models.CharField(verbose_name='gender',

@@ -2,26 +2,44 @@
 {% load bootstrap4 %}
 
 {% block content %}
-<div class="forms col-lg-3 col-md-4 col-sm-6 col-7">
+<style>
+  select:focus,
+  select[type]:focus,
+  .uneditable-select:focus {
+    border-color: rgb(131, 131, 131);
+    box-shadow: none;
+    outline: 0 none;
+  }
+
+  textarea:focus,
+  input:focus,
+  input[type]:focus,
+  .uneditable-input:focus {
+    border-color: rgb(131, 131, 131);
+    box-shadow: none;
+    outline: 0 none;
+  }
+  
+  input:focus::placeholder {
+    color: transparent;
+  }
+
+  input::placeholder {
+    color: #fff !important;
+  }
+</style>
+
+<div class="forms text-center col-lg-3 col-md-4 col-sm-6 col-10">
   <div>
     <h2 class="form-logo">
       회원가입
     </h2>
     <hr style="border-color: #000">
   </div>
-  <form action="{% url 'users:signup' %}" method="post" enctype="multipart/form-data" class="sign-up-form">
-    {% load widget_tweaks %}
+  <form action="{% url 'users:signup' %}" method="post" enctype="multipart/form-data" class="sg-form-input">
     {% csrf_token %}
-    <div> <div>{{ form.user_id.label }} <span style="color: crimson;">*</span> </div> {{ form.user_id |add_class:"form-input" }} <span>{{ form.user_id.help_text }}</span> </div>
-    <div> <div>{{ form.email.label }} <span style="color: crimson;">*</span> </div> {{ form.email |add_class:"form-input" }}</div>
-    <div> <div>{{ form.name.label }} <span style="color: crimson;">*</span> </div> {{ form.name |add_class:"form-input" }}</div>
-    <div> <div>{{ form.nickname.label }} <span style="color: crimson;">*</span> </div> {{ form.nickname |add_class:"form-input" }}</div>
-    <div> <div>{{ form.image.label }}</div> {{ form.image |add_class:"form-input" }} <span>{{ form.image.help_text }}</span></div>
-    <div> <div>{{ form.gender.label }}</div> {{ form.gender |add_class:"form-input" }}</div>
-    <div> <div>{{ form.phonenum.label }} <span style="color: crimson;">*</span> </div> {{ form.phonenum |add_class:"form-input" }} <span>{{ form.phonenum.help_text }}</span> </div>
-    <div> <div>{{ form.password1.label }} <span style="color: crimson;">*</span> </div> {{ form.password1 |add_class:"form-input" }} <span>{{ form.password1.help_text }}</span> </div>
-    <div> <div>{{ form.password2.label }} <span style="color: crimson;">*</span> </div> {{ form.password2 |add_class:"form-input" }} <span>{{ form.password2.help_text }}</span> </div>
-    <input type="submit" class="btn btn-dark col-12 mt-4 mb-5" style="padding: 0.6rem 0;">
+    {% bootstrap_form form %}
+    <input type="submit" class="btn btn-dark col-12 mt-3 mb-5 py-2">
   </form>
 </div>
 {% endblock %}

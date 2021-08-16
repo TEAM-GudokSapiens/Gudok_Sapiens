@@ -142,7 +142,6 @@
 .main-search .search {
   font-size: 0.7rem;
   cursor: pointer;
-  color: #444;
 }
 
 .main-search-input {
@@ -153,6 +152,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.main-search-input input:focus::placeholder {
+  color: rgb(241, 237, 237) !important;
+}
+
+.main-search-input input::placeholder {
+  color: #444 !important;
 }
 
 .main-search-input input {
@@ -287,17 +294,22 @@
   padding: 0 !important;
 }
 
-.form-input {
+.sg-form-input {
   margin-top: 0.3rem;
-  padding: 0.6rem 0.8rem;
-  font-size: 0.8rem;
+  text-align: start;
+  font-size: 1rem;
+}
+
+.ud-form-input {
+  margin-top: 0.3rem;
+  padding: 0.35rem 0.8rem;
+  font-size: 1rem;
 }
 
 .sign-up-form {
   margin: 0 auto;
   color: #444;
 }
-
 
 .sign-up-form > div {
   display: flex;
@@ -777,6 +789,7 @@
 
 .form-logo {
   margin-bottom: 1rem;
+  text-align: start;
   font-family: "GmarketSansTTFMedium";
   font-size: 1.7rem;
 }
