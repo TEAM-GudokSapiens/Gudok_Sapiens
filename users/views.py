@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate, update_session_auth_hash
@@ -20,7 +21,8 @@ from django.utils.encoding import force_bytes
 from django.core.mail import EmailMessage
 from django.utils.encoding import force_bytes, force_text
 from django.urls import reverse
-from .helper import send_mail
+from .helper import send_mail, email_auth_num
+from .forms import CustomSetPasswordForm
 import json
 import os
 import requests
@@ -54,7 +56,7 @@ class Signup(CreateView):
         send_mail(
             '{}님의 회원가입 인증메일 입니다.'.format(self.object.user_id),
             recipient_list=[self.object.email],
-            from_email='dmand@naver.com',
+            from_email='david90907@naver.com',
             message='',
             html_message=render_to_string('users/register_email.html', {
                 'user': self.object,
@@ -74,9 +76,8 @@ def register_success(request):
 
     return render(request, 'users/register_success.html')
 
+
 # 이메일 인증 성공시 자동로그인
-
-
 def activate(request, uid64, token):
     try:
         uid = force_text(urlsafe_base64_decode(uid64))
@@ -225,7 +226,7 @@ class AgreementView(View):
 
 # 아이디 찾기
 
-
+# 아이디 찾기
 @method_decorator(logout_message_required, name='dispatch')
 class RecoveryIdView(View):
     template_name = 'users/recovery_id.html'
@@ -243,3 +244,85 @@ def ajax_find_id_view(request):
     result_id = User.objects.get(name=name, email=email)
 
     return HttpResponse(json.dumps({"result_id": result_id.user_id}, cls=DjangoJSONEncoder), content_type="application/json")
+
+# 비밀번호찾기
+
+
+@method_decorator(logout_message_required, name='dispatch')
+class RecoveryPwView(View):
+    template_name = 'users/recovery_pw.html'
+    recovery_pw = RecoveryPwForm
+
+    def get(self, request):
+        if request.method == 'GET':
+            form_pw = self.recovery_pw(None)
+            return render(request, self.template_name, {'form_pw': form_pw, })
+
+
+    return render(request, 'users/password_reset.html', {'form': reset_password_form})
+        reset_password_form = CustomSetPasswordForm(request.user)
+
+    else:
+            request.session['auth'] = session_user
+        else:
+            logout(request)
+            return redirect('users:login')
+            logout(request)
+            messages.success(request, "비밀번호 변경완료! 변경된 비밀번호로 로그인하세요.")
+            user = reset_password_form.save()
+        if reset_password_form.is_valid():
+
+        reset_password_form = CustomSetPasswordForm(request.user, request.POST)
+
+              backend="django.contrib.auth.backends.ModelBackend")
+        login(request, current_user,
+        current_user = User.objects.get(user_id=session_user)
+
+        session_user = request.session['auth']
+    if request.method == 'POST':
+            raise PermissionDenied
+        if not request.session.get('auth', False):
+    if request.method == 'GET':
+def auth_pw_reset_view(request):
+@logout_message_required
+# 비밀번호찾기 새비밀번호 등록
+
+
+    return HttpResponse(json.dumps({"result": user.user_id}, cls=DjangoJSONEncoder), content_type="application/json")
+
+    request.session['auth'] = user.user_id
+    user.save()
+    user.auth = ""
+    # login(request, user)
+    user = User.objects.get(user_id=user_id, auth=input_auth_num)
+    input_auth_num = request.POST.get('input_auth_num')
+    user_id = request.POST.get('user_id')
+    # if request.method=='POST' and 'auth_confirm' in request.POST:
+def auth_confirm_view(request):
+
+
+# 비밀번호찾기 인증번호 확인
+
+    return HttpResponse(json.dumps({"result": result_pw.user_id}, cls=DjangoJSONEncoder), content_type="application/json")
+    # print(auth_num)
+        # print('이메일전송완료')
+        )
+            })
+                'auth_num': auth_num,
+            html_message=render_to_string('users/recovery_email.html', {
+            from_email='david90907@naver.com',
+            recipient_list=[email],
+            '{}님의 비밀번호 찾기 인증메일입니다.'.format(user_id),
+            message='',
+        send_mail(
+        result_pw.save()
+        result_pw.auth = auth_num
+        auth_num = email_auth_num()
+    if result_pw:
+
+    result_pw = User.objects.get(user_id=user_id, name=name, email=email)
+    email = request.POST.get('email')
+    name = request.POST.get('name')
+    user_id = request.POST.get('user_id')
+def ajax_find_pw_view(request):
+# 비밀번호찾기 AJAX 통신

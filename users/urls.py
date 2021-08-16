@@ -18,5 +18,8 @@ urlpatterns = [
     path('agreement/', views.AgreementView.as_view(), name='agreement'),
     path('recovery/id/', views.RecoveryIdView.as_view(), name='recovery_id'),
     path('recovery/id/find/', views.ajax_find_id_view, name='ajax_id'),
-
+    path('recovery/pw/', views.RecoveryPwView.as_view(), name='recovery_pw'),
+    path('recovery/pw/find/', views.ajax_find_pw_view, name='ajax_pw'),
+    path('recovery/pw/auth/', views.auth_confirm_view, name='recovery_auth'),
+    path('recovery/pw/reset/', views.auth_pw_reset_view, name='recovery_pw_reset'),
 ]

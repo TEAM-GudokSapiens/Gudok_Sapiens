@@ -6,7 +6,7 @@ from django.core.validators import RegexValidator, MaxLengthValidator, MinLength
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, user_id, email, password, name, nickname, phonenum, gender, created_at, **extra_fields):
+    def create_user(self, user_id, email, password, name, nickname, phonenum, gender, auth, created_at, **extra_fields):
         user = self.model(
             user_id=user_id,
             email=email,
@@ -14,6 +14,7 @@ class UserManager(BaseUserManager):
             nickname=nickname,
             phonenum=phonenum,
             gender=gender,
+            auth=auth,
             created_at=created_at,
             **extra_fields
         )
@@ -21,9 +22,9 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, user_id,  password, email=None, name=None, nickname=None, phonenum=None, gender=None):
+    def create_superuser(self, user_id,  password, email=None, name=None, nickname=None, phonenum=None, gender=None, auth=None):
         user = self.create_user(user_id, email, password, email,
-                                name, nickname, phonenum, gender)
+                                name, nickname, phonenum, gender, auth)
         user.is_superuser = True
         user.is_staff = True
         user.is_admin = True
@@ -63,6 +64,7 @@ class User(AbstractBaseUser, PermissionsMixin):
                               choices=GENDERS, max_length=30, null=True)
     level = models.CharField(choices=LEVEL_CHOICES,
                              max_length=18, verbose_name="등급", default=3)
+    auth = models.CharField(max_length=10, verbose_name="인증번호", null=True)
     created_at = models.DateTimeField(
         'created_at', default=timezone.now, null=True, blank=True)
 

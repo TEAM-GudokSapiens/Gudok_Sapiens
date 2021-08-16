@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from .models import User
 from django.contrib.auth.hashers import check_password
+from django.contrib.auth.forms import SetPasswordForm
 
 
 class SignupForm(UserCreationForm):
@@ -173,6 +174,52 @@ class PasswordChangeForm(PasswordChangeForm):
             'class': 'form-control',
             'autofocus': False,
         })
+        self.fields['new_password1'].label = '새 비밀번호'
+        self.fields['new_password1'].widget.attrs.update({
+            'class': 'form-control',
+        })
+        self.fields['new_password2'].label = '새 비밀번호 확인'
+        self.fields['new_password2'].widget.attrs.update({
+            'class': 'form-control',
+        })
+
+# 비밀번호 찾기 폼
+
+
+class RecoveryPwForm(forms.Form):
+    user_id = forms.CharField(
+        widget=forms.TextInput,)
+    name = forms.CharField(
+        widget=forms.TextInput,)
+    email = forms.EmailField(
+        widget=forms.EmailInput,)
+
+    class Meta:
+        fields = ['user_id', 'name', 'email']
+
+    def __init__(self, *args, **kwargs):
+        super(RecoveryPwForm, self).__init__(*args, **kwargs)
+        self.fields['user_id'].label = '아이디'
+        self.fields['user_id'].widget.attrs.update({
+            'class': 'form-control',
+            'id': 'pw_form_id',
+        })
+        self.fields['name'].label = '이름'
+        self.fields['name'].widget.attrs.update({
+            'class': 'form-control',
+            'id': 'pw_form_name',
+        })
+        self.fields['email'].label = '이메일'
+        self.fields['email'].widget.attrs.update({
+            'class': 'form-control',
+            'id': 'pw_form_email',
+        })
+# 비밀번호 변경
+
+
+class CustomSetPasswordForm(SetPasswordForm):
+    def __init__(self, *args, **kwargs):
+        super(CustomSetPasswordForm, self).__init__(*args, **kwargs)
         self.fields['new_password1'].label = '새 비밀번호'
         self.fields['new_password1'].widget.attrs.update({
             'class': 'form-control',
