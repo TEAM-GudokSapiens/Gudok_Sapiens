@@ -831,6 +831,37 @@ a:hover {
   padding: 0 !important;
 }
 .dibs-list-container h3 {
+  text-align: center;
+}
+.my-review-box {
+  display: flex;
+  border-radius: 15px;
+  padding: 1.2rem;
+  border: 1px solid #e8e8e8;
+  margin: 1.5rem;
+  font-weight: 300;
+}
+.my-review-img {
+  width: 64%;
+  height: 20vh;
+}
+.my-review-box img {
+  width: 100%;
+  height: 100%;
+}
+.my-review-first-section,
+.my-review-second-section {
+  display: flex;
+  flex-direction: column;
+  /* padding: 0 !important; */
+}
+.my-review-score {
+  display: flex;
+  flex-direction: column;
+}
+.my-review-content {
+  display: flex;
+  justify-content: space-between;
 }
 
 @media screen and (max-width: 1200px) {
@@ -872,6 +903,9 @@ a:hover {
   .review-img {
     width: 180px;
     height: 180px;
+  }
+  .my-review-first-section {
+    display: none;
   }
 }
 

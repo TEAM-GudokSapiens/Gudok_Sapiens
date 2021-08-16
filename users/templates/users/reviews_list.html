@@ -18,43 +18,49 @@
     </ul>
 </nav>
 
-<div class="dibs-list-container col-7">
+<div class="dibs-list-container col-lg-7 col-md-10 col-sm-12">
     <h3>내가 쓴 리뷰</h3>
     <hr>
     <div class="">
         {% if reviews %}
         {% for review in reviews %}
-        <div class='service-card card col-3'>
-            <div class="card-img-top">
+        <div class="my-review-box">
+            <!-- <div class="my-review-first-section col-4">
+                <div>서비스 이름: {{review.target.name}}</div>
                 {% if review.target.img1 %}
-                <a href="{% url 'services:services_detail' pk=review.target.id %}">
+                <a href="{% url 'services:services_detail' pk=review.target.id %}"
+                class="my-review-img">
+                    <img src="{{ review.target.img1.url }}" />
+                </a>
+                {% endif %}
+            </div> -->
+            <div class="my-review-first-section col-lg-4">
+                <!-- <div>서비스 이름: {{review.target.name}}</div> -->
+                {% if review.target.img1 %}
+                <a href="{% url 'services:services_detail' pk=review.target.id %}" class="my-review-img">
                     <img src="{{ review.target.img1.url }}" />
                 </a>
                 {% endif %}
             </div>
-            <div>
-                <span>서비스 이름: {{review.target.name}}</span>
-            </div>
-            <div class='card-img-top'>
+            <div class="my-review-second-section col-xl-8 col-12">
+                <div class="my-review-content">
+                    <div class="my-review-score">
+                        <span>{{review.updated_at| date:"Y/m/d"}}</span>
+                        <span>{{review.period}}개월 사용</span>
+                    </div>
+                    <span>⭐️⭐️⭐️⭐️⭐️</span>
+                    <!-- <span>{{review.score}}</span> -->
+                    
+                </div>
                 {% if review.photo %}
-                <a href="{% url 'services:services_detail' pk=review.target.id %}">
+                <a href="{% url 'services:services_detail' pk=review.target.id %}"
+                class="my-review-img">
                     <img src="{{ review.photo.url }}" />
                 </a>
                 {% endif %}
-            </div>
-            <div>
-                <div class="d-flex justify-content-between">
-                    <h5><a href="{% url 'services:services_detail' pk=review.target.id %}">{{ review.title }}</a></h5>
-                    <!-- <span class="star"><i class="fas fa-star"></i>{{ avg_of_reviews
-                        }}({{service.get_review_count}})</span> -->
-                </div>
-                <div class="d-flex justify-content-between">
-                    <span class="service-intro">{{ review.content }}</span>
-                    <span>
-                        {{review.score}}
-                    </span>
-                    <span>{{review.updated_at| date:"Y-m-d"}}</span>
-                </div>
+                <span>{{review.title}}</span>
+                <span>{{review.content}}</span>
+                
             </div>
         </div>
         {% endfor %}
