@@ -294,31 +294,39 @@
   padding: 0 !important;
 }
 
-.sg-form-input {
+.login-direction {
+  display: flex;
+  flex-direction: row !important;
+  justify-content: space-between;
+  padding: 0 !important;
+  font-size: 0.8rem;
+}
+
+.signup-form {
   margin-top: 0.3rem;
   text-align: start;
   font-size: 1rem;
+}
+
+.update-form {
+  margin: 0 auto;
+  color: #444;
+}
+
+.update-form > div {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.update-form > div > span {
+  font-size: 0.8rem;
 }
 
 .ud-form-input {
   margin-top: 0.3rem;
   padding: 0.35rem 0.8rem;
   font-size: 1rem;
-}
-
-.sign-up-form {
-  margin: 0 auto;
-  color: #444;
-}
-
-.sign-up-form > div {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 1rem;
-}
-
-.sign-up-form > div > span {
-  font-size: 0.8rem;
 }
 
 .service-list-section {

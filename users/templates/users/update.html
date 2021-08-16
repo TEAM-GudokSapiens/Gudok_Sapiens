@@ -9,7 +9,7 @@
     </h2>
     <hr style="border-color: #000">
   </div>
-  <form action="{% url 'users:update' pk=user.pk %}" method="post" enctype="multipart/form-data" class="sign-up-form">
+  <form action="{% url 'users:update' pk=user.pk %}" method="post" enctype="multipart/form-data" class="update-form">
     {% load widget_tweaks %}
     {% csrf_token %}
     <div>{{ form.user_id.label }}{{ form.user_id |add_class:"ud-form-input" }}</div>
@@ -19,13 +19,14 @@
     <div>{{ form.image.label }}{{ form.image |add_class:"ud-form-input" }} <span>{{ form.image.help_text }}</span></div>
     <div>{{ form.gender.label }}{{ form.gender |add_class:"ud-form-input" }}</div>
     <div>{{ form.phonenum.label }}{{ form.phonenum |add_class:"ud-form-input" }} <span>{{ form.phonenum.help_text }}</span> </div>
-    <input type="submit" class="btn btn-dark col-12 mt-4 mb-5" style="padding: 0.6rem 0;">
+    <input type="submit" value="변경" class="btn btn-dark col-12 mt-4 mb-5" style="padding: 0.6rem 0;">
   </form>
   <a href="{% url 'users:update_password' %}" style="text-align: center; color: #444;">
     <p>
       비밀번호 변경
     </p>
-  </a>  <a href="{% url 'users:delete' pk=user.pk %}" style="text-align: center; color: #444;">
+  </a>
+  <a href="{% url 'users:delete' %}" style="text-align: center; color: #444;">
     <p>
       회원 탈퇴
     </p>

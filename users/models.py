@@ -2,7 +2,7 @@ from django.core.mail import send_mail
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.utils import timezone
-from django.core.validators import RegexValidator
+from django.core.validators import RegexValidator, MaxLengthValidator, MinLengthValidator
 
 
 class UserManager(BaseUserManager):
@@ -38,6 +38,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     GENDERS = (
         ('남자', '남자'),
         ('여자', '여자'),
+        ('기타', '기타'),
     )
     LEVEL_CHOICES = (
         ("3", "Lv3_미인증사용자"),
@@ -45,8 +46,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         ("1", "Lv1_관리자"),
         ("0", "Lv0_개발자"),
     )
-    user_id = models.CharField(
-        verbose_name='아이디', max_length=30, unique=True)
+    user_id = models.TextField(
+        verbose_name='아이디', validators=[MinLengthValidator(5), MaxLengthValidator(15)], unique=True)
     email = models.EmailField(verbose_name='email', null=True, unique=True)
     password = models.CharField(max_length=256, verbose_name="비밀번호")
     name = models.CharField(verbose_name='name', max_length=30, null=True)

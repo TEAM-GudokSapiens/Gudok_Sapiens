@@ -6,12 +6,11 @@
   select:focus,
   select[type]:focus,
   .uneditable-select:focus {
-    border-color: rgb(131, 131, 131);
-    box-shadow: none;
-    outline: 0 none;
+    border-color: rgb(131, 131, 131) !important;
+    box-shadow: none !important;
+    outline: 0 none !important;
   }
 
-  textarea:focus,
   input:focus,
   input[type]:focus,
   .uneditable-input:focus {
@@ -19,11 +18,20 @@
     box-shadow: none;
     outline: 0 none;
   }
+
+  textarea:focus,
+  textarea[type]:focus,
+  .uneditable-textarea:focus {
+    border-color: rgb(131, 131, 131) !important;
+    box-shadow: none !important;
+    outline: 0 none !important;
+  }
   
   input:focus::placeholder {
     color: transparent;
   }
 
+  textarea::placeholder,
   input::placeholder {
     color: #fff !important;
   }
@@ -36,7 +44,7 @@
     </h2>
     <hr style="border-color: #000">
   </div>
-  <form action="{% url 'users:signup' %}" method="post" enctype="multipart/form-data" class="sg-form-input">
+  <form action="{% url 'users:signup' %}" method="post" enctype="multipart/form-data" class="signup-form">
     {% csrf_token %}
     {% bootstrap_form form %}
     <input type="submit" class="btn btn-dark col-12 mt-3 mb-5 py-2">

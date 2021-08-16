@@ -48,7 +48,7 @@
         </div>
         <div class="fixing-box">
             <div class="keywords">
-                {% for tag in service.tags.all  %}
+                {% for tag in service.tags.all %}
                 <div><a href="{% url 'services:same_tag_list' tag.name %}">#{{ tag.name }}</a></div>
                 {% endfor %}
             </div>
@@ -113,124 +113,124 @@
                             <span class="review-count ">{{service.get_review_count}}개</span>
                         </div>
                         {% for review in reviews_order_help %}
-                        {% for review in page_obj %}                          
+                        {% for review in page_obj %}
                         <div class="review-container review-id-{{ review.id }}">
-                                <div class="title-block mb-3 d-flex justify-content-between">
-                                    <span class="">{{review.user}}🌱</span>
-                                    <span class="review-date">{{review.updated_at| date:"Y/m/d"}}</span>
+                            <div class="title-block mb-3 d-flex justify-content-between">
+                                <span class="">{{review.user}}🌱</span>
+                                <span class="review-date">{{review.updated_at| date:"Y/m/d"}}</span>
+                            </div>
+                            <div class="content-block">
+                                {% if review.photo %}
+                                <div class="review-img">
+                                    <img src="{{ review.photo.url }}" />
                                 </div>
-                                <div class="content-block">
-                                    {% if review.photo %}
-                                    <div class="review-img">
-                                        <img src="{{ review.photo.url }}" />
-                                    </div>
-                                    {% endif %}
-                                    <div class="review-content">
-                                        <div class="">{{review.title}}</div>
-                                        <div class="">{{review.content}}</div>
-                                        <div>
-                                            {% comment %} <a href="{% url 'likes:likes_helps' review.id %}">도움이 돼요!</a>
-                                            {% endcomment %}
-                                            {% if review.is_help %}
-                                            <div class="btn help" onclick="onClickHelp({{ review.id }})">이미 눌렀어요</div>
-                                            {% else %}
-                                            <div class="btn help" onclick="onClickHelp({{ review.id }})">도움이 돼요</div>
-                                            {% endif %}
-                                            <span class="help__counts">{{ review.reviews_help.all.count }}</span>
-                                        </div>
+                                {% endif %}
+                                <div class="review-content">
+                                    <div class="">{{review.title}}</div>
+                                    <div class="">{{review.content}}</div>
+                                    <div>
+                                        {% comment %} <a href="{% url 'likes:likes_helps' review.id %}">도움이 돼요!</a>
+                                        {% endcomment %}
+                                        {% if review.is_help %}
+                                        <div class="btn help" onclick="onClickHelp({{ review.id }})">이미 눌렀어요</div>
+                                        {% else %}
+                                        <div class="btn help" onclick="onClickHelp({{ review.id }})">도움이 돼요</div>
+                                        {% endif %}
+                                        <span class="help__counts">{{ review.reviews_help.all.count }}</span>
                                     </div>
                                 </div>
                             </div>
-                            <hr>
-                            {% endfor %}
-                            {% endfor %}
+                        </div>
+                        <hr>
+                        {% endfor %}
+                        {% endfor %}
 
-                            {% if page_obj.has_previous %}
-                            <a href="?page=1">처음으로</a>
-                            <a href="?page={{ page_obj.previous_page_number }}">이전으로</a>
-                            {% endif %}
+                        {% if page_obj.has_previous %}
+                        <a href="?page=1">처음으로</a>
+                        <a href="?page={{ page_obj.previous_page_number }}">이전으로</a>
+                        {% endif %}
 
-                            <span class="current">
-                                {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
-                            </span>
+                        <span class="current">
+                            {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+                        </span>
 
-                            {% if page_obj.has_next %}
-                            <a href="?page={{ page_obj.next_page_number }}">다음으로</a>
-                            <a href="?page={{ page_obj.paginator.num_pages }}">맨뒤로</a>
-                            {% endif %}
+                        {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">다음으로</a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}">맨뒤로</a>
+                        {% endif %}
 
 
 
-                            {% if request.user.is_authenticated %}
-                            <form action="{% url 'reviews:submit_ajax' service.id %}" enctype="multipart/form-data"
-                                id="review_create_form" method="POST">
-                                {% csrf_token %}
+                        {% if request.user.is_authenticated %}
+                        <form action="{% url 'reviews:submit_ajax' service.id %}" enctype="multipart/form-data"
+                            id="review_create_form" method="POST">
+                            {% csrf_token %}
 
-                                제목 <br> {{ form.title }} <br> <br>
-                                내용 <br>
-                                <textarea class="content_textarea" name="content" placeholder='15자 이상 입력해주세요'
-                                    onkeyup="countLetters();"></textarea> <br>
-                                <p>현재 글자수 : <span class="content_count">0</span></p><br>
+                            제목 <br> {{ form.title }} <br> <br>
+                            내용 <br>
+                            <textarea class="content_textarea" name="content" placeholder='15자 이상 입력해주세요'
+                                onkeyup="countLetters();"></textarea> <br>
+                            <p>현재 글자수 : <span class="content_count">0</span></p><br>
 
-                                사진 <br> {{ form.photo }} <br> <br>
-                                별점 <br> {{ form.score }} <br> <br>
-                                사용기간(개월) <br>
-                                <div class="period">
-                                    <div class="range">
-                                        <div class="sliderValue">
-                                            <span class="period_select">50</span>
-                                        </div>
-                                        <div class="field">
-                                            <div class="value left">0</div>
-                                            <input class="period_choice" type="range" name="period" min="0" max="100"
-                                                value="50" steps="1">
-                                            <div class="value right">100</div>
-                                        </div>
+                            사진 <br> {{ form.photo }} <br> <br>
+                            별점 <br> {{ form.score }} <br> <br>
+                            사용기간(개월) <br>
+                            <div class="period">
+                                <div class="range">
+                                    <div class="sliderValue">
+                                        <span class="period_select">50</span>
+                                    </div>
+                                    <div class="field">
+                                        <div class="value left">0</div>
+                                        <input class="period_choice" type="range" name="period" min="0" max="100"
+                                            value="50" steps="1">
+                                        <div class="value right">100</div>
                                     </div>
                                 </div>
+                            </div>
 
-                                <br><br>
-                                <input type="submit" onclick="" />
-                            </form>
-                            {% endif %}
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-                        <div class="info-tab">
-                            <div class="tab-title">회사 정보</div>
-                            <p class="tab-content">회사명: XXX</p>
-                            <p class="tab-content">회사 주소: XXX</p>
-                            <p class="tab-content">고객센터: XXX</p>
-                        </div>
+                            <br><br>
+                            <input type="submit" onclick="" />
+                        </form>
+                        {% endif %}
                     </div>
                 </div>
-                <!-- tabend -->
+                <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                    <div class="info-tab">
+                        <div class="tab-title">회사 정보</div>
+                        <p class="tab-content">회사명: XXX</p>
+                        <p class="tab-content">회사 주소: XXX</p>
+                        <p class="tab-content">고객센터: XXX</p>
+                    </div>
+                </div>
             </div>
+            <!-- tabend -->
         </div>
     </div>
-    <script>
-        const slideValue = document.querySelector(".period_select");
-        const inputSlider = document.querySelector(".period_choice");
-        inputSlider.oninput = (() => {
-            let value = inputSlider.value;
-            slideValue.textContent = value;
-            slideValue.style.left = value + "%";
-            slideValue.classList.add("show");
-        });
-        inputSlider.onblur = (() => {
-            slideValue.classList.remove("show");
-        });
+</div>
+<script>
+    const slideValue = document.querySelector(".period_select");
+    const inputSlider = document.querySelector(".period_choice");
+    inputSlider.oninput = (() => {
+        let value = inputSlider.value;
+        slideValue.textContent = value;
+        slideValue.style.left = value + "%";
+        slideValue.classList.add("show");
+    });
+    inputSlider.onblur = (() => {
+        slideValue.classList.remove("show");
+    });
 
-        const textarea = document.querySelector('.content_textarea');
-        const count = document.querySelector('.content_count');
+    const textarea = document.querySelector('.content_textarea');
+    const count = document.querySelector('.content_count');
 
-        function countLetters() {
-            const text = textarea.value;
-            const textLength = textarea.value.length;
-            count.innerText = `${textLength}`;
-        }
-    </script>
-    <!-- 
+    function countLetters() {
+        const text = textarea.value;
+        const textLength = textarea.value.length;
+        count.innerText = `${textLength}`;
+    }
+</script>
+<!-- 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
     const onClickSubmit=async(service_id)=>{  
@@ -269,15 +269,15 @@
     };
 </script> -->
 
-    <script>
-        // <!--찜 기능 ajax 
-        // -->
-        const
-            requestDib =
+<script>
+    // <!--찜 기능 ajax 
+    // -->
+    const
+        requestDib =
             new
-        XMLHttpRequest();
-        const
-            onClickDib =
+                XMLHttpRequest();
+    const
+        onClickDib =
             (id) => {
                 requestDib.open('POST',
                     '/likes/dibs_ajax/',
@@ -290,14 +290,14 @@
                     id: id
                 }));
             };
-        const
-            DibHandleResponse =
+    const
+        DibHandleResponse =
             () => {
-                if (requestDib.status <
-                    400) {
+                if (requestDib.status < 400) {
                     const {
                         id
-                    } = JSON.parse(requestDib.response) const element = document.querySelector(`.fix-link .dib`);
+                    } = JSON.parse(requestDib.response);
+                    const element = document.querySelector(`.fix-link .dib`);
                     if (element.innerHTML == `찜하기`) {
                         element.innerHTML = `안찜하기`;
                         const dibsCounts = document.querySelector(`.dib__counts`);
@@ -318,52 +318,52 @@
 
                 }
             }
-        requestDib.onreadystatechange = () => {
-            if (requestDib.readyState === XMLHttpRequest.DONE) {
-                DibHandleResponse();
-            }
+    requestDib.onreadystatechange = () => {
+        if (requestDib.readyState === XMLHttpRequest.DONE) {
+            DibHandleResponse();
         }
+    }
 
-        // <!--도움이 돼요 ajax --> 
-        const requestHelp = new XMLHttpRequest();
+    // <!--도움이 돼요 ajax --> 
+    const requestHelp = new XMLHttpRequest();
 
-        const onClickHelp = (id) => {
+    const onClickHelp = (id) => {
 
-            requestHelp.open(' POST', '/likes/help_ajax/', true);
-            requestHelp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-            requestHelp.send(JSON.stringify({
-                id: id
-            }));
-        };
-        const
-            HelpHandleResponse = () => {
-                if (requestHelp.status < 400) {
-                    const {
-                        id
-                    } = JSON.parse(requestHelp.response)
-                    const element = document.querySelector(`.review-id-${id} .help`);
-                    if (element.innerHTML == `도움이 돼요`) {
-                        element.innerHTML = `이미 눌렀어요`
-                        const dibsCounts = document.querySelector(`.review-id-${id} .help__counts`);
-                        const
-                            num = dibsCounts.innerHTML;
-                        const count = Number(num) + 1;
-                        dibsCounts.innerHTML = `${count}`;
-                    } else {
-                        element.innerHTML = `도움이 돼요`;
-                        const dibsCounts = document.querySelector(`.review-id-${id} .help__counts`);
-                        const
-                            num = dibsCounts.innerHTML;
-                        const count = Number(num) - 1;
-                        dibsCounts.innerHTML = `${count}`;
-                    }
+        requestHelp.open(' POST', '/likes/help_ajax/', true);
+        requestHelp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        requestHelp.send(JSON.stringify({
+            id: id
+        }));
+    };
+    const
+        HelpHandleResponse = () => {
+            if (requestHelp.status < 400) {
+                const {
+                    id
+                } = JSON.parse(requestHelp.response)
+                const element = document.querySelector(`.review-id-${id} .help`);
+                if (element.innerHTML == `도움이 돼요`) {
+                    element.innerHTML = `이미 눌렀어요`
+                    const dibsCounts = document.querySelector(`.review-id-${id} .help__counts`);
+                    const
+                        num = dibsCounts.innerHTML;
+                    const count = Number(num) + 1;
+                    dibsCounts.innerHTML = `${count}`;
+                } else {
+                    element.innerHTML = `도움이 돼요`;
+                    const dibsCounts = document.querySelector(`.review-id-${id} .help__counts`);
+                    const
+                        num = dibsCounts.innerHTML;
+                    const count = Number(num) - 1;
+                    dibsCounts.innerHTML = `${count}`;
                 }
             }
-        requestHelp.onreadystatechange = () => {
-            if (requestHelp.readyState === XMLHttpRequest.DONE) {
-                HelpHandleResponse();
-            }
         }
-    </script>
+    requestHelp.onreadystatechange = () => {
+        if (requestHelp.readyState === XMLHttpRequest.DONE) {
+            HelpHandleResponse();
+        }
+    }
+</script>
 
 {% endblock content %}

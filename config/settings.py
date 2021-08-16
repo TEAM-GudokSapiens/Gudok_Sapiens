@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',  # 소셜account 정보관리
     'allauth.socialaccount.providers.naver',  # 네이버 소셜로그인
     'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.kakao',
 
 
     'ckeditor',
@@ -87,7 +88,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -181,6 +182,7 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 
 CKEDITOR_UPLOAD_PATH = 'uploads/'
 CKEDITOR_IMAGE_BACKEND = "pillow"
+
 # 이메일 인증
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.naver.com'
