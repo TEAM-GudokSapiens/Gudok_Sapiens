@@ -57,6 +57,13 @@
 </nav>
 
 <div id="mainCarousel" class="main-carousel carousel slide" data-ride="carousel">
+    {% if messages %}
+    <div>
+        {% for message in messages %}
+        <script>alert('{{ message.message }}')</script>
+        {% endfor %}
+    </div>
+    {% endif %}
     <div class="main-carousel-inner carousel-inner">
         {% for magazine in magazine_list  %}
         {% if forloop.counter  == 1 %}

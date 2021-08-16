@@ -29,6 +29,7 @@ django-js-asset==1.2.2
 django-storages==1.11.1
 django-taggit==1.5.1
 django-taggit-templatetags2==1.6.1
+django-widget-tweaks==1.4.8
 Faker==8.10.1
 filelock==3.0.12
 idna==3.2
