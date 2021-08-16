@@ -52,8 +52,9 @@
             {% endfor %}
             {% endif %}
         </div>
-        <div class="d-flex justify-content-between">   
-            <span>비밀번호 찾기</span>
+        <div class="d-flex justify-content-between">  
+            <span> <a href="{% url 'users:recovery_id' %}">아이디 찾기</a></span> 
+            <span>비밀번호 찾기</span> 
             <span><a href="{% url 'users:agreement' %}">회원가입</a></span>
         </div>
 
@@ -76,7 +77,7 @@
             <img src="../../../media/naver_logo.png" alt="" style="width: 8%;" class="mr-2">
             네이버로 시작하기
         </a>
-        <a class="social-login3 w-100" href="/accounts/naver/login/?process=login">
+        <a class="social-login3 w-100" href="{% url 'users:kakao-login' %}">
             <img src="../../../media/kakao_logo.png" alt="" style="width: 8%;" class="mr-2">
             카카오로 시작하기
         </a>

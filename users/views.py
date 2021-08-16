@@ -6,24 +6,13 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.forms.utils import ErrorList
 from django.core.paginator import Paginator
 from django.utils.decorators import method_decorator
-from django.views.generic import UpdateView, DeleteView, FormView
-from services.models import Service
-from .forms import *
-from .decorators import *
+from django.views.generic import UpdateView, DeleteView, FormView, CreateView, View
 from services.models import Service
 from django.core.paginator import Paginator
-from django.template.loader import render_to_string
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.utils.encoding import force_bytes, force_text
 from django.contrib.auth.tokens import PasswordResetTokenGenerator, default_token_generator
 from django.core.exceptions import PermissionDenied
 from django.core.exceptions import ValidationError
-from django.views.generic import CreateView
-from django.http import HttpResponseRedirect, Http404, HttpResponseForbidden
-from django.views.generic import View
-from .models import *
-from django.views.generic import UpdateView, DeleteView
-from users.forms import UpdateForm, LoginForm, SignupForm
+from django.http import HttpResponseRedirect, Http404, HttpResponseForbidden, HttpResponse, JsonResponse
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -32,11 +21,16 @@ from django.core.mail import EmailMessage
 from django.utils.encoding import force_bytes, force_text
 from django.urls import reverse
 from .helper import send_mail
-from django.utils.encoding import force_bytes, force_text
-from django.contrib.auth.tokens import default_token_generator
+import json, os ,requests
+from django.template import loader
+from django.core.serializers.json import DjangoJSONEncoder
+from .forms import *
+from .models import *
+from .decorators import *
+from .exception import *
+
+
 # 회원가입
-
-
 class Signup(CreateView):
     model = User
     template_name = 'users/signup.html'
@@ -62,7 +56,7 @@ class Signup(CreateView):
         send_mail(
             '{}님의 회원가입 인증메일 입니다.'.format(self.object.user_id),
             recipient_list=[self.object.email],
-            from_email='david90907@naver.com',
+            from_email='yysk_915@naver.com',
             message='',
             html_message=render_to_string('users/register_email.html', {
                 'user': self.object,
@@ -72,56 +66,18 @@ class Signup(CreateView):
             }),
         )
         return redirect(self.get_success_url())
-        # message = render_to_string('users/register_email.html',                         {
-        #     'user': self.object,
-        #     'domain': self.request.META['HTTP_HOST'],
-        #     'uid': urlsafe_base64_encode(force_bytes(self.object.pk)).encode().decode(),
-        #     'token': default_token_generator.make_token(self.object),
-        # })
-        # mail_subject = "[구독사피엔스] 회원가입 인증 메일입니다."
-        # user_email = self.object.email
-        # email = EmailMessage(mail_subject, message, to=[user_email])
-        # print(user_email)
-        # email.send()
-        # if email.send() == 0:
-        #     print("실패")
-        # else:
-        #     print("성공")
-        # return redirect(self.get_success_url())
-# def signup(request):
-#     if request.method == "POST":
-#         form = SignupForm(request.POST)
-#         if form.is_valid():
-#             user = form.save()
-#             user_id = form.cleaned_data.get('user_id')
-#             raw_password = form.cleaned_data.get('password1')
-#             user = authenticate(username=user_id, password=raw_password)
-#             send_mail('[] {}님의 회원가입 인증메일 입니다.'.format(user_id), [user.email], html=render_to_string('users/register_email.html', {
-#                 'user': user_id,
-#                 'uid': urlsafe_base64_encode(force_bytes(user.pk)).encode().decode(),
-#                 'domain': user.request.META['HTTP_HOST'],
-#                 'token': default_token_generator.make_token(user_id),
-#             }))
-#             return redirect(user.get_success_url())
-
-#     else:
-#         form = SignupForm()
-#     ctx = {'form': form}
-#     return render(request, template_name="users/signup.html", context=ctx)
 
 
 # 회원가입 인증메일 발송 안내 창
 def register_success(request):
     if not request.session.get('register_auth', False):
         raise PermissionDenied
-    request.session['register_auth'] = False
+    request.session['register_auth'] = False    
 
     return render(request, 'users/register_success.html')
 
 
 # 이메일 인증 성공시 자동로그인
-
-
 def activate(request, uid64, token):
     try:
         uid = force_text(urlsafe_base64_decode(uid64))
@@ -140,9 +96,8 @@ def activate(request, uid64, token):
     messages.error(request, '메일 인증에 실패했습니다.')
     return redirect('users:login')
 
+
 # 로그인
-
-
 @method_decorator(logout_message_required, name='dispatch')
 class LoginView(FormView):
     template_name = 'users/login.html'
@@ -160,16 +115,15 @@ class LoginView(FormView):
                   backend="django.contrib.auth.backends.ModelBackend")
 
         return super().form_valid(form)
+
+
 # 로그아웃
-
-
 def logout_view(request):
     logout(request)
     return redirect('/')
 
+
 # 유저정보
-
-
 class AccountUpdateView(UpdateView):
     model = User
     form_class = UpdateForm
@@ -188,25 +142,40 @@ class AccountUpdateView(UpdateView):
         else:
             return HttpResponseForbidden()
 
+
+# 비밀번호 변경
+@login_message_required
+def update_password(request):
+    if request.method == 'POST':
+        password_change_form = PasswordChangeForm(request.user, request.POST)
+        if password_change_form.is_valid():
+            user = password_change_form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, "비밀번호를 성공적으로 변경하였습니다.")
+            return redirect('services:main')
+    else:
+        password_change_form = PasswordChangeForm(request.user)
+        
+    return render(request, 'users/update_password.html', {'password_change_form':password_change_form})
+
+
 # 회원탈퇴
+@login_message_required
+def profile_delete_view(request):
+    if request.method == 'POST':
+        password_form = CheckPasswordForm(request.user, request.POST)
+        
+        if password_form.is_valid():
+            request.user.delete()
+            logout(request)
+            messages.success(request, "회원탈퇴가 완료되었습니다.")
+            return redirect('/users/login/')
+    else:
+        password_form = CheckPasswordForm(request.user)
+
+    return render(request, 'users/delete.html', {'password_form':password_form})
 
 
-class AccountDeleteView(DeleteView):
-    model = User
-    success_url = reverse_lazy('users:login')
-    template_name = 'users/delete.html'
-
-    def get(self, *args, **kwargs):
-        if self.request.user.is_authenticated and self.get_object() == self.request.user:
-            return super().get(*args, **kwargs)
-        else:
-            return HttpResponseForbidden()
-
-    def post(self, *args, **kwargs):
-        if self.request.user.is_authenticated and self.get_object() == self.request.user:
-            return super().post(*args, **kwargs)
-        else:
-            return HttpResponseForbidden()
 
 
 def dibs_list(request):
@@ -235,9 +204,8 @@ def reviews_list(request):
     }
     return render(request, 'users/dibs_list.html', context=ctx)
 
+
 # 이용약관 동의
-
-
 @method_decorator(logout_message_required, name='dispatch')
 class AgreementView(View):
     def get(self, request, *args, **kwargs):
@@ -254,18 +222,104 @@ class AgreementView(View):
             return render(request, 'users/agreement.html')
 
 
-# 비밀번호 변경
-@login_message_required
-def update_password(request):
-    if request.method == 'POST':
-        form = PasswordChangeForm(request.user, request.POST)
-        if form.is_valid():
-            user = form.save()
-            # 비밀번호를 자동으로 업데이트해줌! 사이트에 머물수있오
-            update_session_auth_hash(request, user)
-            return redirect('services:main')
-    else:
-        form = PasswordChangeForm(request.user)
-    return render(request, 'users/update_password.html', {
-        'form': form
-    })
+
+
+
+# 아이디 찾기
+@method_decorator(logout_message_required, name='dispatch')
+class RecoveryIdView(View):
+    template_name = 'users/recovery_id.html'
+    recovery_id = RecoveryIdForm
+
+    def get(self, request):
+        if request.method=='GET':
+            form = self.recovery_id(None)
+        return render(request, self.template_name, { 'form':form, })
+
+
+def ajax_find_id_view(request):
+    name = request.POST.get('name')
+    email = request.POST.get('email')
+    result_id = User.objects.get(name=name, email=email)
+       
+    return HttpResponse(json.dumps({"result_id": result_id.user_id}, cls=DjangoJSONEncoder), content_type = "application/json")
+
+
+# 카카오 로그인
+def kakao_login(request):
+    try:
+        if request.user.is_authenticated:
+            raise SocialLoginException("User already logged in")
+        client_id = os.environ.get("KAKAO_ID")
+        redirect_uri = "http://127.0.0.1:8000/users/login/kakao/callback/"
+
+        return redirect(
+            f"https://kauth.kakao.com/oauth/authorize?client_id={client_id}&redirect_uri={redirect_uri}&response_type=code"
+        )
+    except KakaoException as error:
+        messages.error(request, error)
+        return redirect("services:main")
+    except SocialLoginException as error:
+        messages.error(request, error)
+        return redirect("services:main")
+        
+def kakao_login_callback(request):
+    try:
+        if request.user.is_authenticated:
+            raise SocialLoginException("User already logged in")
+        code = request.GET.get("code", None)
+        if code is None:
+            KakaoException("Can't get code")
+        client_id = os.environ.get("KAKAO_ID")
+        redirect_uri = "http://127.0.0.1:8000/users/login/kakao/callback/"
+        client_secret = os.environ.get("KAKAO_SECRET")
+        request_access_token = requests.post(
+            f"https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id={client_id}&redirect_uri={redirect_uri}&code={code}&client_secret={client_secret}",
+            headers={"Accept": "application/json"},
+        )
+        access_token_json = request_access_token.json()
+        error = access_token_json.get("error", None)
+        if error is not None:
+            print(error)
+            KakaoException("Can't get access token")
+        access_token = access_token_json.get("access_token")
+        headers = {"Authorization": f"Bearer {access_token}"}
+        profile_request = requests.post(
+            "https://kapi.kakao.com/v2/user/me",
+            headers=headers,
+        )
+        profile_json = profile_request.json()
+
+        nickname = profile_json.get("profile_nickname",None)
+        avatar_url = profile_json.get("profile_image_url", None)
+        email = profile_json.get("email", None)
+        gender = profile_json.get("gender", None)
+
+        user = User.objects.get_or_none(email=email)
+        if user is not None:
+            raise KakaoException                
+        else:
+            user = User.objects.create_user(
+                email=email,
+                username=email,
+                first_name=nickname,
+                gender=gender,
+                login_method=User.LOGIN_KAKAO,
+            )
+
+            if avatar_url is not None:
+                avatar_request = requests.get(avatar_url)
+                user.avatar.save(
+                    f"{nickname}-avatar", ContentFile(avatar_request.content)
+                )
+            user.set_unusable_password()
+            user.save()
+        messages.success(request, f"{user.email} signed up and logged in with Kakao")
+        login(request, user)
+        return redirect(reverse("core:home"))
+    except KakaoException as error:
+        messages.error(request, error)
+        return redirect(reverse("core:home"))
+    except SocialLoginException as error:
+        messages.error(request, error)
+        return redirect(reverse("core:home"))

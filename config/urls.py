@@ -10,7 +10,7 @@ from django.views.decorators.cache import never_cache
 urlpatterns = [
     path('', lambda req: redirect('services:main'), name='root'),
     path('admin/', admin.site.urls),
-    path('users/', include('users.urls')),
+    path('users/', include('users.urls', namespace="users")),
     path('services/', include('services.urls', namespace="services")),
     path('reviews/', include('reviews.urls', namespace="reviews")),
     path('accounts/', include('allauth.urls')),
