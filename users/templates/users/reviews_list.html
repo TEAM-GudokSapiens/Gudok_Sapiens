@@ -45,31 +45,36 @@
                 <span class="my-review-content">{{review.target.intro}}</span>
             </div>
             <div class="my-review-second-section col-xl-8 col-12">
-                <div class="my-review-content">
-                    <div class="my-review-target">{{review.target.name}} | {{review.period}}개월 사용</div>
-                    <div class="my-review-score">
-                        <span>{{review.updated_at| date:"Y/m/d"}} | {{review.period}}개월 사용</span>
+                <div class="my-review-content-container">
+                    <div class="my-review-content">
+                        <div class="my-review-target">{{review.target.name}} | {{review.period}}개월 사용</div>
+                        <div class="my-review-score">
+                            <span>{{review.updated_at| date:"Y/m/d"}} | {{review.period}}개월 사용</span>
+                        </div>
+                        <span class="star">
+                            <i class="fas fa-star" style="color: #ffcd3c;"></i>
+                            <i class="fas fa-star" style="color: #ffcd3c;"></i>
+                            <i class="fas fa-star" style="color: #ffcd3c;"></i>
+                            <i class="fas fa-star" style="color: #ffcd3c;"></i>
+                            <i class="fas fa-star" style="color: #ffcd3c;"></i>
+                        </span>
+                        <!-- <span>{{review.score}}</span> -->
+                        
                     </div>
-                    <span class="star">
-                        <i class="fas fa-star" style="color: #ffcd3c;"></i>
-                        <i class="fas fa-star" style="color: #ffcd3c;"></i>
-                        <i class="fas fa-star" style="color: #ffcd3c;"></i>
-                        <i class="fas fa-star" style="color: #ffcd3c;"></i>
-                        <i class="fas fa-star" style="color: #ffcd3c;"></i>
-                    </span>
-                    <!-- <span>{{review.score}}</span> -->
-                    
+                        {% if review.photo %}
+                        <a href="{% url 'services:services_detail' pk=review.target.id %}"
+                        class="my-review-img">
+                            <img src="{{ review.photo.url }}" />
+                        </a>
+                        {% endif %}
+                    <span class="my-review-title">{{review.title}}</span>
+                    <span class="my-review-content">{{review.content}}</span>
                 </div>
-                    {% if review.photo %}
-                    <a href="{% url 'services:services_detail' pk=review.target.id %}"
-                    class="my-review-img">
-                        <img src="{{ review.photo.url }}" />
-                    </a>
-                    {% endif %}
-                <span class="my-review-title">{{review.title}}</span>
-                <span class="my-review-content">{{review.content}}</span>
                 <div class="my-review-date">
                     <span>{{ review.updated_at| date:"Y/m/d" }}</span>
+                </div>
+                <div class="my-review-likes">
+                    <span><i class="far fa-thumbs-up" style="color: #585858;"></i> 55개</span>
                 </div>
             </div>
         </div>

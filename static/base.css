@@ -1116,8 +1116,7 @@ a:hover {
   width: 100%;
   height: 100%;
 }
-.my-review-first-section,
-.my-review-second-section {
+.my-review-first-section {
   display: flex;
   flex-direction: column;
   /* padding: 0 !important; */
@@ -1125,6 +1124,17 @@ a:hover {
 }
 .my-review-first-section {
   border-right: 1px solid #e8e8e8;
+}
+.my-review-second-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  max-height: 40vh;
+}
+.my-review-content-container {
+  display: flex;
+  flex-direction: column;
+  max-height: 40vh;
 }
 .my-review-score {
   display: flex;
@@ -1150,6 +1160,11 @@ a:hover {
   display: none;
   font-size: 0.9rem;
   color: #808080;
+}
+.my-review-likes {
+  display: flex;
+  justify-content: flex-end;
+  color: #585858;
 }
 @media screen and (max-width: 1200px) {
   html {
