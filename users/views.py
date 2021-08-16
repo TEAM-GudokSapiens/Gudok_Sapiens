@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate, update_session_auth_hash
@@ -20,8 +21,11 @@ from django.utils.encoding import force_bytes
 from django.core.mail import EmailMessage
 from django.utils.encoding import force_bytes, force_text
 from django.urls import reverse
-from .helper import send_mail
-import json, os ,requests
+from .helper import send_mail, email_auth_num
+from .forms import CustomSetPasswordForm
+import json
+import os
+import requests
 from django.template import loader
 from django.core.serializers.json import DjangoJSONEncoder
 from .forms import *
@@ -56,7 +60,7 @@ class Signup(CreateView):
         send_mail(
             '{}님의 회원가입 인증메일 입니다.'.format(self.object.user_id),
             recipient_list=[self.object.email],
-            from_email='yysk_915@naver.com',
+            from_email='david90907@naver.com',
             message='',
             html_message=render_to_string('users/register_email.html', {
                 'user': self.object,
@@ -72,7 +76,7 @@ class Signup(CreateView):
 def register_success(request):
     if not request.session.get('register_auth', False):
         raise PermissionDenied
-    request.session['register_auth'] = False    
+    request.session['register_auth'] = False
 
     return render(request, 'users/register_success.html')
 
@@ -155,8 +159,8 @@ def update_password(request):
             return redirect('services:main')
     else:
         password_change_form = PasswordChangeForm(request.user)
-        
-    return render(request, 'users/update_password.html', {'password_change_form':password_change_form})
+
+    return render(request, 'users/update_password.html', {'password_change_form': password_change_form})
 
 
 # 회원탈퇴
@@ -164,7 +168,7 @@ def update_password(request):
 def profile_delete_view(request):
     if request.method == 'POST':
         password_form = CheckPasswordForm(request.user, request.POST)
-        
+
         if password_form.is_valid():
             request.user.delete()
             logout(request)
@@ -173,9 +177,7 @@ def profile_delete_view(request):
     else:
         password_form = CheckPasswordForm(request.user)
 
-    return render(request, 'users/delete.html', {'password_form':password_form})
-
-
+    return render(request, 'users/delete.html', {'password_form': password_form})
 
 
 def dibs_list(request):
@@ -222,9 +224,6 @@ class AgreementView(View):
             return render(request, 'users/agreement.html')
 
 
-
-
-
 # 아이디 찾기
 @method_decorator(logout_message_required, name='dispatch')
 class RecoveryIdView(View):
@@ -232,17 +231,17 @@ class RecoveryIdView(View):
     recovery_id = RecoveryIdForm
 
     def get(self, request):
-        if request.method=='GET':
+        if request.method == 'GET':
             form = self.recovery_id(None)
-        return render(request, self.template_name, { 'form':form, })
+        return render(request, self.template_name, {'form': form, })
 
 
 def ajax_find_id_view(request):
     name = request.POST.get('name')
     email = request.POST.get('email')
     result_id = User.objects.get(name=name, email=email)
-       
-    return HttpResponse(json.dumps({"result_id": result_id.user_id}, cls=DjangoJSONEncoder), content_type = "application/json")
+
+    return HttpResponse(json.dumps({"result_id": result_id.user_id}, cls=DjangoJSONEncoder), content_type="application/json")
 
 
 # 카카오 로그인
@@ -262,7 +261,8 @@ def kakao_login(request):
     except SocialLoginException as error:
         messages.error(request, error)
         return redirect("services:main")
-        
+
+
 def kakao_login_callback(request):
     try:
         if request.user.is_authenticated:
@@ -290,14 +290,14 @@ def kakao_login_callback(request):
         )
         profile_json = profile_request.json()
 
-        nickname = profile_json.get("profile_nickname",None)
+        nickname = profile_json.get("profile_nickname", None)
         avatar_url = profile_json.get("profile_image_url", None)
         email = profile_json.get("email", None)
         gender = profile_json.get("gender", None)
 
         user = User.objects.get_or_none(email=email)
         if user is not None:
-            raise KakaoException                
+            raise KakaoException
         else:
             user = User.objects.create_user(
                 email=email,
@@ -314,7 +314,8 @@ def kakao_login_callback(request):
                 )
             user.set_unusable_password()
             user.save()
-        messages.success(request, f"{user.email} signed up and logged in with Kakao")
+        messages.success(
+            request, f"{user.email} signed up and logged in with Kakao")
         login(request, user)
         return redirect(reverse("core:home"))
     except KakaoException as error:
@@ -323,3 +324,85 @@ def kakao_login_callback(request):
     except SocialLoginException as error:
         messages.error(request, error)
         return redirect(reverse("core:home"))
+
+# 비밀번호찾기
+
+
+@method_decorator(logout_message_required, name='dispatch')
+class RecoveryPwView(View):
+    template_name = 'users/recovery_pw.html'
+    recovery_pw = RecoveryPwForm
+
+    def get(self, request):
+        if request.method == 'GET':
+            form_pw = self.recovery_pw(None)
+            return render(request, self.template_name, {'form_pw': form_pw, })
+
+
+# 비밀번호찾기 AJAX 통신
+def ajax_find_pw_view(request):
+    user_id = request.POST.get('user_id')
+    name = request.POST.get('name')
+    email = request.POST.get('email')
+    result_pw = User.objects.get(user_id=user_id, name=name, email=email)
+
+    if result_pw:
+        auth_num = email_auth_num()
+        result_pw.auth = auth_num
+        result_pw.save()
+        send_mail(
+            '{}님의 비밀번호 찾기 인증메일입니다.'.format(user_id),
+            message='',
+            recipient_list=[email],
+            from_email='david90907@naver.com',
+            html_message=render_to_string('users/recovery_email.html', {
+                'auth_num': auth_num,
+            })
+        )
+        # print('이메일전송완료')
+    # print(auth_num)
+    return HttpResponse(json.dumps({"result": result_pw.user_id}, cls=DjangoJSONEncoder), content_type="application/json")
+
+# 비밀번호찾기 인증번호 확인
+
+
+def auth_confirm_view(request):
+    # if request.method=='POST' and 'auth_confirm' in request.POST:
+    user_id = request.POST.get('user_id')
+    input_auth_num = request.POST.get('input_auth_num')
+    user = User.objects.get(user_id=user_id, auth=input_auth_num)
+    # login(request, user)
+    user.auth = ""
+    user.save()
+    request.session['auth'] = user.user_id
+
+    return HttpResponse(json.dumps({"result": user.user_id}, cls=DjangoJSONEncoder), content_type="application/json")
+
+
+# 비밀번호찾기 새비밀번호 등록
+@logout_message_required
+def auth_pw_reset_view(request):
+    if request.method == 'GET':
+        if not request.session.get('auth', False):
+            raise PermissionDenied
+
+    if request.method == 'POST':
+        session_user = request.session['auth']
+        current_user = User.objects.get(user_id=session_user)
+        login(request, current_user,
+              backend="django.contrib.auth.backends.ModelBackend")
+
+        reset_password_form = CustomSetPasswordForm(request.user, request.POST)
+
+        if reset_password_form.is_valid():
+            user = reset_password_form.save()
+            messages.success(request, "비밀번호 변경완료! 변경된 비밀번호로 로그인하세요.")
+            logout(request)
+            return redirect('users:login')
+        else:
+            logout(request)
+            request.session['auth'] = session_user
+    else:
+        reset_password_form = CustomSetPasswordForm(request.user)
+
+    return render(request, 'users/password_reset.html', {'form': reset_password_form})
