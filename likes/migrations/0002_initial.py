@@ -13,17 +13,20 @@ class Migration(migrations.Migration):
         ('reviews', '0001_initial'),
         ('likes', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        ('likes', '0001_initial'),
     ]
 
     operations = [
         migrations.AddField(
             model_name='help',
             name='review',
-            field=models.ForeignKey(db_column='review_id', on_delete=django.db.models.deletion.CASCADE, related_name='reviews_help', to='reviews.review'),
+            field=models.ForeignKey(db_column='review_id', on_delete=django.db.models.deletion.CASCADE,
+                                    related_name='reviews_help', to='reviews.review'),
         ),
         migrations.AddField(
             model_name='help',
             name='users',
-            field=models.ForeignKey(db_column='user_id', on_delete=django.db.models.deletion.CASCADE, related_name='users_helps', to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(db_column='user_id', on_delete=django.db.models.deletion.CASCADE,
+                                    related_name='users_helps', to=settings.AUTH_USER_MODEL),
         ),
     ]

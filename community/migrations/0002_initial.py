@@ -10,25 +10,28 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('community', '0001_initial'),
         ('services', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        ('community', '0001_initial'),
     ]
 
     operations = [
         migrations.AddField(
             model_name='magazine',
             name='category',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, related_name='magazine', to='services.category'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT,
+                                    related_name='magazine', to='services.category'),
         ),
         migrations.AddField(
             model_name='board',
             name='like',
-            field=models.ManyToManyField(blank=True, related_name='likes', to=settings.AUTH_USER_MODEL),
+            field=models.ManyToManyField(
+                blank=True, related_name='likes', to=settings.AUTH_USER_MODEL),
         ),
         migrations.AddField(
             model_name='board',
             name='user',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='board', to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
+                                    related_name='board', to=settings.AUTH_USER_MODEL),
         ),
     ]
