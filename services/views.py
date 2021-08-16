@@ -13,7 +13,7 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 from likes.models import Dib, Help
 from django.db.models import Exists, OuterRef
-
+from config.utils import get_random_services
 from reviews.models import *
 
 # 전체 보기 페이지
@@ -25,9 +25,16 @@ def main(request):
     # 추후에 별점 순으로 변경할 수 있음
     services = Service.objects.annotate(
         num_dibs=Count('dib')).order_by('-num_dibs')[:8].annotate(avg_reviews=Avg('review__score'))
+    new_order_services = Service.objects.order_by("-id")[:4]
+    random_services = get_random_services(4)
+    categories = Category.objects.all()
+
     ctx = {
         'magazine_list': magazine_list,
         'services': services,
+        'random_services':random_services,
+        'categories':categories,
+        "new_order_services":new_order_services,
     }
     return render(request, 'services/main.html', context=ctx)
 
@@ -138,6 +145,7 @@ def search(request):
     categories = Category.objects.all()
     query = request.GET.get('search_key')
     search_type = request.GET.get('type')
+    print(request.GET)
     if query:
         if search_type == "all":
             results = Service.objects.filter(Q(name__icontains=query) | Q(
@@ -152,8 +160,9 @@ def search(request):
             results = Service.objects.filter(content__icontains=query).annotate(
                 avg_reviews=Avg('review__score'))
         else:
-            results = Service.objects.filter(Q(name__icontains=query) | Q(intro__icontains=query) | Q(
-                content__icontains=query)).annotate(avg_reviews=Avg('review__score')).distinct()
+            results = Service.objects.filter(Q(name__icontains=query) | Q(
+            intro__icontains=query) | Q(content__icontains=query)).annotate(avg_reviews=Avg('review__score')).distinct()
+       
     else:
         results = []
     ctx = {

@@ -4,6 +4,15 @@
 {% block content %}
 {% get_taglist as tags %}
 
+<style>
+    .tag-1 {width: 3em; height: 3em;}
+    .tag-2 {width: 4em; height: 4em;}
+    .tag-3 {width: 5em; height: 5em;}
+    .tag-4 {width: 6em; height: 6em;}
+    .tag-5 {width: 7em; height: 7em;}
+    .tag-6 {width: 8em; height: 8em;}
+</style>
+
 <form action="{% url 'services:services_tags' %}" method='POST'> 
 {% csrf_token %}
 <div class="album py-5 bg-light">
@@ -12,9 +21,9 @@
                 {% for tag in tags  %}
                 <div class="col">
                     <div class='card'>
-                        <div>
-                            <input type='checkbox' name='selected' value='{{ tag }}'>
-                            <label>{{ tag }} </label> 
+                        <div class="tag-{{tag.num_times}}" >
+                            <input  type='checkbox' name='selected' value='{{ tag }}'>
+                            <label>{{ tag.name }} </label> 
                         </div>                 
                     </div>
                 </div>

@@ -21,6 +21,6 @@ class EmailThread(threading.Thread):
         msg.send(self.fail_silently)
 
 
-def send_mail(subject, recipient_list, body='', from_email='tjr50999@naver.com', fail_silently=False, html_message=None, *args, **kwargs):
+def send_mail(subject, recipient_list, body='', from_email='dmand@naver.com', fail_silently=False, html_message=None, *args, **kwargs):
     EmailThread(subject, body, from_email, recipient_list,
                 fail_silently, html_message).start()

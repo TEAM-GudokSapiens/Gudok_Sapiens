@@ -51,22 +51,19 @@ class Signup(CreateView):
         return reverse('users:register_success')
 
 
-def form_valid(self, form):
-    self.object = form.save()
-
-    send_mail(
-        '{}님의 회원가입 인증메일 입니다.'.format(self.object.user_id),
-        recipient_list=[self.object.email],
-        from_email='tjr50999@naver.com',
-        message='',
-        html_message=render_to_string('users/register_email.html', {
-            'user': self.object,
-            'uid': urlsafe_base64_encode(force_bytes(self.object.pk)).encode().decode(),
-            'domain': self.request.META['HTTP_HOST'],
-            'token': default_token_generator.make_token(self.object),
-        }),
-    )
-    return redirect(self.get_success_url())
+        send_mail(
+            '{}님의 회원가입 인증메일 입니다.'.format(self.object.user_id),
+            recipient_list=[self.object.email],
+            from_email='dmand@naver.com',
+            message='',
+            html_message=render_to_string('users/register_email.html', {
+                'user': self.object,
+                'uid': urlsafe_base64_encode(force_bytes(self.object.pk)).encode().decode(),
+                'domain': self.request.META['HTTP_HOST'],
+                'token': default_token_generator.make_token(self.object),
+            }),
+        )
+        return redirect(self.get_success_url())
 
 
 # 회원가입 인증메일 발송 안내 창
