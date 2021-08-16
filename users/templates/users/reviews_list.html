@@ -46,6 +46,7 @@
             </div>
             <div class="my-review-second-section col-xl-8 col-12">
                 <div class="my-review-content">
+                    <div class="my-review-target">{{review.target.name}} | {{review.period}}개월 사용</div>
                     <div class="my-review-score">
                         <span>{{review.updated_at| date:"Y/m/d"}} | {{review.period}}개월 사용</span>
                     </div>
@@ -67,7 +68,9 @@
                     {% endif %}
                 <span class="my-review-title">{{review.title}}</span>
                 <span class="my-review-content">{{review.content}}</span>
-                
+                <div class="my-review-date">
+                    <span>{{ review.updated_at| date:"Y/m/d" }}</span>
+                </div>
             </div>
         </div>
         {% endfor %}

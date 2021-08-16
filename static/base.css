@@ -1104,6 +1104,9 @@ a:hover {
   /* height: 20vh; */
   max-height: 20vh;
 }
+.my-review-target {
+  display: none;
+}
 .my-review-target-img {
   width: 100%;
   height: 20vh;
@@ -1142,6 +1145,11 @@ a:hover {
 .my-review-title {
   margin: 0.3rem 0;
   color: #585858;
+}
+.my-review-date {
+  display: none;
+  font-size: 0.9rem;
+  color: #808080;
 }
 @media screen and (max-width: 1200px) {
   html {
@@ -1185,6 +1193,16 @@ a:hover {
   }
   .my-review-first-section {
     display: none;
+  }
+  .my-review-target {
+    display: block;
+  }
+  .my-review-score {
+    display: none;
+  }
+  .my-review-date {
+    display: flex;
+    justify-content: flex-end;
   }
 }
 
