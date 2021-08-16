@@ -56,58 +56,23 @@ class Signup(CreateView):
         # return settings.LOGIN_URL
         return reverse('users:register_success')
 
-    def form_valid(self, form):
-        self.object = form.save()
 
-        # 회원가입 인증 메일 발송
-        # ISSUE - https 통신오류 -> http 프로토콜 수정
-        send_mail(
-            '[구독사피엔스] {}님의 회원가입 인증메일 입니다.'.format(self.object.user_id),
-            [self.object.email],
-            html=render_to_string('users/register_email.html', {
-                'user': self.object,
-                'uid': urlsafe_base64_encode(force_bytes(self.object.pk)).encode().decode(),
-                'domain': self.request.META['HTTP_HOST'],
-                'token': default_token_generator.make_token(self.object),
-            }),
-        )
-        return redirect(self.get_success_url())
-        # message = render_to_string('users/register_email.html',                         {
-        #     'user': self.object,
-        #     'domain': self.request.META['HTTP_HOST'],
-        #     'uid': urlsafe_base64_encode(force_bytes(self.object.pk)).encode().decode(),
-        #     'token': default_token_generator.make_token(self.object),
-        # })
-        # mail_subject = "[구독사피엔스] 회원가입 인증 메일입니다."
-        # user_email = self.object.email
-        # email = EmailMessage(mail_subject, message, to=[user_email])
-        # print(user_email)
-        # email.send()
-        # if email.send() == 0:
-        #     print("실패")
-        # else:
-        #     print("성공")
-        # return redirect(self.get_success_url())
-# def signup(request):
-#     if request.method == "POST":
-#         form = SignupForm(request.POST)
-#         if form.is_valid():
-#             user = form.save()
-#             user_id = form.cleaned_data.get('user_id')
-#             raw_password = form.cleaned_data.get('password1')
-#             user = authenticate(username=user_id, password=raw_password)
-#             send_mail('[] {}님의 회원가입 인증메일 입니다.'.format(user_id), [user.email], html=render_to_string('users/register_email.html', {
-#                 'user': user_id,
-#                 'uid': urlsafe_base64_encode(force_bytes(user.pk)).encode().decode(),
-#                 'domain': user.request.META['HTTP_HOST'],
-#                 'token': default_token_generator.make_token(user_id),
-#             }))
-#             return redirect(user.get_success_url())
+def form_valid(self, form):
+    self.object = form.save()
 
-#     else:
-#         form = SignupForm()
-#     ctx = {'form': form}
-#     return render(request, template_name="users/signup.html", context=ctx)
+    send_mail(
+        '{}님의 회원가입 인증메일 입니다.'.format(self.object.user_id),
+        recipient_list=[self.object.email],
+        from_email='tjr50999@naver.com',
+        message='',
+        html_message=render_to_string('users/register_email.html', {
+            'user': self.object,
+            'uid': urlsafe_base64_encode(force_bytes(self.object.pk)).encode().decode(),
+            'domain': self.request.META['HTTP_HOST'],
+            'token': default_token_generator.make_token(self.object),
+        }),
+    )
+    return redirect(self.get_success_url())
 
 
 # 회원가입 인증메일 발송 안내 창

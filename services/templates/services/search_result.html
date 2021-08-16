@@ -16,36 +16,16 @@
     </ul>
     <form method="GET" action="{% url 'services:search' %}">
         {% csrf_token %}
-        <div class="form-row">
-            <div class="col" style="margin-top: 10px;">
-                <select style="width: 6em;" class="custom-select custom-select-md" name="type">
-                    <option value="all">전체</option>
-                    <option value="name">제목</option>
-                    <option value="intro">한줄 소개</option>
-                    <option value="content">내용</option>
-                </select>
-            </div>
-            <div class="col" style="margin-top: 10px;">
-                <input type='text' name='search_key' value="{{ search_key }}" placeholder='Search' />
-            </div>
-            <div class="col">
-                <input type='submit' value="Search" />
-            </div>
-        </div>
-
-    </form>
-    <!-- <form method="GET" action="{% url 'services:search' %}">
-        {% csrf_token %}
         <div class="main-search">
             <div class="main-search-icon">
                 <i class="search fa fa-search"></i>
             </div>
             <div class="main-search-input">
-                <input type="text" placeholder="서비스 검색" id="main-search-input" name='search_key' value="{{ search_key }}">
+                <input type="text" placeholder="서비스 검색" id="main-search-input" name='search_key'
+                    value="{{ search_key }}">
             </div>
-            
         </div>
-    </form> -->
+    </form>
 </nav>
 
 <div class="search-result-box col-7">
@@ -55,7 +35,7 @@
     {% if query %}
     <strong><span>'{{ query }}'</span>검색 결과입니다.</strong>
     {% endif %}
-    <hr/>
+    <hr />
     <div class="search-service-list-box col-12">
         {% if results %}
         {% for service in results  %}
@@ -70,7 +50,8 @@
             <div>
                 <div class="d-flex justify-content-between">
                     <h5><a href="{% url 'services:services_detail' pk=service.pk %}">{{ service.name }}</a></h5>
-                    <span class="star"><i class="fas fa-star"></i>{{ avg_of_reviews }}({{service.get_review_count}})</span>
+                    <span class="star"><i
+                            class="fas fa-star"></i>{{ avg_of_reviews }}({{service.get_review_count}})</span>
                 </div>
                 <div class="d-flex justify-content-between">
                     <span class="service-intro">{{ service.intro }}</span>
@@ -83,7 +64,7 @@
         </div>
         {% endfor %}
         {% else %}
-        <div class="col-12" style="margin: 2rem auto 20rem auto; text-align: center; font-size: 0.8rem;">
+        <div class="col-12" style="margin: 2rem auto 20rem auto; text-align: center; font-size: 1.2rem;">
             {% if query %}
             <tr style="text-align: center;">
                 <td style="font-weight: bold; color:gray;" colspan="5">
@@ -96,12 +77,20 @@
                     &nbsp;작성된 게시글이 없습니다.
                 </td>
             </tr>
-        {% endif %}
+            {% endif %}
         </div>
         {% endif %}
     </div>
 </div>
-</div>
+
+<script>
+    let search = document.querySelector(".search");
+    let clearh = document.querySelector(".clear");
+
+    search.onclick = function(){
+        document.querySelector(".main-search").classList.toggle('active');
+    }
+</script>
 
 
 {% endblock %}

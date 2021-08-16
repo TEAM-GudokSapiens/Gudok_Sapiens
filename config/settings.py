@@ -66,6 +66,8 @@ INSTALLED_APPS = [
 
     'ckeditor',
     'ckeditor_uploader',
+
+    'widget_tweaks',
 ]
 
 TAGGIT_CASE_INSENSITIVE = True  # 태그의 대소문자 구분하지 않음

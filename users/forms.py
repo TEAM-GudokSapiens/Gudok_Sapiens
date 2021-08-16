@@ -10,34 +10,39 @@ class SignupForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
         super(SignupForm, self).__init__(*args, **kwargs)
 
-        self.fields['user_id'].label = '아이디'
         self.fields['user_id'].widget.attrs.update({
             'class': 'form-control',
             'autofocus': False
         })
-        self.fields['password1'].label = '비밀번호'
         self.fields['password1'].widget.attrs.update({
             'class': 'form-control',
         })
 
     class Meta:
         model = get_user_model()
-        fields = ('user_id', 'email', 'nickname','image', 'name',
+        fields = ('user_id', 'email', 'nickname', 'image', 'name',
                   'gender', 'phonenum', 'password1', 'password2')
+        labels = {
+            'user_id': '아이디',
+            'email': '이메일',
+            'nickname': '닉네임',
+            'image': '프로필 사진',
+            'name': '이름',
+            'gender': '성별',
+            'phonenum': '휴대폰 번호',
+            'password1': '비밀번호',
+            'password2': '비밀번호 확인',
+
+        }
+        help_texts = {
+            'user_id': '문자와 숫자를 혼합하여 5자 이상 15자 이하로 작성해주세요',
+            'image': '자신을 표현할 수 있는 사진을 첨부해 주세요.',
+            'phonenum': '-를 빼고 입력해주세요.',
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.fields['user_id'].label = '아이디'
-        self.fields['user_id'].help_text = '20자 이하 문자, 숫자 그리고 @/./+/-/_만 가능합니다.'
-        self.fields['email'].label = '이메일'
-        self.fields['name'].label = '이름'
-        self.fields['nickname'].label = '닉네임'
-        self.fields['image'].label = '프로필 사진'
-        self.fields['image'].help_text = '자신을 표현할 수 있는 사진을 첨부해 주세요.'
-        self.fields['gender'].label = '성별'
-        self.fields['phonenum'].label = '휴대폰 번호'
-        self.fields['phonenum'].help_text = '-를 빼고 입력해주세요.'
         self.fields['password1'].help_text = '기호, 영어 소문자, 숫자를 혼합하여 10자리 이상'
 
     def save(self, commit=True):
