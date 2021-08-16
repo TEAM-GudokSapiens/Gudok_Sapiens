@@ -862,6 +862,9 @@ a:hover {
   /* padding: 0 !important; */
   max-height: 40vh;
 }
+.my-review-first-section {
+  border-right: 1px solid #e8e8e8;
+}
 .my-review-score {
   display: flex;
   flex-direction: column;
