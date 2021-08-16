@@ -1136,6 +1136,7 @@ a:hover {
   overflow: auto;
   font-size: 0.9rem;
   color: #808080;
+  word-break: break-all;
 }
 .my-review-title {
   margin: 0.3rem 0;

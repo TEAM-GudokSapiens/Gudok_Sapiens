@@ -1,36 +1,33 @@
-from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
-from django.contrib import messages
-from django.contrib.auth import login, logout, authenticate, update_session_auth_hash
-from django.contrib.auth.forms import PasswordChangeForm
-from django.forms.utils import ErrorList
-from django.core.paginator import Paginator
-from django.utils.decorators import method_decorator
-from django.views.generic import UpdateView, DeleteView, FormView, CreateView, View
-from services.models import Service
-from django.core.paginator import Paginator
-from django.contrib.auth.tokens import PasswordResetTokenGenerator, default_token_generator
-from django.core.exceptions import PermissionDenied
-from django.core.exceptions import ValidationError
-from django.http import HttpResponseRedirect, Http404, HttpResponseForbidden, HttpResponse, JsonResponse
-from django.contrib.sites.shortcuts import get_current_site
-from django.template.loader import render_to_string
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.utils.encoding import force_bytes
-from django.core.mail import EmailMessage
-from django.utils.encoding import force_bytes, force_text
-from django.urls import reverse
-from .helper import send_mail, email_auth_num
-from .forms import CustomSetPasswordForm
 import json
 import os
 import requests
-from django.template import loader
+from django.contrib import messages
+from django.contrib.auth import login, logout, authenticate, update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.tokens import PasswordResetTokenGenerator, default_token_generator
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.exceptions import PermissionDenied, ValidationError
+from django.core.paginator import Paginator
+from django.core.mail import EmailMessage
 from django.core.serializers.json import DjangoJSONEncoder
+from django.db.models.expressions import RawSQL
+from django.forms.utils import ErrorList
+from django.http import HttpResponseRedirect, Http404, HttpResponseForbidden, HttpResponse, JsonResponse
+from django.shortcuts import render, redirect
+from django.template import loader
+from django.template.loader import render_to_string
+from django.urls import reverse, reverse_lazy
+from django.utils.decorators import method_decorator
+from django.utils.encoding import force_bytes, force_text
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.views.generic import UpdateView, DeleteView, FormView, CreateView, View
+from services.models import Service
+from reviews.models import Review
 from .forms import *
 from .models import *
 from .decorators import *
 from .exception import *
+from .helper import *
 
 
 # 회원가입
@@ -193,20 +190,20 @@ def dibs_list(request):
 
 
 def reviews_list(request):
-    reviews_list = Service.objects.filter(
-        review__user=request.user.id).distinct()
+    reviews_list = Review.objects.filter(user=request.user.id)
     # 한 페이지 당 담을 수 있는 객체 수를 정할 수 있음
     paginator = Paginator(reviews_list, 10)
     page = request.GET.get('page')
-    services = paginator.get_page(page)
+    reviews = paginator.get_page(page)
 
     ctx = {
-        'services': services,
+        'reviews': reviews,
     }
-    return render(request, 'users/dibs_list.html', context=ctx)
-
+    return render(request, 'users/reviews_list.html', context=ctx)
 
 # 이용약관 동의
+
+
 @method_decorator(logout_message_required, name='dispatch')
 class AgreementView(View):
     def get(self, request, *args, **kwargs):
