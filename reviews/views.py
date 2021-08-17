@@ -26,5 +26,5 @@ def review_create(request, pk):
             messages.success(request, "리뷰가 성공적으로 작성되었습니다!")
             return redirect("services:services_detail", pk)
         else:
-            messages.error(request, "리뷰를 양식에 맞춰 작성해주세요.")
+            messages.error(request, "양식 확인 후 재작성 해주시기 바랍니다.")
             return redirect("services:services_detail", pk)

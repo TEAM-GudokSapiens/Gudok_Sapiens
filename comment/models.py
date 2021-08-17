@@ -11,8 +11,7 @@ class Comment(models.Model):
     user = models.ForeignKey(
         "users.User", related_name='comment', on_delete=models.CASCADE, verbose_name='유저'
     )
-    content = models.TextField(verbose_name='내용', validators=[
-        MinLengthValidator(15)])
+    content = models.TextField(verbose_name='내용')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     deleted = models.BooleanField(default=False, verbose_name='삭제여부')

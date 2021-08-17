@@ -28,7 +28,7 @@ class SignupForm(UserCreationForm):
             'user_id': '문자와 숫자를 혼합하여 5자 이상 15자 이하로 작성해주세요.',
             'image': '자신을 표현할 수 있는 사진을 첨부해 주세요.',
             'phonenum': '-를 빼고 입력해주세요.',
-            'nickname': '한글, 영어 소문자를 사용하여 2자 이상 8자이하로 작성해주세요.',
+            'nickname': '한글, 영어 소문자를 사용하여 2자 이상 15자 이하로 작성해주세요.',
         }
 
         widgets = {
