@@ -1,20 +1,20 @@
 from django.db.models.fields import DecimalField
 from django.shortcuts import redirect, render
-from .models import *
-from community.models import Magazine
 from django.contrib import messages
 from django.db.models import Q, Count, Avg
 from django.core.paginator import Paginator
 from taggit.models import Tag
 from reviews.forms import ReviewCreateForm
-from reviews.models import Review
 from django.http.response import JsonResponse
 import json
 from django.views.decorators.csrf import csrf_exempt
 from likes.models import Dib, Help
 from django.db.models import Exists, OuterRef
 from config.utils import get_random_services
+
+from .models import *
 from reviews.models import *
+from community.models import *
 
 # 전체 보기 페이지
 
@@ -115,14 +115,12 @@ def services_detail(request, pk):
     review_form = ReviewCreateForm()
     number_of_dibs = service.dib_set.all().count()
     avg_of_reviews = service.review.aggregate(Avg('score'))['score__avg']
-    # num_of_full_stars = int(avg_of_reviews // 1)
-    # is_half_star = True if avg_of_reviews % 1 ==0.5 else False
     reviews_order_help = Review.objects.filter(target_id=pk).annotate(dibs_count=Count('reviews_help')).annotate(is_help=Exists(
         Help.objects.filter(users=request.user, review_id=OuterRef('pk'))
     )).order_by('-dibs_count')
 
     review_list = service.get_review()
-    NUM_OF_PAGINATOR = 10
+    NUM_OF_PAGINATOR = 5
     paginator = Paginator(reviews_order_help, NUM_OF_PAGINATOR)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -138,16 +136,6 @@ def services_detail(request, pk):
     }
     return render(request, 'services/detail.html', context=ctx)
 
-# def review(request):
-#     review_list = Review.objects.filter(
-#         service_id=target_id
-#     )
-#     paginator = Paginator(review_list, 5)  # 한페이지에 10개씩
-
-#     page_number = request.GET.get('page')
-#     page_obj = paginator.get_page(page_number)
-
-#     return render(request, 'services/detail.html', {'review_list': review_list, 'page_obj': page_obj})
 
 def search(request):
     categories = Category.objects.all()
@@ -211,17 +199,4 @@ def same_tag_list(request, tag):
 def service_intro(request):
     return render(request, 'services/service_intro.html')
 
-# @csrf_exempt
-# def dibs_ajax(request):
-#     req = json.loads(request.body)
-#     print(req)
-#     service_id = req['id']
-#     new_dib, created = Dib.objects.get_or_create(users_id=request.user.id, service_id=service_id)
-#     # created==True면 이번에 만들었음.
-#     # created ==False -> not created ==True는 이미 만들어져서 삭제하러 가는 것.
-#     if not created:
-#         new_dib.delete()
-#     else:
-#         pass
 
-#     return JsonResponse({'id': service_id})

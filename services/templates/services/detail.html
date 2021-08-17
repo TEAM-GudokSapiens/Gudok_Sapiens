@@ -8,7 +8,7 @@
             <div class="main-img-container">
                 <img src="{{ service.img1.url }}" class="main-img" />
                 <!-- carousel -->
-                <div id="carouselControls" class="carousel slide" data-ride="carousel">
+                <div id="carouselControls" class="carousel slide" data-ride="carousel" style="display:none">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
                             <img src="{{ service.img1.url }}" />
@@ -165,8 +165,8 @@
 
 
                         {% if request.user.is_authenticated %}
-                        <form action="{% url 'reviews:submit_ajax' service.id %}" enctype="multipart/form-data"
-                            id="review_create_form" method="POST" onsubmit="reviewSubmit();">
+                        <form action="{% url 'reviews:review_create' service.id %}" enctype="multipart/form-data"
+                            id="review_create_form" method="POST" >
                             {% csrf_token %}
 
                             제목 <br> {{ form.title }} <br> <br>
@@ -211,6 +211,15 @@
         </div>
     </div>
 </div>
+
+{% if messages %}
+<div>
+    {% for message in messages %}
+    <script>alert('{{ message.message }}')</script>
+    {% endfor %}
+</div>
+{% endif %}
+
 <script>
     //리뷰 길이 실시간 출력
     const slideValue = document.querySelector(".period_select");
@@ -238,7 +247,8 @@
     //리뷰 작성 후 alert
     function reviewSubmit() {
         alert( '리뷰가 성공적으로 작성되었습니다!' );
-      }
+    }
+
 </script>
 
 <script>

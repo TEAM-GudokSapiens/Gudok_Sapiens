@@ -12,29 +12,9 @@ from .forms import ReviewCreateForm
 from .models import Review
 from services.models import Service
 
-def reviews_create(request, pk):
-    message={}
-    if request.method == "POST":
-        form = ReviewCreateForm(request.POST, request.FILES)
-        if form.is_valid():
-            review_form = form.save(commit=False)
-            review_form.user = request.user
-            review_form.target = Service.objects.get(pk=pk)
-            review_form.save()
-            return redirect("services:services_detail", pk)
-    else:
-        form = ReviewCreateForm()
-
-    ctx = {"form": form,
-           "service_pk": pk}
-    
-
-    return render(request, "reviews/create.html", ctx)
-
-
 @login_message_required
 @csrf_exempt
-def submit_ajax(request, pk):
+def review_create(request, pk):
     if request.method == "POST":
         form = ReviewCreateForm(request.POST, request.FILES)
         if form.is_valid():
@@ -42,7 +22,9 @@ def submit_ajax(request, pk):
             review_form = form.save(commit=False)
             review_form.user = request.user
             review_form.target = Service.objects.get(pk=pk)
-            review_form.save()
+            review_form.save()            
+            messages.success(request, "리뷰가 성공적으로 작성되었습니다!")
             return redirect("services:services_detail", pk)
         else:
+            messages.error(request, "리뷰를 양식에 맞춰 작성해주세요.")
             return redirect("services:services_detail", pk)
