@@ -121,9 +121,10 @@ def services_detail(request, pk):
         Help.objects.filter(users=request.user, review_id=OuterRef('pk'))
     )).order_by('-dibs_count')
 
-    review_list = service.get_review()
+    # review_list = service.get_review()
+
     NUM_OF_PAGINATOR = 10
-    paginator = Paginator(review_list, NUM_OF_PAGINATOR)
+    paginator = Paginator(reviews_order_help, NUM_OF_PAGINATOR)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
@@ -133,7 +134,7 @@ def services_detail(request, pk):
         'number_of_dibs': number_of_dibs,
         'avg_of_reviews': avg_of_reviews,
         'reviews_order_help': reviews_order_help,
-        'review_list': review_list,
+        # 'review_list': review_list,
         'page_obj': page_obj,
     }
     return render(request, 'services/detail.html', context=ctx)

@@ -112,7 +112,6 @@
                             <span class="tab-title">리뷰</span>
                             <span class="review-count ">{{service.get_review_count}}개</span>
                         </div>
-                        {% for review in reviews_order_help %}
                         {% for review in page_obj %}
                         <div class="review-container review-id-{{ review.id }}">
                             <div class="title-block mb-3 d-flex justify-content-between">
@@ -129,8 +128,6 @@
                                     <div class="">{{review.title}}</div>
                                     <div class="">{{review.content}}</div>
                                     <div>
-                                        {% comment %} <a href="{% url 'likes:likes_helps' review.id %}">도움이 돼요!</a>
-                                        {% endcomment %}
                                         {% if review.is_help %}
                                         <div class="btn help" onclick="onClickHelp({{ review.id }})">이미 눌렀어요</div>
                                         {% else %}
@@ -142,7 +139,6 @@
                             </div>
                         </div>
                         <hr>
-                        {% endfor %}
                         {% endfor %}
 
                         {% if page_obj.has_previous %}
