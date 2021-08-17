@@ -10,20 +10,22 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('reviews', '0001_initial'),
         ('services', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        ('reviews', '0001_initial'),
     ]
 
     operations = [
         migrations.AddField(
             model_name='review',
             name='target',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='review', to='services.service', verbose_name='서비스'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
+                                    related_name='review', to='services.service', verbose_name='서비스'),
         ),
         migrations.AddField(
             model_name='review',
             name='user',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='review', to=settings.AUTH_USER_MODEL, verbose_name='유저'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
+                                    related_name='review', to=settings.AUTH_USER_MODEL, verbose_name='유저'),
         ),
     ]

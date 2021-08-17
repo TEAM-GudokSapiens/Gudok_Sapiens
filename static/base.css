@@ -831,27 +831,39 @@
 .social-login2,
 .social-login3 {
   display: block;
-  height: 5vh;
-  line-height: 5vh;
   margin-top: 15px;
+  padding: 0.7rem 0 !important;
+  border-radius: 4px;
 }
 
 .social-login3 {
-  background-color: #fee500;
-  border-radius: 10px;
   color: #191919;
+  background-color: #fee500;
 }
 
 .social-login2 {
-  background-color: #03c75a;
-  border-radius: 10px;
   color: #ffffff;
+  background-color: #03c75a;
 }
 
 .social-login1 {
-  background-color: #ffffff;
-  border-radius: 10px;
   color: #000000;
+  background-color: #ffffff;
+}
+
+.social-login3:hover {
+  color: #000000;
+  background-color: #f7de00;
+}
+
+.social-login2:hover {
+  color: #fff;
+  background-color: #03be58;
+}
+
+.social-login1:hover {
+  color: #000000;
+  background-color: #f6f6f6;
 }
 
 /* board */
