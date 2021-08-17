@@ -755,6 +755,12 @@
   width: 100%;
   height: 40vh;
 }
+.detail-carousel {
+  display: none;
+}
+.detail-carousel img {
+  width: 100%;
+}
 
 .fixing-box {
   font-family: "KOTRA_SONGEULSSI";
@@ -1218,6 +1224,9 @@ a:hover {
   .my-review-date {
     display: flex;
     justify-content: flex-end;
+  }
+  .detail-carousel {
+    display: block;
   }
 }
 
