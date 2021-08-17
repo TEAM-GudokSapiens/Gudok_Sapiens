@@ -30,23 +30,29 @@
                     <img src="{{ review.photo.url }}" />
                 </a>
                 <div class="my-review-second-section col-9">
-                {% else %}
-                <div class="my-review-second-section col-12"> 
-                {% endif %}
-                    <div class="my-review-content-container">
-                        <div class="my-review-content">
-                            <div class="my-review-target">{{review.target.name}} | {{review.period}}개월 사용</div>
+                    {% else %}
+                    <div class="my-review-second-section col-12"> 
+                        {% endif %}
+                        <div class="my-review-content-container">
+                            <div class="my-review-content">
+                                <div class="my-review-target ">
+                                    <a href="{% url 'services:services_detail' pk=review.target.id %}" style="color: #585858;font-weight: 400;"
+                                    class="">{{review.target.name}}</a> 
+                                    <span class="">| {{review.period}}개월 사용</span>
+                                </div>
                             <!-- <div class="my-review-score">
                                 <span>{{review.updated_at| date:"Y/m/d"}} | {{review.period}}개월 사용</span>
                             </div> -->
-                            <span class="star">
-                                <i class="fas fa-star"></i>
-                                <span>{{review.score}}</span>
-                            </span>
+                                <span class="star" style="min-width:fit-content">
+                                    <i class="fas fa-star"></i>
+                                    <span>{{review.score}}</span>
+                                </span>
+                            </div>
+                            <span class="my-review-date" style="font-size: 0.9rem;
+                                color: #808080;">{{review.period}}개월 사용</span>
+                            <span class="my-review-title">{{review.title}}</span>
+                            <span class="my-review-content">{{review.content}}</span>
                         </div>
-                        <span class="my-review-title">{{review.title}}</span>
-                        <span class="my-review-content">{{review.content}}</span>
-                    </div>
                     <div class="my-review-likes">
                         <span><i class="far fa-thumbs-up" style="color: #585858;"></i> {{review.reviews_help.count}}개</span>
                     </div>
