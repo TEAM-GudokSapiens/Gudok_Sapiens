@@ -123,7 +123,7 @@ def services_detail(request, pk):
 
     review_list = service.get_review()
     NUM_OF_PAGINATOR = 10
-    paginator = Paginator(review_list, NUM_OF_PAGINATOR)
+    paginator = Paginator(reviews_order_help, NUM_OF_PAGINATOR)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
@@ -148,7 +148,6 @@ def services_detail(request, pk):
 #     page_obj = paginator.get_page(page_number)
 
 #     return render(request, 'services/detail.html', {'review_list': review_list, 'page_obj': page_obj})
-
 
 def search(request):
     categories = Category.objects.all()
