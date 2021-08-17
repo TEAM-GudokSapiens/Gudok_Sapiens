@@ -9,14 +9,14 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
+        ('comment', '0001_initial'),
         ('community', '0001_initial'),
-        ('services', '0001_initial'),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='magazine',
-            name='category',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, related_name='magazine', to='services.category'),
+            model_name='comment',
+            name='target',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='comment', to='community.board', verbose_name='게시글'),
         ),
     ]
