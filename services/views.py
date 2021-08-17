@@ -45,16 +45,24 @@ def main(request):
 
 
 def services_list(request):
-    if request.user.is_authenticated:
-        services_list = Service.objects.all().annotate(avg_reviews=Avg('review__score')).annotate(
-                    is_dib=Exists(Dib.objects.filter(
-                        users=request.user, service_id=OuterRef('pk')))
-                )
-        categories = Category.objects.all()
-    else:
-        services_list = Service.objects.all().annotate(avg_reviews=Avg('review__score'))
-        categories = Category.objects.all()
+    sort = request.GET.get('sort','') #url의 쿼리스트링을 가져온다. 없는 경우 공백을 리턴한다
 
+    if sort == 'dib':
+        services_list = Service.objects.annotate(num_dibs=Count('dib')).order_by('-num_dibs', '-created_at')
+    elif sort == 'score':
+        services_list = Service.objects.annotate(avg_reviews=Avg('review__score')).order_by('-avg_reviews', '-created_at') #복수를 가져올수 있음
+    else:
+        services_list = Service.objects.order_by('-created_at')
+
+    # if request.user.is_authenticated:
+    #     services_list = Service.objects.all().annotate(avg_reviews=Avg('review__score')).annotate(
+    #                 is_dib=Exists(Dib.objects.filter(
+    #                     users=request.user, service_id=OuterRef('pk')))
+    #             )
+    # else:
+    #     services_list = Service.objects.all().annotate(avg_reviews=Avg('review__score'))
+    
+    categories = Category.objects.all()
     NUM_OF_PAGINATOR = 10    
     # 한 페이지 당 담을 수 있는 객체 수를 정할 수 있음
     paginator = Paginator(services_list, NUM_OF_PAGINATOR)
@@ -65,7 +73,9 @@ def services_list(request):
         'services': services,
         'categories': categories,
     }
+    
     return render(request, 'services/list.html', context=ctx)
+
 
 # 카테고리별 페이지 보기
 
@@ -124,16 +134,16 @@ def services_detail(request, pk):
         avg_of_reviews = service.review.aggregate(Avg('score'))['score__avg']
         # num_of_full_stars = int(avg_of_reviews // 1)
         # is_half_star = True if avg_of_reviews % 1 ==0.5 else False
-        reviews_order_help = Review.objects.filter(target_id=pk).annotate(dibs_count=Count('reviews_help')).annotate(is_help=Exists(
+        reviews_order_help = Review.objects.filter(target_id=pk).annotate(helps_count=Count('reviews_help')).annotate(is_help=Exists(
             Help.objects.filter(users=request.user, review_id=OuterRef('pk'))
-        )).order_by('-dibs_count')
+        )).order_by('-helps_count')
 
     else:
         service = Service.objects.get(id=pk)
         review_form = ReviewCreateForm()
         number_of_dibs = service.dib_set.all().count()
         avg_of_reviews = service.review.aggregate(Avg('score'))['score__avg']
-        reviews_order_help = Review.objects.filter(target_id=pk).annotate(dibs_count=Count('reviews_help')).order_by('-dibs_count')
+        reviews_order_help = Review.objects.filter(target_id=pk).annotate(helps_count=Count('reviews_help')).order_by('-helps_count')
 
     NUM_OF_PAGINATOR = 10
     paginator = Paginator(reviews_order_help, NUM_OF_PAGINATOR)
