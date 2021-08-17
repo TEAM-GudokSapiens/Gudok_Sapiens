@@ -56,7 +56,10 @@
                         <i class="fas fa-star" style="color: #ffcd3c;"></i>
                         <i class="fas fa-star" style="color: #ffcd3c;"></i>
                     </span>
-                    <!-- <span>{{review.score}}</span> -->
+                    <!-- 내가 쓴 리뷰의 평점 -->
+                    <span>{{review.score}}</span>
+                    <!-- 내가 쓴 리뷰의 "도움이 돼요"를 받은 수 -->
+                    <span>{{review.reviews_help.count}}</span>                    
                     
                 </div>
                     {% if review.photo %}

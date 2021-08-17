@@ -35,6 +35,7 @@
     {% if query %}
     <strong><span>'{{ query }}'</span>검색 결과입니다.</strong>
     {% endif %}
+    <span>총 '{{ results|length }}' 개 서비스가 검색되었습니다.</span>
     <hr />
     <div class="search-service-list-box col-12">
         {% if results %}
