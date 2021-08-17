@@ -1111,7 +1111,7 @@ a:hover {
   max-height: 20vh;
 }
 .my-review-target {
-  display: none;
+  /* display: none; */
 }
 .my-review-target-img {
   width: 100%;
@@ -1214,9 +1214,6 @@ a:hover {
   }
   .my-review-first-section {
     display: none;
-  }
-  .my-review-target {
-    display: block;
   }
   .my-review-score {
     display: none;
