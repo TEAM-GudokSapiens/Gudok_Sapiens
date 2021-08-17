@@ -23,12 +23,13 @@ def main(request):
     magazine_list = Magazine.objects.all()
     # 찜을 많이 받은 서비스를 우선적으로 배치
     # 추후에 별점 순으로 변경할 수 있음
+    NUM_OF_DISPLAY = 4
     services = Service.objects.annotate(
-        num_dibs=Count('dib')).order_by('-num_dibs')[:8].annotate(avg_reviews=Avg('review__score'))
-    new_order_services = Service.objects.order_by("-id")[:4]
+        num_dibs=Count('dib')).order_by('-num_dibs')[:NUM_OF_DISPLAY].annotate(avg_reviews=Avg('review__score'))
+    new_order_services = Service.objects.order_by("-id")[:NUM_OF_DISPLAY]
     num_of_service = Service.objects.all().count()
-    if num_of_service >= 4:
-        random_services = get_random_services(4)
+    if num_of_service >= NUM_OF_DISPLAY:
+        random_services = get_random_services(NUM_OF_DISPLAY)
     else:
         random_services = get_random_services(num_of_service)
     categories = Category.objects.all()
@@ -49,8 +50,9 @@ def services_list(request):
             users=request.user, service_id=OuterRef('pk')))
     )
     categories = Category.objects.all()
+    NUM_OF_PAGINATOR = 10
     # 한 페이지 당 담을 수 있는 객체 수를 정할 수 있음
-    paginator = Paginator(services_list, 3)
+    paginator = Paginator(services_list, NUM_OF_PAGINATOR)
     page = request.GET.get('page')
     services = paginator.get_page(page)
 
@@ -70,7 +72,8 @@ def category_list(request, category_slug):
     sub_category_list = SubCategory.objects.filter(
         category__slug__contains=category_slug)
     # 한 페이지 당 담을 수 있는 객체 수를 정할 수 있음
-    paginator = Paginator(services_list, 3)
+    NUM_OF_PAGINATOR =10
+    paginator = Paginator(services_list, NUM_OF_PAGINATOR)
     page = request.GET.get('page')
     services = paginator.get_page(page)
 
@@ -90,7 +93,8 @@ def sub_category_list(request, category_slug, sub_category_slug):
     sub_category_list = SubCategory.objects.filter(
         category__slug__contains=category_slug)
     # 한 페이지 당 담을 수 있는 객체 수를 정할 수 있음
-    paginator = Paginator(services_list, 3)
+    NUM_OF_PAGINATOR = 10
+    paginator = Paginator(services_list, NUM_OF_PAGINATOR)
     page = request.GET.get('page')
     services = paginator.get_page(page)
 
@@ -118,7 +122,8 @@ def services_detail(request, pk):
     )).order_by('-dibs_count')
 
     review_list = service.get_review()
-    paginator = Paginator(review_list, 10)
+    NUM_OF_PAGINATOR = 10
+    paginator = Paginator(review_list, NUM_OF_PAGINATOR)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
