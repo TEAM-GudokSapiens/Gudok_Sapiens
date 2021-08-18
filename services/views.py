@@ -47,20 +47,33 @@ def main(request):
 def services_list(request):
     sort = request.GET.get('sort','') #url의 쿼리스트링을 가져온다. 없는 경우 공백을 리턴한다
 
-    if sort == 'dib':
-        services_list = Service.objects.annotate(num_dibs=Count('dib')).order_by('-num_dibs', '-created_at')
-    elif sort == 'score':
-        services_list = Service.objects.annotate(avg_reviews=Avg('review__score')).order_by('-avg_reviews', '-created_at') #복수를 가져올수 있음
-    else:
-        services_list = Service.objects.order_by('-created_at')
+    if request.user.is_authenticated:
+        if sort == 'dib':
+            services_list = Service.objects.annotate(avg_reviews=Avg('review__score')).annotate(
+                    is_dib=Exists(Dib.objects.filter(
+                        users=request.user, service_id=OuterRef('pk')))
+                ).annotate(num_dibs=Count('dib')).order_by('-num_dibs', '-created_at')
 
-    # if request.user.is_authenticated:
-    #     services_list = Service.objects.all().annotate(avg_reviews=Avg('review__score')).annotate(
-    #                 is_dib=Exists(Dib.objects.filter(
-    #                     users=request.user, service_id=OuterRef('pk')))
-    #             )
-    # else:
-    #     services_list = Service.objects.all().annotate(avg_reviews=Avg('review__score'))
+        elif sort == 'score':
+            services_list = Service.objects.annotate(avg_reviews=Avg('review__score')).annotate(
+                    is_dib=Exists(Dib.objects.filter(
+                        users=request.user, service_id=OuterRef('pk')))
+                ).order_by('-avg_reviews', '-created_at') #복수를 가져올수 있음
+                
+        else:
+            services_list = Service.objects.annotate(avg_reviews=Avg('review__score')).annotate(
+                    is_dib=Exists(Dib.objects.filter(
+                        users=request.user, service_id=OuterRef('pk')))
+                ).order_by('-created_at')
+
+    else:
+        if sort == 'dib':
+            services_list = Service.objects.annotate(avg_reviews=Avg('review__score')).annotate(num_dibs=Count('dib')).order_by('-num_dibs', '-created_at')
+        elif sort == 'score':
+            services_list = Service.objects.annotate(avg_reviews=Avg('review__score')).order_by('-avg_reviews', '-created_at') #복수를 가져올수 있음
+        else:
+            services_list = Service.objects.annotate(avg_reviews=Avg('review__score')).order_by('-created_at')
+
     
     categories = Category.objects.all()
     NUM_OF_PAGINATOR = 10    
