@@ -700,7 +700,8 @@
   background-color: aquamarine;
 } */
 .service-name {
-  font-size: 2.4rem;
+  font-size: 2rem;
+  font-family: "GmarketSansTTFMedium";
 }
 
 .service-intro {
@@ -714,9 +715,7 @@
 
 .service-box {
   word-break: break-all;
-}
-.service-detail-container {
-  /* font-weight: 300; */
+  margin: 1rem 0;
 }
 
 .img-container {
@@ -771,13 +770,17 @@
   width: 23.8vw;
   height: auto;
   position: fixed;
-  top: 50%;
+  top: 53%;
   right: 20.2%;
   /* min-width: fit-content; */
 }
+.service-price {
+  font-size: 1.5rem;
+}
 
-.keywords {
-  margin: 10px 0px;
+.keywords a {
+  /* margin: 10px 0px; */
+  color: #585858;
 }
 
 .keywords div {
@@ -790,14 +793,16 @@
 
 .tab-title {
   font-size: 2rem;
-  font-weight: bolder;
-  margin-bottom: 20px;
+  font-family: "GmarketSansTTFMedium";
 }
 
 .tab-content {
   font-size: 1.1rem;
 }
-
+.review-container {
+  background-color: #f3f3f3;
+  border-radius: 15px;
+}
 .review-form-img {
   border: 1px solid #585858;
   background-color: #e8e8e8;
@@ -827,10 +832,6 @@
   /* display: flex;
   justify-content: flex-start; */
   word-break: break-all;
-}
-
-.review-count {
-  padding-top: 15px;
 }
 
 .forms {
@@ -1108,6 +1109,7 @@ a:hover {
 }
 .dibs-list-container h3 {
   text-align: center;
+  font-family: "GmarketSansTTFMedium";
 }
 .my-review-box {
   display: flex;
