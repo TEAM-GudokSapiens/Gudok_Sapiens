@@ -1,7 +1,7 @@
 from django import forms
 from django.db.models import fields
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
+from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm, UserChangeForm
 from .models import User
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.forms import SetPasswordForm
@@ -57,11 +57,11 @@ class SignupForm(UserCreationForm):
         return user
 
 
-class UpdateForm(UserCreationForm):
+class UpdateForm(UserChangeForm):
     class Meta:
         model = get_user_model()
         fields = ('user_id', 'email', 'name', 'nickname', 'image',
-                  'gender', 'phonenum', 'password1', 'password2')
+                  'gender', 'phonenum')
         widgets = {
             'user_id': forms.Textarea(
                 attrs={'placeholder': '5자 이상 15자 이하 문자', 'rows': 1}),
@@ -75,8 +75,6 @@ class UpdateForm(UserCreationForm):
             'name': '이름',
             'gender': '성별',
             'phonenum': '휴대폰 번호',
-            'password1': '비밀번호',
-            'password2': '비밀번호 확인',
         }
 
         help_texts = {
