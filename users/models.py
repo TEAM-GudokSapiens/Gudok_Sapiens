@@ -53,7 +53,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     password = models.CharField(max_length=256, verbose_name="비밀번호")
     name = models.CharField(verbose_name='name', max_length=30, null=True)
     nickname = models.CharField(
-        verbose_name='nickname', max_length=30, null=True)
+        verbose_name='nickname', max_length=15, null=True)
 
     phonenumRegex = RegexValidator(regex=r"^\+?1?\d{9,11}$")
     phonenum = models.CharField(

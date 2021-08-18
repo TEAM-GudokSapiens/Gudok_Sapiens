@@ -30,6 +30,7 @@ from .exception import *
 from reviews.models import Review
 
 
+
 # 회원가입
 class Signup(CreateView):
     model = User
@@ -56,7 +57,7 @@ class Signup(CreateView):
         send_mail(
             '{}님의 회원가입 인증메일 입니다.'.format(self.object.user_id),
             recipient_list=[self.object.email],
-            from_email='david90907@naver.com',
+            from_email='yysk_915@naver.com',
             message='',
             html_message=render_to_string('users/register_email.html', {
                 'user': self.object,
@@ -77,7 +78,7 @@ def register_success(request):
     return render(request, 'users/register_success.html')
 
 
-# 이메일 인증 성공시 자동로그인
+# 이메일 인증 성공실패
 def activate(request, uid64, token):
     try:
         uid = force_text(urlsafe_base64_decode(uid64))
@@ -267,7 +268,7 @@ def ajax_find_pw_view(request):
             '{}님의 비밀번호 찾기 인증메일입니다.'.format(user_id),
             message='',
             recipient_list=[email],
-            from_email='david90907@naver.com',
+            from_email='yysk_915@naver.com',
             html_message=render_to_string('users/recovery_email.html', {
                 'auth_num': auth_num,
             })

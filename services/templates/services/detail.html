@@ -8,7 +8,7 @@
             <div class="main-img-container">
                 <img src="{{ service.img1.url }}" class="main-img" />
                 <!-- carousel -->
-                <div id="carouselControls" class="carousel slide" data-ride="carousel">
+                <div id="carouselControls" class="carousel slide" data-ride="carousel" style="display:none">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
                             <img src="{{ service.img1.url }}" />
@@ -46,6 +46,11 @@
                 </div>
             </div>
         </div>
+        {% if message %}
+            <script>alert('{{ message }}')</script>
+        </div>
+        {% endif %}
+    
         <div class="fixing-box">
             <div class="keywords">
                 {% for tag in service.tags.all %}
@@ -112,7 +117,6 @@
                             <span class="tab-title">리뷰</span>
                             <span class="review-count ">{{service.get_review_count}}개</span>
                         </div>
-                        {% for review in reviews_order_help %}
                         {% for review in page_obj %}
                         <div class="review-container review-id-{{ review.id }}">
                             <div class="title-block mb-3 d-flex justify-content-between">
@@ -143,7 +147,6 @@
                         </div>
                         <hr>
                         {% endfor %}
-                        {% endfor %}
 
                         {% if page_obj.has_previous %}
                         <a href="?page=1">처음으로</a>
@@ -162,8 +165,8 @@
 
 
                         {% if request.user.is_authenticated %}
-                        <form action="{% url 'reviews:submit_ajax' service.id %}" enctype="multipart/form-data"
-                            id="review_create_form" method="POST">
+                        <form action="{% url 'reviews:review_create' service.id %}" enctype="multipart/form-data"
+                            id="review_create_form" method="POST" >
                             {% csrf_token %}
 
                             제목 <br> {{ form.title }} <br> <br>
@@ -208,7 +211,17 @@
         </div>
     </div>
 </div>
+
+{% if messages %}
+<div>
+    {% for message in messages %}
+    <script>alert('{{ message.message }}')</script>
+    {% endfor %}
+</div>
+{% endif %}
+
 <script>
+    //리뷰 길이 실시간 출력
     const slideValue = document.querySelector(".period_select");
     const inputSlider = document.querySelector(".period_choice");
     inputSlider.oninput = (() => {
@@ -221,6 +234,7 @@
         slideValue.classList.remove("show");
     });
 
+    //리뷰 사용기간 range
     const textarea = document.querySelector('.content_textarea');
     const count = document.querySelector('.content_count');
 
@@ -229,45 +243,13 @@
         const textLength = textarea.value.length;
         count.innerText = `${textLength}`;
     }
+
+    //리뷰 작성 후 alert
+    function reviewSubmit() {
+        alert( '리뷰가 성공적으로 작성되었습니다!' );
+    }
+
 </script>
-<!-- 
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script>
-    const onClickSubmit=async(service_id)=>{  
-        const url='/reviews/submit_ajax/';
-        // const title=document.querySelector(`.review-title`).value
-        // const content=document.querySelector(`.review-content`).value
-        // const score=document.querySelector(`.review-score`).value
-        // const period=document.querySelector(`.review-period`).value
-        // const photo=document.querySelector(`.review-photo`).value.replace('C:\\fakepath\\','');
-        // console.log(photo)
-        const {data}=await axios.post(url,{
-            service_id
-        });
-        submitHandleResponse(data.service_id, data.review_id, data.review_title,
-        data.review_content,data.review_score,data.review_period,data.review_updated_at,data.review_photo);
-    };
-    const submitHandleResponse=(service_id, review_id,review_title,review_content,
-    review_score,review_period,review_updated_at,review_photo)=>{
-            const element=document.querySelector(`.review-tab`);
-            element.innerHTML+=`
-            <div class="review-container">
-            <div class="title-block mb-3">
-                <span class="">${review_id}🌱</span>
-                <span class="review-date">${review_updated_at}</span>
-            </div>
-            <div class="content-block">
-                {% if review_photo %}
-                <img src="{{ review_photo }}" class="review-img"/>
-                {% endif %}
-                <span class="">${review_title}</span>
-                <span class="">>${review_content}</span>
-            </div>
-            </div>`;
-            // const input=document.querySelector(`.post_${post_id} .submit-text`);
-            // input.value=null;
-    };
-</script> -->
 
 <script>
     // <!--찜 기능 ajax 
