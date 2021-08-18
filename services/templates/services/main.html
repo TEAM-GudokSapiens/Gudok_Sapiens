@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 {% block content %}
 
 <nav class="main-navbar navbar navbar-expand-lg navbar-light col-7">
@@ -95,14 +96,14 @@
 
 
 
-<div class="service-list-section col-7">
+<div class="main-service-list-section col-7">
     <h4 class="col-12">
         금주의 사피엔스's PICK
     </h4>
-    <div class="service-list-box col-12">
+    <div class="main-service-list-box col-12">
         {% if services %}
         {% for service in services  %}
-        <div class='service-card card col-3'>
+        <div class='service-card card col-3 service-id-{{ service.id }}'>
             <div class='card-img-top'>
                 {% if service.img1 %}
                 <a href="{% url 'services:services_detail' pk=service.pk %}">
@@ -117,10 +118,14 @@
                 </div>
                 <div class="d-flex justify-content-between">
                     <span class="service-intro">{{ service.intro }}</span>
-                    <span>
-                        <a href="{% url 'likes:likes_dibs' service.id %}" class="heart"><i class="far fa-heart"></i></a>
-                        {{ number_of_dibs }}
-                    </span>
+                    <div>
+                        {% if service.is_dib %}
+                            <div class="dib" onclick="onClickDib({{ service.id }})"><i class="fas fa-heart"></i></div>
+                        {% else %}
+                            <div class="dib" onclick="onClickDib({{ service.id }})"><i class="far fa-heart"></i></div>
+                        {% endif %}
+                        <div class="dib__counts">{{ service.dib_set.all.count }}</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -138,16 +143,16 @@
 
 <div class="promotion-section col-7">
     <a href="{% url 'services:services_list' %}">
-        <img src="https://waifu2x.booru.pics/outfiles/1cbe314f8a0548193676a0818108512f08bff5bf_s2_n1.png" alt="">
+        <img src="{% static 'assets/gudok_start.png' %}" alt="">
     </a>
 </div>
 
 
-<div class="service-list-section col-7">
+<div class="main-service-list-section col-7">
     <h4 class="col-12">
         신규 구독 서비스
     </h4>
-    <div class="service-list-box col-12">
+    <div class="main-service-list-box col-12">
         {% if services %}
         {% for service in new_order_services  %}
         <div class='service-card card col-3'>
@@ -189,11 +194,11 @@
             {% endfor %}
 {% endfor %} {% endcomment %}
 
-<div class="service-list-section col-8">
+<div class="main-service-list-section col-8">
     <h4 class="col-12">
         카테고리별 인기 서비스
     </h4>
-    <div class="service-list-box col-12">
+    <div class="main-service-list-box col-12">
         {% if categories %}
         {% for category in categories %}
         <h3> {{ category }} </h3>
@@ -234,11 +239,11 @@
 </div>
 
 
-<div class="service-list-section col-7">
+<div class="main-service-list-section col-7">
     <h4 class="col-12">
         랜덤 구독 서비스
     </h4>
-    <div class="service-list-box col-12">
+    <div class="main-service-list-box col-12">
         {% if random_services %}
         {% for service in random_services  %}
         <div class='service-card card col-3'>
@@ -274,6 +279,54 @@
 
     </div>
 </div>
+
+<script>  
+
+    const requestDib = new XMLHttpRequest();
+
+    const onClickDib = (id) => {
+        
+        requestDib.open('POST','/likes/dibs_ajax/', true);
+        requestDib.setRequestHeader(
+            'Content-type',
+            'application/x-www-form-urlencoded'
+        );
+        requestDib.send(JSON.stringify({id: id}));
+    };
+
+
+    const DibHandleResponse = () => {
+        if (requestDib.status < 400) {
+            const {id} = JSON.parse(requestDib.response)
+            const element = document.querySelector(`.service-id-${id} .dib`);
+            
+            if (element.innerHTML == `<i class="far fa-heart"></i>`) {
+                element.innerHTML = `<i class="fas fa-heart"></i>`;
+                const dibsCounts = document.querySelector(`.service-id-${id} .dib__counts`);
+                const dibsCountsHTML = dibsCounts.innerHTML;
+                const [dibString, num] = dibsCountsHTML.split(' ');
+                const count = Number(num) + 1;
+                dibsCounts.innerHTML = `${dibString} ${count}`;
+                
+            }
+            else {
+                element.innerHTML = `<i class="far fa-heart"></i>`;
+                const dibsCounts = document.querySelector(`.service-id-${id} .dib__counts`);
+                const dibsCountsHTML = dibsCounts.innerHTML;
+                const [dibString, num] = dibsCountsHTML.split(' ');
+                const count = Number(num) - 1;
+                dibsCounts.innerHTML = `${dibString} ${count}`;
+                
+            }
+
+        }
+    }
+    requestDib.onreadystatechange = () => {
+        if (requestDib.readyState === XMLHttpRequest.DONE) {
+            DibHandleResponse();
+        }
+    }
+</script>
 
 <script>
     let search = document.querySelector(".search");

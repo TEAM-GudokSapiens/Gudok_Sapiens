@@ -3,11 +3,19 @@
 
 {% block content %}
 <!--- 대분류 카테고리 표기-->
-<div class="navbar">
-    <a href="{% url 'services:services_list' %}">전체보기</a><!-- 전체보기 -->
-    {% for category in categories %}
-    <a href="{% url 'services:category_list' category.slug %}">{{ category.name }}</a>
-    {% endfor %}
+<nav class="main-navbar navbar navbar-expand-lg navbar-light col-7">
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+            <a class="nav-link text-dark" href="{% url 'services:services_list' %}"
+                style="padding-left: 0 !important;">전체보기</a>
+        </li>
+        {% for category in categories %}
+        <li class="nav-item">
+            <a class="nav-link text-dark"
+                href="{% url 'services:category_list' category.slug %}">{{ category.name }}</a>
+        </li>
+        {% endfor %}
+    </ul>
     <form method="GET" action="{% url 'services:search' %}">
         {% csrf_token %}
         <div class="main-search">
@@ -20,10 +28,12 @@
             </div>
         </div>
     </form>
-</div>
+</nav>
 
 
 
+
+<div class="service-list-main col-7">
 <!--- 세부 카테고리 표기-->
 <div>
     <ul>
@@ -50,14 +60,16 @@
     </ul>
 </div>
 <select id="sort-select" onchange="location = this.value;">
-  <option class="sort-date" value="/">최신순</option>
-  <option class="sort-dib" value="?sort=dib">찜 많은 순</option>
-  <option class="sort-score" value="?sort=score">별점순</option>
+    <option class="sort-date" value="/">최신순</option>
+    <option class="sort-dib" value="?sort=dib">찜 많은 순</option>
+    <option class="sort-score" value="?sort=score">별점순</option>
 </select>
 {% comment %} 본문 내용 서비스 나열 {% endcomment %}
 <div class="album py-5 bg-light">
     <div class="container">
+
         <div class="flex row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
             {% if services %}
             {% for service in services  %}
             <div class="col">
@@ -94,6 +106,8 @@
 </div>
 
 <br />
+</div>
+
 
 {% comment %} 하단 페이지 넘기기 기능 {% endcomment %}
 <div>
@@ -137,52 +151,52 @@
 </div>
 <script>  
 
-        const requestDib = new XMLHttpRequest();
+    const requestDib = new XMLHttpRequest();
 
-        const onClickDib = (id) => {
+    const onClickDib = (id) => {
+        
+        requestDib.open('POST','/likes/dibs_ajax/', true);
+        requestDib.setRequestHeader(
+            'Content-type',
+            'application/x-www-form-urlencoded'
+        );
+        requestDib.send(JSON.stringify({id: id}));
+    };
+
+
+    const DibHandleResponse = () => {
+        if (requestDib.status < 400) {
+            const {id} = JSON.parse(requestDib.response)
+            const element = document.querySelector(`.service-id-${id} .dib`);
             
-            requestDib.open('POST','/likes/dibs_ajax/', true);
-            requestDib.setRequestHeader(
-                'Content-type',
-                'application/x-www-form-urlencoded'
-            );
-            requestDib.send(JSON.stringify({id: id}));
-        };
-
-
-        const DibHandleResponse = () => {
-            if (requestDib.status < 400) {
-                const {id} = JSON.parse(requestDib.response)
-                const element = document.querySelector(`.service-id-${id} .dib`);
+            if (element.innerHTML == `찜하기`) {
+                element.innerHTML = `안찜하기`;
+                const dibsCounts = document.querySelector(`.service-id-${id} .dib__counts`);
+                const dibsCountsHTML = dibsCounts.innerHTML;
+                const [dibString, num] = dibsCountsHTML.split(' ');
+                const count = Number(num) + 1;
+                dibsCounts.innerHTML = `${dibString} ${count}`;
                 
-                if (element.innerHTML == `찜하기`) {
-                    element.innerHTML = `안찜하기`;
-                    const dibsCounts = document.querySelector(`.service-id-${id} .dib__counts`);
-                    const dibsCountsHTML = dibsCounts.innerHTML;
-                    const [dibString, num] = dibsCountsHTML.split(' ');
-                    const count = Number(num) + 1;
-                    dibsCounts.innerHTML = `${dibString} ${count}`;
-                    
-                }
-                else {
-                    element.innerHTML = `찜하기`;
-                    const dibsCounts = document.querySelector(`.service-id-${id} .dib__counts`);
-                    const dibsCountsHTML = dibsCounts.innerHTML;
-                    const [dibString, num] = dibsCountsHTML.split(' ');
-                    const count = Number(num) - 1;
-                    dibsCounts.innerHTML = `${dibString} ${count}`;
-                    
-                }
-
             }
-        }
-        requestDib.onreadystatechange = () => {
-            if (requestDib.readyState === XMLHttpRequest.DONE) {
-                DibHandleResponse();
+            else {
+                element.innerHTML = `찜하기`;
+                const dibsCounts = document.querySelector(`.service-id-${id} .dib__counts`);
+                const dibsCountsHTML = dibsCounts.innerHTML;
+                const [dibString, num] = dibsCountsHTML.split(' ');
+                const count = Number(num) - 1;
+                dibsCounts.innerHTML = `${dibString} ${count}`;
+                
             }
-        }
 
-<!-- 정렬창 고정 -->
+        }
+    }
+    requestDib.onreadystatechange = () => {
+        if (requestDib.readyState === XMLHttpRequest.DONE) {
+            DibHandleResponse();
+        }
+    }
+
+// 정렬창 고정
 var getUrlParameter = function getUrlParameter(sParam) {
     var sPageURL = decodeURIComponent(window.location.search.substring(1)),
         sURLVariables = sPageURL.split('&'),
@@ -209,5 +223,14 @@ $(document).ready(function(){
   }
 });
 </script>  
+
+<script>
+    let search = document.querySelector(".search");
+    let clearh = document.querySelector(".clear");
+
+    search.onclick = function(){
+        document.querySelector(".main-search").classList.toggle('active');
+    }
+</script>
 
 {% endblock %}

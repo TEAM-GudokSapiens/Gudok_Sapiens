@@ -387,12 +387,12 @@
   font-size: 1rem;
 }
 
-.service-list-section {
+.main-service-list-section {
   margin: 0 auto 60px auto;
   padding: 0 !important;
 }
 
-.service-list-section h4 {
+.main-service-list-section h4 {
   margin-bottom: 60px;
   text-align: center;
   font-size: 1.6rem;
@@ -400,7 +400,7 @@
   font-family: "GmarketSansTTFLight";
 }
 
-.service-list-box {
+.main-service-list-box {
   display: flex;
   flex-wrap: wrap;
   padding: 0 !important;
@@ -480,8 +480,10 @@
   height: auto;
 }
 
-.board-second-info {
-  display: none;
+.service-list-main {
+  display: flex;
+  margin: 0 auto;
+  padding: 0 !important;
 }
 
 .search-result-box {
@@ -494,7 +496,7 @@
   text-align: center;
 }
 
-.search-result-box > strong {
+.search-result-box strong {
   font-size: 0.9rem;
   font-weight: 400;
 }
@@ -503,7 +505,7 @@
   margin: 0.25rem 0 1.3rem 0 !important;
 }
 
-.search-result-box > strong > span {
+.search-result-box strong > span {
   margin-right: 0.5rem;
   font-size: 1.1rem;
   font-weight: 400;
@@ -879,6 +881,9 @@
 
 .community-navbar span {
   padding: 0;
+}
+.board-second-info {
+  display: none;
 }
 .board-second-info span {
   padding: 0;
