@@ -914,10 +914,6 @@
   border: 1px solid #d0d0d0;
   margin-bottom: 0.5rem;
 }
-.board-submit-box {
-  display: flex;
-  justify-content: flex-end;
-}
 .board-content p {
   padding: 0;
   margin: 0;
@@ -966,28 +962,41 @@
 }
 
 .board-submit {
-  background: #f3f3f3;
+  background: #000000;
   padding: 0.5rem 2.2rem;
-  color: #585858;
+  color: #ffffff;
   font-weight: 300;
   width: auto !important;
 }
+
+.board-submit:hover {
+  color: #ffffff;
+  font-weight: 400;
+}
 .board-button {
   min-width: 20%;
-  background: #f3f3f3;
+  background: #000000;
   padding: 0.5rem 2.2rem;
   margin: 0 0.7rem;
-  color: #585858;
+  color: #ffffff;
+}
+.board-button a:hover {
+  color: #fff;
+  font-weight: 400;
 }
 .board-button a {
-  color: #585858;
+  color: #f2f2f2;
 }
 #comment_write,
 #reply_write {
-  background: #f3f3f3;
+  background: #000000;
   width: 15%;
-  color: #585858;
+  color: #ffffff;
   font-weight: 300;
+}
+#comment_write:hover,
+#reply_write:hover {
+  font-weight: 400;
 }
 #reply_write {
   width: 100%;
