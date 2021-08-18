@@ -23,6 +23,8 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views.generic import UpdateView, DeleteView, FormView, CreateView, View
 from services.models import Service
 from reviews.models import Review
+
+from .helper import *
 from .forms import *
 from .models import *
 from .decorators import *
