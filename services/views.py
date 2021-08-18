@@ -100,6 +100,25 @@ def category_list(request, category_slug):
     }
     return render(request, 'services/list.html', context=ctx)
 
+def category_list_str(request, category):
+    services_list = Service.objects.filter(
+        category__slug__contains=category).annotate(avg_reviews=Avg('review__score'))
+    categories = Category.objects.all()
+    sub_category_list = SubCategory.objects.filter(category__slug__contains=category)
+    # 한 페이지 당 담을 수 있는 객체 수를 정할 수 있음
+    NUM_OF_PAGINATOR =10
+    paginator = Paginator(services_list, NUM_OF_PAGINATOR)
+    page = request.GET.get('page')
+    services = paginator.get_page(page)
+
+    ctx = {
+        'services': services,
+        'categories': categories,
+        'sub_category_list': sub_category_list,
+        'category_slug': category,
+    }
+    return render(request, 'services/list.html', context=ctx)
+
 
 def sub_category_list(request, category_slug, sub_category_slug):
     services_list = Service.objects.filter(
