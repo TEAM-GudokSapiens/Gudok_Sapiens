@@ -738,10 +738,12 @@
 }
 
 .sub-img div {
-  width: 49.4%;
+  width: 48%;
 }
 
 .sub-img {
+  display: flex;
+  justify-content: space-between;
   padding-left: 15px;
   height: 20vh;
 }
@@ -792,7 +794,8 @@
 .fix-link {
   text-align: right;
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 1rem;
 }
 .fix-link a {
   color: inherit;
