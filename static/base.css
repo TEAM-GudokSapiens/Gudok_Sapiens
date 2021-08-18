@@ -766,12 +766,14 @@
 
 .fixing-box {
   font-family: "KOTRA_SONGEULSSI";
-  /* border: 1px solid rgb(215, 215, 215); */
+  border-top: 2px solid #888888;
+  border-bottom: 2px solid #888888;
   width: 23.8vw;
   height: auto;
   position: fixed;
   top: 53%;
   right: 20.2%;
+  padding: 1rem;
   /* min-width: fit-content; */
 }
 .service-price {
@@ -800,8 +802,8 @@
   font-size: 1.1rem;
 }
 .review-container {
-  background-color: #f3f3f3;
-  border-radius: 15px;
+  /* background-color: #f3f3f3;
+  border-radius: 15px; */
 }
 .review-form-img {
   border: 1px solid #585858;
