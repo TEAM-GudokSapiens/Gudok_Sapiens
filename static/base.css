@@ -1116,6 +1116,12 @@ a:hover {
   border: 1px solid #e8e8e8;
   margin: 1.5rem;
   font-weight: 300;
+  justify-content: space-around;
+}
+.my-review-box-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .my-review-img {
   width: 10rem;
