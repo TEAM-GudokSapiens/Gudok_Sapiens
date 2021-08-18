@@ -776,7 +776,7 @@
   top: 53%;
   right: 20.2%;
   padding: 1rem;
-  /* min-width: fit-content; */
+  margin-bottom: 1rem;
 }
 .service-price {
   font-size: 1.2rem;
@@ -802,6 +802,14 @@
 }
 .fix-link a:hover {
   color: inherit;
+}
+.fix-link div:hover,
+.fix-link a:hover {
+  text-shadow: 1px 1px 5px rgb(179, 179, 179);
+}
+.dib i,
+.help i {
+  cursor: pointer;
 }
 
 .tab-title {
