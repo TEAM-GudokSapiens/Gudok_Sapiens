@@ -1133,7 +1133,7 @@ a:hover {
   border: 1px solid #e8e8e8;
   margin: 1.5rem 0;
   font-weight: 300;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 .my-review-box-container {
   display: flex;
