@@ -402,7 +402,9 @@
 
 .main-service-list-box {
   display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
+  margin-bottom: 3rem;
   padding: 0 !important;
 }
 
@@ -413,8 +415,8 @@
 
 .service-card .card-img-top {
   width: 100%;
-  height: 70%;
-  margin-bottom: 12px;
+  height: 60%;
+  margin-bottom: 1rem;
   overflow: hidden;
 }
 
@@ -482,8 +484,59 @@
 
 .service-list-main {
   display: flex;
-  margin: 0 auto;
+  margin: 0 auto 2rem auto;
   padding: 0 !important;
+}
+
+.service-second-category {
+  margin-right: 1rem;
+  font-size: 1rem;
+}
+
+.service-second-category ul > li {
+  margin-bottom: 0.7rem;
+}
+
+.list-service-underline:hover {
+  text-decoration: underline;
+}
+
+.service-second-category ul > li:first-child {
+  margin-top: 0.5rem;
+}
+
+.service-second-category  a {
+  color: #444;
+}
+
+.service-second-category .weight {
+  font-weight: 600;
+}
+
+.service-list-img {
+  width: 100%;
+  height: 8rem;
+  margin-bottom: 1rem;
+}
+
+.service-list-img img {
+  width: 100%;
+  height: 100%;
+}
+
+.service-list-main .service-card .card-img-top {
+  height: 8rem;
+}
+
+.service-list-select {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 0.8rem;
+}
+
+.not-service {
+  margin-bottom: 20rem;
+  font-size: 1rem;
 }
 
 .search-result-box {
@@ -496,7 +549,7 @@
   text-align: center;
 }
 
-.search-result-box strong {
+.search-result-box > strong {
   font-size: 0.9rem;
   font-weight: 400;
 }
@@ -505,7 +558,7 @@
   margin: 0.25rem 0 1.3rem 0 !important;
 }
 
-.search-result-box strong > span {
+.search-result-box > strong > span {
   margin-right: 0.5rem;
   font-size: 1.1rem;
   font-weight: 400;
@@ -577,6 +630,134 @@
 .magazine-content {
   margin-bottom: 30px;
 }
+
+.tag-service-section {
+  margin: 6rem auto;
+}
+
+ul.tag-service-box {
+  margin: 0 auto;
+  list-style: none;
+  padding: 0 !important;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  line-height: 2.75rem;
+  width: 90%;
+}
+
+ul.tag-service-box label {
+  --color: #15066b;
+  color: var(--color);
+  display: block;
+  padding: 0.125rem 0.25rem;
+  position: relative;
+}
+
+ul.tag-service-box li:nth-child(3n+1) label { --color: #07449a; }
+ul.tag-service-box li:nth-child(4n+1) label { --color: #1c6d73; }
+ul.tag-service-box li:nth-child(5n+1) label { --color: #246a96; }
+ul.tag-service-box li:nth-child(6n+1) label { --color: #0c0a23; }
+ul.tag-service-box li:nth-child(7n+1) label { --color: #4f4c8e; }
+ul.tag-service-box li:nth-child(8n+1) label { --color: #1f62a1; }
+
+.tag-service-card label {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.tag-service-card label input[type='checkbox']{
+  display: none;
+}
+
+
+
+
+/* 체크표시 */
+/* .tag-service-card label input[type="checkbox"]:checked ~ span::before {
+  content: "✔";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) scale(1);
+  width: 1rem;
+  color: #03be58;
+} */
+
+/* 밑줄표시
+.tag-service-card label input[type="checkbox"]:checked ~ span {
+  text-decoration-line: underline;
+} */
+
+/* 3줄효과 */
+.tag-service-card label::before {
+  content: "";
+  position: absolute;
+  height: 33.33%;
+  width: 0;
+  background-color: rgba(13,124,255,0.2);
+  right: 0;
+  z-index: 0;
+  top: 33.33%;
+  transition: all 1s;
+}
+.tag-service-card label::after {
+  content: "";
+  position: absolute;
+  height: 33.33%;
+  width: 0;
+  background-color: rgba(13,124,255,0.2);
+  left: 0;
+  z-index: 0;
+  bottom: 0;
+  transition: all 1s;
+}
+.tag-service-card label span::before {
+  position: absolute;
+  content: "";
+  height: 33.33%;
+  width: 0;
+  background-color: rgba(13,124,255,0.2);
+  bottom: 66.66%;
+  left: 0;
+  transition: all 1s;
+}
+.tag-service-card label:hover::before,
+.tag-service-card label:hover::after,
+.tag-service-card label:hover span::before {
+  width: 100%;
+}
+
+.tag-service-card label input[type="checkbox"]:checked ~ span {
+  text-decoration: underline;
+  text-decoration-style: solid;
+  text-decoration-color: inherit;
+  text-decoration-thickness: 0.3rem;
+} 
+
+
+/* 글씨효과 */
+/* .tag-service-card label input[type="checkbox"]:checked ~ span {
+  background: linear-gradient(to right, red, blue); 
+  -webkit-background-clip:text; 
+  -webkit-text-fill-color:transparent;
+}
+.tag-service-card label input[type="checkbox"]:checked ~ span {
+  text-shadow:1px 0 0 red,0 1px 0 red,-1px 0 0 red,0 -1px 0 red,-1px -1px 0 red,1px 1px 0 red
+}
+.tag-service-card label input[type="checkbox"]:checked ~ span {
+  font-family: arial; font-weight: bold; color:rgba(0,0,0,.5);
+text-shadow:1px 1px 0 #07449a,
+2px 2px 0 orange,
+3px 3px 0 yellow,
+4px 4px 0 green,
+5px 5px 0 blue,
+6px 6px 0 darkblue,
+7px 7px 0 purple;
+} */
 
 .service-intro-section {
   margin: 0 auto;
@@ -998,7 +1179,7 @@
   margin: 1rem 0;
 }
 .board-paginator {
-  margin-bottom: 30px;
+  margin-bottom: 2rem;
   text-align: center;
 }
 .board-info {

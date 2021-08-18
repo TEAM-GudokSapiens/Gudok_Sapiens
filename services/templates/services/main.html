@@ -292,6 +292,7 @@
             'application/x-www-form-urlencoded'
         );
         requestDib.send(JSON.stringify({id: id}));
+
     };
 
 
@@ -299,7 +300,6 @@
         if (requestDib.status < 400) {
             const {id} = JSON.parse(requestDib.response)
             const element = document.querySelector(`.service-id-${id} .dib`);
-            
             if (element.innerHTML == `<i class="far fa-heart"></i>`) {
                 element.innerHTML = `<i class="fas fa-heart"></i>`;
                 const dibsCounts = document.querySelector(`.service-id-${id} .dib__counts`);

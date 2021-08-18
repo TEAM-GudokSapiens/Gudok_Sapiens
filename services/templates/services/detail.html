@@ -325,7 +325,7 @@
 
     const onClickHelp = (id) => {
 
-        requestHelp.open('POST', '/likes/help_ajax/', true);
+        requestHelp.open(' POST', '/likes/help_ajax/', true);
         requestHelp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         requestHelp.send(JSON.stringify({
             id: id
