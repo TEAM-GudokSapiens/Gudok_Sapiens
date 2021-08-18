@@ -38,6 +38,7 @@ def likes_helps(request, pk):
 
     return redirect(previous_url)
 
+@login_message_required
 @csrf_exempt
 def dibs_ajax(request):
     req = json.loads(request.body)
