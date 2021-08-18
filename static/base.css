@@ -791,6 +791,14 @@
 
 .fix-link {
   text-align: right;
+  display: flex;
+  flex-direction: column;
+}
+.fix-link a {
+  color: inherit;
+}
+.fix-link a:hover {
+  color: inherit;
 }
 
 .tab-title {
@@ -1132,7 +1140,7 @@ a:hover {
   padding: 1.2rem;
   border: 1px solid #e8e8e8;
   margin: 1.5rem 0;
-  font-weight: 300;
+  /* font-weight: 300; */
   justify-content: space-between;
 }
 .my-review-box-container {
@@ -1201,7 +1209,8 @@ a:hover {
 .my-review-likes {
   display: flex;
   justify-content: flex-end;
-  color: #585858;
+  color: #808080;
+  font-size: 1rem;
 }
 @media screen and (max-width: 1200px) {
   html {
@@ -1284,6 +1293,9 @@ a:hover {
   }
 
   /*  */
+  .review-hr {
+    display: none;
+  }
   .service-container {
     width: 100%;
   }

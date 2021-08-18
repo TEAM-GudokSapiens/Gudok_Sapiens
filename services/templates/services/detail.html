@@ -78,14 +78,15 @@
                 {% endif %}
                 {% comment %} <a href="{% url 'likes:likes_dibs' service.id %}">찜({{ number_of_dibs }}개)</a> /
                 {% endcomment %}
-                <a href="{{service.link}}">바로가기</a>
+                <a href="{{service.link}}">
+                    <i class="fas fa-external-link-alt"></i> 바로가기</a>
                 <a @click="onClickFacebook">
-                    페이스북 공유하기
+                    <i class="fab fa-facebook"></i> 페이스북 공유하기
                 </a>
             </div>
         </div>
             <div class="tab-content" id="pills-tabContent">
-                <hr>
+                <hr class="review-hr">
                 <div class="review-tab">
                     <div class="d-flex justify-content-between align-items-center">
                         <span class="tab-title">리뷰</span>
@@ -125,10 +126,10 @@
                                     <div class="my-review-likes">
                                         {% if review.is_help %}
                                         <span class="help" onclick="onClickHelp({{ review.id }})">
-                                            <i class="fas fa-thumbs-up" style="color: #585858;"></i> </span>
+                                            <i class="fas fa-thumbs-up" style="color: #808080;"></i> </span>
                                         {% else %}
                                         <span class="help" onclick="onClickHelp({{ review.id }})">
-                                            <i class="far fa-thumbs-up" style="color: #585858;"></i> </span>
+                                            <i class="far fa-thumbs-up" style="color: #808080;"></i> </span>
                                         {% endif %}
                                         <span class="help__counts">{{ review.reviews_help.all.count }}</span>
                                     </div>
