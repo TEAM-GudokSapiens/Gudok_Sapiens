@@ -70,11 +70,9 @@
             <div class="dib__counts">찜: {{ number_of_dibs }}</div>
             <div class="fix-link">
                 {% if service.is_dib %}
-                <div class="dib" onclick="onClickDib({{ service.id }})">
-                    <i class="fas fa-heart"></i> 찜</div>
+                <div class="dib" onclick="onClickDib({{ service.id }})"><i class="fas fa-heart"></i> 찜</div>
                 {% else %}
-                <div class="dib" onclick="onClickDib({{ service.id }})">
-                    <i class="far fa-heart"></i> 찜</div>
+                <div class="dib" onclick="onClickDib({{ service.id }})"><i class="far fa-heart"></i> 찜</div>
                 {% endif %}
                 {% comment %} <a href="{% url 'likes:likes_dibs' service.id %}">찜({{ number_of_dibs }}개)</a> /
                 {% endcomment %}
@@ -124,11 +122,9 @@
                                     </div>
                                     <div class="my-review-likes">
                                         {% if review.is_help %}
-                                        <span class="help" onclick="onClickHelp({{ review.id }})">
-                                            <i class="fas fa-thumbs-up" style="color: #808080;"></i> </span>
+                                        <span class="help" onclick="onClickHelp({{ review.id }})"><i class="fas fa-thumbs-up" style="color: #808080;"></i></span>
                                         {% else %}
-                                        <span class="help" onclick="onClickHelp({{ review.id }})">
-                                            <i class="far fa-thumbs-up" style="color: #808080;"></i> </span>
+                                        <span class="help" onclick="onClickHelp({{ review.id }})"><i class="far fa-thumbs-up" style="color: #808080;"></i></span>
                                         {% endif %}
                                         <span class="help__counts">{{ review.reviews_help.all.count }}</span>
                                     </div>
@@ -156,43 +152,59 @@
                         <hr>
                         <span class="tab-title">리뷰 쓰기</span>
                         {% if request.user.is_authenticated %}
-                        <form action="{% url 'reviews:submit_ajax' service.id %}" enctype="multipart/form-data"
-                            id="review_create_form" method="POST">
-                            {% csrf_token %}
-                            <div class="review-form-container">
-                                <div class="review-form-content">
-                                    <span class="review-content-title">{{ form.title }}</span>
-                                    <div>
-                                        <textarea class="content_textarea" rows="3" name="content" placeholder='15자 이상 입력해주세요'
-                                            onkeyup="countLetters();"></textarea>
-                                            <div style="display: flex;justify-content: space-between;">
-                                                <span>{{form.photo}}</span>
-                                                <span class="content_count">0</span>
-                                            </div>
-                                            <div style="display: flex; justify-content: space-between;">
-                                                <span>{{ form.score }}</span>
-                                                <div class="period">
-                                                    <div class="range">
-                                                        <div class="sliderValue">
-                                                            <span class="period_select">24</span>
+                        <button type="button" class="btn btn-primary btn-lg" id="openModalBtn">
+                            리뷰쓰기
+                        </button>
+                        {% endif %}
+                        <!-- 모달 시작 -->
+                        <div id="modalBox" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeModalBtn"><span
+                                                aria-hidden="true">×</span></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="{% url 'reviews:submit_ajax' service.id %}" enctype="multipart/form-data" id="review_create_form"
+                                            method="POST">
+                                            {% csrf_token %}
+                                            <div class="review-form-container">
+                                                <div class="review-form-content">
+                                                    <span class="review-content-title">{{ form.title }}</span>
+                                                    <div>
+                                                        <textarea class="content_textarea" rows="3" name="content" placeholder='15자 이상 입력해주세요'
+                                                            onkeyup="countLetters();"></textarea>
+                                                        <div style="display: flex;justify-content: space-between;">
+                                                            <span>{{form.photo}}</span>
+                                                            <span class="content_count">0</span>
                                                         </div>
-                                                        <div class="field">
-                                                            <div class="value left">0</div>
-                                                            <input class="period_choice" type="range" name="period" min="0" max="24" value="12" steps="1">
-                                                            <div class="value right">24개월 이상</div>
+                                                        <div style="display: flex; justify-content: space-between;">
+                                                            <span>{{ form.score }}</span>
+                                                            <div class="period">
+                                                                <div class="range">
+                                                                    <div class="sliderValue">
+                                                                        <span class="period_select">24</span>
+                                                                    </div>
+                                                                    <div class="field">
+                                                                        <div class="value left">0</div>
+                                                                        <input class="period_choice" type="range" name="period" min="0" max="24" value="12"
+                                                                            steps="1">
+                                                                        <div class="value right">24개월 이상</div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                            <input type="submit" onclick="" value="리뷰 등록" style="border: none;color: white;background: black;"/>
+                                        </form>
+                                        <button type="button" class="btn btn-default" id="closeModalBtn">취소</button>
                                     </div>
-
                                 </div>
                             </div>
-
-
-                            <input type="submit" onclick="" value="리뷰 등록" style="border: none;color: white;background: black;"/>
-                        </form>
-                        {% endif %}
+                        </div>
+                        <!-- 모달 끝 -->
                     </div>
             </div>
             <!-- tabend -->
@@ -315,7 +327,14 @@
             HelpHandleResponse();
         }
     }
-
+    // 모달 버튼에 이벤트를 건다.
+    $('#openModalBtn').on('click', function () {
+        $('#modalBox').modal('show');
+    });
+    // 모달 안의 취소 버튼에 이벤트를 건다.
+    $('#closeModalBtn').on('click', function () {
+        $('#modalBox').modal('hide');
+    });
 </script>
 
 {% endblock content %}
