@@ -125,6 +125,7 @@ def logout_view(request):
 
 
 # 유저정보
+
 class AccountUpdateView(UpdateView):
     model = User
     form_class = UpdateForm
@@ -177,6 +178,7 @@ def profile_delete_view(request):
     return render(request, 'users/delete.html', {'password_form': password_form})
 
 
+@login_message_required
 def dibs_list(request):
     services_list = Service.objects.filter(dib__users=request.user.id)
     # 한 페이지 당 담을 수 있는 객체 수를 정할 수 있음
@@ -190,6 +192,7 @@ def dibs_list(request):
     return render(request, 'users/dibs_list.html', context=ctx)
 
 
+@login_message_required
 def reviews_list(request):
     reviews_list = Review.objects.filter(user=request.user.id)
     # 한 페이지 당 담을 수 있는 객체 수를 정할 수 있음

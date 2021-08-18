@@ -122,6 +122,7 @@ def board_detail(request, pk):
 #     # return render(request, 'community/board_detail.html', context=ctx)
 
 
+@login_message_required
 def board_delete(request, pk):
     post = Board.objects.get(id=pk)
     post.delete()
