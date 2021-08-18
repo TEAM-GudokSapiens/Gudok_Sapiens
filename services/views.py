@@ -321,3 +321,31 @@ def category_other(request):
         'category_slug': other,
     }
     return render(request, 'services/list.html', context=ctx)
+
+def get_sub_categories(category, subcategory):
+    services_list = Service.objects.filter(
+        subcategory__slug__contains=subcategory).annotate(avg_reviews=Avg('review__score'))
+    category_list = Category.objects.all()
+    sub_category_list = SubCategory.objects.filter(
+        category__slug__contains=category)
+    return services_list, category_list, sub_category_list
+
+def make_paginator(request, queryset, NUM_OF_PAGINATOR=10):
+    NUM_OF_PAGINATOR = 10
+    paginator = Paginator(queryset, NUM_OF_PAGINATOR)
+    page = request.GET.get('page')
+    queryset_list = paginator.get_page(page)
+    return queryset_list
+
+
+def subcategory_daily_item(request):
+    
+    # 한 페이지 당 담을 수 있는 객체 수를 정할 수 있음
+    
+    ctx = {
+        'services': services,
+        'categories': categories,
+        'sub_category_list': sub_category_list,
+        'category_slug': category_slug,
+    }
+    return render(request, 'services/list.html', context=ctx)

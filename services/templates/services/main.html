@@ -31,16 +31,16 @@
             </div>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark" href="#">라이프 스타일</a>
+            <a class="nav-link text-dark" href="{% url 'services:category_lifestyle' %}" class="text-dark">라이프 스타일</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark" href="#">음식</a>
+            <a class="nav-link text-dark" href="{% url 'services:category_food' %}" class="text-dark">음식</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark" href="#">컨텐츠</a>
+            <a class="nav-link text-dark" href="{% url 'services:category_content' %}" class="text-dark">컨텐츠</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark" href="#">뉴스레터</a>
+            <a class="nav-link text-dark" href="{% url 'services:category_newsletter' %}">뉴스레터</a>
         </li>
     </ul>
     <form method="GET" action="{% url 'services:search' %}">

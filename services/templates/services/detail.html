@@ -8,7 +8,7 @@
             <div class="main-img-container">
                 <img src="{{ service.img1.url }}" class="main-img" />
                 <!-- carousel -->
-                <div id="carouselControls" class="carousel slide" data-ride="carousel">
+                {% comment %} <div id="carouselControls" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
                             <img src="{{ service.img1.url }}" />
@@ -29,7 +29,7 @@
                     <a href="#carouselControls" class="carousel-control-next" data-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     </a>
-                </div>
+                </div> {% endcomment %}
                 <!-- carousel end -->
             </div>
             <div class="img-sub-container d-flex flex-column">
