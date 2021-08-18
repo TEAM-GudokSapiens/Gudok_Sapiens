@@ -100,26 +100,6 @@ def category_list(request, category_slug):
     }
     return render(request, 'services/list.html', context=ctx)
 
-def category_list_str(request, category):
-    services_list = Service.objects.filter(
-        category__slug__contains=category).annotate(avg_reviews=Avg('review__score'))
-    categories = Category.objects.all()
-    sub_category_list = SubCategory.objects.filter(category__slug__contains=category)
-    # 한 페이지 당 담을 수 있는 객체 수를 정할 수 있음
-    NUM_OF_PAGINATOR =10
-    paginator = Paginator(services_list, NUM_OF_PAGINATOR)
-    page = request.GET.get('page')
-    services = paginator.get_page(page)
-
-    ctx = {
-        'services': services,
-        'categories': categories,
-        'sub_category_list': sub_category_list,
-        'category_slug': category,
-    }
-    return render(request, 'services/list.html', context=ctx)
-
-
 def sub_category_list(request, category_slug, sub_category_slug):
     services_list = Service.objects.filter(
         subcategory__slug__contains=sub_category_slug).annotate(avg_reviews=Avg('review__score'))
@@ -240,3 +220,104 @@ def same_tag_list(request, tag):
 
 def service_intro(request):
     return render(request, 'services/service_intro.html')
+
+def category_lifestyle(request):
+    services_list = Service.objects.filter(
+        category__slug__contains=lifestyle).annotate(avg_reviews=Avg('review__score'))
+    categories = Category.objects.all()
+    sub_category_list = SubCategory.objects.filter(
+        category__slug__contains=lifestyle)
+    # 한 페이지 당 담을 수 있는 객체 수를 정할 수 있음
+    NUM_OF_PAGINATOR =10
+    paginator = Paginator(services_list, NUM_OF_PAGINATOR)
+    page = request.GET.get('page')
+    services = paginator.get_page(page)
+
+    ctx = {
+        'services': services,
+        'categories': categories,
+        'sub_category_list': sub_category_list,
+        'category_slug': lifestyle,
+    }
+    return render(request, 'services/list.html', context=ctx)
+
+def category_food(request):
+    services_list = Service.objects.filter(
+        category__slug__contains=food).annotate(avg_reviews=Avg('review__score'))
+    categories = Category.objects.all()
+    sub_category_list = SubCategory.objects.filter(
+        category__slug__contains=food)
+    # 한 페이지 당 담을 수 있는 객체 수를 정할 수 있음
+    NUM_OF_PAGINATOR =10
+    paginator = Paginator(services_list, NUM_OF_PAGINATOR)
+    page = request.GET.get('page')
+    services = paginator.get_page(page)
+
+    ctx = {
+        'services': services,
+        'categories': categories,
+        'sub_category_list': sub_category_list,
+        'category_slug': food,
+    }
+    return render(request, 'services/list.html', context=ctx)
+
+def category_content(request):
+    print(category__slug__contains)
+    services_list = Service.objects.filter(
+        category__slug__contains=content).annotate(avg_reviews=Avg('review__score'))
+    categories = Category.objects.all()
+    sub_category_list = SubCategory.objects.filter(
+        category__slug__contains=content)
+    # 한 페이지 당 담을 수 있는 객체 수를 정할 수 있음
+    NUM_OF_PAGINATOR =10
+    paginator = Paginator(services_list, NUM_OF_PAGINATOR)
+    page = request.GET.get('page')
+    services = paginator.get_page(page)
+
+    ctx = {
+        'services': services,
+        'categories': categories,
+        'sub_category_list': sub_category_list,
+        'category_slug': content,
+    }
+    return render(request, 'services/list.html', context=ctx)
+
+def category_newsletter(request):
+    services_list = Service.objects.filter(
+        category__slug__contains=newsletter).annotate(avg_reviews=Avg('review__score'))
+    categories = Category.objects.all()
+    sub_category_list = SubCategory.objects.filter(
+        category__slug__contains=newsletter)
+    # 한 페이지 당 담을 수 있는 객체 수를 정할 수 있음
+    NUM_OF_PAGINATOR =10
+    paginator = Paginator(services_list, NUM_OF_PAGINATOR)
+    page = request.GET.get('page')
+    services = paginator.get_page(page)
+
+    ctx = {
+        'services': services,
+        'categories': categories,
+        'sub_category_list': sub_category_list,
+        'category_slug': newsletter,
+    }
+    return render(request, 'services/list.html', context=ctx)
+
+def category_other(request):
+    services_list = Service.objects.filter(
+        category__slug__contains=other).annotate(avg_reviews=Avg('review__score'))
+    categories = Category.objects.all()
+    sub_category_list = SubCategory.objects.filter(
+        category__slug__contains=other)
+    # 한 페이지 당 담을 수 있는 객체 수를 정할 수 있음
+    NUM_OF_PAGINATOR =10
+    paginator = Paginator(services_list, NUM_OF_PAGINATOR)
+    page = request.GET.get('page')
+    services = paginator.get_page(page)
+
+    ctx = {
+        'services': services,
+        'categories': categories,
+        'sub_category_list': sub_category_list,
+        'category_slug': other,
+    }
+    return render(request, 'services/list.html', context=ctx)
