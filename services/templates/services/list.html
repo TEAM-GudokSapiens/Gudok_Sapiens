@@ -211,10 +211,10 @@
     $(document).ready(function () {
         var sort = getUrlParameter('sort');
         if (sort == 'dib') {
-            $('.sort-dibs').prop('selected', 'selected')
+            $('.sort-dib').prop('selected', 'selected')
         } else if (sort == 'score') {
             $('.sort-score').prop('selected', 'selected')
-        } else {
+        }else if(sort == 'date'){
             $('.sort-date').prop('selected', 'selected')
         }
     });
@@ -227,9 +227,7 @@
     search.onclick = function () {
         document.querySelector(".main-search").classList.toggle('active');
     }
-    $('.sort-dib').prop('selected', 'selected')
-  }else if(sort == 'date'){
-    $('.sort-date').prop('selected', 'selected')
-  }
+    
+  
 
 {% endblock %}
