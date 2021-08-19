@@ -552,7 +552,7 @@
   margin-top: 0.5rem;
 }
 
-.service-second-category  a {
+.service-second-category a {
   color: #444;
 }
 
@@ -570,8 +570,8 @@
 
 .main-service-list-box .fa-heart,
 .main-service-list-box .fa-star {
-  border-color: #002E6E !important;
-  color: #002E6E !important;
+  border-color: #002e6e !important;
+  color: #002e6e !important;
 }
 
 .main-service-list-box .dib,
@@ -722,12 +722,24 @@ ul.tag-service-box label {
   position: relative;
 }
 
-ul.tag-service-box li:nth-child(3n+1) label { --color: #07449a; }
-ul.tag-service-box li:nth-child(4n+1) label { --color: #1c6d73; }
-ul.tag-service-box li:nth-child(5n+1) label { --color: #246a96; }
-ul.tag-service-box li:nth-child(6n+1) label { --color: #0c0a23; }
-ul.tag-service-box li:nth-child(7n+1) label { --color: #4f4c8e; }
-ul.tag-service-box li:nth-child(8n+1) label { --color: #1f62a1; }
+ul.tag-service-box li:nth-child(3n + 1) label {
+  --color: #07449a;
+}
+ul.tag-service-box li:nth-child(4n + 1) label {
+  --color: #1c6d73;
+}
+ul.tag-service-box li:nth-child(5n + 1) label {
+  --color: #246a96;
+}
+ul.tag-service-box li:nth-child(6n + 1) label {
+  --color: #0c0a23;
+}
+ul.tag-service-box li:nth-child(7n + 1) label {
+  --color: #4f4c8e;
+}
+ul.tag-service-box li:nth-child(8n + 1) label {
+  --color: #1f62a1;
+}
 
 .tag-service-card label {
   width: 100%;
@@ -736,12 +748,9 @@ ul.tag-service-box li:nth-child(8n+1) label { --color: #1f62a1; }
   z-index: 1;
 }
 
-.tag-service-card label input[type='checkbox']{
+.tag-service-card label input[type="checkbox"] {
   display: none;
 }
-
-
-
 
 /* 체크표시 */
 /* .tag-service-card label input[type="checkbox"]:checked ~ span::before {
@@ -765,7 +774,7 @@ ul.tag-service-box li:nth-child(8n+1) label { --color: #1f62a1; }
   position: absolute;
   height: 33.33%;
   width: 0;
-  background-color: rgba(13,124,255,0.2);
+  background-color: rgba(13, 124, 255, 0.2);
   right: 0;
   z-index: 0;
   top: 33.33%;
@@ -776,7 +785,7 @@ ul.tag-service-box li:nth-child(8n+1) label { --color: #1f62a1; }
   position: absolute;
   height: 33.33%;
   width: 0;
-  background-color: rgba(13,124,255,0.2);
+  background-color: rgba(13, 124, 255, 0.2);
   left: 0;
   z-index: 0;
   bottom: 0;
@@ -787,7 +796,7 @@ ul.tag-service-box li:nth-child(8n+1) label { --color: #1f62a1; }
   content: "";
   height: 33.33%;
   width: 0;
-  background-color: rgba(13,124,255,0.2);
+  background-color: rgba(13, 124, 255, 0.2);
   bottom: 66.66%;
   left: 0;
   transition: all 1s;
@@ -803,8 +812,7 @@ ul.tag-service-box li:nth-child(8n+1) label { --color: #1f62a1; }
   text-decoration-style: solid;
   text-decoration-color: inherit;
   text-decoration-thickness: 0.3rem;
-} 
-
+}
 
 /* 글씨효과 */
 /* .tag-service-card label input[type="checkbox"]:checked ~ span {
@@ -1028,6 +1036,7 @@ text-shadow:1px 1px 0 #07449a,
   right: 20.2%;
   padding: 1rem;
   margin-bottom: 1rem;
+  z-index: 2;
 }
 .service-price {
   font-size: 1.2rem;
@@ -1035,10 +1044,14 @@ text-shadow:1px 1px 0 #07449a,
 
 .keywords a {
   /* margin: 10px 0px; */
-  color: #585858;
+  color: #929292;
 }
 
 .keywords div {
+  /* border: 1px solid #c1c1c1;
+  border-radius: 17px;
+  background: #f5f5f5; */
+  padding: 0.2rem;
   display: inline;
 }
 
@@ -1795,23 +1808,23 @@ a:hover {
     transition: 0.5s;
     overflow: hidden;
   }
-  
+
   .main-search.active {
     width: 100px;
   }
-  
+
   .main-search-icon {
     position: absolute;
     left: 18px;
     top: 45%;
     transform: translate(-50%, -50%);
   }
-  
+
   .main-search .search {
     font-size: 0.7rem;
     cursor: pointer;
   }
-  
+
   .main-search-input {
     position: relative;
     width: 300px;
@@ -1821,15 +1834,15 @@ a:hover {
     align-items: center;
     justify-content: center;
   }
-  
+
   .main-search-input input:focus::placeholder {
     color: rgb(241, 237, 237) !important;
   }
-  
+
   .main-search-input input::placeholder {
     color: #444 !important;
   }
-  
+
   .main-search-input input {
     position: absolute;
     bottom: 13px;
@@ -1841,7 +1854,6 @@ a:hover {
     outline: none;
     background-color: rgb(241, 237, 237);
   }
-
 }
 
 @media screen and (min-width: 430px) {
@@ -1849,7 +1861,6 @@ a:hover {
   .bottom-nav {
     display: none !important;
   }
-  
 }
 
 @media screen and (max-width: 320px) {
