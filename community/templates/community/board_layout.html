@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+<div class="community-container">
+    <nav class="main-navbar navbar navbar-expand-lg navbar-light col-7">
+        <ul class="navbar-nav mr-auto">
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" href="{%url 'community:notice'%}" style="padding-left: 0 !important;">공지사항</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" href="{%url 'community:magazine'%}">매거진</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" href="{%url 'community:board'%}">자유게시판</a>
+            </li>
+        </ul>
+        <form method="GET" action="{% url 'community:search' %}">
+            {% csrf_token %}
+            <div class="main-search">
+                <div class="main-search-icon">
+                    <i class="search fa fa-search"></i>
+                </div>
+                <div class="main-search-input">
+                    <input type="text" placeholder="서비스 검색" id="main-search-input" name='search_key'
+                        value="{{ search_key }}">
+    
+                </div>
+    
+            </div>
+        </form>
+    </nav>
+    <!--------------------------------------------------------------------->
+    <!-- <div class="community-board col-xl-8 col-md-8 col-xs-12 mb-4">
+        <div class="board-header d-flex justify-content-between pb-3">
+            {% block board_navbar %}
+            {% endblock %}
+        </div>
+    </div> -->
+    {% block board_content %}
+    {% endblock %}
+</div>
+<!-- <script>
+    const currentLocation=location.href;
+    const menuItem=document.querySelectorAll('a');
+    const menuLength=menuItem.length
+    for(let i=0; i<menuLength;i++){
+        if(menuItem[i].href===currentLocation){
+            menuItem[i].className="active"
+        }
+    }
+</script> -->
+<script>
+    let search = document.querySelector(".search");
+    let clearh = document.querySelector(".clear");
+
+    search.onclick = function () {
+        document.querySelector(".main-search").classList.toggle('active');
+    }
+</script>
+
+{% endblock %}

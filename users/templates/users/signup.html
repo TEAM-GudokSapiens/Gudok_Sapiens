@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+<style>
+  select:focus,
+  select[type]:focus,
+  .uneditable-select:focus {
+    border-color: rgb(131, 131, 131) !important;
+    box-shadow: none !important;
+    outline: 0 none !important;
+  }
+
+  input:focus,
+  input[type]:focus,
+  .uneditable-input:focus {
+    border-color: rgb(131, 131, 131);
+    box-shadow: none;
+    outline: 0 none;
+  }
+
+  textarea:focus,
+  textarea[type]:focus,
+  .uneditable-textarea:focus {
+    border-color: rgb(131, 131, 131) !important;
+    box-shadow: none !important;
+    outline: 0 none !important;
+  }
+  
+  input:focus::placeholder {
+    color: transparent;
+  }
+
+  textarea::placeholder,
+  input::placeholder {
+    color: #fff !important;
+  }
+</style>
+
+<div class="forms text-center col-lg-3 col-md-4 col-sm-6 col-10">
+  <div>
+    <h2 class="form-logo">
+      회원가입
+    </h2>
+    <hr style="border-color: #000">
+  </div>
+  <form action="{% url 'users:signup' %}" method="post" enctype="multipart/form-data" class="signup-form">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <input type="submit" class="btn btn-dark col-12 mt-3 mb-5 py-2">
+  </form>
+</div>
+{% endblock %}

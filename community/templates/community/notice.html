@@ -1,0 +1,63 @@
+{% extends "./board_layout.html" %}
+{% load bootstrap4 %}
+
+
+{% block board_content %}
+<div class="community-board col-xl-7 col-md-7 col-xs-12 mb-4">
+    <div class="board-header d-flex justify-content-between pb-2">
+        <div class="col-4 p-0">
+        <div class="board-header-title">공지사항</div>
+        <div class="board-header-count">{{notices_count}}개의 글</div>
+        </div>
+    </div>
+    <div class="board-content mb-3">
+        <div class="board-title col-md-12">
+            <p class="col-8">제목</p>
+            <div class="col-4 p-0">
+                <p class="col-6">작성일</p>
+                <p class="col-6">조회수</p>
+            </div>
+        </div>
+        {% for notice in page_obj.object_list %}
+        <div class="board-content-container" style="border-bottom: 1px solid #EEEEEE;">
+            <p class="col-8"><a href="{%url 'community:notice_detail' notice.id%}" class="text-dark">{{ notice.title }}</a></p>
+            <div class="board-info col-4 p-0">
+                <p class="col-6">{{ notice.created_at | date:"Y-m-d" }}</p>
+                <p class="col-6">{{ notice.hits }}</p>
+            </div>
+            <div class="board-second-info col-sm-4 p-0">
+                <div class="col-md-12">{{ notice.created_at | date:"Y-m-d" }}</div>
+                <span class="col-6 pl-3">조회수 : {{ notice.hits }}</span>
+            </div>
+        </div>
+        {%endfor%}
+    </div>
+</div>
+<div class="board-paginator">
+    {% if page_obj.has_previous %}
+    <a href="?page=1" class="">처음으로</a>
+    <a href="?page={{ page_obj.previous_page_number }}" class="">&lt&lt</a>
+    {% endif %}
+
+    {% for page_number in page_obj.paginator.page_range %}
+        {% if page_number >= page_obj.number|add:-4 and page_number <= page_obj.number|add:4 %} 
+            {% if page_number is page_obj.number %} 
+            <li class="page-item active" aria-current="page">
+                <a class="" href="?page={{ page_number }}">{{ page_number }}</a>
+                </li>
+            {% else %}
+                <li class="page-item">
+                    <a class="" href="?page={{ page_number }}">{{ page_number }}</a>
+                </li>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+    <!-- <li>...{{ page_obj.paginator.num_pages }}</li> -->
+    <a href="?page={{ page_obj.next_page_number }}" class="">&gt&gt</a>
+    <a href="?page={{ page_obj.paginator.num_pages }}" class="">맨뒤로</a>
+    {% endif %}
+</div>
+{% endblock %}
+    

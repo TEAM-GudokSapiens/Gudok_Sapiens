@@ -1,0 +1,364 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<nav class="main-navbar navbar navbar-expand-lg navbar-light col-7">
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                전체 카테고리
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{% url 'services:subcategory_daily_item' %}"><i class="fas fa-store"></i>생활용품</a>
+                <a class="dropdown-item" href="{% url 'services:subcategory_health' %}"><i class="fas fa-running"></i>건강/헬스</a>
+                <a class="dropdown-item" href="{% url 'services:subcategory_clothing' %}"><i class="fas fa-tshirt"></i>의류</a>
+                <a class="dropdown-item" href="{% url 'services:subcategory_laundry' %}"><i class="fas fa-hand-sparkles"></i>세탁</a>
+                <a class="dropdown-item" href="{% url 'services:subcategory_cleaning' %}"><i class="fas fa-broom"></i>청소</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{% url 'services:subcategory_delivery' %}"><i class="fas fa-truck"></i>홈배달</a>
+                <a class="dropdown-item" href="{% url 'services:subcategory_beverage' %}"><i class="fas fa-coffee"></i>음료/커피</a>
+                <a class="dropdown-item" href="{% url 'services:subcategory_alcohol' %}"><i class="fas fa-cocktail"></i>주류</a>
+                <a class="dropdown-item" href="{% url 'services:subcategory_fruit' %}"><i class="fas fa-seedling"></i>과일/야채</a>
+                <a class="dropdown-item" href="{% url 'services:subcategory_health_food' %}"><i class="fas fa-capsules"></i>건강식품</a>
+                <a class="dropdown-item" href="{% url 'services:subcategory_bakery' %}"><i class="fas fa-bread-slice"></i>베이커리</a>
+                <a class="dropdown-item" href="{% url 'services:subcategory_fastfood' %}"><i class="fas fa-hamburger"></i>패스트푸드</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{% url 'services:subcategory_video' %}"><i class="fas fa-photo-video"></i>영상</a>
+                <a class="dropdown-item" href="{% url 'services:subcategory_music' %}"><i class="fas fa-headphones-alt"></i>음악</a>
+                <a class="dropdown-item" href="{% url 'services:subcategory_book' %}"><i class="fas fa-book"></i>도서</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{% url 'services:category_newsletter' %}"><i class="far fa-newspaper"></i>뉴스레터</a>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" href="{% url 'services:category_lifestyle' %}" class="text-dark">라이프 스타일</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" href="{% url 'services:category_food' %}" class="text-dark">음식</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" href="{% url 'services:category_content' %}" class="text-dark">컨텐츠</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" href="{% url 'services:category_newsletter' %}">뉴스레터</a>
+        </li>
+    </ul>
+    <form method="GET" action="{% url 'services:search' %}">
+        {% csrf_token %}
+        <div class="main-search">
+            <div class="main-search-icon">
+                <i class="search fa fa-search"></i>
+            </div>
+            <div class="main-search-input">
+                <input type="text" placeholder="서비스 검색" id="main-search-input" name='search_key'
+                    value="{{ search_key }}">
+            </div>
+        </div>
+    </form>
+</nav>
+
+<div id="mainCarousel" class="main-carousel carousel slide" data-ride="carousel">
+    {% if messages %}
+    <div>
+        {% for message in messages %}
+        <script>
+            alert('{{ message.message }}')
+        </script>
+        {% endfor %}
+    </div>
+    {% endif %}
+    <div class="main-carousel-inner carousel-inner">
+        {% for magazine in magazine_list  %}
+        {% if forloop.counter  == 1 %}
+        <div class="main-carousel-item carousel-item active">
+            <a href="{% url 'community:magazine_detail' magazine.id %}">
+                <img src="{{ magazine.img.url }}"
+                    style="display: block; line-height: 1; margin: 0 auto; max-width: 100%;" />
+            </a>
+        </div>
+        {% else %}
+        <div class="main-carousel-item carousel-item">
+            <a href="{% url 'community:magazine_detail' magazine.id %}">
+                <img src="{{ magazine.img.url }}"
+                    style="display: block; line-height: 1; margin: 0 auto; max-width: 100%;" />
+            </a>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+    <a class="main-carousel-control carousel-control-prev" href="#mainCarousel" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="main-carousel-control carousel-control-next" href="#mainCarousel" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+
+<div class="service-list-section col-7">
+    <h4 class="col-12">
+        금주의 사피엔스's PICK
+    </h4>
+    <div class="main-service-list-box col-12">
+        {% if services %}
+        {% for service in services  %}
+        <div class='service-card card service-id-{{ service.id }} col-6 col-md-3'>
+            <div class='card-img-top'>
+                {% if service.img1 %}
+                <a href="{% url 'services:services_detail' pk=service.pk %}">
+                    <img src="{{ service.img1.url }}" />
+                </a>
+                {% endif %}
+            </div>
+            <div>
+                <div class="d-flex justify-content-between">
+                    <h5><a href="{% url 'services:services_detail' pk=service.pk %}">{{ service.name }}</a></h5>
+                    <span class="star"><i
+                            class="fas fa-star"></i>{{ avg_of_reviews|floatformat:1 }}({{service.get_review_count}})</span>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <span class="service-intro">{{ service.intro }}</span>
+                    <div class="d-flex">
+                        {% if service.is_dib %}
+                        <div class="dib" onclick="onClickDib({{ service.id }})" style="margin-right: 0.1rem;"><i
+                                class="fas fa-heart"></i></div>
+                        {% else %}
+                        <div class="dib" onclick="onClickDib({{ service.id }})" style="margin-right: 0.1rem;"><i
+                                class="far fa-heart"></i></div>
+                        {% endif %}
+                        <div class="dib__counts">{{ service.dib_set.all.count }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+
+        <div>
+            <h5>조건에 맞는 구독 서비스가 없습니다.</h5>
+        </div>
+
+        {% endif %}
+
+    </div>
+</div>
+
+<div class="promotion-section col-7">
+    <a href="{% url 'services:services_list' %}">
+        <img src="{% static 'assets/gudok_start.png' %}" alt="">
+    </a>
+</div>
+
+{% comment %} 찜 많은 순으로 카테고리별 정렬 {% endcomment %}
+{% comment %} {% for category in categories %}
+<h3> {{ category }} </h3>
+{% for service in category.get_services_by_category  %}
+{{ service.name }}
+{% endfor %}
+{% endfor %} {% endcomment %}
+
+<div class="main-service-list-section popular-services col-7">
+    <h4 class="col-12">
+        카테고리별 인기 서비스
+    </h4>
+    <div class="main-service-list-box col-12 d-flex flex-column">
+        {% if categories %}
+        {% for category in categories %}
+        <h5> {{ category }} </h5>
+        <div class="popular-service col-12">
+            {% for service in category.get_services_by_category  %}
+            <div class='service-card card service-id-{{ service.id }} col-6 col-md-3'>
+                <div class='card-img-top'>
+                    {% if service.img1 %}
+                    <a href="{% url 'services:services_detail' pk=service.pk %}">
+                        <img src="{{ service.img1.url }}" width='100%' />
+                    </a>
+                    {% endif %}
+                </div>
+                <div>
+                    <div class="d-flex justify-content-between">
+                        <h5><a href="{% url 'services:services_detail' pk=service.pk %}">{{ service.name }}</a></h5>
+                        <span><i class="fas fa-star"></i>{{ avg_of_reviews }}({{service.get_review_count}})</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span class="service-intro">{{ service.intro }}</span>
+                        <div class="d-flex">
+                            {% if service.is_dib %}
+                            <div class="dib" onclick="onClickDib({{ service.id }})" style="margin-right: 0.1rem;"><i
+                                    class="fas fa-heart"></i></div>
+                            {% else %}
+                            <div class="dib" onclick="onClickDib({{ service.id }})" style="margin-right: 0.1rem;"><i
+                                    class="far fa-heart"></i></div>
+                            {% endif %}
+                            <div class="dib__counts">{{ service.dib_set.all.count }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+        {% else %}
+
+        <div>
+            <h5>조건에 맞는 구독 서비스가 없습니다.</h5>
+        </div>
+
+        {% endif %}
+
+    </div>
+</div>
+
+<div class="main-service-list-section col-7">
+    <h4 class="col-12">
+        신규 구독 서비스
+    </h4>
+    <div class="main-service-list-box col-12">
+        {% if services %}
+        {% for service in new_order_services  %}
+        <div class='service-card card service-id-{{ service.id }} col-6 col-md-3'>
+            <div class='card-img-top'>
+                {% if service.img1 %}
+                <a href="{% url 'services:services_detail' pk=service.pk %}">
+                    <img src="{{ service.img1.url }}" width='100%' />
+                </a>
+                {% endif %}
+            </div>
+            <div>
+                <div class="d-flex justify-content-between">
+                    <h5><a href="{% url 'services:services_detail' pk=service.pk %}">{{ service.name }}</a></h5>
+                    <span><i class="fas fa-star"></i>{{ avg_of_reviews }}({{service.get_review_count}})</span>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <span class="service-intro">{{ service.intro }}</span>
+                    <div class="d-flex">
+                        {% if service.is_dib %}
+                        <div class="dib" onclick="onClickDib({{ service.id }})" style="margin-right: 0.1rem;"><i
+                                class="fas fa-heart"></i></div>
+                        {% else %}
+                        <div class="dib" onclick="onClickDib({{ service.id }})" style="margin-right: 0.1rem;"><i
+                                class="far fa-heart"></i></div>
+                        {% endif %}
+                        <div class="dib__counts">{{ service.dib_set.all.count }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div>
+            <h5>조건에 맞는 구독 서비스가 없습니다.</h5>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="main-service-list-section col-7">
+    <h4 class="col-12">
+        랜덤 구독 서비스
+    </h4>
+    <div class="main-service-list-box col-12">
+        {% if random_services %}
+        {% for service in random_services  %}
+        <div class='service-card card service-id-{{ service.id }} col-6 col-md-3'>
+            <div class='card-img-top'>
+                {% if service.img1 %}
+                <a href="{% url 'services:services_detail' pk=service.pk %}">
+                    <img src="{{ service.img1.url }}" width='100%' />
+                </a>
+                {% endif %}
+            </div>
+            <div>
+                <div class="d-flex justify-content-between">
+                    <h5><a href="{% url 'services:services_detail' pk=service.pk %}">{{ service.name }}</a></h5>
+                    <span><i class="fas fa-star"></i>{{ avg_of_reviews }}({{service.get_review_count}})</span>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <span class="service-intro">{{ service.intro }}</span>
+                    <div class="d-flex">
+                        {% if service.is_dib %}
+                        <div class="dib" onclick="onClickDib({{ service.id }})" style="margin-right: 0.1rem;"><i
+                                class="fas fa-heart"></i></div>
+                        {% else %}
+                        <div class="dib" onclick="onClickDib({{ service.id }})" style="margin-right: 0.1rem;"><i
+                                class="far fa-heart"></i></div>
+                        {% endif %}
+                        <div class="dib__counts">{{ service.dib_set.all.count }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+
+        <div>
+            <h5>조건에 맞는 구독 서비스가 없습니다.</h5>
+        </div>
+
+        {% endif %}
+
+    </div>
+</div>
+
+
+<script>
+    const requestDib = new XMLHttpRequest();
+
+    const onClickDib = (id) => {
+
+        requestDib.open('POST', '/likes/dibs_ajax/', true);
+        requestDib.setRequestHeader(
+            'Content-type',
+            'application/x-www-form-urlencoded'
+        );
+        requestDib.send(JSON.stringify({
+            id: id
+        }));
+    };
+
+
+    const DibHandleResponse = () => {
+        if (requestDib.status < 400) {
+            const {
+                id
+            } = JSON.parse(requestDib.response)
+            const element = document.querySelector(`.service-id-${id} .dib`);
+
+            if (element.innerHTML == `<i class="fas fa-heart"></i>`) {
+                element.innerHTML = `<i class="far fa-heart"></i>`;
+                const dibsCounts = document.querySelector(`.service-id-${id} .dib__counts`);
+                const dibsCountsHTML = dibsCounts.innerHTML;
+                const count = Number(dibsCountsHTML) - 1;
+                dibsCounts.innerHTML = `${count}`;
+
+            } else {
+                element.innerHTML = `<i class="fas fa-heart"></i>`;
+                const dibsCounts = document.querySelector(`.service-id-${id} .dib__counts`);
+                const dibsCountsHTML = dibsCounts.innerHTML;
+                const count = Number(dibsCountsHTML) + 1;
+                dibsCounts.innerHTML = `${count}`;
+
+            }
+
+        }
+    }
+    requestDib.onreadystatechange = () => {
+        if (requestDib.readyState === XMLHttpRequest.DONE) {
+            DibHandleResponse();
+        }
+    }
+</script>
+
+<script>
+    let searches = document.querySelectorAll(".search");
+
+    for (let search of searches) {
+        search.onclick = function () {
+            document.querySelector(".main-search").classList.toggle('active');
+        }
+    }
+</script>
+
+{% endblock %}

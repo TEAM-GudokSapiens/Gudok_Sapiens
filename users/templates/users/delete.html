@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+<style>
+  input:focus,
+  input[type]:focus,
+  .uneditable-input:focus {
+    border-color: rgb(131, 131, 131);
+    box-shadow: none;
+    outline: 0 none;
+  }
+</style>
+
+<div class="col-8" style="text-align: center; margin: 9rem auto;">
+  
+  <h4 class="logo" style="margin-bottom: 2rem;">
+    회원 탈퇴를 진행하시겠습니까?
+  </h4>
+
+  <form action="{% url 'users:delete' %}" method="post" novalidate>
+    {% csrf_token %}
+    <div>
+      <div style="margin-bottom: 0.5rem;">
+        본인인증을 위해 비밀번호를 입력해주세요.
+      </div>
+
+      <div class="col-8 col-sm-4" style="margin: 0 auto 1.2rem auto; padding: 0;">
+        {{ password_form.password }}
+        {% if password_form.password.errors %}
+        <script type="text/javascript">
+            document.getElementsByName('password')[0].setAttribute('class', 'form-control is-invalid')
+        </script>
+        
+        {% for error in password_form.password.errors %}
+        <div class="invalid-feedback">
+            {{ error }}
+        </div>
+        {% endfor %}
+
+      {% endif %}
+      </div>
+
+
+
+    </div>
+    <input type="submit" class="btn btn-danger col-8 col-sm-4 mt-3" value="즉시 탈퇴">
+  </form>
+
+</div>
+{% endblock %}

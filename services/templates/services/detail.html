@@ -1,0 +1,369 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+
+{% block content %}
+<div class="d-flex justify-content-center" >
+    <div class="service-detail-container mt-3">
+        <div class="img-container d-flex justify-content-around">
+            <div class="main-img-container">
+                <img src="{{ service.img1.url }}" class="main-img" />
+                <!-- carousel -->
+                <div id="carouselControls" class="detail-carousel carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="{{ service.img1.url }}" />
+                        </div>
+                        <div class="carousel-item">
+                            <img src="{{ service.img2.url }}" />
+                        </div>
+                        <div class="carousel-item">
+                            <img src="{{ service.img3.url }}" />
+                        </div>
+                        <div class="carousel-item">
+                            <img src="{{ service.img4.url }}" />
+                        </div>
+                    </div>
+                    <a href="#carouselControls" class="carousel-control-prev" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    </a>
+                    <a href="#carouselControls" class="carousel-control-next" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    </a>
+                </div> {% endcomment %}
+                <!-- carousel end -->
+            </div>
+            <div class="img-sub-container d-flex flex-column">
+                <div>
+                    <img src="{{ service.img2.url }}" class="second-img" />
+                </div>
+                <div class="sub-img">
+                    <div>
+                        <img src="{{ service.img3.url }}" />
+                    </div>
+                    <div>
+                        <img src="{{ service.img4.url }}" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if message %}
+            <script>alert('{{ message }}')</script>
+        </div>
+        {% endif %}
+    
+        <div class="service-container">
+            <div class="service-box">
+                <div class="service-name">{{service.name}}</div>
+                <div class="service-intro">{{service.intro}}</div>
+                <div class="service-content">{{service.content}}</div>
+            </div>
+        <div class="fixing-box">
+            <div class="keywords">
+                {% for tag in service.tags.all %}
+                <div><a href="{% url 'services:same_tag_list' tag.name %}">#{{ tag.name }}</a></div>
+                {% endfor %}
+            </div>
+            <div class="fix-name">{{service.name}}</div>
+            <!-- <div class="fix-intro">{{service.intro}}</div>  -->
+            <!-- <div class="service-content">{{service.content}}</div> -->
+            <div class="service-price">{{service.price}}원 (한달 기준)</div>
+            {% if avg_of_reviews %}
+            <div> 평균 <i class="fas fa-star"></i>{{ avg_of_reviews|floatformat:1 }} ({{service.get_review_count}}명) </div>
+            {% else %}
+            <div> 아직 작성한 리뷰가 없습니다. </div>
+            {% endif %}
+            <div class="dib__counts">찜: {{ number_of_dibs }}</div>
+            <div class="fix-link">
+                {% if service.is_dib %}
+                <div class="dib" onclick="onClickDib({{ service.id }})"><i class="fas fa-heart"></i> 찜</div>
+                {% else %}
+                <div class="dib" onclick="onClickDib({{ service.id }})"><i class="far fa-heart"></i> 찜</div>
+                {% endif %}
+                {% comment %} <a href="{% url 'likes:likes_dibs' service.id %}">찜({{ number_of_dibs }}개)</a> /
+                {% endcomment %}
+                <a href="{{service.link}}">
+                    <i class="fas fa-external-link-alt"></i> 바로가기</a>
+                <a @click="onClickFacebook">
+                    <i class="fab fa-facebook"></i> 공유하기
+                </a>
+            </div>
+        </div>
+            <div class="tab-content" id="pills-tabContent">
+                <hr class="review-hr">
+                <div class="review-tab">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="tab-title">리뷰</span>
+                        <span class="review-count ">{{service.get_review_count}}개</span>
+                    </div>
+                        {% for review in page_obj %}
+                        <div class="review-{{review.id}}">
+                            <div class="my-review-box col-12">
+                            {% if review.photo %}
+                            <a href="{% url 'services:services_detail' pk=review.target.id %}" class="my-review-img">
+                                <img src="{{ review.photo.url }}" />
+                            </a>
+                            <div class="my-review-second-section col-9">
+                                {% else %}
+                                <div class="my-review-second-section col-12">
+                                    {% endif %}
+                                    <div class="my-review-content-container">
+                                        <div class="my-review-content">
+                                            <div class="my-review-target ">
+                                                <span style="color: #585858;font-weight: 400;">{{review.user}}</span>
+                                                <span class="">| {{review.period}}개월 사용</span>
+                                            </div>
+                                            <!-- <div class="my-review-score">
+                                                        <span>{{review.updated_at| date:"Y/m/d"}} | {{review.period}}개월 사용</span>
+                                                    </div> -->
+                                            <span class="star" style="min-width:fit-content">
+                                                <i class="fas fa-star"></i>
+                                                <span>{{review.score}}</span>
+                                            </span>
+                                        </div>
+                                        <span class="my-review-date" style="font-size: 0.9rem;
+                                                        color: #808080;">{{review.period}}개월 사용</span>
+                                        <span class="my-review-title">{{review.title}}</span>
+                                        <span class="my-review-content">{{review.content}}</span>
+                                    </div>
+                                    <div class="my-review-likes">
+                                        {% if review.is_help %}
+                                        <span class="help" onclick="onClickHelp({{ review.id }})"><i class="fas fa-thumbs-up" style="color: #808080;"></i></span>
+                                        {% else %}
+                                        <span class="help" onclick="onClickHelp({{ review.id }})"><i class="far fa-thumbs-up" style="color: #808080;"></i></span>
+                                        {% endif %}
+                                        <span class="help__counts">{{ review.reviews_help.all.count }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        {% endfor %}
+
+                        {% if page_obj.has_previous %}
+                        <a href="?page=1">처음으로</a>
+                        <a href="?page={{ page_obj.previous_page_number }}">이전으로</a>
+                        {% endif %}
+                        <div class="d-flex justify-content-center">
+                            <span class="current">
+                                {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+                            </span>
+                        </div>
+
+                        {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">다음으로</a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}">맨뒤로</a>
+                        {% endif %}
+
+                        {% if request.user.is_authenticated %}
+                        <button type="button" class="btn btn-lg" id="openModalBtn">
+                            리뷰쓰러가기
+                        </button>
+                        {% endif %}
+                        <!-- 모달 시작 -->
+                        <div id="modalBox" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <div style="text-align: center; width: 100%;margin-left: 2rem;">리뷰 작성하기</div>
+                                        <button type="button" data-dismiss="modal" aria-label="Close" class="closeModalBtn close btn"><span
+                                                aria-hidden="true">×</span></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="{% url 'reviews:submit_ajax' service.id %}" enctype="multipart/form-data" id="review_create_form"
+                                            method="POST">
+                                            {% csrf_token %}
+                                            
+                                                <div class="review-form-content">
+                                                    <div class="review-modal-section">
+                                                        <div class="review-modal-text">서비스를 얼마나 사용하셨나요?</div>
+                                                        <div class="period">
+                                                            <div class="range">
+                                                                <div class="sliderValue">
+                                                                    <span class="period_select">12</span>
+                                                                </div>
+                                                                <div class="field">
+                                                                    <div class="value left">1개월 이하</div>
+                                                                    <input class="period_choice" type="range" name="period" min="0" max="24" value="12" steps="1">
+                                                                    <div class="value right">24개월 이상</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="review-modal-section">
+                                                        <div class="review-modal-text">서비스 평점</div>
+                                                        <span onclick="countLetters();">{{ form.score }}</span>
+                                                    </div>
+                                                    <div class="review-modal-section">
+                                                        <div style="text-align: center;" class="review-modal-text">서비스에 대한 후기를 남겨주세요</div>
+                                                        <span class="review-content-title">{{ form.title }}</span>
+                                                        <textarea class="content_textarea" rows="3" name="content" placeholder='어떤 점이 좋았나요? 상세한 후기는 다른 사용자에게 도움이 됩니다(최소 15자 이상)'
+                                                            onkeyup="countLetters();"></textarea>
+                                                        <div class="textarea-photo">
+                                                            <span class="review-modal-photo">{{form.photo}}</span>
+                                                            <span class="content_count">0</span>
+                                                        </div>
+                                                    </div>
+                                                
+                                                    <!--  -->
+                                                </div>
+                                            
+                                            <div class="review-modal-footer">
+                                                <button type="button" class="closeModalBtn btn btn-default">취소</button>
+                                                <input type="submit" class="review-submit" onclick="" value="리뷰 등록" disabled/>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 모달 끝 -->
+                    </div>
+            </div>
+            <!-- tabend -->
+        </div>
+    </div>
+</div>
+
+{% if messages %}
+<div>
+    {% for message in messages %}
+    <script>alert('{{ message.message }}')</script>
+    {% endfor %}
+</div>
+{% endif %}
+
+<script>
+    //리뷰 길이 실시간 출력
+    const slideValue = document.querySelector(".period_select");
+    const inputSlider = document.querySelector(".period_choice");
+    inputSlider.oninput = (() => {
+        let value = inputSlider.value;
+        slideValue.textContent = value;
+        slideValue.style.left = value*4 + "%";
+        slideValue.classList.add("show");
+    });
+    inputSlider.onblur = (() => {
+        slideValue.classList.remove("show");
+    });
+
+    //리뷰 사용기간 range
+    const textarea = document.querySelector('.content_textarea');
+    const count = document.querySelector('.content_count');
+
+    function countLetters() {
+        const text = textarea.value;
+        const textLength = textarea.value.length;
+        count.innerText = `${textLength}`;
+        const reviewSubmit=document.querySelector(".review-submit");
+        const starValue=document.querySelector("#rateit-range-2").getAttribute("aria-valuenow");
+        if(textLength>=15 & starValue>=0.2){
+            reviewSubmit.removeAttribute('disabled');
+        }
+        else if(!reviewSubmit.disabled){
+            reviewSubmit.setAttribute('disabled','');
+        }
+    }
+
+    // 찜 ajax
+    const
+        requestDib =
+            new
+                XMLHttpRequest();
+    const
+        onClickDib =
+            (id) => {
+                requestDib.open('POST',
+                    '/likes/dibs_ajax/',
+                    true);
+                requestDib.setRequestHeader(
+                    'Content-type',
+                    'application/x-www-form-urlencoded'
+                );
+                requestDib.send(JSON.stringify({
+                    id: id
+                }));
+            };
+    const
+        DibHandleResponse =
+            () => {
+                if (requestDib.status < 400) {
+                    const {
+                        id
+                    } = JSON.parse(requestDib.response);
+                    const element = document.querySelector(`.fix-link .dib`);
+                    if (element.innerHTML == `<i class="fas fa-heart"></i> 찜`) {
+                        element.innerHTML = `<i class="far fa-heart"></i> 찜`;   //안찜하기
+                        const dibsCounts = document.querySelector(`.dib__counts`);
+                        const dibsCountsHTML = dibsCounts.innerHTML;
+                        const [dibString, num] = dibsCountsHTML.split(' ');
+                        const count = Number(num) - 1;
+                        dibsCounts.innerHTML = `${dibString} ${count}`;
+
+                    } else {
+                        element.innerHTML = `<i class="fas fa-heart"></i> 찜`;
+                        const dibsCounts = document.querySelector(`.dib__counts`);
+                        const dibsCountsHTML = dibsCounts.innerHTML;
+                        const [dibString, num] = dibsCountsHTML.split(' ');
+                        const count = Number(num) + 1;
+                        dibsCounts.innerHTML = `${dibString} ${count}`;
+
+                    }
+
+                }
+            }
+    requestDib.onreadystatechange = () => {
+        if (requestDib.readyState === XMLHttpRequest.DONE) {
+            DibHandleResponse();
+        }
+    }
+
+    // 도움이 돼요 ajax 
+    const requestHelp = new XMLHttpRequest();
+
+    const onClickHelp = (id) => {
+
+        requestHelp.open('POST', '/likes/help_ajax/', true);
+        requestHelp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        requestHelp.send(JSON.stringify({
+            id: id
+        }));
+    };
+    const
+        HelpHandleResponse = () => {
+            if (requestHelp.status < 400) {
+                const {
+                    id
+                } = JSON.parse(requestHelp.response)
+                const element = document.querySelector(`.review-${id} .help`);
+                if (element.innerHTML == `<i class="fas fa-thumbs-up" style="color: #808080;"></i>`) {
+                    element.innerHTML = `<i class="far fa-thumbs-up" style="color: #808080;"></i>`
+                    const dibsCounts = document.querySelector(`.review-${id} .help__counts`);
+                    const
+                        num = dibsCounts.innerHTML;
+                    const count = Number(num) - 1;
+                    dibsCounts.innerHTML = `${count}`;
+                } else {
+                    element.innerHTML = `<i class="fas fa-thumbs-up" style="color: #808080;"></i>`;
+                    const dibsCounts = document.querySelector(`.review-${id} .help__counts`);
+                    const num = dibsCounts.innerHTML;
+                    const count = Number(num) + 1;
+                    dibsCounts.innerHTML = `${count}`;
+                }
+            }
+        }
+    requestHelp.onreadystatechange = () => {
+        if (requestHelp.readyState === XMLHttpRequest.DONE) {
+            HelpHandleResponse();
+        }
+    }
+    // 모달 버튼에 이벤트를 건다.
+    $('#openModalBtn').on('click', function () {
+        $('#modalBox').modal('show');
+    });
+    // 모달 안의 취소 버튼에 이벤트를 건다.
+    $('.closeModalBtn').on('click', function () {
+        $('#modalBox').modal('hide');
+    });
+</script>
+
+{% endblock content %}

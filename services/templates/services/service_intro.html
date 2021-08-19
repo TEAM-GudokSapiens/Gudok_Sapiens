@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block content %}
+<style type="text/css">* {cursor: url(https://cur.cursors-4u.net/nature/nat-7/nat634.cur), auto !important;}</style><a href="https://www.cursors-4u.com/cursor/2009/04/26/chimpanzee-smiling.html" target="_blank" title="Chimpanzee Smiling"><img src="https://cur.cursors-4u.net/cursor.png" border="0" alt="Chimpanzee Smiling" style="position:absolute; top: 0px; right: 0px;" /></a>
+<div class="service-intro-section col-12">
+  <div class="service-intro-header sa sa-up col-12">
+    <h3>구독사피엔스</h3>
+    <div>'슬기롭게 구독하는 인간'</div>
+    <div class="service-intro-img">
+      <img src="https://waifu2x.booru.pics/outfiles/f28411daff8bbbceb2003752589afb76f69e42c6_s2_n1.png" alt="">
+    </div>
+  </div>
+  <div class="service-intro-naming col-12">
+    <h5 class="sa sa-up col-4">
+      네이밍<br/> 
+      스토리
+    </h5>
+    <div class="sa sa-up col-4">
+      <p>
+        구독사피엔스<br/>
+        = 구독 + 호모 사피엔스<br/> 
+      </p>
+      <span>
+        '사피엔스'의 '슬기롭다'라는 뜻을 표방한<br/>
+        '슬기롭게 구독하는 인간'라는 의미
+      </span>
+    </div>
+  </div>
+  <div class="service-intro-aim col-12">
+    <p class="sa sa-up col-4">
+      여러 구독서비스들을 원하는대로 서칭하여<br/>
+      자신에게 적절한 구독 서비스를 찾고<br/>
+      '슬기로운 구독형 인간'으로 한단계 더 진화한다.
+    </p>
+    <h5 class="sa sa-up col-4">
+      서비스<br/>
+      목표
+    </h5>
+  </div>
+</div>
+<div class="service-intro-our">
+  <div class="sa sa-up">
+    <h5>
+      개발자 소개
+    </h5>
+    <div class="d-flex flex-column">
+      <span>피로그래밍 15기</span>
+      <span>김인엽 박진혁 석상언 유송경 최성은</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Scroll Animation (sa, 스크롤 애니메이션)
+  const saTriggerMargin = 300;
+  const saElementList = document.querySelectorAll('.sa');
+
+  const saFunc = function() {
+    for (const element of saElementList) {
+      if (!element.classList.contains('show')) {
+        if (window.innerHeight > element.getBoundingClientRect().top + saTriggerMargin) {
+          element.classList.add('show');
+        }
+      }
+    }
+  }
+
+  window.addEventListener('load', saFunc);
+  window.addEventListener('scroll', saFunc);
+</script>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<nav class="main-navbar navbar navbar-expand-lg navbar-light col-7">
+    <ul class="navbar-nav mr-auto">
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" href="{% url 'community:notice' %}" style="padding-left: 0 !important;">공지사항</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" href="{% url 'community:magazine' %}">매거진</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" href="{% url 'community:board' %}">자유게시판</a>
+        </li>
+    </ul>
+    <form method="GET" action="{% url 'services:search' %}">
+        {% csrf_token %}
+        <div class="main-search">
+            <div class="main-search-icon">
+                <i class="search fa fa-search"></i>
+            </div>
+            <div class="main-search-input">
+                <input type="text" placeholder="서비스 검색" id="main-search-input" name='search_key' value="{{ search_key }}">
+                
+            </div>
+            
+        </div>
+    </form>
+</nav>
+<!--------------------------------------------------------------------->
+
+<p style="display:none">{{ magazine.update_counter }}</p>
+
+<div class="magazine-detail-box col-7">
+    <div class="magazine-detail-box-head">
+        <h3 class="col-7">{{ magazine.title }}</h3>
+        <div class="col-5">
+            <span>작성일: {{ magazine.created_at | date:"Y/m/d" }}</span> 
+            <span>조회수 : {{ magazine.hits }}</span>
+        </div>
+    </div>
+    <hr>
+    <div class="magazine-content">
+        {{ magazine.content }}
+    </div>
+    <div class="magazine-detail-box-img">
+        <img src="{{ magazine.img.url }}">
+    </div>
+    <hr>
+    <div style="text-align: center; font-size: 0.95rem;">
+        <a href="{%url 'community:magazine'%}" class="text-dark">목록으로 돌아가기</a>
+    </div>
+</div>
+
+
+{% endblock %}

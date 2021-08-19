@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="col-lg-7 col-sm-8" style="display: flex; flex-direction: column; align-items: center; width: 100%; margin: 10rem auto;">
+    <div class="card col-10" style="margin-bottom: 5rem;">
+        <div class="card-body">
+            <div class="row mt-5">
+                <div class="col-12">
+                    <h4 style="font-weight: bold; margin-bottom: 1.2rem;">인증을 위한 메일이 발송되었습니다.</h4>
+                    <p>입력하신 메일을 확인해주세요.<br>인증을 하지 않으시면 로그인이 되지 않습니다.</p>
+                    <br>
+                </div>
+            </div>
+            <div class="row justify-content-md-center">
+                <button onclick="location.href='/'" style="opacity: 90%; font-size: 1rem; margin-top: 0.35rem;"
+                    class="btn btn-red"><i class="fas fa-home"></i>&nbsp;&nbsp;메인으로</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

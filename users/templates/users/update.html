@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+    <nav class="main-navbar navbar navbar-expand-lg navbar-light col-7">
+      <ul class="navbar-nav mr-auto">
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="{%url 'users:update' request.user.id %}"
+            style="padding-left: 0 !important;">마이페이지</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="{%url 'users:dibs_list'%}">내가 찜한 서비스</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="{%url 'users:reviews_list'%}">내가 쓴 리뷰</a>
+        </li>
+      </ul>
+    </nav>
+<div class="forms text-center col-lg-3 col-md-4 col-sm-6 col-10">
+  <div>
+    <h2 class="form-logo">
+      회원정보 변경
+    </h2>
+    <hr style="border-color: #000">
+  </div>
+  <form action="{% url 'users:update' pk=user.pk %}" method="post" enctype="multipart/form-data" class="update-form">
+    {% load widget_tweaks %}
+    {% csrf_token %}
+    <div>{{ form.user_id.label }}{{ form.user_id |add_class:"ud-form-input" }}</div>
+    <div>{{ form.email.label }}{{ form.email |add_class:"ud-form-input" }}</div>
+    <div>{{ form.name.label }}{{ form.name |add_class:"ud-form-input" }}</div>
+    <div>{{ form.nickname.label }}{{ form.nickname |add_class:"ud-form-input" }} <span>{{ form.nickname.help_text }}</span></div>
+    <div>{{ form.image.label }}{{ form.image |add_class:"ud-form-input" }} <span>{{ form.image.help_text }}</span></div>
+    <div>{{ form.gender.label }}{{ form.gender |add_class:"ud-form-input" }}</div>
+    <div>{{ form.phonenum.label }}{{ form.phonenum |add_class:"ud-form-input" }} <span>{{ form.phonenum.help_text }}</span> </div>
+    <input type="submit" value="변경" class="btn btn-dark col-12 mt-4 mb-5" style="padding: 0.6rem 0;">
+  </form>
+  <a href="{% url 'users:update_password' %}" style="text-align: center; color: #444;">
+    <p>
+      비밀번호 변경
+    </p>
+  </a>
+  <a href="{% url 'users:delete' %}" style="text-align: center; color: #444;">
+    <p>
+      회원 탈퇴
+    </p>
+  </a>
+</div>
+
+{% if message %}
+<script>alert('{{ message }}')</script>
+{% endif %}
+
+{% endblock %}

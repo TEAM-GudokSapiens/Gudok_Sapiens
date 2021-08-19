@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load taggit_templatetags2_tags %}
+
+{% block content %}
+{% get_taglist as tags %}
+
+<style>
+    /* .tag-1 {
+        font-size: 1rem;
+    }
+
+    .tag-2 {
+        font-size: 2rem;
+    }
+
+    .tag-3 {
+        font-size: 3rem;
+    }
+
+    .tag-4 {
+        font-size: 4rem;
+    }
+
+    .tag-5 {
+        font-size: 5rem;
+    }
+
+    .tag-6 {
+        font-size: 6rem;
+    } */
+    .page-item input:focus,
+    .page-item input[type]:focus,
+    .uneditable-input:focus {
+      box-shadow: none;
+      outline: 0 none;
+    }
+</style>
+<div class="tag-service-section col-10">
+    <form action="{% url 'services:services_tags' %}" method='POST' id="checkbox-group">
+        {% csrf_token %}
+        <ul class="tag-service-box">
+            {% for tag in tags  %}
+            <li class="tag-service-card tag-{{tag.num_times}}">
+                <label data-weight="3">
+                    <input type='checkbox' name='selected' value='{{ tag }}'>
+                    <span style="font-family: 'GmarketSansTTFMedium';">
+                        <span class="material-icons">favorite</span>
+                        {{ tag.name }}
+                    </span>
+                </label>
+            </li>
+            {% endfor %}
+        </ul>
+        <div>
+            <ul class="pagination justify-content-center">
+                <li class="page-item">
+                    <input class="btn btn-dark" type='submit' value='검색' style="width: 5rem;"/>
+                </li>
+            </ul>
+        </div>
+    </form>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        let items = $(".tag-service-card");
+        for (let i = 0; i < items.length; i++) {
+            let idx = Math.floor(Math.random() * items.length - 1) + 1;
+            let idx2 = Math.floor(Math.random() * items.length - 1) + 1;
+            items.eq(idx).before(items.eq(idx2));
+        };
+    });
+</script>
+<script>
+    window.addEventListener('unload', function (event) {
+        document.getElementById("checkbox-group").reset();
+    }, false);
+</script>
+<script>
+    
+</script>
+
+
+
+
+{% endblock %}

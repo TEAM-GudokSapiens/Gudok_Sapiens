@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    input:focus,
+    input[type]:focus,
+    .uneditable-input:focus {
+      border-color: rgb(131, 131, 131);
+      box-shadow: none;
+      outline: 0 none;
+    }
+</style>
+
+<div class="forms text-center col-lg-3 col-md-4 col-sm-6 col-10">
+    {% if messages %}
+    <div>
+        {% for message in messages %}
+        <script>alert('{{ message.message }}')</script>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div>
+        <h2 class="form-logo">
+          로그인
+        </h2>
+        <hr style="border-color: #000">
+    </div>
+    <form method="POST" class="update-form text-dark" >
+        {% load widget_tweaks %}
+        {% csrf_token %}
+        <div class="mb-4 md-form" style="text-align: start;">
+            <label name="label_user_id" for="{{ form.user_id.id_for_label }}">{{ form.user_id.label }}</label>
+            {{ form.user_id |add_class:"ud-form-input"}}
+            <script type="text/javascript">
+                if (document.getElementsByName('user_id')[0].value != '') {
+                    document.getElementsByName('label_user_id')[0].setAttribute('class', 'active');
+                }
+            </script>
+            {% if form.user_id.errors %}
+            <script type="text/javascript">
+                document.getElementsByName('user_id')[0].setAttribute('class',
+                    'form-control is-invalid')
+            </script>
+            {% for error in form.user_id.errors %}
+            <div class="invalid-feedback">
+                {{ error }}
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="mb-2 md-form" style="text-align: start;">
+            <label for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+            {{ form.password |add_class:"ud-form-input"}}
+
+            {% if form.password.errors %}
+            <script type="text/javascript">
+                document.getElementsByName('password')[0].setAttribute('class', 'form-control is-invalid')
+            </script>
+            {% for error in form.password.errors %}
+            <div class="invalid-feedback">
+                {{ error }}
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+        <div class="login-direction col-12">
+            <div>
+                <a href="{% url 'users:recovery_id' %}" class="text-dark">아이디 찾기</a>
+                / 
+                <a href="{% url 'users:recovery_pw' %}" class="text-dark">비밀번호 찾기</a>
+            </div>
+            <div><a href="{% url 'users:agreement' %}" class="text-dark">회원가입</a></div>
+        </div>
+
+        <input class="btn btn-dark col-12 mt-3 mb-5" style="padding: 0.6rem 0;" type="submit" value="로그인">
+
+        <!-- <a class="social-login1 w-100" href="/accounts/google/login/?process=login">
+            <img src="https://artmusee.com/images/google_login.png" alt="구글 로그인" style="width: 100%;">
+        </a>
+        <a class="social-login2 w-100" href="/accounts/naver/login/?process=login">
+            <img src="https://img1.daumcdn.net/thumb/R720x0.q80/?scode=mtistory2&fname=http%3A%2F%2Fcfile24.uf.tistory.com%2Fimage%2F99580C465C3D7D130CF754" alt="네이버 로그인" style="width: 100%;">
+        </a>
+        <a class="social-login2 w-100" href="/accounts/naver/login/?process=login">
+            <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=http%3A%2F%2Fcfile28.uf.tistory.com%2Fimage%2F99BEE8465C3D7D12140EAC" alt="네이버 로그인" style="width: 100%;">
+        </a> -->
+        <a class="social-login1 w-100" href="/accounts/google/login/?process=login">
+            <img src="../../../media/google_logo.png" alt="" style="width: 10%;" class="mr-2">
+            구글로 시작하기
+        </a>
+        <a class="social-login2 w-100" href="/accounts/naver/login/?process=login">
+            <img src="../../../media/naver_logo.png" alt="" style="width: 8%;" class="mr-2">
+            네이버로 시작하기
+        </a>
+        <a class="social-login3 w-100" href="/accounts/kakao/login/?process=login">
+            <img src="../../../media/kakao_logo.png" alt="" style="width: 8%;" class="mr-2">
+            카카오로 시작하기
+        </a>
+    </form>
+</div>
+{% endblock %}

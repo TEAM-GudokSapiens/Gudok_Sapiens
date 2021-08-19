@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load taggit_templatetags2_tags %}
+
+{% block content %}
+    <nav class="main-navbar navbar navbar-expand-lg navbar-light col-7">
+        <ul class="navbar-nav mr-auto">
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" href="{%url 'users:update' request.user.id %}" style="padding-left: 0 !important;">마이페이지</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" href="{%url 'users:dibs_list'%}">내가 찜한 서비스</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" href="{%url 'users:reviews_list'%}">내가 쓴 리뷰</a>
+            </li>
+        </ul>
+    </nav>
+
+{% comment %} 본문 내용 서비스 나열 {% endcomment %}
+<div class="dibs-list-container col-lg-7 col-md-10 col-sm-12">
+    <h3>내가 찜한 서비스</h3>
+    <hr style="border-color: #000;">
+    <div class="row d-flex justify-content-center">
+        {% if services %}
+            {% for service in services  %}
+            <div class='service-card card col-lg-3 col-md-4 col-sm-5 col-5'>
+                    <div class='card-img-top'>
+                        {% if service.img1 %}
+                        <a href="{% url 'services:services_detail' pk=service.pk %}">
+                            <img src="{{ service.img1.url }}" />
+                        </a>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <div class="d-flex justify-content-between">
+                            <h5><a href="{% url 'services:services_detail' pk=service.pk %}">{{ service.name }}</a></h5>
+                            <span class="star"><i class="fas fa-star"></i>{{ avg_of_reviews }}({{service.get_review_count}})</span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span class="service-intro">{{ service.intro }}</span>
+                            <span>
+                                <a href="{% url 'likes:likes_dibs' service.id %}" class="heart"><i class="far fa-heart"></i></a>
+                                {{ number_of_dibs }}
+                            </span>
+                        </div>
+                    </div>
+            </div>
+            {% endfor %}
+        {% else %}
+
+            <div class="col-12" style="margin: 2rem auto 20rem auto; text-align: center; font-size: 0.8rem;">
+                <tr style="text-align: center;">
+                    <td style="font-weight: bold; color:gray;" colspan="5">
+                        찜한 구독 서비스가 없습니다.
+                    </td>
+                </tr>
+            </div>
+
+        {% endif %}
+    </div>
+</div>
+
+{% comment %} 하단 페이지 넘기기 기능 {% endcomment %}
+
+<div class="board-paginator">
+    {% if services.has_previous %}
+    <a href="?page=1" class="text-dark">처음으로</a>
+    <a href="?page={{ page_obj.previous_page_number }}" class="text-dark">&lt&lt</a>
+    {% endif %}
+
+    {% for page_number in services.paginator.page_range %}
+    {% if page_number >= services.number|add:-4 and page_number <= services.number|add:4 %} 
+    {% if page_number is services.number %} <li class="page-item active" aria-current="page">
+        <a class="text-dark" href="?page={{ page_number }}">{{ page_number }}</a>
+        </li>
+        {% else %}
+        <li class="page-item">
+            <a class="text-dark" href="?page={{ page_number }}">{{ page_number }}</a>
+        </li>
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+
+        {% if services.has_next %}
+        <!-- <li>...{{ page_obj.paginator.num_pages }}</li> -->
+        <a href="?page={{ services.next_page_number }}" class="text-dark">&gt&gt</a>
+        <a href="?page={{ services.paginator.num_pages }}" class="text-dark">맨뒤로</a>
+        {% endif %}
+</div>
+
+{% endblock %}
