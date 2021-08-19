@@ -142,7 +142,7 @@ class AccountUpdateView(UpdateView):
 
     def post(self, *args, **kwargs):
         if self.request.user.is_authenticated and self.get_object() == self.request.user:
-            messages.success(self.request, "유저정보를 성공적으로 변경하였습니다.")
+            messages.success(self.request, "유저정보가 성공적으로 변경되었습니다.")
             return super().post(*args, **kwargs)
         else:
             return HttpResponseForbidden()
