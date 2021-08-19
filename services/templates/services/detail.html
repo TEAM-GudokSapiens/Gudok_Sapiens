@@ -158,7 +158,7 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <span>리뷰 작성하기</span>
+                                        <div style="text-align: center; width: 100%;margin-left: 2rem;">리뷰 작성하기</div>
                                         <button type="button" data-dismiss="modal" aria-label="Close" class="closeModalBtn close btn"><span
                                                 aria-hidden="true">×</span></button>
                                     </div>
@@ -185,7 +185,7 @@
                                                     </div>
                                                     <div class="review-modal-section">
                                                         <div class="review-modal-text">서비스 평점</div>
-                                                        <span>{{ form.score }}</span>
+                                                        <span onclick="countLetters();">{{ form.score }}</span>
                                                     </div>
                                                     <div class="review-modal-section">
                                                         <div style="text-align: center;" class="review-modal-text">서비스에 대한 후기를 남겨주세요</div>
@@ -203,7 +203,7 @@
                                             
                                             <div class="review-modal-footer">
                                                 <button type="button" class="closeModalBtn btn btn-default">취소</button>
-                                                <input type="submit" class="review-submit" onclick="" value="리뷰 등록" style="border: none;color: white;background: black;" disabled/>
+                                                <input type="submit" class="review-submit" onclick="" value="리뷰 등록" disabled/>
                                             </div>
                                         </form>
                                     </div>
@@ -241,6 +241,9 @@
         const starValue=document.querySelector("#rateit-range-2").getAttribute("aria-valuenow");
         if(textLength>=15 & starValue>=0.2){
             reviewSubmit.removeAttribute('disabled');
+        }
+        else if(!reviewSubmit.disabled){
+            reviewSubmit.setAttribute('disabled','');
         }
     }
 

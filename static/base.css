@@ -805,7 +805,7 @@
 }
 .fix-link div:hover,
 .fix-link a:hover {
-  text-shadow: 1px 1px 5px rgb(179, 179, 179);
+  text-shadow: 1px 1px 3px rgb(179, 179, 179);
 }
 .dib i,
 .help i {
@@ -846,6 +846,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 2rem;
 }
 .review-content-title input,
 .review-form-content textarea {
@@ -860,7 +861,7 @@
   font-size: 0.9rem;
 }
 .review-modal-section {
-  margin-bottom: 1.5rem;
+  margin-bottom: 3rem;
 }
 .review-modal-text {
   margin-bottom: 0.3rem;
@@ -878,6 +879,16 @@
 .textarea-photo {
   display: flex;
   justify-content: space-between;
+}
+.review-submit {
+  border: none;
+  color: rgb(0, 0, 0);
+  margin: 0 0.5rem;
+}
+.review-submit:disabled {
+  border: none;
+  background-color: #f3f3f3;
+  color: #bbbbbb;
 }
 
 .content-block {
