@@ -51,7 +51,7 @@
     </ul>
 </div>
 <select id="sort-select" onchange="location = this.value;">
-  <option class="sort-date" value="/">최신순</option>
+  <option class="sort-date" value="?sort=date">최신순</option>
   <option class="sort-dib" value="?sort=dib">찜 많은 순</option>
   <option class="sort-score" value="?sort=score">별점순</option>
 </select>
@@ -202,10 +202,10 @@ var getUrlParameter = function getUrlParameter(sParam) {
 $(document).ready(function(){
   var sort = getUrlParameter('sort');
   if(sort == 'dib'){
-    $('.sort-dibs').prop('selected', 'selected')
+    $('.sort-dib').prop('selected', 'selected')
   }else if(sort == 'score'){
     $('.sort-score').prop('selected', 'selected')
-  }else{
+  }else if(sort == 'date'){
     $('.sort-date').prop('selected', 'selected')
   }
 });
