@@ -714,30 +714,61 @@ ul.tag-service-box {
   width: 90%;
 }
 
-ul.tag-service-box label {
-  --color: #15066b;
-  color: var(--color);
-  display: block;
-  padding: 0.125rem 0.25rem;
-  position: relative;
+ul.tag-service-box li {
+  margin: 0 1rem;
 }
 
-ul.tag-service-box li:nth-child(3n+1) label { --color: #07449a; }
-ul.tag-service-box li:nth-child(4n+1) label { --color: #1c6d73; }
-ul.tag-service-box li:nth-child(5n+1) label { --color: #246a96; }
-ul.tag-service-box li:nth-child(6n+1) label { --color: #0c0a23; }
-ul.tag-service-box li:nth-child(7n+1) label { --color: #4f4c8e; }
-ul.tag-service-box li:nth-child(8n+1) label { --color: #1f62a1; }
-
-.tag-service-card label {
-  width: 100%;
-  height: 100%;
+ul.tag-service-box label {
   cursor: pointer;
-  z-index: 1;
+  line-height: 2;
+
+}
+
+ul.tag-service-box label > span {
+  position: relative;
+  display: inline-block;
+  padding: 0 0.5rem;
+  color: #ba3965;
+  border: 1px solid #e66691;
+  border-radius: 30px;
+  font-size: 0.9rem;
+  transition: 0.5s;
+  user-select: none;
+  overflow: hidden;
+}
+
+ul.tag-service-box label > span:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+}
+
+ul.tag-service-box label > span > span {
+  font-size: 1.3rem;
+  color: #fcdce7;
+  vertical-align: middle;
 }
 
 .tag-service-card label input[type='checkbox']{
   display: none;
+}
+
+.tag-service-card label input[type="checkbox"]:checked ~ span {
+  color: #c23464;
+  /* text-shadow: 0.5px 0.5px 0.5px #c23464;  */
+  font-weight: 600;
+  /* box-shadow: 0 0 2 #c23464;  */
+  border:2px solid #c23464;
+  background-color: #fdecf2;
+}
+
+.tag-service-card label input[type="checkbox"]:checked ~ span > span {
+  color: #c23464;
+  transition: 0.5s;
+
 }
 
 
@@ -754,13 +785,13 @@ ul.tag-service-box li:nth-child(8n+1) label { --color: #1f62a1; }
   color: #03be58;
 } */
 
-/* 밑줄표시
-.tag-service-card label input[type="checkbox"]:checked ~ span {
+/* 밑줄표시 */
+/* .tag-service-card label input[type="checkbox"]:checked ~ span {
   text-decoration-line: underline;
 } */
 
 /* 3줄효과 */
-.tag-service-card label::before {
+/* .tag-service-card label::before {
   content: "";
   position: absolute;
   height: 33.33%;
@@ -803,7 +834,7 @@ ul.tag-service-box li:nth-child(8n+1) label { --color: #1f62a1; }
   text-decoration-style: solid;
   text-decoration-color: inherit;
   text-decoration-thickness: 0.3rem;
-} 
+}  */
 
 
 /* 글씨효과 */
@@ -1019,15 +1050,19 @@ text-shadow:1px 1px 0 #07449a,
 
 .fixing-box {
   font-family: "KOTRA_SONGEULSSI";
-  border-top: 2px solid #888888;
-  border-bottom: 2px solid #888888;
+  border: 0.1px solid #fdeeee;
+  /* border-bottom: 2px solid #888888; */
+  border-radius: 5px;
   width: 23.8vw;
   height: auto;
   position: fixed;
   top: 53%;
   right: 20.2%;
+  box-shadow: 0 0 1px rgb(0 0 0 / 20%);
   padding: 1rem;
   margin-bottom: 1rem;
+  background-color: #fff;
+  z-index: 1;
 }
 .service-price {
   font-size: 1.2rem;
@@ -1982,7 +2017,7 @@ a:hover {
   left: 0;
   width: 100%;
   height: 55px;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 3px rgba(0, 0, 0);
   background-color: #ffffff;
   display: flex;
   overflow-x: auto;

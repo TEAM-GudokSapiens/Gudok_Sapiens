@@ -5,7 +5,7 @@
 {% get_taglist as tags %}
 
 <style>
-    .tag-1 {
+    /* .tag-1 {
         font-size: 1rem;
     }
 
@@ -27,7 +27,7 @@
 
     .tag-6 {
         font-size: 6rem;
-    }
+    } */
     .page-item input:focus,
     .page-item input[type]:focus,
     .uneditable-input:focus {
@@ -35,7 +35,7 @@
       outline: 0 none;
     }
 </style>
-<div class="tag-service-section col-10 col-sm-8 col-md-7">
+<div class="tag-service-section col-10">
     <form action="{% url 'services:services_tags' %}" method='POST' id="checkbox-group">
         {% csrf_token %}
         <ul class="tag-service-box">
@@ -43,7 +43,10 @@
             <li class="tag-service-card tag-{{tag.num_times}}">
                 <label data-weight="3">
                     <input type='checkbox' name='selected' value='{{ tag }}'>
-                    <span style="font-family: 'GmarketSansTTFMedium';">{{ tag.name }}</span>
+                    <span style="font-family: 'GmarketSansTTFMedium';">
+                        <span class="material-icons">favorite</span>
+                        {{ tag.name }}
+                    </span>
                 </label>
             </li>
             {% endfor %}
