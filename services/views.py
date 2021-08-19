@@ -23,12 +23,13 @@ def main(request):
     magazine_list = Magazine.objects.all()
     # 찜을 많이 받은 서비스를 우선적으로 배치
     # 추후에 별점 순으로 변경할 수 있음
+    NUM_OF_DISPLAY = 4
     services = Service.objects.annotate(
-        num_dibs=Count('dib')).order_by('-num_dibs')[:8].annotate(avg_reviews=Avg('review__score'))
-    new_order_services = Service.objects.order_by("-id")[:4]
+        num_dibs=Count('dib')).order_by('-num_dibs')[:NUM_OF_DISPLAY].annotate(avg_reviews=Avg('review__score'))
+    new_order_services = Service.objects.order_by("-id")[:NUM_OF_DISPLAY]
     num_of_service = Service.objects.all().count()
-    if num_of_service >= 4:
-        random_services = get_random_services(4)
+    if num_of_service >= NUM_OF_DISPLAY:
+        random_services = get_random_services(NUM_OF_DISPLAY)
     else:
         random_services = get_random_services(num_of_service)
     categories = Category.objects.all()
@@ -44,13 +45,42 @@ def main(request):
 
 
 def services_list(request):
-    services_list = Service.objects.all().annotate(avg_reviews=Avg('review__score')).annotate(
-        is_dib=Exists(Dib.objects.filter(
-            users=request.user, service_id=OuterRef('pk')))
-    )
+    sort = request.GET.get('sort', '')  # url의 쿼리스트링을 가져온다. 없는 경우 공백을 리턴한다
+
+    if request.user.is_authenticated:
+        if sort == 'dib':
+            services_list = Service.objects.annotate(avg_reviews=Avg('review__score')).annotate(
+                is_dib=Exists(Dib.objects.filter(
+                    users=request.user, service_id=OuterRef('pk')))
+            ).annotate(num_dibs=Count('dib')).order_by('-num_dibs', '-created_at')
+
+        elif sort == 'score':
+            services_list = Service.objects.annotate(avg_reviews=Avg('review__score')).annotate(
+                is_dib=Exists(Dib.objects.filter(
+                    users=request.user, service_id=OuterRef('pk')))
+            ).order_by('-avg_reviews', '-created_at')  # 복수를 가져올수 있음
+
+        else:
+            services_list = Service.objects.annotate(avg_reviews=Avg('review__score')).annotate(
+                is_dib=Exists(Dib.objects.filter(
+                    users=request.user, service_id=OuterRef('pk')))
+            ).order_by('-created_at')
+
+    else:
+        if sort == 'dib':
+            services_list = Service.objects.annotate(avg_reviews=Avg('review__score')).annotate(
+                num_dibs=Count('dib')).order_by('-num_dibs', '-created_at')
+        elif sort == 'score':
+            services_list = Service.objects.annotate(avg_reviews=Avg(
+                'review__score')).order_by('-avg_reviews', '-created_at')  # 복수를 가져올수 있음
+        else:
+            services_list = Service.objects.annotate(
+                avg_reviews=Avg('review__score')).order_by('-created_at')
+
     categories = Category.objects.all()
+    NUM_OF_PAGINATOR = 12
     # 한 페이지 당 담을 수 있는 객체 수를 정할 수 있음
-    paginator = Paginator(services_list, 3)
+    paginator = Paginator(services_list, NUM_OF_PAGINATOR)
     page = request.GET.get('page')
     services = paginator.get_page(page)
 
@@ -58,7 +88,9 @@ def services_list(request):
         'services': services,
         'categories': categories,
     }
+
     return render(request, 'services/list.html', context=ctx)
+
 
 # 카테고리별 페이지 보기
 
@@ -70,7 +102,8 @@ def category_list(request, category_slug):
     sub_category_list = SubCategory.objects.filter(
         category__slug__contains=category_slug)
     # 한 페이지 당 담을 수 있는 객체 수를 정할 수 있음
-    paginator = Paginator(services_list, 3)
+    NUM_OF_PAGINATOR = 10
+    paginator = Paginator(services_list, NUM_OF_PAGINATOR)
     page = request.GET.get('page')
     services = paginator.get_page(page)
 
@@ -90,7 +123,8 @@ def sub_category_list(request, category_slug, sub_category_slug):
     sub_category_list = SubCategory.objects.filter(
         category__slug__contains=category_slug)
     # 한 페이지 당 담을 수 있는 객체 수를 정할 수 있음
-    paginator = Paginator(services_list, 3)
+    NUM_OF_PAGINATOR = 10
+    paginator = Paginator(services_list, NUM_OF_PAGINATOR)
     page = request.GET.get('page')
     services = paginator.get_page(page)
 
@@ -227,18 +261,3 @@ def same_tag_list(request, tag):
 
 def service_intro(request):
     return render(request, 'services/service_intro.html')
-
-# @csrf_exempt
-# def dibs_ajax(request):
-#     req = json.loads(request.body)
-#     print(req)
-#     service_id = req['id']
-#     new_dib, created = Dib.objects.get_or_create(users_id=request.user.id, service_id=service_id)
-#     # created==True면 이번에 만들었음.
-#     # created ==False -> not created ==True는 이미 만들어져서 삭제하러 가는 것.
-#     if not created:
-#         new_dib.delete()
-#     else:
-#         pass
-
-#     return JsonResponse({'id': service_id})

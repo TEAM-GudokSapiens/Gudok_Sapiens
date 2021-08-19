@@ -9,7 +9,8 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="header-links collapse navbar-collapse justify-content-end" id="navbarCollapse">
-    <a class="d-block nav-link text-dark" href="{% url 'services:services_list' %}">홈</a><!-- 홈 -->
+    <a class="d-block nav-link text-dark" href="{% url 'services:main' %}">메인</a><!-- 홈 -->
+    <a class="d-block nav-link text-dark" href="{% url 'services:services_list' %}">서비스</a><!-- 서비스 -->
     <a class="d-block nav-link text-dark" href="{% url 'community:board' %}">커뮤니티</a><!-- 커뮤니티 -->
     <div class="header-second-links navbar-brand d-flex justify-content-between">
       <a class="nav-link text-dark justify-content-center align-self-center" href="{% url 'services:services_tags' %}">나에게 맞는 서비스찾기</a><!-- 나에게맞는서비스찾기 -->

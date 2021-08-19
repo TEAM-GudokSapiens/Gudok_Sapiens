@@ -27,7 +27,7 @@ from .forms import *
 from .models import *
 from .decorators import *
 from .exception import *
-from .helper import *
+from reviews.models import Review
 
 
 # 회원가입
@@ -200,7 +200,6 @@ def reviews_list(request):
         'reviews': reviews,
     }
     return render(request, 'users/reviews_list.html', context=ctx)
-
 # 이용약관 동의
 
 

@@ -1,0 +1,18 @@
+<div class="top-nav col-7">
+  <h1>
+    <a href="{% url 'services:main' %}" class="header-title text-dark">
+      구독사피엔스
+    </a>
+  </h1>
+  <form method="GET" action="{% url 'services:search' %}">
+    {% csrf_token %}
+    <div class="main-search">
+        <div class="main-search-icon" >
+            <i class="search fa fa-search"></i>
+        </div>
+        <div class="main-search-input">
+            <input type="text" placeholder="서비스 검색" id="main-search-input" name='search_key' value="{{ search_key }}">
+        </div>
+    </div>
+</form>
+</div>

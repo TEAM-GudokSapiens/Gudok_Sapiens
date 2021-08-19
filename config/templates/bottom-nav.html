@@ -1,0 +1,21 @@
+<nav class="bottom-nav">
+  <a href="{% url 'services:services_list' %}" class="nav__link">
+    <i class="material-icons nav__icon">category</i>
+    <span class="nav__text">카테고리</span>
+  </a>
+  <a href="{% url 'community:board' %}" class="nav__link">
+    <i class="material-icons nav__icon">forum</i>
+    <span class="nav__text">커뮤니티</span>
+    <a href="{% url 'services:main' %}" class="nav__link">
+      <i class="material-icons nav__icon">home</i>
+      <span class="nav__text">메인</span>
+    </a>
+    <a href="{% url 'users:update' pk=user.pk %}" class="nav__link">
+      <i class="material-icons nav__icon">person</i>
+      <span class="nav__text">내 정보</span>
+    </a>
+    <a href="{% url 'services:services_tags' %}" class="nav__link">
+      <i class="material-icons nav__icon">tag</i>
+      <span class="nav__text">태그서칭</span>
+    </a>
+</nav>
