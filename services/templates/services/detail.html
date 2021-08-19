@@ -29,7 +29,7 @@
                     <a href="#carouselControls" class="carousel-control-next" data-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     </a>
-                </div> {% endcomment %}
+                </div>
                 <!-- carousel end -->
             </div>
             <div class="img-sub-container d-flex flex-column">
@@ -169,7 +169,7 @@
                                                 aria-hidden="true">×</span></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="{% url 'reviews:submit_ajax' service.id %}" enctype="multipart/form-data" id="review_create_form"
+                                        <form action="{% url 'reviews:review_create' service.id %}" enctype="multipart/form-data" id="review_create_form"
                                             method="POST">
                                             {% csrf_token %}
                                             
