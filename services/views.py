@@ -32,6 +32,7 @@ def main(request):
         random_services = get_random_services(NUM_OF_DISPLAY)
     else:
         random_services = get_random_services(num_of_service)
+
     categories = Category.objects.all()
 
     ctx = {
@@ -43,39 +44,57 @@ def main(request):
     }
     return render(request, 'services/main.html', context=ctx)
 
+def main_test(request):
+    magazine_list = Magazine.objects.all()
+    # 찜을 많이 받은 서비스를 우선적으로 배치
+    # 추후에 별점 순으로 변경할 수 있음
+    NUM_OF_DISPLAY = 4
+    services = Service.objects.annotate(
+        num_dibs=Count('dib')).order_by('-num_dibs')[:NUM_OF_DISPLAY].annotate(avg_reviews=Avg('review__score'))
+    new_order_services = Service.objects.order_by("-id")[:NUM_OF_DISPLAY]
+    num_of_service = Service.objects.all().count()
+    if num_of_service >= NUM_OF_DISPLAY:
+        random_services = get_random_services(NUM_OF_DISPLAY)
+    else:
+        random_services = get_random_services(num_of_service)
+
+    categories = Category.objects.all()
+
+    ctx = {
+        'magazine_list': magazine_list,
+        'services': services,
+        'random_services': random_services,
+        'categories': categories,
+        "new_order_services": new_order_services,
+    }
+    return render(request, 'services/main_test.html', context=ctx)
+
 
 def services_list(request):
-    sort = request.GET.get('sort', '')  # url의 쿼리스트링을 가져온다. 없는 경우 공백을 리턴한다
-
+    sort = request.GET.get('sort','') #url의 쿼리스트링을 가져온다. 없는 경우 공백을 리턴한다
     if request.user.is_authenticated:
+
         if sort == 'dib':
             services_list = Service.objects.annotate(avg_reviews=Avg('review__score')).annotate(
-                is_dib=Exists(Dib.objects.filter(
-                    users=request.user, service_id=OuterRef('pk')))
-            ).annotate(num_dibs=Count('dib')).order_by('-num_dibs', '-created_at')
+                        is_dib=Exists(Dib.objects.filter(
+                            users=request.user, service_id=OuterRef('pk')))
+                    ).annotate(num_dibs=Count('dib')).order_by('-num_dibs', '-created_at')
 
         elif sort == 'score':
-            services_list = Service.objects.annotate(avg_reviews=Avg('review__score')).annotate(
-                is_dib=Exists(Dib.objects.filter(
-                    users=request.user, service_id=OuterRef('pk')))
-            ).order_by('-avg_reviews', '-created_at')  # 복수를 가져올수 있음
-
+            services_list = Service.objects.annotate(avg_reviews=Avg('review__score')).annotate(is_dib=Exists(Dib.objects.filter(users=request.user, service_id=OuterRef('pk')))
+                    ).order_by('-avg_reviews', '-created_at') #복수를 가져올수 있음
+                    
         else:
-            services_list = Service.objects.annotate(avg_reviews=Avg('review__score')).annotate(
-                is_dib=Exists(Dib.objects.filter(
-                    users=request.user, service_id=OuterRef('pk')))
-            ).order_by('-created_at')
+            services_list = Service.objects.annotate(avg_reviews=Avg('review__score')).annotate(is_dib=Exists(Dib.objects.filter(users=request.user, service_id=OuterRef('pk')))
+                    ).order_by('-created_at')
 
     else:
         if sort == 'dib':
-            services_list = Service.objects.annotate(avg_reviews=Avg('review__score')).annotate(
-                num_dibs=Count('dib')).order_by('-num_dibs', '-created_at')
+            services_list = Service.objects.annotate(avg_reviews=Avg('review__score')).annotate(num_dibs=Count('dib')).order_by('-num_dibs', '-created_at')
         elif sort == 'score':
-            services_list = Service.objects.annotate(avg_reviews=Avg(
-                'review__score')).order_by('-avg_reviews', '-created_at')  # 복수를 가져올수 있음
+            services_list = Service.objects.annotate(avg_reviews=Avg('review__score')).order_by('-avg_reviews', '-created_at') #복수를 가져올수 있음
         else:
-            services_list = Service.objects.annotate(
-                avg_reviews=Avg('review__score')).order_by('-created_at')
+            services_list = Service.objects.annotate(avg_reviews=Avg('review__score')).order_by('-created_at')
 
     categories = Category.objects.all()
     NUM_OF_PAGINATOR = 12
@@ -114,7 +133,6 @@ def category_list(request, category_slug):
         'category_slug': category_slug,
     }
     return render(request, 'services/list.html', context=ctx)
-
 
 def sub_category_list(request, category_slug, sub_category_slug):
     services_list = Service.objects.filter(
@@ -258,3 +276,345 @@ def same_tag_list(request, tag):
 
 def service_intro(request):
     return render(request, 'services/service_intro.html')
+
+def category_lifestyle(request):
+    services_list = Service.objects.filter(
+        category__slug__contains=lifestyle).annotate(avg_reviews=Avg('review__score'))
+    categories = Category.objects.all()
+    sub_category_list = SubCategory.objects.filter(
+        category__slug__contains=lifestyle)
+    # 한 페이지 당 담을 수 있는 객체 수를 정할 수 있음
+    NUM_OF_PAGINATOR =10
+    paginator = Paginator(services_list, NUM_OF_PAGINATOR)
+    page = request.GET.get('page')
+    services = paginator.get_page(page)
+
+    ctx = {
+        'services': services,
+        'categories': categories,
+        'sub_category_list': sub_category_list,
+        'category_slug': lifestyle,
+    }
+    return render(request, 'services/list.html', context=ctx)
+
+def category_food(request):
+    services_list = Service.objects.filter(
+        category__slug__contains=food).annotate(avg_reviews=Avg('review__score'))
+    categories = Category.objects.all()
+    sub_category_list = SubCategory.objects.filter(
+        category__slug__contains=food)
+    # 한 페이지 당 담을 수 있는 객체 수를 정할 수 있음
+    NUM_OF_PAGINATOR =10
+    paginator = Paginator(services_list, NUM_OF_PAGINATOR)
+    page = request.GET.get('page')
+    services = paginator.get_page(page)
+
+    ctx = {
+        'services': services,
+        'categories': categories,
+        'sub_category_list': sub_category_list,
+        'category_slug': food,
+    }
+    return render(request, 'services/list.html', context=ctx)
+
+def category_content(request):
+    print(category__slug__contains)
+    services_list = Service.objects.filter(
+        category__slug__contains=content).annotate(avg_reviews=Avg('review__score'))
+    categories = Category.objects.all()
+    sub_category_list = SubCategory.objects.filter(
+        category__slug__contains=content)
+    # 한 페이지 당 담을 수 있는 객체 수를 정할 수 있음
+    NUM_OF_PAGINATOR =10
+    paginator = Paginator(services_list, NUM_OF_PAGINATOR)
+    page = request.GET.get('page')
+    services = paginator.get_page(page)
+
+    ctx = {
+        'services': services,
+        'categories': categories,
+        'sub_category_list': sub_category_list,
+        'category_slug': content,
+    }
+    return render(request, 'services/list.html', context=ctx)
+
+def category_newsletter(request):
+    services_list = Service.objects.filter(
+        category__slug__contains=newsletter).annotate(avg_reviews=Avg('review__score'))
+    categories = Category.objects.all()
+    sub_category_list = SubCategory.objects.filter(
+        category__slug__contains=newsletter)
+    # 한 페이지 당 담을 수 있는 객체 수를 정할 수 있음
+    NUM_OF_PAGINATOR =10
+    paginator = Paginator(services_list, NUM_OF_PAGINATOR)
+    page = request.GET.get('page')
+    services = paginator.get_page(page)
+
+    ctx = {
+        'services': services,
+        'categories': categories,
+        'sub_category_list': sub_category_list,
+        'category_slug': newsletter,
+    }
+    return render(request, 'services/list.html', context=ctx)
+
+def category_other(request):
+    services_list = Service.objects.filter(
+        category__slug__contains=other).annotate(avg_reviews=Avg('review__score'))
+    categories = Category.objects.all()
+    sub_category_list = SubCategory.objects.filter(
+        category__slug__contains=other)
+    # 한 페이지 당 담을 수 있는 객체 수를 정할 수 있음
+    NUM_OF_PAGINATOR =10
+    paginator = Paginator(services_list, NUM_OF_PAGINATOR)
+    page = request.GET.get('page')
+    services = paginator.get_page(page)
+
+    ctx = {
+        'services': services,
+        'categories': categories,
+        'sub_category_list': sub_category_list,
+        'category_slug': other,
+    }
+    return render(request, 'services/list.html', context=ctx)
+
+def get_sub_categories(category, subcategory):
+    services_list = Service.objects.filter(
+        subcategory__slug__contains=subcategory).annotate(avg_reviews=Avg('review__score'))
+    category_list = Category.objects.all()
+    sub_category_list = SubCategory.objects.filter(
+        category__slug__contains=category)
+    return services_list, category_list, sub_category_list
+
+def make_paginator(request, queryset, NUM_OF_PAGINATOR=10):
+    NUM_OF_PAGINATOR = 10
+    paginator = Paginator(queryset, NUM_OF_PAGINATOR)
+    page = request.GET.get('page')
+    queryset_list = paginator.get_page(page)
+    return queryset_list
+
+
+def subcategory_daily_item(request):
+    category = "lifestyle" 
+    subcategory = "daily_item"
+    services_list, category_list, sub_category_list = get_sub_categories(category, subcategory)
+    num_of_display = 10
+    services = make_paginator(request, services_list, num_of_display)
+    
+    ctx = {
+        'services': services,
+        'categories': category_list,
+        'sub_category_list': sub_category_list,
+        'category_slug': category,
+    }
+    return render(request, 'services/list.html', context=ctx)
+
+def subcategory_health(request):
+    category = "lifestyle" 
+    subcategory = "health"
+    services_list, category_list, sub_category_list = get_sub_categories(category, subcategory)
+    num_of_display = 10
+    services = make_paginator(request, services_list, num_of_display)
+    
+    ctx = {
+        'services': services,
+        'categories': category_list,
+        'sub_category_list': sub_category_list,
+        'category_slug': category,
+    }
+    return render(request, 'services/list.html', context=ctx)
+
+def subcategory_clothing(request):
+    category = "lifestyle" 
+    subcategory = "clothing"
+    services_list, category_list, sub_category_list = get_sub_categories(category, subcategory)
+    num_of_display = 10
+    services = make_paginator(request, services_list, num_of_display)
+    
+    ctx = {
+        'services': services,
+        'categories': category_list,
+        'sub_category_list': sub_category_list,
+        'category_slug': category,
+    }
+    return render(request, 'services/list.html', context=ctx)
+
+def subcategory_laundry(request):
+    category = "lifestyle" 
+    subcategory = "laundry"
+    services_list, category_list, sub_category_list = get_sub_categories(category, subcategory)
+    num_of_display = 10
+    services = make_paginator(request, services_list, num_of_display)
+    
+    ctx = {
+        'services': services,
+        'categories': category_list,
+        'sub_category_list': sub_category_list,
+        'category_slug': category,
+    }
+    return render(request, 'services/list.html', context=ctx)
+
+def subcategory_cleaning(request):
+    category = "lifestyle" 
+    subcategory = "cleaning"
+    services_list, category_list, sub_category_list = get_sub_categories(category, subcategory)
+    num_of_display = 10
+    services = make_paginator(request, services_list, num_of_display)
+    
+    ctx = {
+        'services': services,
+        'categories': category_list,
+        'sub_category_list': sub_category_list,
+        'category_slug': category,
+    }
+    return render(request, 'services/list.html', context=ctx)
+
+def subcategory_delivery(request):
+    category = "food" 
+    subcategory = "delivery"
+    services_list, category_list, sub_category_list = get_sub_categories(category, subcategory)
+    num_of_display = 10
+    services = make_paginator(request, services_list, num_of_display)
+    
+    ctx = {
+        'services': services,
+        'categories': category_list,
+        'sub_category_list': sub_category_list,
+        'category_slug': category,
+    }
+    return render(request, 'services/list.html', context=ctx)
+
+def subcategory_beverage(request):
+    category = "food" 
+    subcategory = "beverage"
+    services_list, category_list, sub_category_list = get_sub_categories(category, subcategory)
+    num_of_display = 10
+    services = make_paginator(request, services_list, num_of_display)
+    
+    ctx = {
+        'services': services,
+        'categories': category_list,
+        'sub_category_list': sub_category_list,
+        'category_slug': category,
+    }
+    return render(request, 'services/list.html', context=ctx)
+
+def subcategory_alcohol(request):
+    category = "food" 
+    subcategory = "alcohol"
+    services_list, category_list, sub_category_list = get_sub_categories(category, subcategory)
+    num_of_display = 10
+    services = make_paginator(request, services_list, num_of_display)
+    
+    ctx = {
+        'services': services,
+        'categories': category_list,
+        'sub_category_list': sub_category_list,
+        'category_slug': category,
+    }
+    return render(request, 'services/list.html', context=ctx)
+
+def subcategory_fruit(request):
+    category = "food" 
+    subcategory = "fruit"
+    services_list, category_list, sub_category_list = get_sub_categories(category, subcategory)
+    num_of_display = 10
+    services = make_paginator(request, services_list, num_of_display)
+    
+    ctx = {
+        'services': services,
+        'categories': category_list,
+        'sub_category_list': sub_category_list,
+        'category_slug': category,
+    }
+    return render(request, 'services/list.html', context=ctx)
+
+def subcategory_health_food(request):
+    category = "food" 
+    subcategory = "health_food"
+    services_list, category_list, sub_category_list = get_sub_categories(category, subcategory)
+    num_of_display = 10
+    services = make_paginator(request, services_list, num_of_display)
+    
+    ctx = {
+        'services': services,
+        'categories': category_list,
+        'sub_category_list': sub_category_list,
+        'category_slug': category,
+    }
+    return render(request, 'services/list.html', context=ctx)
+
+def subcategory_bakery(request):
+    category = "food" 
+    subcategory = "bakery"
+    services_list, category_list, sub_category_list = get_sub_categories(category, subcategory)
+    num_of_display = 10
+    services = make_paginator(request, services_list, num_of_display)
+    
+    ctx = {
+        'services': services,
+        'categories': category_list,
+        'sub_category_list': sub_category_list,
+        'category_slug': category,
+    }
+    return render(request, 'services/list.html', context=ctx)
+
+def subcategory_fastfood(request):
+    category = "food" 
+    subcategory = "fastfood"
+    services_list, category_list, sub_category_list = get_sub_categories(category, subcategory)
+    num_of_display = 10
+    services = make_paginator(request, services_list, num_of_display)
+    
+    ctx = {
+        'services': services,
+        'categories': category_list,
+        'sub_category_list': sub_category_list,
+        'category_slug': category,
+    }
+    return render(request, 'services/list.html', context=ctx)
+
+def subcategory_video(request):
+    category = "content" 
+    subcategory = "video"
+    services_list, category_list, sub_category_list = get_sub_categories(category, subcategory)
+    num_of_display = 10
+    services = make_paginator(request, services_list, num_of_display)
+    
+    ctx = {
+        'services': services,
+        'categories': category_list,
+        'sub_category_list': sub_category_list,
+        'category_slug': category,
+    }
+    return render(request, 'services/list.html', context=ctx)
+
+def subcategory_music(request):
+    category = "content" 
+    subcategory = "music"
+    services_list, category_list, sub_category_list = get_sub_categories(category, subcategory)
+    num_of_display = 10
+    services = make_paginator(request, services_list, num_of_display)
+    
+    ctx = {
+        'services': services,
+        'categories': category_list,
+        'sub_category_list': sub_category_list,
+        'category_slug': category,
+    }
+    return render(request, 'services/list.html', context=ctx)
+
+def subcategory_book(request):
+    category = "content" 
+    subcategory = "book"
+    services_list, category_list, sub_category_list = get_sub_categories(category, subcategory)
+    num_of_display = 10
+    services = make_paginator(request, services_list, num_of_display)
+    
+    ctx = {
+        'services': services,
+        'categories': category_list,
+        'sub_category_list': sub_category_list,
+        'category_slug': category,
+    }
+    return render(request, 'services/list.html', context=ctx)
