@@ -149,12 +149,9 @@
                         <a href="?page={{ page_obj.paginator.num_pages }}">맨뒤로</a>
                         {% endif %}
 
-
-                        <hr>
-                        <span class="tab-title">리뷰 쓰기</span>
                         {% if request.user.is_authenticated %}
-                        <button type="button" class="btn btn-primary btn-lg" id="openModalBtn">
-                            리뷰쓰기
+                        <button type="button" class="btn btn-lg" id="openModalBtn">
+                            리뷰쓰러가기
                         </button>
                         {% endif %}
                         <!-- 모달 시작 -->
@@ -162,45 +159,54 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeModalBtn"><span
+                                        <div style="text-align: center; width: 100%;margin-left: 2rem;">리뷰 작성하기</div>
+                                        <button type="button" data-dismiss="modal" aria-label="Close" class="closeModalBtn close btn"><span
                                                 aria-hidden="true">×</span></button>
                                     </div>
                                     <div class="modal-body">
                                         <form action="{% url 'reviews:submit_ajax' service.id %}" enctype="multipart/form-data" id="review_create_form"
                                             method="POST">
                                             {% csrf_token %}
-                                            <div class="review-form-container">
+                                            
                                                 <div class="review-form-content">
-                                                    <span class="review-content-title">{{ form.title }}</span>
-                                                    <div>
-                                                        <textarea class="content_textarea" rows="3" name="content" placeholder='15자 이상 입력해주세요'
-                                                            onkeyup="countLetters();"></textarea>
-                                                        <div style="display: flex;justify-content: space-between;">
-                                                            <span>{{form.photo}}</span>
-                                                            <span class="content_count">0</span>
-                                                        </div>
-                                                        <div style="display: flex; justify-content: space-between;">
-                                                            <span>{{ form.score }}</span>
-                                                            <div class="period">
-                                                                <div class="range">
-                                                                    <div class="sliderValue">
-                                                                        <span class="period_select">24</span>
-                                                                    </div>
-                                                                    <div class="field">
-                                                                        <div class="value left">0</div>
-                                                                        <input class="period_choice" type="range" name="period" min="0" max="24" value="12"
-                                                                            steps="1">
-                                                                        <div class="value right">24개월 이상</div>
-                                                                    </div>
+                                                    <div class="review-modal-section">
+                                                        <div class="review-modal-text">서비스를 얼마나 사용하셨나요?</div>
+                                                        <div class="period">
+                                                            <div class="range">
+                                                                <div class="sliderValue">
+                                                                    <span class="period_select">12</span>
+                                                                </div>
+                                                                <div class="field">
+                                                                    <div class="value left">1개월 이하</div>
+                                                                    <input class="period_choice" type="range" name="period" min="0" max="24" value="12" steps="1">
+                                                                    <div class="value right">24개월 이상</div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <div class="review-modal-section">
+                                                        <div class="review-modal-text">서비스 평점</div>
+                                                        <span onclick="countLetters();">{{ form.score }}</span>
+                                                    </div>
+                                                    <div class="review-modal-section">
+                                                        <div style="text-align: center;" class="review-modal-text">서비스에 대한 후기를 남겨주세요</div>
+                                                        <span class="review-content-title">{{ form.title }}</span>
+                                                        <textarea class="content_textarea" rows="3" name="content" placeholder='어떤 점이 좋았나요? 상세한 후기는 다른 사용자에게 도움이 됩니다(최소 15자 이상)'
+                                                            onkeyup="countLetters();"></textarea>
+                                                        <div class="textarea-photo">
+                                                            <span class="review-modal-photo">{{form.photo}}</span>
+                                                            <span class="content_count">0</span>
+                                                        </div>
+                                                    </div>
+                                                
+                                                    <!--  -->
                                                 </div>
+                                            
+                                            <div class="review-modal-footer">
+                                                <button type="button" class="closeModalBtn btn btn-default">취소</button>
+                                                <input type="submit" class="review-submit" onclick="" value="리뷰 등록" disabled/>
                                             </div>
-                                            <input type="submit" onclick="" value="리뷰 등록" style="border: none;color: white;background: black;"/>
                                         </form>
-                                        <button type="button" class="btn btn-default" id="closeModalBtn">취소</button>
                                     </div>
                                 </div>
                             </div>
@@ -232,10 +238,16 @@
         const text = textarea.value;
         const textLength = textarea.value.length;
         count.innerText = `${textLength}`;
+        const reviewSubmit=document.querySelector(".review-submit");
+        const starValue=document.querySelector("#rateit-range-2").getAttribute("aria-valuenow");
+        if(textLength>=15 & starValue>=0.2){
+            reviewSubmit.removeAttribute('disabled');
+        }
+        else if(!reviewSubmit.disabled){
+            reviewSubmit.setAttribute('disabled','');
+        }
     }
-</script>
 
-<script>
     // 찜 ajax
     const
         requestDib =
@@ -333,7 +345,7 @@
         $('#modalBox').modal('show');
     });
     // 모달 안의 취소 버튼에 이벤트를 건다.
-    $('#closeModalBtn').on('click', function () {
+    $('.closeModalBtn').on('click', function () {
         $('#modalBox').modal('hide');
     });
 </script>
