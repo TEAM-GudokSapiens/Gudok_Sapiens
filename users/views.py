@@ -23,6 +23,8 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views.generic import UpdateView, DeleteView, FormView, CreateView, View
 from services.models import Service
 from reviews.models import Review
+
+from .helper import *
 from .forms import *
 from .models import *
 from .decorators import *
@@ -140,6 +142,7 @@ class AccountUpdateView(UpdateView):
 
     def post(self, *args, **kwargs):
         if self.request.user.is_authenticated and self.get_object() == self.request.user:
+            messages.success(self.request, "유저정보를 성공적으로 변경하였습니다.")
             return super().post(*args, **kwargs)
         else:
             return HttpResponseForbidden()
