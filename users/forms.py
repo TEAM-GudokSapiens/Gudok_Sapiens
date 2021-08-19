@@ -1,7 +1,7 @@
 from django import forms
 from django.db.models import fields
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm, UserChangeForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
 from .models import User
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.forms import SetPasswordForm
@@ -74,7 +74,7 @@ class UpdateForm(UserChangeForm):
             'image': '프로필 사진',
             'name': '이름',
             'gender': '성별',
-            'phonenum': '휴대폰 번호',
+            'phonenum': '휴대폰 번호'
         }
 
         help_texts = {
