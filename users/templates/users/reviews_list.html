@@ -20,70 +20,53 @@
 
 <div class="dibs-list-container col-lg-7 col-md-10 col-sm-12">
     <h3>내가 쓴 리뷰</h3>
-    <hr>
-    <div class="">
+    <hr style="border-color: #000;">
+    <div class="my-review-box-container">
         {% if reviews %}
-        {% for review in reviews %}
-        <div class="my-review-box">
-            <!-- <div class="my-review-first-section col-4">
-                <div>서비스 이름: {{review.target.name}}</div>
-                {% if review.target.img1 %}
-                <a href="{% url 'services:services_detail' pk=review.target.id %}"
-                class="my-review-img">
-                    <img src="{{ review.target.img1.url }}" />
+            {% for review in reviews %}
+            <div class="my-review-box col-10">
+                {% if review.photo %}
+                <a href="{% url 'services:services_detail' pk=review.target.id %}" class="my-review-img">
+                    <img src="{{ review.photo.url }}" />
                 </a>
-                {% endif %}
-            </div> -->
-            <div class="my-review-first-section col-lg-4">
-                <!-- <div>서비스 이름: {{review.target.name}}</div> -->
-                {% if review.target.img1 %}
-                <a href="{% url 'services:services_detail' pk=review.target.id %}" class="my-review-target-img">
-                    <img src="{{ review.target.img1.url }}" />
-                </a>
-                {% endif %}
-                <span class="my-review-title">{{review.target.name}}</span>
-                <span class="my-review-content">{{review.target.intro}}</span>
-            </div>
-            <div class="my-review-second-section col-xl-8 col-12">
-                <div class="my-review-content">
-                    <div class="my-review-score">
-                        <span>{{review.updated_at| date:"Y/m/d"}} | {{review.period}}개월 사용</span>
+                <div class="my-review-second-section col-9">
+                    {% else %}
+                    <div class="my-review-second-section col-12"> 
+                        {% endif %}
+                        <div class="my-review-content-container">
+                            <div class="my-review-content">
+                                <div class="my-review-target ">
+                                    <a href="{% url 'services:services_detail' pk=review.target.id %}" style="color: #585858;font-weight: 400;"
+                                    class="">{{review.target.name}}</a> 
+                                    <span class="">| {{review.period}}개월 사용</span>
+                                </div>
+                            <!-- <div class="my-review-score">
+                                <span>{{review.updated_at| date:"Y/m/d"}} | {{review.period}}개월 사용</span>
+                            </div> -->
+                                <span class="star" style="min-width:fit-content">
+                                    <i class="fas fa-star"></i>
+                                    <span>{{review.score}}</span>
+                                </span>
+                            </div>
+                            <span class="my-review-date" style="font-size: 0.9rem;
+                                color: #808080;">{{review.period}}개월 사용</span>
+                            <span class="my-review-title">{{review.title}}</span>
+                            <span class="my-review-content">{{review.content}}</span>
+                        </div>
+                    <div class="my-review-likes">
+                        <span><i class="far fa-thumbs-up" style="color: #585858;"></i> {{review.reviews_help.count}}개</span>
                     </div>
-                    <span class="star">
-                        <i class="fas fa-star" style="color: #ffcd3c;"></i>
-                        <i class="fas fa-star" style="color: #ffcd3c;"></i>
-                        <i class="fas fa-star" style="color: #ffcd3c;"></i>
-                        <i class="fas fa-star" style="color: #ffcd3c;"></i>
-                        <i class="fas fa-star" style="color: #ffcd3c;"></i>
-                    </span>
-                    <!-- 내가 쓴 리뷰의 평점 -->
-                    <span>{{review.score}}</span>
-                    <!-- 내가 쓴 리뷰의 "도움이 돼요"를 받은 수 -->
-                    <span>{{review.reviews_help.count}}</span>                    
-                    
                 </div>
-                    {% if review.photo %}
-                    <a href="{% url 'services:services_detail' pk=review.target.id %}"
-                    class="my-review-img">
-                        <img src="{{ review.photo.url }}" />
-                    </a>
-                    {% endif %}
-                <span class="my-review-title">{{review.title}}</span>
-                <span class="my-review-content">{{review.content}}</span>
-                
             </div>
-        </div>
-        {% endfor %}
+            {% endfor %}
         {% else %}
-
-        <div class="col-12" style="margin: 2rem auto 20rem auto; text-align: center; font-size: 0.8rem;">
-            <tr style="text-align: center;">
-                <td style="font-weight: bold; color:gray;" colspan="5">
-                    작성한 리뷰가 없습니다.
-                </td>
-            </tr>
-        </div>
-
+            <div class="col-12" style="margin: 2rem auto 20rem auto; text-align: center; font-size: 0.8rem;">
+                <tr style="text-align: center;">
+                    <td style="font-weight: bold; color:gray;" colspan="5">
+                        작성한 리뷰가 없습니다.
+                    </td>
+                </tr>
+            </div>
         {% endif %}
     </div>
 </div>

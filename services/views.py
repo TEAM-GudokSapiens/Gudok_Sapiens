@@ -138,6 +138,18 @@ def sub_category_list(request, category_slug, sub_category_slug):
 
 
 def services_detail(request, pk):
+    service = Service.objects.annotate(
+        is_dib=Exists(Dib.objects.filter(
+            users=request.user, service_id=OuterRef('pk')))
+    ).get(id=pk)
+    review_form = ReviewCreateForm()
+    number_of_dibs = service.dib_set.all().count()
+    avg_of_reviews = service.review.aggregate(Avg('score'))['score__avg']
+    # num_of_full_stars = int(avg_of_reviews // 1)
+    # is_half_star = True if avg_of_reviews % 1 ==0.5 else False
+    reviews_order_help = Review.objects.filter(target_id=pk).annotate(dibs_count=Count('reviews_help')).annotate(is_help=Exists(
+        Help.objects.filter(users=request.user, review_id=OuterRef('pk'))
+    )).order_by('-dibs_count')
 
     if request.user.is_authenticated:
         service = Service.objects.annotate(
@@ -176,6 +188,16 @@ def services_detail(request, pk):
         'page_obj': page_obj,
     }
     return render(request, 'services/detail.html', context=ctx)
+# def review(request):
+#     review_list = Review.objects.filter(
+#         service_id=target_id
+#     )
+#     paginator = Paginator(review_list, 5)  # 한페이지에 10개씩
+
+#     page_number = request.GET.get('page')
+#     page_obj = paginator.get_page(page_number)
+
+#     return render(request, 'services/detail.html', {'review_list': review_list, 'page_obj': page_obj})
 
 
 def search(request):

@@ -5,7 +5,7 @@
 {% block content %}
 <!--- 대분류 카테고리 표기-->
 <nav class="main-navbar navbar navbar-expand-lg navbar-light col-7">
-    <ul class="navbar-nav mr-auto">
+    <ul class="navbar-nav mr-auto d-flex">
         <li class="nav-item">
             <a class="nav-link text-dark" href="{% url 'services:services_list' %}"
                 style="padding-left: 0 !important;">전체보기</a>
@@ -36,10 +36,10 @@
 
 <div class="service-list-main col-7">
     <!--- 세부 카테고리 표기-->
-    <div class="service-second-category col-2">
+    <div class="service-second-category col-3 col-sm-2">
         <ul>
             <li>
-                <a href="{% url 'services:services_list' %}" class="weight">‣ 전체보기</a><!-- 전체보기 -->
+                <a href="{% url 'services:services_list' %}" class="weight">‣ 전체보기</a>
                 </il>
                 {% for category in categories %}
             <li>
@@ -62,7 +62,7 @@
     </div>
 
     {% comment %} 본문 내용 서비스 나열 {% endcomment %}
-    <div class="col-10" style=" padding: 0;">
+    <div class="col-9 col-sm-10" style="padding: 0;">
         <div class="service-list-img">
             <img src="{% static 'assets/service-list-food.png' %}" alt="">
         </div>
@@ -76,7 +76,7 @@
         <div class="main-service-list-box">
             {% if services %}
             {% for service in services  %}
-            <div class="service-card card col-3 service-id-{{ service.id }}">
+            <div class="service-card card service-id-{{ service.id }} col-6 col-sm-4 col-md-3">
                 <div class='card-img-top'>
                     {% if service.img1 %}
                     <a href="{% url 'services:services_detail' pk=service.pk %}">
@@ -88,17 +88,15 @@
                     <div class="d-flex justify-content-between">
                         <h5><a href="{% url 'services:services_detail' pk=service.pk %}">{{ service.name }}</a></h5>
                         <span class="star"><i
-                                class="fas fa-star"></i>{{ avg_of_reviews }}({{service.get_review_count}})</span>
+                                class="fas fa-star"></i>{{ avg_of_reviews|floatformat:1 }}({{service.get_review_count}})</span>
                     </div>
                     <div class="d-flex justify-content-between">
                         <span class="service-intro">{{ service.intro }}</span>
-                        <div>
+                        <div class="d-flex">
                             {% if service.is_dib %}
-                            <div class="dib" onclick="onClickDib({{ service.id }})"><i class="fas fa-heart"></i>
-                            </div>
+                            <div class="dib" onclick="onClickDib({{ service.id }})" style="margin-right: 0.1rem;"><i class="fas fa-heart"></i></div>
                             {% else %}
-                            <div class="dib" onclick="onClickDib({{ service.id }})"><i class="far fa-heart"></i>
-                            </div>
+                            <div class="dib" onclick="onClickDib({{ service.id }})" style="margin-right: 0.1rem;"><i class="far fa-heart"></i></div>
                             {% endif %}
                             <div class="dib__counts">{{ service.dib_set.all.count }}</div>
                         </div>
@@ -143,7 +141,6 @@
             {% endif %}
         </div>
     </div>
-
 </div>
 
 
@@ -171,21 +168,19 @@
             } = JSON.parse(requestDib.response)
             const element = document.querySelector(`.service-id-${id} .dib`);
 
-            if (element.innerHTML == `찜하기`) {
-                element.innerHTML = `안찜하기`;
+            if (element.innerHTML == `<i class="fas fa-heart"></i>`) {
+                element.innerHTML = `<i class="far fa-heart"></i>`;
                 const dibsCounts = document.querySelector(`.service-id-${id} .dib__counts`);
                 const dibsCountsHTML = dibsCounts.innerHTML;
-                const [dibString, num] = dibsCountsHTML.split(' ');
-                const count = Number(num) + 1;
-                dibsCounts.innerHTML = `${dibString} ${count}`;
+                const count = Number(dibsCountsHTML) - 1;
+                dibsCounts.innerHTML = `${count}`;
 
             } else {
-                element.innerHTML = `찜하기`;
+                element.innerHTML = `<i class="fas fa-heart"></i>`;
                 const dibsCounts = document.querySelector(`.service-id-${id} .dib__counts`);
                 const dibsCountsHTML = dibsCounts.innerHTML;
-                const [dibString, num] = dibsCountsHTML.split(' ');
-                const count = Number(num) - 1;
-                dibsCounts.innerHTML = `${dibString} ${count}`;
+                const count = Number(dibsCountsHTML) + 1;
+                dibsCounts.innerHTML = `${count}`;
 
             }
 
