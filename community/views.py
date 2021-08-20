@@ -67,7 +67,6 @@ def board(request):
 def board_create(request):
     if request.method == 'POST':  # post
         form = BoardForm(request.POST, request.FILES)
-
         if form.is_valid():
             user_id = request.session.get('user')
             user = request.user
