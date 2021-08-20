@@ -59,7 +59,7 @@ class Signup(CreateView):
         send_mail(
             '{}님의 회원가입 인증메일 입니다.'.format(self.object.user_id),
             recipient_list=[self.object.email],
-            from_email='yysk_915@naver.com',
+            from_email='david90907@naver.com',
             message='',
             html_message=render_to_string('users/register_email.html', {
                 'user': self.object,
@@ -274,7 +274,7 @@ def ajax_find_pw_view(request):
             '{}님의 비밀번호 찾기 인증메일입니다.'.format(user_id),
             message='',
             recipient_list=[email],
-            from_email='yysk_915@naver.com',
+            from_email='david90907@naver.com',
             html_message=render_to_string('users/recovery_email.html', {
                 'auth_num': auth_num,
             })

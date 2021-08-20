@@ -19,5 +19,10 @@
     <a href="{% url 'services:services_tags' %}" class="nav__link">
       <i class="material-icons nav__icon">tag</i>
       <span class="nav__text">태그서칭</span>
-    </a>
+    </a>    
+    {% else %}
+      <a href="{% url 'users:login' %}" class="nav__link">
+        로그인</a>
+    {% endif %}
+    
 </nav>

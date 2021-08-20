@@ -1,9 +1,7 @@
 from django.db import models
-from users.models import User
 from taggit.managers import TaggableManager
-from django.core.paginator import Paginator
-from django.db.models import Count
-
+from django.db.models import Count, Avg, Exists, OuterRef
+from likes.models import Dib
 
 class Category(models.Model):
     name = models.CharField(max_length=150, db_index=True)
@@ -14,7 +12,7 @@ class Category(models.Model):
     @property
     def get_services_by_category(self):
         return Service.objects.annotate(
-        num_dibs=Count('dib')).order_by('-num_dibs').filter(category__name=self.name)
+        num_dibs=Count('dib')).annotate(avg_reviews=Avg('review__score')).order_by('-num_dibs').filter(category__name=self.name)
 
     def __str__(self):
         return self.name
@@ -70,33 +68,3 @@ class Service(models.Model):
     def get_review_count(self):
         counts = self.review.all().count()
         return counts
-
-    # def get_context_data(self, **kwargs):
-    # context = super(PostDetailView, self).get_context_data(**kwargs)
-    # comments = context['post'].comment_set.all()
-    # paginator = Paginator(comments, per_page=50)
-    # page_number = 1  # get it from query sting or whatever the way you want
-    # page = paginator.page(page_number)
-    # context['comments'] = page
-    # return context
-
-    # dibs = models.OneToOneField(
-    #     Like, on_delete=models.PROTECT, verbose_name='찜',blank=True,null=True)
-
-    # def get_total_dibs(self):
-    #     return self.dibs.users.count()
-
-
-# class Dib(models.Model):
-#     service = models.OneToOneField(
-#         Service, related_name="dibs", on_delete=models.CASCADE)
-#     users = models.ManyToManyField(
-#         User, related_name='requirement_service_dibs')
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
-
-
-# class Tag(models.Model):
-#     service = models.ManyToManyField(
-#         Service, related_name='tags')
-#     created_at = models.DateTimeField(auto_now_add=True)

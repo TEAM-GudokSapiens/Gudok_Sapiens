@@ -1,12 +1,8 @@
-from django.db.models.fields import DecimalField
 from django.shortcuts import redirect, render
-from django.contrib import messages
 from django.db.models import Q, Count, Avg
 from django.core.paginator import Paginator
 from taggit.models import Tag
 from reviews.forms import ReviewCreateForm
-from django.http.response import JsonResponse
-import json
 from django.views.decorators.csrf import csrf_exempt
 from likes.models import Dib, Help
 from django.db.models import Exists, OuterRef
@@ -22,18 +18,22 @@ from community.models import *
 def main(request):
     magazine_list = Magazine.objects.all()
     NUM_OF_DISPLAY = 4
-    # 찜을 많이 받은 서비스를 우선적으로 배치
-    # 추후에 별점 순으로 변경할 수 있음
-    services = Service.objects.annotate(
-        num_dibs=Count('dib')).annotate(avg_reviews=Avg('review__score')).order_by('-num_dibs')[:NUM_OF_DISPLAY]
-    new_order_services = Service.objects.order_by("-id")[:NUM_OF_DISPLAY]
+    
+    services = Service.objects.annotate(is_dib=Exists(Dib.objects.filter(users__pk=request.user.id, service_id=OuterRef('pk')))).annotate(num_dibs=Count('dib')).annotate(avg_reviews=Avg('review__score')).order_by('-num_dibs')[:NUM_OF_DISPLAY]
+    new_order_services = Service.objects.annotate(is_dib=Exists(Dib.objects.filter(users__pk=request.user.id, service_id=OuterRef('pk')))).order_by("-id")[:NUM_OF_DISPLAY]
+
     num_of_service = Service.objects.all().count()
     if num_of_service >= NUM_OF_DISPLAY:
-        random_services = get_random_services(NUM_OF_DISPLAY)
+        random_services = get_random_services(request, NUM_OF_DISPLAY)
     else:
-        random_services = get_random_services(num_of_service)
+        random_services = get_random_services(request, num_of_service)
 
     categories = Category.objects.all()
+    
+    services_list_by_category = []
+    for category in categories:
+        category_services = Service.objects.annotate(is_dib=Exists(Dib.objects.filter(users__pk=request.user.id, service_id=OuterRef('pk')))).annotate(num_dibs=Count('dib')).annotate(avg_reviews=Avg('review__score')).filter(category__slug = category.slug).order_by('-num_dibs')[:NUM_OF_DISPLAY]
+        services_list_by_category.append(category_services)
 
     ctx = {
         'magazine_list': magazine_list,
@@ -41,6 +41,7 @@ def main(request):
         'random_services': random_services,
         'categories': categories,
         "new_order_services": new_order_services,
+        "services_list_by_category":services_list_by_category,
     }
     return render(request, 'services/main.html', context=ctx)
 
@@ -54,9 +55,9 @@ def main_test(request):
     new_order_services = Service.objects.order_by("-id")[:NUM_OF_DISPLAY]
     num_of_service = Service.objects.all().count()
     if num_of_service >= NUM_OF_DISPLAY:
-        random_services = get_random_services(NUM_OF_DISPLAY)
+        random_services = get_random_services(request,NUM_OF_DISPLAY)
     else:
-        random_services = get_random_services(num_of_service)
+        random_services = get_random_services(request, num_of_service)
 
     categories = Category.objects.all()
 
@@ -72,29 +73,14 @@ def main_test(request):
 
 def services_list(request):
     sort = request.GET.get('sort','') #url의 쿼리스트링을 가져온다. 없는 경우 공백을 리턴한다
-    if request.user.is_authenticated:
-
-        if sort == 'dib':
-            services_list = Service.objects.annotate(avg_reviews=Avg('review__score')).annotate(
-                        is_dib=Exists(Dib.objects.filter(
-                            users=request.user, service_id=OuterRef('pk')))
-                    ).annotate(num_dibs=Count('dib')).order_by('-num_dibs', '-created_at')
-
-        elif sort == 'score':
-            services_list = Service.objects.annotate(avg_reviews=Avg('review__score')).annotate(is_dib=Exists(Dib.objects.filter(users=request.user, service_id=OuterRef('pk')))
-                    ).order_by('-avg_reviews', '-created_at') #복수를 가져올수 있음
-                    
-        else:
-            services_list = Service.objects.annotate(avg_reviews=Avg('review__score')).annotate(is_dib=Exists(Dib.objects.filter(users=request.user, service_id=OuterRef('pk')))
-                    ).order_by('-created_at')
-
+    
+    if sort == 'dib':
+        services_list = Service.objects.annotate(avg_reviews=Avg('review__score')).annotate(num_dibs=Count('dib')).annotate(is_dib=Exists(Dib.objects.filter(users__pk=request.user.id, service_id=OuterRef('pk')))).order_by('-num_dibs', '-created_at')
+    elif sort == 'score':
+        services_list = Service.objects.annotate(avg_reviews=Avg('review__score')).annotate(is_dib=Exists(Dib.objects.filter(users__pk=request.user.id, service_id=OuterRef('pk')))).order_by('-avg_reviews', '-created_at') #복수를 가져올수 있음
     else:
-        if sort == 'dib':
-            services_list = Service.objects.annotate(avg_reviews=Avg('review__score')).annotate(num_dibs=Count('dib')).order_by('-num_dibs', '-created_at')
-        elif sort == 'score':
-            services_list = Service.objects.annotate(avg_reviews=Avg('review__score')).order_by('-avg_reviews', '-created_at') #복수를 가져올수 있음
-        else:
-            services_list = Service.objects.annotate(avg_reviews=Avg('review__score')).order_by('-created_at')
+        services_list = Service.objects.annotate(avg_reviews=Avg('review__score')).annotate(is_dib=Exists(Dib.objects.filter(users__pk=request.user.id, service_id=OuterRef('pk')))).order_by('-created_at')
+    
 
     categories = Category.objects.all()
     NUM_OF_PAGINATOR = 12
@@ -117,9 +103,8 @@ def services_list(request):
 def category_list(request, category_slug):
     services_list = Service.objects.filter(
         category__slug__contains=category_slug).annotate(avg_reviews=Avg('review__score'))
-    categories = Category.objects.all()
-    sub_category_list = SubCategory.objects.filter(
-        category__slug__contains=category_slug)
+    categories = Category.objects.order_by('-id')
+    sub_category_list = SubCategory.objects.filter(category__slug__contains=category_slug).order_by('id')
     # 한 페이지 당 담을 수 있는 객체 수를 정할 수 있음
     NUM_OF_PAGINATOR = 10
     paginator = Paginator(services_list, NUM_OF_PAGINATOR)
@@ -156,38 +141,12 @@ def sub_category_list(request, category_slug, sub_category_slug):
 
 
 def services_detail(request, pk):
-    service = Service.objects.annotate(
-        is_dib=Exists(Dib.objects.filter(
-            users=request.user, service_id=OuterRef('pk')))
-    ).get(id=pk)
+    service = Service.objects.annotate(is_dib=Exists(Dib.objects.filter(users__pk=request.user.id, service_id=OuterRef('pk')))).get(id=pk)
     review_form = ReviewCreateForm()
     number_of_dibs = service.dib_set.all().count()
     avg_of_reviews = service.review.aggregate(Avg('score'))['score__avg']
-    # num_of_full_stars = int(avg_of_reviews // 1)
-    # is_half_star = True if avg_of_reviews % 1 ==0.5 else False
-    reviews_order_help = Review.objects.filter(target_id=pk).annotate(dibs_count=Count('reviews_help')).annotate(is_help=Exists(
-        Help.objects.filter(users=request.user, review_id=OuterRef('pk'))
-    )).order_by('-dibs_count')
-
-    if request.user.is_authenticated:
-        service = Service.objects.annotate(
-            is_dib=Exists(Dib.objects.filter(
-                users=request.user, service_id=OuterRef('pk')))
-        ).get(id=pk)
-        review_form = ReviewCreateForm()
-        number_of_dibs = service.dib_set.all().count()
-        avg_of_reviews = service.review.aggregate(Avg('score'))['score__avg']
-        reviews_order_help = Review.objects.filter(target_id=pk).annotate(helps_count=Count('reviews_help')).annotate(is_help=Exists(
-            Help.objects.filter(users=request.user, review_id=OuterRef('pk'))
-        )).order_by('-helps_count')
-
-    else:
-        service = Service.objects.get(id=pk)
-        review_form = ReviewCreateForm()
-        number_of_dibs = service.dib_set.all().count()
-        avg_of_reviews = service.review.aggregate(Avg('score'))['score__avg']
-        reviews_order_help = Review.objects.filter(target_id=pk).annotate(
-            helps_count=Count('reviews_help')).order_by('-helps_count')
+    reviews_order_help = Review.objects.filter(target_id=pk).annotate(
+    helps_count=Count('reviews_help')).order_by('-helps_count')
 
     NUM_OF_PAGINATOR = 10
     paginator = Paginator(reviews_order_help, NUM_OF_PAGINATOR)
