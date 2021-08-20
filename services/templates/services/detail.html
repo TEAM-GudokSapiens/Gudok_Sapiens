@@ -253,6 +253,46 @@
 {% endif %}
 
 <script>
+    //디테일 content 더보기 기능
+    $(document).ready(function () {
+
+            $('.service-box').each(function () {
+                var content = $(this).children('.service-content');
+                var content_txt = content.text();
+                var content_txt_short = content_txt.substring(0, 200) + "...";
+                var btn_more = $('<div style="text-align:right;cursor:pointer;"><a href="javascript:void(0)" class="read-more">더보기</a><div>');
+
+
+                $(this).append(btn_more);
+
+                if (content_txt.length >= 100) {
+                    content.html(content_txt_short)
+
+                } else {
+                    btn_more.hide()
+                }
+
+                btn_more.click(toggle_content);
+
+                function toggle_content() {
+                    if ($(this).hasClass('short')) {
+                        // 접기 상태
+                        $(this).html('더보기');
+                        content.html(content_txt_short)
+                        $(this).removeClass('short');
+                    } else {
+                        // 더보기 상태
+                        $(this).html('접기');
+                        content.html(content_txt);
+                        $(this).addClass('short');
+
+                    }
+                }
+            });
+        });
+
+
+    //리뷰 input placeholder 추가
     const reviewContentTitle=document.querySelector('.review-content-title');
     reviewContentTitle.firstChild.setAttribute('placeholder','제목을 입력해주세요.');
     //리뷰 길이 실시간 출력

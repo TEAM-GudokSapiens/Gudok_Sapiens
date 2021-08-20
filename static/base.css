@@ -995,6 +995,13 @@ text-shadow:1px 1px 0 #07449a,
   margin: 1rem 0;
 }
 
+.read-more {
+  color: #000;
+}
+.read-more:hover {
+  color: #000;
+}
+
 .img-container {
   width: 60vw;
   height: 40vh;
@@ -1318,6 +1325,7 @@ text-shadow:1px 1px 0 #07449a,
   height: 6vh;
   display: flex;
   align-items: center;
+  font-size: 1.1rem;
 }
 .board-title p {
   word-break: break-all;
@@ -1337,6 +1345,7 @@ text-shadow:1px 1px 0 #07449a,
   display: flex;
   align-items: center;
   font-weight: 300;
+  font-size: 1rem;
 }
 .board-content-container p {
   word-break: break-all;
@@ -1521,9 +1530,10 @@ a:hover {
   border-radius: 15px;
   padding: 1.2rem;
   border: 1px solid #e8e8e8;
-  margin: 1.5rem 0;
+  margin: 1rem 0;
   /* font-weight: 300; */
   justify-content: space-between;
+  align-items: center;
 }
 .my-review-box-container {
   display: flex;
@@ -1531,8 +1541,8 @@ a:hover {
   align-items: center;
 }
 .my-review-img {
-  width: 8rem;
-  height: 8rem;
+  width: 10rem;
+  height: 10rem;
 }
 .my-review-target-img {
   width: 100%;
@@ -1575,11 +1585,12 @@ a:hover {
   justify-content: space-between;
   max-height: 10vh;
   overflow: auto;
-  font-size: 0.9rem;
+  font-size: 1.1rem;
   color: #808080;
   word-break: break-all;
 }
 .my-review-title {
+  font-size: 1.2rem;
   margin: 0.3rem 0;
   color: #585858;
 }
