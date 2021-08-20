@@ -3,6 +3,8 @@ import random
 
 from django.db.models.aggregates import Max
 from services.models import Service
+from django.db.models import Avg
+
 
 def get_filename(filename):
     string = "asdf"
@@ -16,7 +18,7 @@ def get_random_services(input_num):
     new_list = []
     while input_num != len(new_list):
         pk = random.randint(1, max_id)
-        service = Service.objects.filter(pk=pk).first()
+        service = Service.objects.annotate(avg_reviews=Avg('review__score')).filter(pk=pk).first()
         if service and service not in new_list:
             new_list.append(service)
 
