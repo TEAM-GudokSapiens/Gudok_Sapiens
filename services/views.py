@@ -29,6 +29,11 @@ def main(request):
         random_services = get_random_services(request, num_of_service)
 
     categories = Category.objects.all()
+    
+    services_list_by_category = []
+    for category in categories:
+        category_services = Service.objects.annotate(is_dib=Exists(Dib.objects.filter(users__pk=request.user.id, service_id=OuterRef('pk')))).annotate(num_dibs=Count('dib')).annotate(avg_reviews=Avg('review__score')).filter(category__slug = category.slug).order_by('-num_dibs')[:NUM_OF_DISPLAY]
+        services_list_by_category.append(category_services)
 
     ctx = {
         'magazine_list': magazine_list,
@@ -36,6 +41,7 @@ def main(request):
         'random_services': random_services,
         'categories': categories,
         "new_order_services": new_order_services,
+        "services_list_by_category":services_list_by_category,
     }
     return render(request, 'services/main.html', context=ctx)
 
@@ -49,9 +55,9 @@ def main_test(request):
     new_order_services = Service.objects.order_by("-id")[:NUM_OF_DISPLAY]
     num_of_service = Service.objects.all().count()
     if num_of_service >= NUM_OF_DISPLAY:
-        random_services = get_random_services(NUM_OF_DISPLAY)
+        random_services = get_random_services(request,NUM_OF_DISPLAY)
     else:
-        random_services = get_random_services(num_of_service)
+        random_services = get_random_services(request, num_of_service)
 
     categories = Category.objects.all()
 

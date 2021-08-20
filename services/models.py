@@ -1,9 +1,7 @@
 from django.db import models
-from users.models import User
 from taggit.managers import TaggableManager
-from django.core.paginator import Paginator
-from django.db.models import Count, Avg
-
+from django.db.models import Count, Avg, Exists, OuterRef
+from likes.models import Dib
 
 class Category(models.Model):
     name = models.CharField(max_length=150, db_index=True)

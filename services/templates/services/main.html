@@ -160,7 +160,8 @@
         {% for category in categories %}
         <h5> {{ category }} </h5>
         <div class="popular-service col-12">
-            {% for service in category.get_services_by_category  %}
+            {% for category_services in services_list_by_category %}
+            {% for service in category_services  %}
             <div class='service-card card service-id-{{ service.id }} col-6 col-md-3'>
                 <div class='card-img-top'>
                     {% if service.img1 %}
@@ -189,6 +190,7 @@
                     </div>
                 </div>
             </div>
+            {% endfor %}
             {% endfor %}
         </div>
         {% endfor %}
