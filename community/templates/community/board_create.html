@@ -2,7 +2,7 @@
 {% load bootstrap4 %}
 
 {% block board_content %}
-<div class="community-board col-xl-6 col-md-6 col-xs-12 mb-4">
+<div class="community-board col-xl-7 col-md-7 col-11 mb-4">
     <div class="board-header d-flex justify-content-between pb-2">
         <div class="col-4 p-0">
             <div class="board-header-title">자유게시판</div>
@@ -11,7 +11,7 @@
     <div class="board-create-content mb-3">
         <form action="{% url 'community:board_create' %}" method="POST" class="board-form" >
             {%csrf_token%}
-            <div>
+            <div class="mb-3">
                 {{ form.media }}    
                 {{ form.title }}
                 {{ form.content }}

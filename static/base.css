@@ -103,8 +103,8 @@
 /* 보드 디테일 메뉴 */
 .board-detail-container .detail-menu {
   position: absolute;
-  top: 100px;
-  right: -4px;
+  top: 6.5rem;
+  right: -1.6rem;
   height: 55px;
   background: #fff;
   box-sizing: 0 5px 25px rgba(0, 0, 0, 0.1);
@@ -117,8 +117,8 @@
 }
 
 .board-detail-container .detail-menu.active {
-  top: 100px;
-  right: -4px;
+  top: 6.5rem;
+  right: -1.6rem;
   height: 60px;
   visibility: visible;
   opacity: 1;
@@ -953,15 +953,6 @@ text-shadow:1px 1px 0 #07449a,
   line-height: 1.5rem;
 }
 
-@media screen and (max-width: 1200px) {
-  html {
-    font-size: 14px;
-  }
-
-  .img-slider .navigation {
-    left: 70%;
-  }
-}
 .board-second-user {
   display: none;
 }
@@ -1152,7 +1143,7 @@ text-shadow:1px 1px 0 #07449a,
   margin-bottom: 3rem;
 }
 .review-modal-text {
-  margin-bottom: 0.3rem;
+  margin-bottom: 1.3rem;
   font-size: 1.3rem;
   text-align: center;
 }
@@ -1175,8 +1166,11 @@ text-shadow:1px 1px 0 #07449a,
 .modal-content {
   top: 6rem;
 }
-#openModalBtn:hover {
-  text-shadow: 2px 2px #d2d2d2;
+#openModalBtn {
+  color: white;
+  background: black;
+  padding: 0.6rem;
+  width: 100%;
 }
 .textarea-photo {
   display: flex;
@@ -1193,14 +1187,14 @@ text-shadow:1px 1px 0 #07449a,
   color: #bbbbbb;
 }
 .no-review-text {
-  padding: 0.8rem;
+  padding: 1.8rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid #e8e8e8;
-  border-radius: 15px;
+  border-top: 1px solid #e8e8e8;
   color: #5f5f5f;
   background: #fbfbfb;
+  margin-bottom: 3rem;
 }
 .no-review-text p {
   margin: 0;
@@ -1296,7 +1290,7 @@ text-shadow:1px 1px 0 #07449a,
 }
 .board-header-title {
   margin-bottom: 1.1rem;
-  font-size: 1.5rem;
+  font-size: 1.7rem;
 }
 .board-header-count {
   font-weight: 300;
@@ -1325,7 +1319,8 @@ text-shadow:1px 1px 0 #07449a,
   height: 6vh;
   display: flex;
   align-items: center;
-  font-size: 1.1rem;
+  font-size: 0.85rem;
+  padding: 2.2rem 1.7rem;
 }
 .board-title p {
   word-break: break-all;
@@ -1341,11 +1336,11 @@ text-shadow:1px 1px 0 #07449a,
 .board-content-container {
   border-bottom: 1px solid #cdcdcd;
   height: auto;
-  padding: 1.1rem;
+  padding: 1.4rem;
   display: flex;
   align-items: center;
   font-weight: 300;
-  font-size: 1rem;
+  font-size: 0.85rem;
 }
 .board-content-container p {
   word-break: break-all;
@@ -1460,14 +1455,15 @@ a:hover {
   margin-bottom: 0.3rem;
 }
 .detail-profile {
-  width: 30px;
-  height: 30px;
+  width: 3rem;
+  height: 3rem;
   border-radius: 50%;
   overflow: hidden;
 }
 .detail-box-user {
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 .detail-box-content {
   min-height: 30vh;
@@ -1585,12 +1581,12 @@ a:hover {
   justify-content: space-between;
   max-height: 10vh;
   overflow: auto;
-  font-size: 1.1rem;
+  font-size: 0.9rem;
   color: #808080;
   word-break: break-all;
 }
 .my-review-title {
-  font-size: 1.2rem;
+  font-size: 1rem;
   margin: 0.3rem 0;
   color: #585858;
 }
@@ -1603,7 +1599,7 @@ a:hover {
   display: flex;
   justify-content: flex-end;
   color: #808080;
-  font-size: 1rem;
+  font-size: 0.9rem;
 }
 @media screen and (max-width: 1200px) {
   html {
@@ -1654,6 +1650,10 @@ a:hover {
   }
   .detail-carousel {
     display: block;
+  }
+
+  .img-slider .navigation {
+    left: 70%;
   }
 }
 
@@ -1853,6 +1853,9 @@ a:hover {
 }
 
 @media screen and (max-width: 430px) {
+  html {
+    font-size: 8.5px;
+  }
   .navbar {
     display: none !important;
   }
@@ -1927,7 +1930,7 @@ a:hover {
 
 @media screen and (max-width: 320px) {
   html {
-    font-size: 5.5px;
+    font-size: 6.5px;
   }
 }
 
@@ -1950,6 +1953,7 @@ a:hover {
   height: 100%;
   text-align: center;
   place-items: center;
+  margin-top: 3rem;
 }
 
 .range {
