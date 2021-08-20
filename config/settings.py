@@ -60,7 +60,7 @@ INSTALLED_APPS = [
     'allauth',  # 설치한앱
     'allauth.account',  # 소셜로그인한 계정관리
     'allauth.socialaccount',  # 소셜account 정보관리
-    'allauth.socialaccount.providers.naver',  # 네이버 소셜로그인
+    'allauth.socialaccount.providers.naver', 
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.kakao',
 
@@ -164,8 +164,8 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
+STATICFILES_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
