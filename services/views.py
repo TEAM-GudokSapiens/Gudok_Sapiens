@@ -21,11 +21,11 @@ from community.models import *
 
 def main(request):
     magazine_list = Magazine.objects.all()
+    NUM_OF_DISPLAY = 4
     # 찜을 많이 받은 서비스를 우선적으로 배치
     # 추후에 별점 순으로 변경할 수 있음
-    NUM_OF_DISPLAY = 4
     services = Service.objects.annotate(
-        num_dibs=Count('dib')).order_by('-num_dibs')[:NUM_OF_DISPLAY].annotate(avg_reviews=Avg('review__score'))
+        num_dibs=Count('dib')).annotate(avg_reviews=Avg('review__score')).order_by('-num_dibs')[:NUM_OF_DISPLAY]
     new_order_services = Service.objects.order_by("-id")[:NUM_OF_DISPLAY]
     num_of_service = Service.objects.all().count()
     if num_of_service >= NUM_OF_DISPLAY:
