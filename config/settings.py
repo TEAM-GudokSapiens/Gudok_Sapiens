@@ -31,7 +31,8 @@ def get_secret(setting, secrets=secrets):
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# -------------------------------------------바꿔주기---------------------------------------------
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -164,8 +165,8 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
-STATICFILES_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
