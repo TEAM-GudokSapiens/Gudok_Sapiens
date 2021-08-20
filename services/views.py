@@ -101,9 +101,8 @@ def services_list(request):
 def category_list(request, category_slug):
     services_list = Service.objects.filter(
         category__slug__contains=category_slug).annotate(avg_reviews=Avg('review__score'))
-    categories = Category.objects.all()
-    sub_category_list = SubCategory.objects.filter(
-        category__slug__contains=category_slug)
+    categories = Category.objects.order_by('-id')
+    sub_category_list = SubCategory.objects.filter(category__slug__contains=category_slug).order_by('id')
     # 한 페이지 당 담을 수 있는 객체 수를 정할 수 있음
     NUM_OF_PAGINATOR = 10
     paginator = Paginator(services_list, NUM_OF_PAGINATOR)
