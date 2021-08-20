@@ -52,12 +52,14 @@
     }
 </script> -->
 <script>
-    let search = document.querySelector(".search");
-    let clearh = document.querySelector(".clear");
+    let searches = document.querySelectorAll(".search");
 
-    search.onclick = function () {
-        document.querySelector(".main-search").classList.toggle('active');
+    for (let search of searches) {
+        search.onclick = function () {
+            document.querySelector(".main-search").classList.toggle('active');
+        }
     }
 </script>
+
 
 {% endblock %}
