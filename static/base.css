@@ -1044,7 +1044,7 @@ text-shadow:1px 1px 0 #07449a,
 
 .fixing-box {
   font-family: "KOTRA_SONGEULSSI";
-  border: 0.1px solid #fdeeee;
+  border: 0.1px solid #e8e8e8;
   /* border-bottom: 2px solid #888888; */
   border-radius: 5px;
   width: 23.8vw;
@@ -1085,7 +1085,7 @@ text-shadow:1px 1px 0 #07449a,
 }
 .fix-link div:hover,
 .fix-link a:hover {
-  text-shadow: 1px 1px 3px rgb(179, 179, 179);
+  text-shadow: 2px 2px #d2d2d2;
 }
 .dib i,
 .help i {
@@ -1156,6 +1156,17 @@ text-shadow:1px 1px 0 #07449a,
   display: flex;
   justify-content: center;
 }
+.review-modal-footer input,
+.review-modal-footer button {
+  font-weight: 300;
+}
+.review-modal-footer input:hover,
+.review-modal-footer button:hover {
+  font-weight: 400;
+}
+.modal-content {
+  top: 6rem;
+}
 .textarea-photo {
   display: flex;
   justify-content: space-between;
@@ -1170,7 +1181,24 @@ text-shadow:1px 1px 0 #07449a,
   background-color: #f3f3f3;
   color: #bbbbbb;
 }
-
+.no-review-text {
+  padding: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #e8e8e8;
+  border-radius: 15px;
+  color: #5f5f5f;
+  background: #fbfbfb;
+}
+.no-review-text p {
+  margin: 0;
+}
+.review-button-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.8rem;
+}
 .content-block {
   /* display: flex;
   justify-content: flex-start; */
