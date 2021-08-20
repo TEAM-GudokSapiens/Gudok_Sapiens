@@ -1,12 +1,8 @@
-from django.db.models.fields import DecimalField
 from django.shortcuts import redirect, render
-from django.contrib import messages
 from django.db.models import Q, Count, Avg
 from django.core.paginator import Paginator
 from taggit.models import Tag
 from reviews.forms import ReviewCreateForm
-from django.http.response import JsonResponse
-import json
 from django.views.decorators.csrf import csrf_exempt
 from likes.models import Dib, Help
 from django.db.models import Exists, OuterRef
@@ -28,9 +24,9 @@ def main(request):
 
     num_of_service = Service.objects.all().count()
     if num_of_service >= NUM_OF_DISPLAY:
-        random_services = get_random_services(NUM_OF_DISPLAY)
+        random_services = get_random_services(request, NUM_OF_DISPLAY)
     else:
-        random_services = get_random_services(num_of_service)
+        random_services = get_random_services(request, num_of_service)
 
     categories = Category.objects.all()
 

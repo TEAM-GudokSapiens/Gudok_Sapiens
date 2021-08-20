@@ -151,14 +151,6 @@
     </a>
 </div>
 
-{% comment %} 찜 많은 순으로 카테고리별 정렬 {% endcomment %}
-{% comment %} {% for category in categories %}
-<h3> {{ category }} </h3>
-{% for service in category.get_services_by_category  %}
-{{ service.name }}
-{% endfor %}
-{% endfor %} {% endcomment %}
-
 <div class="main-service-list-section popular-services col-7">
     <h4 class="col-12">
         카테고리별 인기 서비스
