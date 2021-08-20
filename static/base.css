@@ -1167,6 +1167,9 @@ text-shadow:1px 1px 0 #07449a,
 .modal-content {
   top: 6rem;
 }
+#openModalBtn:hover {
+  text-shadow: 2px 2px #d2d2d2;
+}
 .textarea-photo {
   display: flex;
   justify-content: space-between;

@@ -253,6 +253,8 @@
 {% endif %}
 
 <script>
+    const reviewContentTitle=document.querySelector('.review-content-title');
+    reviewContentTitle.firstChild.setAttribute('placeholder','제목을 입력해주세요.');
     //리뷰 길이 실시간 출력
     const slideValue = document.querySelector(".period_select");
     const inputSlider = document.querySelector(".period_choice");
