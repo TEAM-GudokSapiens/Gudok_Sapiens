@@ -1,7 +1,35 @@
 {% extends "base.html" %}
 {% load bootstrap4 %}
+{% load static %}
 
 {% block content %}
+<style>
+    .sns-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .sns-modal-box {
+      background: white;
+      width: 300px;
+      height: 200px;
+      border-radius: 10px;
+    }
+
+    .sns-modal-title,
+    .sns-modal-content,
+    .sns-modal-close{
+      text-align: center;
+    }
+
+</style>
 <div class="d-flex justify-content-center" >
     <div class="service-detail-container mt-3">
         <div class="img-container d-flex justify-content-around">
@@ -83,9 +111,41 @@
                 {% endcomment %}
                 <a href="{{service.link}}">
                     <i class="fas fa-external-link-alt"></i> 바로가기</a>
-                <a @click="onClickFacebook">
-                    <i class="fab fa-facebook"></i> 공유하기
-                </a>
+                
+                <button id="modal-open-btn">SNS 공유하기</button>
+
+                <!--SNS 공유하기 모달 시작-->
+                <div class='sns-modal'>
+                    <div class='sns-modal-box'>
+                        <div claee='sns-modal-title'>SNS 공유하기</div>
+                        <div class='sns-modal-content'>
+                            <span class="sociallink ml-1">
+                                <a href="javascript:sendLinkFacebook()" title="페이스북으로 공유">                       
+                                    <img src="{% static 'sns/facebook.png' %}" width=36 alt="Facebook">
+                                </a>
+                            </span>
+                            <span class="sociallink ml-1">
+                                <a href="javascript:sendLinkTwitter()" title="트위터로 공유">                
+                                    <img src="{% static 'sns/twitter.png' %}" width=36 alt="Twitter">
+                                </a>
+                            </span>
+                            <span class="sociallink ml-1">
+                            <a href="javascript:sendLinkNaver()" title="네이버로 공유">                
+                                    <img src="{% static 'sns/naver.png' %}" width=36 alt="Naver">
+                            </a>
+                            </span>
+
+                            <input type="text" id = "ShareUrl">
+                            <span class="btn-type1"><button OnClick="javascript:CopyUrlToClipboard()">URL 복사</button></span>
+
+
+                        </div>
+                        <div class="sns-modal-close">
+                            <button id="modal-close-btn">닫기</button>
+                        </div>
+                    </div>
+                </div>
+                <!--SNS 공유하기 모달 끝-->
             </div>
         </div>
             <div class="tab-content" id="pills-tabContent">
@@ -364,6 +424,61 @@
     $('.closeModalBtn').on('click', function () {
         $('#modalBox').modal('hide');
     });
+
+    // modal 
+    const modalOpenBtn = document.getElementById("modal-open-btn");
+    const modalCloseBtn = document.getElementById("modal-close-btn");
+    const modalWrapper = document.querySelector(".sns-modal");
+
+    console.log(modalWrapper.style);
+    modalOpenBtn.addEventListener("click", () => {
+      modalWrapper.style.display = "flex";
+    });
+
+    modalCloseBtn.addEventListener("click", () => {
+      modalWrapper.style.display = "none";
+    });
+
+    // 페이스북 공유
+    function sendLinkFacebook(){
+    var facebook_share_url = "https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}";
+    window.open(facebook_share_url,
+                'Share on Facebook',
+                'scrollbars=no, width=500, height=500');
+    }
+
+    // 트위터 공유
+    function sendLinkTwitter(){
+    var twitter_share_text="{{ service.name }}";
+    var twitter_share_url="{{ request.build_absolute_uri }}";
+    window.open("https://twitter.com/share?text="+twitter_share_text+"&url="+twitter_share_url,
+                'Share on Twitter',
+                'scrollbars=no, width=500, height=500');
+    }
+
+    // 네이버 공유
+    function sendLinkNaver(){
+    var raw_url = "{{ request.build_absolute_uri }}";
+    var raw_title = "{{ service.name }}"
+    var naver_root_url = "http://share.naver.com/web/shareView.nhn?url="
+    var naver_share_url = naver_root_url+encodeURI(raw_url)+"&title="+encodeURI(raw_title);
+    window.open(naver_share_url,
+                'Share on Naver',
+                'scrollbars=no, width=500, height=500');    
+    }
+
+    // URL 복사하기
+    function CopyUrlToClipboard()
+    {
+   var obShareUrl = document.getElementById("ShareUrl");
+   obShareUrl.value = window.document.location.href; 
+   obShareUrl.select();  
+   document.execCommand("copy"); 
+   obShareUrl.blur(); 
+   alert("URL이 클립보드에 복사되었습니다"); 
+    }
+
+
 </script>
 
 {% endblock content %}
