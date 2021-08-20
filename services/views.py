@@ -182,7 +182,7 @@ def services_detail(request, pk):
         reviews_order_help = Review.objects.filter(target_id=pk).annotate(
             helps_count=Count('reviews_help')).order_by('-helps_count')
 
-    NUM_OF_PAGINATOR = 1
+    NUM_OF_PAGINATOR = 5
     paginator = Paginator(reviews_order_help, NUM_OF_PAGINATOR)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)

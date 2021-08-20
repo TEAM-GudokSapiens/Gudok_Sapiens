@@ -982,6 +982,7 @@ text-shadow:1px 1px 0 #07449a,
 .service-intro {
   font-size: 1.4rem;
   padding-bottom: 10px;
+  color: #525252;
 }
 
 .service-content {
@@ -1962,12 +1963,14 @@ a:hover {
 
 .range .sliderValue span {
   position: absolute;
-  height: 1.5rem;
-  width: 1.5rem;
+  height: 2.5rem;
+  width: 2.5rem;
+  min-width: 20px;
+  min-height: 20px;
   color: white;
   font-weight: 400;
-  font-size: 0.9rem;
-  top: -25px;
+  font-size: 1.5rem;
+  top: -2.8rem;
   transform: translateX(-50%) scale(0);
   transform-origin: bottom;
   transition: transform 0.3s ease-in-out;
@@ -1981,8 +1984,8 @@ a:hover {
 .range .sliderValue span:after {
   position: absolute;
   content: "";
-  height: 1.5rem;
-  width: 1.5rem;
+  height: 2.5rem;
+  width: 2.5rem;
   background: rgb(177, 177, 177);
   left: 8%;
   transform: translateX(-5%) rotate(45deg);
