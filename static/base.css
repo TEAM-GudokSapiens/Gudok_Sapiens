@@ -552,7 +552,7 @@
   margin-top: 0.5rem;
 }
 
-.service-second-category  a {
+.service-second-category a {
   color: #444;
 }
 
@@ -570,8 +570,8 @@
 
 .main-service-list-box .fa-heart,
 .main-service-list-box .fa-star {
-  border-color: #002E6E !important;
-  color: #002E6E !important;
+  border-color: #002e6e !important;
+  color: #002e6e !important;
 }
 
 .main-service-list-box .dib,
@@ -721,7 +721,6 @@ ul.tag-service-box li {
 ul.tag-service-box label {
   cursor: pointer;
   line-height: 2;
-
 }
 
 ul.tag-service-box label > span {
@@ -738,7 +737,7 @@ ul.tag-service-box label > span {
 }
 
 ul.tag-service-box label > span:before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -752,7 +751,7 @@ ul.tag-service-box label > span > span {
   vertical-align: middle;
 }
 
-.tag-service-card label input[type='checkbox']{
+.tag-service-card label input[type="checkbox"] {
   display: none;
 }
 
@@ -761,18 +760,14 @@ ul.tag-service-box label > span > span {
   /* text-shadow: 0.5px 0.5px 0.5px #c23464;  */
   font-weight: 600;
   /* box-shadow: 0 0 2 #c23464;  */
-  border:2px solid #c23464;
+  border: 2px solid #c23464;
   background-color: #fdecf2;
 }
 
 .tag-service-card label input[type="checkbox"]:checked ~ span > span {
   color: #c23464;
   transition: 0.5s;
-
 }
-
-
-
 
 /* 체크표시 */
 /* .tag-service-card label input[type="checkbox"]:checked ~ span::before {
@@ -835,7 +830,6 @@ ul.tag-service-box label > span > span {
   text-decoration-color: inherit;
   text-decoration-thickness: 0.3rem;
 }  */
-
 
 /* 글씨효과 */
 /* .tag-service-card label input[type="checkbox"]:checked ~ span {
@@ -1453,6 +1447,9 @@ a:hover {
 #cke_1_contents {
   height: 50vh !important;
 }
+.django-ckeditor-widget {
+  display: block !important;
+}
 .detail-first-box {
   display: flex;
   align-items: flex-end;
@@ -1830,23 +1827,23 @@ a:hover {
     transition: 0.5s;
     overflow: hidden;
   }
-  
+
   .main-search.active {
     width: 100px;
   }
-  
+
   .main-search-icon {
     position: absolute;
     left: 18px;
     top: 45%;
     transform: translate(-50%, -50%);
   }
-  
+
   .main-search .search {
     font-size: 0.7rem;
     cursor: pointer;
   }
-  
+
   .main-search-input {
     position: relative;
     width: 300px;
@@ -1856,15 +1853,15 @@ a:hover {
     align-items: center;
     justify-content: center;
   }
-  
+
   .main-search-input input:focus::placeholder {
     color: rgb(241, 237, 237) !important;
   }
-  
+
   .main-search-input input::placeholder {
     color: #444 !important;
   }
-  
+
   .main-search-input input {
     position: absolute;
     bottom: 13px;
@@ -1876,7 +1873,6 @@ a:hover {
     outline: none;
     background-color: rgb(241, 237, 237);
   }
-
 }
 
 @media screen and (min-width: 430px) {
@@ -1884,7 +1880,6 @@ a:hover {
   .bottom-nav {
     display: none !important;
   }
-  
 }
 
 @media screen and (max-width: 320px) {
