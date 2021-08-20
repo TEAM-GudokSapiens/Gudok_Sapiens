@@ -261,11 +261,10 @@
                 var content_txt = content.text();
                 var content_txt_short = content_txt.substring(0, 200) + "...";
                 var btn_more = $('<div style="text-align:right;cursor:pointer;"><a href="javascript:void(0)" class="read-more">더보기</a><div>');
-
-
+                
                 $(this).append(btn_more);
 
-                if (content_txt.length >= 100) {
+                if (content_txt.length > 200) {
                     content.html(content_txt_short)
 
                 } else {
