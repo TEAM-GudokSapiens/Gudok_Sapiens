@@ -10,7 +10,6 @@
   padding: 10px 0 !important;
 }
 
-
 .header-container h1 {
   padding: 0 !important;
 }
@@ -116,8 +115,8 @@
 /* 보드 디테일 메뉴 */
 .board-detail-container .detail-menu {
   position: absolute;
-  top: 100px;
-  right: -4px;
+  top: 6.5rem;
+  right: -1.6rem;
   height: 55px;
   background: #fff;
   box-sizing: 0 5px 25px rgba(0, 0, 0, 0.1);
@@ -130,8 +129,8 @@
 }
 
 .board-detail-container .detail-menu.active {
-  top: 100px;
-  right: -4px;
+  top: 6.5rem;
+  right: -1.6rem;
   height: 60px;
   visibility: visible;
   opacity: 1;
@@ -574,7 +573,7 @@
   margin-top: 0.5rem;
 }
 
-.service-second-category  a {
+.service-second-category a {
   color: #444;
 }
 
@@ -592,10 +591,10 @@
 
 .main-service-list-box .fa-heart,
 .main-service-list-box .fa-star,
-.search-service-list-box .fa-star, 
+.search-service-list-box .fa-star,
 .search-service-list-box .fa-star {
-  border-color: #002E6E !important;
-  color: #002E6E !important;
+  border-color: #002e6e !important;
+  color: #002e6e !important;
 }
 
 .main-service-list-box .dib,
@@ -746,7 +745,6 @@ ul.tag-service-box li {
 ul.tag-service-box label {
   cursor: pointer;
   line-height: 2;
-
 }
 
 ul.tag-service-box label > span {
@@ -763,7 +761,7 @@ ul.tag-service-box label > span {
 }
 
 ul.tag-service-box label > span:before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -777,7 +775,7 @@ ul.tag-service-box label > span > span {
   vertical-align: middle;
 }
 
-.tag-service-card label input[type='checkbox']{
+.tag-service-card label input[type="checkbox"] {
   display: none;
 }
 
@@ -786,18 +784,14 @@ ul.tag-service-box label > span > span {
   /* text-shadow: 0.5px 0.5px 0.5px #c23464;  */
   font-weight: 600;
   /* box-shadow: 0 0 2 #c23464;  */
-  border:2px solid #c23464;
+  border: 2px solid #c23464;
   background-color: #fdecf2;
 }
 
 .tag-service-card label input[type="checkbox"]:checked ~ span > span {
   color: #c23464;
   transition: 0.5s;
-
 }
-
-
-
 
 /* 체크표시 */
 /* .tag-service-card label input[type="checkbox"]:checked ~ span::before {
@@ -860,7 +854,6 @@ ul.tag-service-box label > span > span {
   text-decoration-color: inherit;
   text-decoration-thickness: 0.3rem;
 }  */
-
 
 /* 글씨효과 */
 /* .tag-service-card label input[type="checkbox"]:checked ~ span {
@@ -1010,6 +1003,7 @@ text-shadow:1px 1px 0 #07449a,
 .service-intro {
   font-size: 1.4rem;
   padding-bottom: 10px;
+  color: #525252;
 }
 
 .service-content {
@@ -1020,6 +1014,13 @@ text-shadow:1px 1px 0 #07449a,
 .service-box {
   word-break: break-all;
   margin: 1rem 0;
+}
+
+.read-more {
+  color: #000;
+}
+.read-more:hover {
+  color: #000;
 }
 
 .img-container {
@@ -1072,7 +1073,7 @@ text-shadow:1px 1px 0 #07449a,
 
 .fixing-box {
   font-family: "KOTRA_SONGEULSSI";
-  border: 0.1px solid #fdeeee;
+  border: 0.1px solid #e8e8e8;
   /* border-bottom: 2px solid #888888; */
   border-radius: 5px;
   width: 23.8vw;
@@ -1113,7 +1114,7 @@ text-shadow:1px 1px 0 #07449a,
 }
 .fix-link div:hover,
 .fix-link a:hover {
-  text-shadow: 1px 1px 3px rgb(179, 179, 179);
+  text-shadow: 2px 2px #d2d2d2;
 }
 .dib i,
 .help i {
@@ -1172,7 +1173,7 @@ text-shadow:1px 1px 0 #07449a,
   margin-bottom: 3rem;
 }
 .review-modal-text {
-  margin-bottom: 0.3rem;
+  margin-bottom: 1.3rem;
   font-size: 1.3rem;
   text-align: center;
 }
@@ -1183,6 +1184,23 @@ text-shadow:1px 1px 0 #07449a,
 .review-modal-footer {
   display: flex;
   justify-content: center;
+}
+.review-modal-footer input,
+.review-modal-footer button {
+  font-weight: 300;
+}
+.review-modal-footer input:hover,
+.review-modal-footer button:hover {
+  font-weight: 400;
+}
+.modal-content {
+  top: 6rem;
+}
+#openModalBtn {
+  color: white;
+  background: black;
+  padding: 0.6rem;
+  width: 100%;
 }
 .textarea-photo {
   display: flex;
@@ -1198,7 +1216,24 @@ text-shadow:1px 1px 0 #07449a,
   background-color: #f3f3f3;
   color: #bbbbbb;
 }
-
+.no-review-text {
+  padding: 1.8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-top: 1px solid #e8e8e8;
+  color: #5f5f5f;
+  background: #fbfbfb;
+  margin-bottom: 3rem;
+}
+.no-review-text p {
+  margin: 0;
+}
+.review-button-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.8rem;
+}
 .content-block {
   /* display: flex;
   justify-content: flex-start; */
@@ -1207,7 +1242,7 @@ text-shadow:1px 1px 0 #07449a,
 
 .forms {
   margin: 5rem auto;
-  padding: 0!important;
+  padding: 0 !important;
   font-family: "GmarketSansTTFMedium";
 }
 
@@ -1309,7 +1344,7 @@ text-shadow:1px 1px 0 #07449a,
 }
 .board-header-title {
   margin-bottom: 1.1rem;
-  font-size: 1.5rem;
+  font-size: 1.7rem;
 }
 .board-header-count {
   font-weight: 300;
@@ -1338,6 +1373,8 @@ text-shadow:1px 1px 0 #07449a,
   height: 6vh;
   display: flex;
   align-items: center;
+  font-size: 0.85rem;
+  padding: 2.2rem 1.7rem;
 }
 .board-title p {
   word-break: break-all;
@@ -1353,10 +1390,11 @@ text-shadow:1px 1px 0 #07449a,
 .board-content-container {
   border-bottom: 1px solid #cdcdcd;
   height: auto;
-  padding: 1.1rem;
+  padding: 1.4rem;
   display: flex;
   align-items: center;
   font-weight: 300;
+  font-size: 0.85rem;
 }
 .board-content-container p {
   word-break: break-all;
@@ -1471,14 +1509,15 @@ a:hover {
   margin-bottom: 0.3rem;
 }
 .detail-profile {
-  width: 30px;
-  height: 30px;
+  width: 3rem;
+  height: 3rem;
   border-radius: 50%;
   overflow: hidden;
 }
 .detail-box-user {
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 .detail-box-content {
   min-height: 30vh;
@@ -1498,6 +1537,9 @@ a:hover {
 }
 #cke_1_contents {
   height: 50vh !important;
+}
+.django-ckeditor-widget {
+  display: block !important;
 }
 .detail-first-box {
   display: flex;
@@ -1538,9 +1580,10 @@ a:hover {
   border-radius: 15px;
   padding: 1.2rem;
   border: 1px solid #e8e8e8;
-  margin: 1.5rem 0;
+  margin: 1rem 0;
   /* font-weight: 300; */
   justify-content: space-between;
+  align-items: center;
 }
 .my-review-box-container {
   display: flex;
@@ -1548,8 +1591,8 @@ a:hover {
   align-items: center;
 }
 .my-review-img {
-  width: 8rem;
-  height: 8rem;
+  width: 10rem;
+  height: 10rem;
 }
 .my-review-target-img {
   width: 100%;
@@ -1597,6 +1640,7 @@ a:hover {
   word-break: break-all;
 }
 .my-review-title {
+  font-size: 1rem;
   margin: 0.3rem 0;
   color: #585858;
 }
@@ -1609,7 +1653,7 @@ a:hover {
   display: flex;
   justify-content: flex-end;
   color: #808080;
-  font-size: 1rem;
+  font-size: 0.9rem;
 }
 .pw-recovery-3 {
   font-size: 1rem !important;
@@ -1670,6 +1714,10 @@ a:hover {
   }
   .detail-carousel {
     display: block;
+  }
+
+  .img-slider .navigation {
+    left: 70%;
   }
 }
 
@@ -1843,12 +1891,12 @@ a:hover {
     margin: -4rem auto 30px auto;
     padding: 0 !important;
   }
-  
+
   .main-navbar-2 #navbarDropdown {
     z-index: 5;
     padding-left: 0 !important;
   }
-  
+
   .main-navbar-2 .nav-item a {
     padding-left: 2.5rem !important;
     font-size: 1.3rem;
@@ -1879,10 +1927,10 @@ a:hover {
   .login-direction {
     font-size: 1.2rem !important;
   }
-  
+
   .update-form .btn {
     height: 5.5rem;
-    font-size: 2rem
+    font-size: 2rem;
   }
 
   .social-login {
@@ -1906,7 +1954,7 @@ a:hover {
     height: 5.5rem !important;
     font-size: 2rem !important;
     margin-bottom: 0.5rem;
-    padding: 1.3rem 1.5rem 0 1.5rem!important;
+    padding: 1.3rem 1.5rem 0 1.5rem !important;
   }
 
   .bootstrap-form select {
@@ -1927,7 +1975,7 @@ a:hover {
 
   .forms .btn {
     height: 5.5rem;
-    font-size: 2rem
+    font-size: 2rem;
   }
 
   .forms-a {
@@ -1962,7 +2010,7 @@ a:hover {
   .sign-register h4 {
     font-size: 2.3rem;
   }
-  
+
   .sign-register p {
     font-size: 1.7rem;
   }
@@ -2045,7 +2093,7 @@ a:hover {
 
 @media screen and (max-width: 430px) {
   html {
-    font-size: 9px;
+    font-size: 8.5px;
   }
 
   .service-intro-our {
@@ -2056,7 +2104,6 @@ a:hover {
 
   .service-intro-our h5 {
     font-size: 1.8rem;
-
   }
 
   .service-second-category {
@@ -2120,23 +2167,23 @@ a:hover {
     transition: 0.5s;
     overflow: hidden;
   }
-  
+
   .top-search.active {
     width: 100px;
   }
-  
+
   .top-search-icon {
     position: absolute;
     left: 18px;
     top: 45%;
     transform: translate(-50%, -50%);
   }
-  
+
   .top-search .search {
     font-size: 0.7rem;
     cursor: pointer;
   }
-  
+
   .top-search-input {
     position: relative;
     width: 300px;
@@ -2146,15 +2193,15 @@ a:hover {
     align-items: center;
     justify-content: center;
   }
-  
+
   .top-search-input input:focus::placeholder {
     color: rgb(241, 237, 237) !important;
   }
-  
+
   .top-search-input input::placeholder {
     color: #444 !important;
   }
-  
+
   .top-search-input input {
     position: absolute;
     bottom: 13px;
@@ -2170,7 +2217,7 @@ a:hover {
   .sign-register h4 {
     font-size: 1.5rem;
   }
-  
+
   .sign-register p {
     font-size: 1.3rem;
   }
@@ -2187,7 +2234,6 @@ a:hover {
   .main-navbar-2 {
     display: none !important;
   }
-  
 }
 
 @media screen and (max-width: 320px) {
@@ -2215,6 +2261,7 @@ a:hover {
   height: 100%;
   text-align: center;
   place-items: center;
+  margin-top: 3rem;
 }
 
 .range {
@@ -2239,12 +2286,14 @@ a:hover {
 
 .range .sliderValue span {
   position: absolute;
-  height: 1.5rem;
-  width: 1.5rem;
+  height: 2.5rem;
+  width: 2.5rem;
+  min-width: 20px;
+  min-height: 20px;
   color: white;
   font-weight: 400;
-  font-size: 0.9rem;
-  top: -25px;
+  font-size: 1.5rem;
+  top: -2.8rem;
   transform: translateX(-50%) scale(0);
   transform-origin: bottom;
   transition: transform 0.3s ease-in-out;
@@ -2258,8 +2307,8 @@ a:hover {
 .range .sliderValue span:after {
   position: absolute;
   content: "";
-  height: 1.5rem;
-  width: 1.5rem;
+  height: 2.5rem;
+  width: 2.5rem;
   background: rgb(177, 177, 177);
   left: 8%;
   transform: translateX(-5%) rotate(45deg);

@@ -110,7 +110,7 @@
                 {% comment %} <a href="{% url 'likes:likes_dibs' service.id %}">찜({{ number_of_dibs }}개)</a> /
                 {% endcomment %}
                 <a href="{{service.link}}">
-                    <i class="fas fa-external-link-alt"></i> 바로가기</a>
+                    <i class="fas fa-link"></i> 바로가기</a>
                 
                 <button id="modal-open-btn">SNS 공유하기</button>
 
@@ -151,7 +151,7 @@
             <div class="tab-content" id="pills-tabContent">
                 <hr class="review-hr">
                 <div class="review-tab">
-                    <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
                         <span class="tab-title">리뷰</span>
                         <span class="review-count ">{{service.get_review_count}}개</span>
                     </div>
@@ -198,33 +198,53 @@
                         </div>
                         <hr>
                         {% endfor %}
-
-                        {% if page_obj.has_previous %}
-                        <a href="?page=1">처음으로</a>
-                        <a href="?page={{ page_obj.previous_page_number }}">이전으로</a>
-                        {% endif %}
-                        <div class="d-flex justify-content-center">
-                            <span class="current">
-                                {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
-                            </span>
+                        {% if page_obj %}
+                            <div class="board-paginator">
+                                {% if page_obj.has_previous %}
+                                    <a href="?page=1" class="text-dark">처음으로</a>
+                                    <a href="?page={{ page_obj.previous_page_number }}" class="text-dark">&lt&lt</a>
+                                {% endif %}
+                            
+                                {% for page_number in page_obj.paginator.page_range %}
+                                    {% if page_number >= page_obj.number|add:-4 and page_number <= page_obj.number|add:4 %} 
+                                        {% if page_number is page_obj.number %} 
+                                            <li class="page-item active" aria-current="page">
+                                            <a class="text-dark" href="?page={{ page_number }}">{{ page_number }}</a>
+                                            </li>
+                                        {% else %}
+                                            <li class="page-item">
+                                                <a class="text-dark" href="?page={{ page_number }}">{{ page_number }}</a>
+                                            </li>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            
+                                {% if page_obj.has_next %}
+                                <!-- <li>...{{ page_obj.paginator.num_pages }}</li> -->
+                                <a href="?page={{ page_obj.next_page_number }}" class="text-dark">&gt&gt</a>
+                                <a href="?page={{ page_obj.paginator.num_pages }}" class="text-dark">맨뒤로</a>
+                                {% endif %}
+                            </div>
+                        {% else %}
+                        <div class="no-review-text">
+                            <p>등록된 리뷰가 없습니다.</p>
+                            <p style="margin-top: 0.6rem;">서비스를 구독 중이라면 후기를 남겨주세요.</p>
                         </div>
-
-                        {% if page_obj.has_next %}
-                        <a href="?page={{ page_obj.next_page_number }}">다음으로</a>
-                        <a href="?page={{ page_obj.paginator.num_pages }}">맨뒤로</a>
                         {% endif %}
 
                         {% if request.user.is_authenticated %}
-                        <button type="button" class="btn btn-lg" id="openModalBtn">
-                            리뷰쓰러가기
-                        </button>
+                        <div class="review-button-container">
+                            <button type="button" class="btn btn-lg" id="openModalBtn">
+                                리뷰쓰러가기
+                            </button>
+                        </div>
                         {% endif %}
                         <!-- 모달 시작 -->
                         <div id="modalBox" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <div style="text-align: center; width: 100%;margin-left: 2rem;">리뷰 작성하기</div>
+                                        <div style="text-align: center; width: 100%;margin-left: 2rem;font-size: 1.4rem;">리뷰 작성하기</div>
                                         <button type="button" data-dismiss="modal" aria-label="Close" class="closeModalBtn close btn"><span
                                                 aria-hidden="true">×</span></button>
                                     </div>
@@ -293,6 +313,47 @@
 {% endif %}
 
 <script>
+    //디테일 content 더보기 기능
+    $(document).ready(function () {
+
+            $('.service-box').each(function () {
+                var content = $(this).children('.service-content');
+                var content_txt = content.text();
+                var content_txt_short = content_txt.substring(0, 200) + "...";
+                var btn_more = $('<div style="text-align:right;cursor:pointer;"><a href="javascript:void(0)" class="read-more">더보기</a><div>');
+                
+                $(this).append(btn_more);
+
+                if (content_txt.length > 200) {
+                    content.html(content_txt_short)
+
+                } else {
+                    btn_more.hide()
+                }
+
+                btn_more.click(toggle_content);
+
+                function toggle_content() {
+                    if ($(this).hasClass('short')) {
+                        // 접기 상태
+                        $(this).html('더보기');
+                        content.html(content_txt_short)
+                        $(this).removeClass('short');
+                    } else {
+                        // 더보기 상태
+                        $(this).html('접기');
+                        content.html(content_txt);
+                        $(this).addClass('short');
+
+                    }
+                }
+            });
+        });
+
+
+    //리뷰 input placeholder 추가
+    const reviewContentTitle=document.querySelector('.review-content-title');
+    reviewContentTitle.firstChild.setAttribute('placeholder','제목을 입력해주세요.');
     //리뷰 길이 실시간 출력
     const slideValue = document.querySelector(".period_select");
     const inputSlider = document.querySelector(".period_choice");

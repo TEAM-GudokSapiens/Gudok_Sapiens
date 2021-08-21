@@ -3,7 +3,7 @@
 {% load bootstrap4 %}
 
 {% block board_content %}
-<div class="community-board col-xl-6 col-md-6 col-xs-12 mb-4">
+<div class="community-board col-xl-7 col-md-7 col-11 mb-4">
     <!-- <div class="board-header d-flex justify-content-between pb-3">
         <div class="col-4 p-0">
         <div class="board-header-title">공지사항</div>
@@ -38,8 +38,10 @@
         <div class="detail-box-content">
             {{ notice.content | safe }}
         </div>
-        <div class="board-button col-md-2 ml-0" style="text-align: center;">
-            <a href="{%url 'community:notice'%}" class="w-100 d-block">목록으로 </a>
+        <div class="board-submit-box">
+            <div class="board-button col-md-2 ml-0" style="text-align: center;">
+                <a href="{%url 'community:notice'%}" class="w-100 d-block">목록으로 </a>
+            </div>
         </div>
     </div>
 </div>
