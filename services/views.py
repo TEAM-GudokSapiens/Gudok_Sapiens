@@ -398,21 +398,6 @@ def subcategory_clothing(request):
     }
     return render(request, 'services/list.html', context=ctx)
 
-def subcategory_laundry(request):
-    category = "lifestyle" 
-    subcategory = "laundry"
-    services_list, category_list, sub_category_list = get_sub_categories(category, subcategory)
-    num_of_display = 10
-    services = make_paginator(request, services_list, num_of_display)
-    
-    ctx = {
-        'services': services,
-        'categories': category_list,
-        'sub_category_list': sub_category_list,
-        'category_slug': category,
-    }
-    return render(request, 'services/list.html', context=ctx)
-
 def subcategory_cleaning(request):
     category = "lifestyle" 
     subcategory = "cleaning"
@@ -518,9 +503,9 @@ def subcategory_bakery(request):
     }
     return render(request, 'services/list.html', context=ctx)
 
-def subcategory_fastfood(request):
+def subcategory_meal_kit(request):
     category = "food" 
-    subcategory = "fastfood"
+    subcategory = "meal_kit"
     services_list, category_list, sub_category_list = get_sub_categories(category, subcategory)
     num_of_display = 10
     services = make_paginator(request, services_list, num_of_display)
@@ -532,6 +517,22 @@ def subcategory_fastfood(request):
         'category_slug': category,
     }
     return render(request, 'services/list.html', context=ctx)
+
+def subcategory_snack(request):
+    category = "food" 
+    subcategory = "snack"
+    services_list, category_list, sub_category_list = get_sub_categories(category, subcategory)
+    num_of_display = 10
+    services = make_paginator(request, services_list, num_of_display)
+    
+    ctx = {
+        'services': services,
+        'categories': category_list,
+        'sub_category_list': sub_category_list,
+        'category_slug': category,
+    }
+    return render(request, 'services/list.html', context=ctx)
+
 
 def subcategory_video(request):
     category = "content" 
