@@ -104,7 +104,7 @@
     <div class="main-service-list-box col-12">
         {% if services %}
         {% for service in services  %}
-        <div class='service-card card service-id-{{ service.id }} col-6 col-md-3'>
+        <div class="service-card card service-id-{{ service.id }} col-6 col-md-3">
             <div class='card-img-top'>
                 {% if service.img1 %}
                 <a href="{% url 'services:services_detail' pk=service.pk %}">
@@ -162,7 +162,7 @@
         <div class="popular-service col-12">
             {% for category_services in services_list_by_category %}
             {% for service in category_services  %}
-            <div class='service-card card service-id-{{ service.id }} col-6 col-md-3'>
+            <div class="service-card card service-id-{{ service.id }} col-6 col-md-3">
                 <div class='card-img-top'>
                     {% if service.img1 %}
                     <a href="{% url 'services:services_detail' pk=service.pk %}">
@@ -212,7 +212,7 @@
     <div class="main-service-list-box col-12">
         {% if services %}
         {% for service in new_order_services  %}
-        <div class='service-card card service-id-{{ service.id }} col-6 col-md-3'>
+        <div class=:"service-card card service-id-{{ service.id }} col-6 col-md-3">
             <div class='card-img-top'>
                 {% if service.img1 %}
                 <a href="{% url 'services:services_detail' pk=service.pk %}">
@@ -256,7 +256,7 @@
     <div class="main-service-list-box col-12">
         {% if random_services %}
         {% for service in random_services  %}
-        <div class='service-card card service-id-{{ service.id }} col-6 col-md-3'>
+        <div class="service-card card service-id-{{ service.id }} col-6 col-md-3">
             <div class='card-img-top'>
                 {% if service.img1 %}
                 <a href="{% url 'services:services_detail' pk=service.pk %}">
@@ -273,11 +273,9 @@
                     <span class="service-intro">{{ service.intro }}</span>
                     <div class="d-flex">
                         {% if service.is_dib %}
-                        <div class="dib" onclick="onClickDib({{ service.id }})" style="margin-right: 0.1rem;"><i
-                                class="fas fa-heart"></i></div>
+                        <div class="dib" onclick="onClickDib({{ service.id }})" style="margin-right: 0.1rem;"><i class="fas fa-heart"></i></div>
                         {% else %}
-                        <div class="dib" onclick="onClickDib({{ service.id }})" style="margin-right: 0.1rem;"><i
-                                class="far fa-heart"></i></div>
+                        <div class="dib" onclick="onClickDib({{ service.id }})" style="margin-right: 0.1rem;"><i class="far fa-heart"></i></div>
                         {% endif %}
                         <div class="dib__counts">{{ service.dib_set.all.count }}</div>
                     </div>
@@ -351,6 +349,52 @@
     for (let search of searches) {
         search.onclick = function () {
             document.querySelector(".main-search").classList.toggle('active');
+        }
+    }
+
+<!-- 찜하기 ajax -->
+
+    const requestDib = new XMLHttpRequest();
+
+    const onClickDib = (id) => {
+
+        requestDib.open('POST', '/likes/dibs_ajax/', true);
+        requestDib.setRequestHeader(
+            'Content-type',
+            'application/x-www-form-urlencoded'
+        );
+        requestDib.send(JSON.stringify({
+            id: id
+        }));
+    };
+
+    const DibHandleResponse = () => {
+        if (requestDib.status < 400) {
+            const {
+                id
+            } = JSON.parse(requestDib.response)
+            const element = document.querySelectorAll(`.service-id-${id} .dib`);
+
+            if (element.innerHTML == `<i class="fas fa-heart"></i>`) {
+                element.innerHTML = `<i class="far fa-heart"></i>`;
+                const dibsCounts = document.querySelectorAll(`.service-id-${id} .dib__counts`);
+                const dibsCountsHTML = dibsCounts.innerHTML;
+                const count = Number(dibsCountsHTML) - 1;
+                dibsCounts.innerHTML = `${count}`;
+
+            } else {
+                element.innerHTML = `<i class="fas fa-heart"></i>`;
+                const dibsCounts = document.querySelectorAll(`.service-id-${id} .dib__counts`);
+                const dibsCountsHTML = dibsCounts.innerHTML;
+                const count = Number(dibsCountsHTML) + 1;
+                dibsCounts.innerHTML = `${count}`;
+            }
+
+        }
+    }
+    requestDib.onreadystatechange = () => {
+        if (requestDib.readyState === XMLHttpRequest.DONE) {
+            DibHandleResponse();
         }
     }
 </script>
