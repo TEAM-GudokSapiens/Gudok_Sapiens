@@ -93,35 +93,36 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
+                                <div style="text-align: center; width: 100%;margin-left: 2rem;font-size: 1.4rem;">SNS 공유하기</div>
                                 <button type="button" data-dismiss="modal" aria-label="Close" class="closeSnsModalBtn close btn"><span
                                         aria-hidden="true">×</span></button>
                             </div>
                             <div class='modal-body'>
-                                <div claee='sns-modal-title'>SNS 공유하기</div>
                                 <div class='sns-modal-content'>
-                                    <span class="sociallink ml-1">
-                                        <a href="javascript:sendLinkFacebook()" title="페이스북으로 공유">
-                                            <img src="{% static 'sns/facebook.png' %}" width=36 alt="Facebook">
-                                        </a>
-                                    </span>
-                                    <span class="sociallink ml-1">
-                                        <a href="javascript:sendLinkTwitter()" title="트위터로 공유">
-                                            <img src="{% static 'sns/twitter.png' %}" width=36 alt="Twitter">
-                                        </a>
-                                    </span>
-                                    <span class="sociallink ml-1">
-                                        <a href="javascript:sendLinkNaver()" title="네이버로 공유">
-                                            <img src="{% static 'sns/naver.png' %}" width=36 alt="Naver">
-                                        </a>
-                                    </span>
-                
-                                    <input type="text" id="ShareUrl">
-                                    <span class="btn-type1"><button OnClick="javascript:CopyUrlToClipboard()">URL 복사</button></span>
-                
-                
+                                    <div class="sns-link-box">
+                                        <span class="sociallink">
+                                            <a href="javascript:sendLinkFacebook()" title="페이스북으로 공유">
+                                                <img src="{% static 'sns/facebook.png' %}" width=36 alt="Facebook">
+                                            </a>
+                                        </span>
+                                        <span class="sociallink">
+                                            <a href="javascript:sendLinkTwitter()" title="트위터로 공유">
+                                                <img src="{% static 'sns/twitter.png' %}" width=36 alt="Twitter">
+                                            </a>
+                                        </span>
+                                        <span class="sociallink">
+                                            <a href="javascript:sendLinkNaver()" title="네이버로 공유">
+                                                <img src="{% static 'sns/naver.png' %}" width=36 alt="Naver">
+                                            </a>
+                                        </span>
+                                    </div>
+                                    <div class="sns-url-box">
+                                        <input type="text" id="ShareUrl">
+                                        <span class="btn-type1"><button OnClick="javascript:CopyUrlToClipboard()" class="btn url-btn">URL 복사</button></span>
+                                    </div>
                                 </div>
-                                <div class="sns-modal-close">
-                                    <button class="close btn" data-dismiss="modal" aria-label="Close" id="closeSnsModalBtn">닫기</button>
+                                <div class="sns-modal-footer">
+                                    <button class="close btn-lg" data-dismiss="modal" aria-label="Close" id="closeSnsModalBtn">닫기</button>
                                 </div>
                             </div>
                         </div>
@@ -266,11 +267,10 @@
                                                 
                                                     <!--  -->
                                                 </div>
-                                            
-                                            <div class="review-modal-footer">
-                                                <button type="button" class="closeModalBtn btn btn-default" data-dismiss="modal" aria-label="Close" >취소</button>
-                                                <input type="submit" class="review-submit" onclick="" value="리뷰 등록" disabled/>
-                                            </div>
+                                                <div class="review-modal-footer">
+                                                    <button type="button" class="closeModalBtn btn btn-lg" data-dismiss="modal" aria-label="Close" >취소</button>
+                                                    <input type="submit" class="review-submit btn-lg" onclick="" value="리뷰 등록" disabled/>
+                                                </div>
                                         </form>
                                     </div>
                                 </div>
@@ -486,15 +486,17 @@
                 'scrollbars=no, width=500, height=500');    
     }
 
+    var obShareUrl = document.getElementById("ShareUrl");
+    obShareUrl.value = window.document.location.href;
+
     // URL 복사하기
     function CopyUrlToClipboard()
     {
-   var obShareUrl = document.getElementById("ShareUrl");
-   obShareUrl.value = window.document.location.href; 
-   obShareUrl.select();  
-   document.execCommand("copy"); 
-   obShareUrl.blur(); 
-   alert("URL이 클립보드에 복사되었습니다"); 
+        // var obShareUrl = document.getElementById("ShareUrl");
+        obShareUrl.select();  
+        document.execCommand("copy"); 
+        obShareUrl.blur(); 
+        alert("URL이 클립보드에 복사되었습니다"); 
     }
 
 

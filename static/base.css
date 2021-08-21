@@ -1095,6 +1095,9 @@ text-shadow:1px 1px 0 #07449a,
   /* margin: 10px 0px; */
   color: #585858;
 }
+.keywords a:hover {
+  color: #000;
+}
 
 .keywords div {
   display: inline;
@@ -1187,11 +1190,11 @@ text-shadow:1px 1px 0 #07449a,
 }
 .review-modal-footer input,
 .review-modal-footer button {
-  font-weight: 300;
+  font-weight: 400;
 }
 .review-modal-footer input:hover,
 .review-modal-footer button:hover {
-  font-weight: 400;
+  font-weight: 500;
 }
 .modal-content {
   top: 6rem;
@@ -1201,6 +1204,30 @@ text-shadow:1px 1px 0 #07449a,
   background: black;
   padding: 0.6rem;
   width: 100%;
+}
+.sns-link-box,
+.sns-url-box,
+.sns-modal-footer {
+  display: flex;
+  justify-content: center;
+  padding: 0.6rem 0;
+}
+.sociallink {
+  margin: 0 0.5rem;
+}
+#ShareUrl {
+  width: 19rem;
+  height: 2.6rem;
+}
+#closeSnsModalBtn {
+  font-size: 1.3rem !important;
+  font-weight: 400 !important;
+}
+.btn-type1 button {
+  height: 2.6rem;
+  background: #f3f3f3;
+  border-radius: 0.3rem;
+  border: 1px solid #888888;
 }
 .textarea-photo {
   display: flex;
