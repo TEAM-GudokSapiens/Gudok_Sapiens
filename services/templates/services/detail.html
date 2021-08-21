@@ -3,33 +3,6 @@
 {% load static %}
 
 {% block content %}
-<style>
-    .sns-modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      display: none;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .sns-modal-box {
-      background: white;
-      width: 300px;
-      height: 200px;
-      border-radius: 10px;
-    }
-
-    .sns-modal-title,
-    .sns-modal-content,
-    .sns-modal-close{
-      text-align: center;
-    }
-
-</style>
 <div class="d-flex justify-content-center" >
     <div class="service-detail-container mt-3">
         <div class="img-container d-flex justify-content-around">
@@ -112,42 +85,49 @@
                 <a href="{{service.link}}">
                     <i class="fas fa-link"></i> 바로가기</a>
                 
-                <button id="modal-open-btn">SNS 공유하기</button>
-
-                <!--SNS 공유하기 모달 시작-->
-                <div class='sns-modal'>
-                    <div class='sns-modal-box'>
-                        <div claee='sns-modal-title'>SNS 공유하기</div>
-                        <div class='sns-modal-content'>
-                            <span class="sociallink ml-1">
-                                <a href="javascript:sendLinkFacebook()" title="페이스북으로 공유">                       
-                                    <img src="{% static 'sns/facebook.png' %}" width=36 alt="Facebook">
-                                </a>
-                            </span>
-                            <span class="sociallink ml-1">
-                                <a href="javascript:sendLinkTwitter()" title="트위터로 공유">                
-                                    <img src="{% static 'sns/twitter.png' %}" width=36 alt="Twitter">
-                                </a>
-                            </span>
-                            <span class="sociallink ml-1">
-                            <a href="javascript:sendLinkNaver()" title="네이버로 공유">                
-                                    <img src="{% static 'sns/naver.png' %}" width=36 alt="Naver">
-                            </a>
-                            </span>
-
-                            <input type="text" id = "ShareUrl">
-                            <span class="btn-type1"><button OnClick="javascript:CopyUrlToClipboard()">URL 복사</button></span>
-
-
-                        </div>
-                        <div class="sns-modal-close">
-                            <button id="modal-close-btn">닫기</button>
+                <button class="btn btn-lg" id="openSnsModalBtn" data-toggle="modal" data-target="#modalBox2">SNS 공유하기</button>
+            </div>
+        </div>
+        <!--SNS 공유하기 모달 시작-->
+                <div class='modal fade' id="modalBox2" tabindex="-2" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" data-dismiss="modal" aria-label="Close" class="closeSnsModalBtn close btn"><span
+                                        aria-hidden="true">×</span></button>
+                            </div>
+                            <div class='modal-body'>
+                                <div claee='sns-modal-title'>SNS 공유하기</div>
+                                <div class='sns-modal-content'>
+                                    <span class="sociallink ml-1">
+                                        <a href="javascript:sendLinkFacebook()" title="페이스북으로 공유">
+                                            <img src="{% static 'sns/facebook.png' %}" width=36 alt="Facebook">
+                                        </a>
+                                    </span>
+                                    <span class="sociallink ml-1">
+                                        <a href="javascript:sendLinkTwitter()" title="트위터로 공유">
+                                            <img src="{% static 'sns/twitter.png' %}" width=36 alt="Twitter">
+                                        </a>
+                                    </span>
+                                    <span class="sociallink ml-1">
+                                        <a href="javascript:sendLinkNaver()" title="네이버로 공유">
+                                            <img src="{% static 'sns/naver.png' %}" width=36 alt="Naver">
+                                        </a>
+                                    </span>
+                
+                                    <input type="text" id="ShareUrl">
+                                    <span class="btn-type1"><button OnClick="javascript:CopyUrlToClipboard()">URL 복사</button></span>
+                
+                
+                                </div>
+                                <div class="sns-modal-close">
+                                    <button class="close btn" data-dismiss="modal" aria-label="Close" id="closeSnsModalBtn">닫기</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <!--SNS 공유하기 모달 끝-->
-            </div>
-        </div>
+            <!--SNS 공유하기 모달 끝-->
             <div class="tab-content" id="pills-tabContent">
                 <hr class="review-hr">
                 <div class="review-tab">
@@ -234,13 +214,13 @@
 
                         {% if request.user.is_authenticated %}
                         <div class="review-button-container">
-                            <button type="button" class="btn btn-lg" id="openModalBtn">
+                            <button type="button" class="btn btn-lg" id="openModalBtn" data-toggle="modal" data-target="#modalBox">
                                 리뷰쓰러가기
                             </button>
                         </div>
                         {% endif %}
                         <!-- 모달 시작 -->
-                        <div id="modalBox" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div id="modalBox" class="modal fade"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -288,7 +268,7 @@
                                                 </div>
                                             
                                             <div class="review-modal-footer">
-                                                <button type="button" class="closeModalBtn btn btn-default">취소</button>
+                                                <button type="button" class="closeModalBtn btn btn-default" data-dismiss="modal" aria-label="Close" >취소</button>
                                                 <input type="submit" class="review-submit" onclick="" value="리뷰 등록" disabled/>
                                             </div>
                                         </form>
@@ -477,28 +457,6 @@
             HelpHandleResponse();
         }
     }
-    // 모달 버튼에 이벤트를 건다.
-    $('#openModalBtn').on('click', function () {
-        $('#modalBox').modal('show');
-    });
-    // 모달 안의 취소 버튼에 이벤트를 건다.
-    $('.closeModalBtn').on('click', function () {
-        $('#modalBox').modal('hide');
-    });
-
-    // modal 
-    const modalOpenBtn = document.getElementById("modal-open-btn");
-    const modalCloseBtn = document.getElementById("modal-close-btn");
-    const modalWrapper = document.querySelector(".sns-modal");
-
-    console.log(modalWrapper.style);
-    modalOpenBtn.addEventListener("click", () => {
-      modalWrapper.style.display = "flex";
-    });
-
-    modalCloseBtn.addEventListener("click", () => {
-      modalWrapper.style.display = "none";
-    });
 
     // 페이스북 공유
     function sendLinkFacebook(){
