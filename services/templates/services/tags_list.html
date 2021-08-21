@@ -31,12 +31,12 @@
     .page-item input:focus,
     .page-item input[type]:focus,
     .uneditable-input:focus {
-      box-shadow: none;
-      outline: 0 none;
+        box-shadow: none;
+        outline: 0 none;
     }
 </style>
 <div class="tag-service-section col-10">
-    <form action="{% url 'services:services_tags' %}" method='POST' id="checkbox-group">
+    <form class="sa sa-up" action="{% url 'services:services_tags' %}" method='POST' id="checkbox-group">
         {% csrf_token %}
         <ul class="tag-service-box">
             {% for tag in tags  %}
@@ -54,7 +54,7 @@
         <div>
             <ul class="pagination justify-content-center">
                 <li class="page-item">
-                    <input class="btn btn-dark" type='submit' value='검색' style="width: 5rem;"/>
+                    <input class="btn btn-dark" type='submit' value='검색' style="width: 5rem;" />
                 </li>
             </ul>
         </div>
@@ -78,11 +78,24 @@
         document.getElementById("checkbox-group").reset();
     }, false);
 </script>
+
 <script>
-    
+    // Scroll Animation (sa, 스크롤 애니메이션)
+    const saTriggerMargin = 300;
+    const saElementList = document.querySelectorAll('.sa');
+
+    const saFunc = function () {
+        for (const element of saElementList) {
+            if (!element.classList.contains('show')) {
+                if (window.innerHeight > element.getBoundingClientRect().top + saTriggerMargin) {
+                    element.classList.add('show');
+                }
+            }
+        }
+    }
+
+    window.addEventListener('load', saFunc);
+    window.addEventListener('scroll', saFunc);
 </script>
-
-
-
 
 {% endblock %}

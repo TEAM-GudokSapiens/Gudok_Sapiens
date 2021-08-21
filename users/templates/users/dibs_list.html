@@ -2,11 +2,11 @@
 {% load taggit_templatetags2_tags %}
 
 {% block content %}
-    <nav class="main-navbar navbar navbar-expand-lg navbar-light col-7">
+    <nav class="main-navbar navbar navbar-expand-lg navbar-light col-10 col-lg-7">
         <ul class="navbar-nav mr-auto">
             </li>
             <li class="nav-item">
-                <a class="nav-link text-dark" href="{%url 'users:update' request.user.id %}" style="padding-left: 0 !important;">마이페이지</a>
+                <a class="nav-link text-dark" href="{%url 'users:update' request.user.id %}" style="padding-left: 0 !important;">회원정보변경</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link text-dark" href="{%url 'users:dibs_list'%}">내가 찜한 서비스</a>
@@ -17,8 +17,23 @@
         </ul>
     </nav>
 
+    <nav class="main-navbar-2 navbar navbar-expand-lg navbar-light col-10 col-lg-7">
+        <ul class="navbar-nav mr-auto">
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="{% url 'users:update' request.user.id %}" style="padding-left: 0 !important;">회원정보 변경</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="{% url 'users:dibs_list' %}">내가 찜한 서비스</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="{% url 'users:reviews_list' %}">내가 쓴 리뷰</a>
+          </li>
+        </ul>
+    </nav>
+
 {% comment %} 본문 내용 서비스 나열 {% endcomment %}
-<div class="dibs-list-container col-lg-7 col-md-10 col-sm-12">
+<div class="dibs-list-container col-lg-7 col-md-10 col-11">
     <h3>내가 찜한 서비스</h3>
     <hr style="border-color: #000;">
     <div class="row d-flex justify-content-center">

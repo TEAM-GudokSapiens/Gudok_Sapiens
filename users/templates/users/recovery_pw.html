@@ -13,7 +13,7 @@
 </style>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-        <div style="display: flex; flex-direction: column; align-items: center; margin: 8rem auto;">
+        <div class="recovery forms" style="display: flex; flex-direction: column; align-items: center; margin: 8rem auto;">
             <div class="col-lg-3 col-md-4 col-sm-5 col-10" style="margin: 0 auto;">
                 <h2 class="form-logo">
                     비밀번호 찾기
@@ -22,28 +22,29 @@
                 <div class="card-body" style="padding: 0 !important;">
                     <div class="row mt-5" style="padding: 0 !important;">
                         <div class="col-12">
+                            {% load widget_tweaks %}
                             {% csrf_token %}
                             <!--아이디-->
                             <div class="mb-4 md-form">
-                                <label name="label_user_id" for="{{ form_pw.user_id.id_for_label }}">{{ form_pw.user_id.label }}</label>
-                                    {{ form_pw.user_id }}
+                                <label name="label_user_id" for="{{ form_pw.user_id.id_for_label }}" class="user-label">{{ form_pw.user_id.label }}</label>
+                                    {{ form_pw.user_id |add_class:"ud-form-input" }}
                             </div>
                             <!--이름-->
                             <div class="mb-4 md-form">
-                                <label name="label_name" for="{{ form_pw.name.id_for_label }}">{{ form_pw.name.label }}</label>
-                                    {{ form_pw.name }}
+                                <label name="label_name" for="{{ form_pw.name.id_for_label }}" class="user-label">{{ form_pw.name.label }}</label>
+                                    {{ form_pw.name |add_class:"ud-form-input" }}
                             </div>
                             <!--이메일-->
                             <div class="mb-4 md-form">
-                                <label name="label_email" for="{{ form_pw.email.id_for_label }}">{{ form_pw.email.label }}</label>
-                                    {{ form_pw.email }}
+                                <label name="label_email" for="{{ form_pw.email.id_for_label }}" class="user-label">{{ form_pw.email.label }}</label>
+                                    {{ form_pw.email |add_class:"ud-form-input" }}
                                 <small class="form-text text-muted">
                                     등록하신 메일로 인증번호가 발송됩니다.
                                 </small>
                             </div>
                             <!--비밀번호찾기 버튼-->
                             <div id="div_find_pw" style="padding-top:0.6rem;" class="row justify-content-center">
-                                <button id="find_pw" class="btn btn-dark mt-3 mb-2" style="padding: 0.6rem 0; width: 94%;" name="recovery_pw">비밀번호 찾기</button>
+                                <button id="find_pw" class="btn btn-dark mt-3 mb-2 col-11" style="padding: 0.6rem 0;" name="recovery_pw">비밀번호 찾기</button>
                             </div>
 
                             <div style="text-align: center; margin-top: 0.6rem; margin-bottom: -0.6rem;">
@@ -52,8 +53,8 @@
 
                             <div id="result_pw"></div>
 
-                            <span style="color:gray; font-size: 0.8rem;" >&middot;&nbsp;아이디를 잊으셨나요?</span>
-                            <a style="text-decoration:underline; color:black; font-size: 0.8rem;" href="{% url 'users:recovery_id' %}">아이디찾기</a>
+                            <span class="small" style="color:gray;">&middot;&nbsp;아이디를 잊으셨나요?</span>
+                            <a style="text-decoration:underline; color:black; font-size: 0.9rem;" href="{% url 'users:recovery_id' %}">아이디찾기</a>
 
                             <script type="text/javascript">
                                 $(document).ready(function () {
@@ -80,8 +81,8 @@
                                                 $('#div_find_pw').remove()
                                                 $('#result_pw').replaceWith(
                                                     // '<br><form action="{% url "users:recovery_auth" %}" method="POST"><input type="text" name="input_auth_num" placeholder="인증번호를 입력해주세요." class="form-control" /><br><button type="submit" name="auth_confirm" class="btn btn-danger">인증확인</button></form>'
-                                                    '<hr><div class="row justify-content-center"><form class="form-inline" style="margin-bottom:-0.8rem; margin-top:-0.6rem;"><div class="md-form md-outline"><label for="input_auth_num">인증번호 입력 (<span id="timeset"></span>)</label><input type="text" id="input_auth_num" class="form-control mx-sm-2" autofocus/></div></form>'+
-                                                    '<button type="submit" name="auth_confirm" id="id_auth_confirm" class="btn btn-red" style="opacity: 90%; height:30%; margin-top:0.6rem; font-size: 0.8rem;"><i class="fas fa-check"></i>&nbsp;&nbsp;인증확인</button></div><hr>'
+                                                    '<hr><div class="row justify-content-center"><form class="form-inline" style="margin-bottom:-0.8rem; margin-top:-0.6rem;"><div class="md-form md-outline"><label for="input_auth_num" class="pw-recovery-1">인증번호 입력 (<span id="timeset"></span>)</label><div><input type="text" id="input_auth_num" class="pw-recovery-2 form-control mx-sm-2" autofocus/></div></form>'+
+                                                    '<div class="pw-recovery-4"><button type="submit" name="auth_confirm" id="id_auth_confirm" class="pw-recovery-3 btn btn-red" style="opacity: 90%; height:30%; margin-top:0.6rem; font-size: 0.8rem;">인증확인하기</button></div></div><hr>'
                                                 )
                                                 function countdown( elementName, minutes, seconds ) {
                                                     var elementName, endTime, hours, mins, msLeft, time;

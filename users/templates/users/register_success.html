@@ -1,7 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="col-lg-7 col-sm-8" style="display: flex; flex-direction: column; align-items: center; width: 100%; margin: 10rem auto;">
+<style>
+    textarea:focus,
+    button:focus,
+    button[type]:focus,
+    .uneditable-input:focus {
+        border-color: rgb(255, 255, 255);
+        box-shadow: 0 1px 1px rgba(229, 103, 23, 0.075) inset, 0 0 8px rgb(255, 255, 255);
+        outline: 0 none;
+    }
+</style>
+
+<div class="sign-register col-lg-7 col-sm-8" style="display: flex; flex-direction: column; align-items: center; width: 100%; margin: 10rem auto;">
     <div class="card col-10" style="margin-bottom: 5rem;">
         <div class="card-body">
             <div class="row mt-5">

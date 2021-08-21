@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
 
-<nav class="main-navbar navbar navbar-expand-lg navbar-light col-7">
+<nav class="main-navbar navbar navbar-expand-lg navbar-light col-10 col-lg-7">
     <ul class="navbar-nav mr-auto">
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button"
@@ -44,15 +44,14 @@
             <a class="nav-link text-dark" href="{% url 'services:category_newsletter' %}">뉴스레터</a>
         </li>
     </ul>
-    <form method="GET" action="{% url 'services:search' %}">
+    <form method="GET" action="{% url 'services:search' %}" class="d-flex justify-content-end" style="padding: 0" >
         {% csrf_token %}
         <div class="main-search">
-            <div class="main-search-icon">
-                <i class="search fa fa-search"></i>
+            <div class="main-search-icon" >
+                <i class="search1 fa fa-search"></i>
             </div>
             <div class="main-search-input">
-                <input type="text" placeholder="서비스 검색" id="main-search-input" name='search_key'
-                    value="{{ search_key }}">
+                <input type="text" placeholder="서비스 검색" id="main-search-input" name='search_key' value="{{ search_key }}">
             </div>
         </div>
     </form>
@@ -97,7 +96,7 @@
     </a>
 </div>
 
-<div class="service-list-section col-7">
+<div class="main-service-list-section col-10 col-lg-7">
     <h4 class="col-12">
         금주의 사피엔스's PICK
     </h4>
@@ -114,24 +113,21 @@
             </div>
             <div>
                 <div class="d-flex justify-content-between">
-                    <h5><a href="{% url 'services:services_detail' pk=service.pk %}">{{ service.name }}</a></h5>
-                    <span class="star"><i
-                            class="fas fa-star"></i>{{ service.avg_reviews|floatformat:1 }}({{service.get_review_count}})</span>
+                    <h5><a class="service-card-content" href="{% url 'services:services_detail' pk=service.pk %}">{{ service.name }}</a></h5>
+                    <span class="service-card-content star"><i
+                            class="service-card-content fas fa-star"></i>{{ service.avg_reviews |floatformat:1 }}({{service.get_review_count}})</span>
                 </div>
                 <div class="d-flex justify-content-between">
-                    <span class="service-intro">{{ service.intro }}</span>
-                    <div class="d-flex">
+                    <span class="service-card-content service-intro">{{ service.intro }}</span>
+                    <div class="service-card-content d-flex">
                         {% if service.is_dib %}
-                        <div class="dib" onclick="onClickDib({{ service.id }})" style="margin-right: 0.1rem;"><i
+                        <div class="service-card-content dib" onclick="onClickDib({{ service.id }})" style="margin-right: 0.1rem;"><i
                                 class="fas fa-heart"></i></div>
                         {% else %}
-                        <div class="dib" onclick="onClickDib({{ service.id }})" style="margin-right: 0.1rem;"><i
+                        <div class="service-card-content dib" onclick="onClickDib({{ service.id }})" style="margin-right: 0.1rem;"><i
                                 class="far fa-heart"></i></div>
                         {% endif %}
-                        <div class="dib__counts">{{ service.dib_set.all.count }}</div>
-                        {% endif %}
-                        <!-- 테스트 -->
-                        {{ service__avg_reviews }}
+                        <div class="service-card-content dib__counts">{{ service.avg_reviews |floatformat:1 }}</div>
                     </div>
                 </div>
             </div>
@@ -148,13 +144,13 @@
     </div>
 </div>
 
-<div class="promotion-section col-7">
-    <a href="{% url 'services:services_list' %}">
+<div class="promotion-section col-12 col-sm-10 col-md-10 col-lg-7">
+    <a href="{% url 'services:service_intro' %}">
         <img src="{% static 'assets/gudok_start.png' %}" alt="">
     </a>
 </div>
 
-<div class="main-service-list-section popular-services col-7">
+<div class="main-service-list-section popular-services col-10 col-lg-7">
     <h4 class="col-12">
         카테고리별 인기 서비스
     </h4>
@@ -175,20 +171,21 @@
                 </div>
                 <div>
                     <div class="d-flex justify-content-between">
-                        <h5><a href="{% url 'services:services_detail' pk=service.pk %}">{{ service.name }}</a></h5>
-                        <span><i class="fas fa-star"></i>{{ service.avg_reviews|floatformat:1 }} ({{service.get_review_count}})</span>
+                        <h5><a class="service-card-content" href="{% url 'services:services_detail' pk=service.pk %}">{{ service.name }}</a></h5>
+                        <span class="service-card-content star"><i
+                                class="service-card-content fas fa-star"></i>{{ service.avg_reviews |floatformat:1 }}({{service.get_review_count}})</span>
                     </div>
                     <div class="d-flex justify-content-between">
-                        <span class="service-intro">{{ service.intro }}</span>
-                        <div class="d-flex">
+                        <span class="service-card-content service-intro">{{ service.intro }}</span>
+                        <div class="service-card-content d-flex">
                             {% if service.is_dib %}
-                            <div class="dib" onclick="onClickDib({{ service.id }})" style="margin-right: 0.1rem;"><i
+                            <div class="service-card-content dib" onclick="onClickDib({{ service.id }})" style="margin-right: 0.1rem;"><i
                                     class="fas fa-heart"></i></div>
                             {% else %}
-                            <div class="dib" onclick="onClickDib({{ service.id }})" style="margin-right: 0.1rem;"><i
+                            <div class="service-card-content dib" onclick="onClickDib({{ service.id }})" style="margin-right: 0.1rem;"><i
                                     class="far fa-heart"></i></div>
                             {% endif %}
-                            <div class="dib__counts">{{ service.dib_set.all.count }}</div>
+                            <div class="service-card-content dib__counts">{{ service.dib_set.all.count }}</div>
                         </div>
                     </div>
                 </div>
@@ -208,7 +205,7 @@
     </div>
 </div>
 
-<div class="main-service-list-section col-7">
+<div class="main-service-list-section col-10 col-lg-7">
     <h4 class="col-12">
         신규 구독 서비스
     </h4>
@@ -225,20 +222,21 @@
             </div>
             <div>
                 <div class="d-flex justify-content-between">
-                    <h5><a href="{% url 'services:services_detail' pk=service.pk %}">{{ service.name }}</a></h5>
-                    <span><i class="fas fa-star"></i>{{ service.avg_reviews|floatformat:1 }}({{service.get_review_count}})</span>
+                    <h5><a class="service-card-content" href="{% url 'services:services_detail' pk=service.pk %}">{{ service.name }}</a></h5>
+                    <span class="service-card-content star"><i
+                            class="service-card-content fas fa-star"></i>{{ service.avg_reviews |floatformat:1 }}({{service.get_review_count}})</span>
                 </div>
                 <div class="d-flex justify-content-between">
-                    <span class="service-intro">{{ service.intro }}</span>
-                    <div class="d-flex">
+                    <span class="service-card-content service-intro">{{ service.intro }}</span>
+                    <div class="service-card-content d-flex">
                         {% if service.is_dib %}
-                        <div class="dib" onclick="onClickDib({{ service.id }})" style="margin-right: 0.1rem;"><i
+                        <div class="service-card-content dib" onclick="onClickDib({{ service.id }})" style="margin-right: 0.1rem;"><i
                                 class="fas fa-heart"></i></div>
                         {% else %}
-                        <div class="dib" onclick="onClickDib({{ service.id }})" style="margin-right: 0.1rem;"><i
+                        <div class="service-card-content dib" onclick="onClickDib({{ service.id }})" style="margin-right: 0.1rem;"><i
                                 class="far fa-heart"></i></div>
                         {% endif %}
-                        <div class="dib__counts">{{ service.dib_set.all.count }}</div>
+                        <div class="service-card-content dib__counts">{{ service.dib_set.all.count }}</div>
                     </div>
                 </div>
             </div>
@@ -252,7 +250,7 @@
     </div>
 </div>
 
-<div class="main-service-list-section col-7">
+<div class="main-service-list-section col-10 col-lg-7">
     <h4 class="col-12">
         랜덤 구독 서비스
     </h4>
@@ -269,20 +267,21 @@
             </div>
             <div>
                 <div class="d-flex justify-content-between">
-                    <h5><a href="{% url 'services:services_detail' pk=service.pk %}">{{ service.name }}</a></h5>
-                    <span><i class="fas fa-star"></i>{{ service.avg_reviews|floatformat:1 }}({{service.get_review_count}})</span>
+                    <h5><a class="service-card-content" href="{% url 'services:services_detail' pk=service.pk %}">{{ service.name }}</a></h5>
+                    <span class="service-card-content star"><i
+                            class="service-card-content fas fa-star"></i>{{ service.avg_reviews |floatformat:1 }}({{service.get_review_count}})</span>
                 </div>
                 <div class="d-flex justify-content-between">
-                    <span class="service-intro">{{ service.intro }}</span>
-                    <div class="d-flex">
+                    <span class="service-card-content service-intro">{{ service.intro }}</span>
+                    <div class="service-card-content d-flex">
                         {% if service.is_dib %}
-                        <div class="dib" onclick="onClickDib({{ service.id }})" style="margin-right: 0.1rem;"><i
+                        <div class="service-card-content dib" onclick="onClickDib({{ service.id }})" style="margin-right: 0.1rem;"><i
                                 class="fas fa-heart"></i></div>
                         {% else %}
-                        <div class="dib" onclick="onClickDib({{ service.id }})" style="margin-right: 0.1rem;"><i
+                        <div class="service-card-content dib" onclick="onClickDib({{ service.id }})" style="margin-right: 0.1rem;"><i
                                 class="far fa-heart"></i></div>
                         {% endif %}
-                        <div class="dib__counts">{{ service.dib_set.all.count }}</div>
+                        <div class="service-card-content dib__counts">{{ service.dib_set.all.count }}</div>
                     </div>
                 </div>
             </div>
@@ -348,13 +347,23 @@
     }
 </script>
 
-<script>
-    let searches = document.querySelectorAll(".search");
+<!-- <script>
+    const searches = document.querySelectorAll(".search");
 
-    for (let search of searches) {
-        search.onclick = function () {
-            document.querySelector(".main-search").classList.toggle('active');
-        }
+    const onClickSearch = () => {
+        document.querySelector(".main-search").classList.toggle('active');
+    }
+
+    for (const search of searches) {
+        search.addEventListener('click', onClickSearch)
+    }
+</script> -->
+
+<script>
+    let search = document.querySelector(".search1");
+
+    search.onclick = function(){
+        document.querySelector(".main-search").classList.toggle('active');
     }
 </script>
 

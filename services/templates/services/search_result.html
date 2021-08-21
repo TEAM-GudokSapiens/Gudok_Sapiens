@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<nav class="main-navbar navbar navbar-expand-lg navbar-light col-7">
+<nav class="main-navbar navbar navbar-expand-lg navbar-light col-10 col-lg-7">
     <ul class="navbar-nav mr-auto">
         <li class="nav-item">
             <a class="nav-link text-dark" href="{% url 'services:services_list' %}"
@@ -18,7 +18,7 @@
         {% csrf_token %}
         <div class="main-search">
             <div class="main-search-icon">
-                <i class="search fa fa-search"></i>
+                <i class="search1 fa fa-search"></i>
             </div>
             <div class="main-search-input">
                 <input type="text" placeholder="서비스 검색" id="main-search-input" name='search_key'
@@ -28,11 +28,11 @@
     </form>
 </nav>
 
-<div class="search-result-box col-7">
+<div class="search-result-box col-10 col-lg-7">
     <h3>
         서비스 검색
     </h3>
-    <div class="d-flex justify-content-between">
+    <div class="search-result-box-span d-flex justify-content-between">
         {% if query %}
         <strong><span>'{{ query }}'</span>검색 결과입니다.</strong>
         {% endif %}
@@ -42,7 +42,7 @@
     <div class="search-service-list-box col-12">
         {% if results %}
         {% for service in results  %}
-        <div class='service-card card col-3'>
+        <div class='service-card card col-6 col-md-3'>
             <div class='card-img-top'>
                 {% if service.img1 %}
                 <a href="{% url 'services:services_detail' pk=service.pk %}">
@@ -52,14 +52,14 @@
             </div>
             <div>
                 <div class="d-flex justify-content-between">
-                    <h5><a href="{% url 'services:services_detail' pk=service.pk %}">{{ service.name }}</a></h5>
-                    <span class="star"><i
-                            class="fas fa-star"></i>{{ avg_of_reviews }}({{service.get_review_count}})</span>
+                    <h5><a class="service-card-content" href="{% url 'services:services_detail' pk=service.pk %}">{{ service.name }}</a></h5>
+                    <span class="service-card-content star"><i
+                            class="service-card-content fas fa-star"></i>{{ avg_of_reviews }}({{service.get_review_count}})</span>
                 </div>
                 <div class="d-flex justify-content-between">
-                    <span class="service-intro">{{ service.intro }}</span>
+                    <span class="service-card-content service-intro">{{ service.intro }}</span>
                     <span>
-                        <a href="{% url 'likes:likes_dibs' service.id %}" class="heart"><i class="far fa-heart"></i></a>
+                        <a href="{% url 'likes:likes_dibs' service.id %}" class="service-card-content heart"><i class="far fa-heart"></i></a>
                         {{ number_of_dibs }}
                     </span>
                 </div>
@@ -87,15 +87,11 @@
 </div>
 
 <script>
-    let search = document.querySelector(".search");
-    let clearh = document.querySelector(".clear");
+    let search = document.querySelector(".search1");
 
     search.onclick = function(){
         document.querySelector(".main-search").classList.toggle('active');
     }
-</script>
-<script>
-    location.href = document.referrer; 
 </script>
 
 {% endblock %}
