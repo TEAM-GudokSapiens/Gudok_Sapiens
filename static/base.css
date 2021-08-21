@@ -1106,8 +1106,9 @@ text-shadow:1px 1px 0 #07449a,
 .fix-link {
   text-align: right;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   margin-top: 1rem;
+  align-items: center;
 }
 .fix-link a {
   color: inherit;
@@ -1115,13 +1116,19 @@ text-shadow:1px 1px 0 #07449a,
 .fix-link a:hover {
   color: inherit;
 }
-.fix-link div:hover,
-.fix-link a:hover {
-  text-shadow: 2px 2px #d2d2d2;
+.fix-link .btn {
+  padding: 0.2rem 0.4rem !important;
+  border-radius: 6px;
+  border: 0.15rem solid #8181dc;
+  color: #8181dc;
 }
-.dib i,
-.help i {
-  cursor: pointer;
+.fix-link .btn:hover {
+  background-color: #8181dc;
+  color: #fff;
+}
+.fix-link .clicked {
+  background-color: #8181dc;
+  color: #fff;
 }
 
 .tab-title {

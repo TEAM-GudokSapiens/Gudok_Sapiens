@@ -76,16 +76,15 @@
             <div class="dib__counts">찜: {{ number_of_dibs }}</div>
             <div class="fix-link">
                 {% if service.is_dib %}
-                <div class="dib" onclick="onClickDib({{ service.id }})"><i class="fas fa-heart"></i> 찜</div>
+                <button class="dib btn clicked" onclick="onClickDib({{ service.id }})"><i class="fas fa-heart"></i> 찜</button>
                 {% else %}
-                <div class="dib" onclick="onClickDib({{ service.id }})"><i class="far fa-heart"></i> 찜</div>
+                <button class="dib btn" onclick="onClickDib({{ service.id }})"><i class="far fa-heart"></i> 찜</button>
                 {% endif %}
-                {% comment %} <a href="{% url 'likes:likes_dibs' service.id %}">찜({{ number_of_dibs }}개)</a> /
-                {% endcomment %}
-                <a href="{{service.link}}">
+                <a href="{{service.link}}" class="btn">
                     <i class="fas fa-link"></i> 바로가기</a>
                 
-                <button class="btn btn-lg" id="openSnsModalBtn" data-toggle="modal" data-target="#modalBox2">SNS 공유하기</button>
+                <button class="btn" id="openSnsModalBtn" data-toggle="modal" data-target="#modalBox2">
+                    <i class="fas fa-share-alt"></i> 공유</button>
             </div>
         </div>
         <!--SNS 공유하기 모달 시작-->
@@ -394,6 +393,7 @@
                     const element = document.querySelector(`.fix-link .dib`);
                     if (element.innerHTML == `<i class="fas fa-heart"></i> 찜`) {
                         element.innerHTML = `<i class="far fa-heart"></i> 찜`;   //안찜하기
+                        element.classList.remove('clicked');
                         const dibsCounts = document.querySelector(`.dib__counts`);
                         const dibsCountsHTML = dibsCounts.innerHTML;
                         const [dibString, num] = dibsCountsHTML.split(' ');
@@ -402,6 +402,7 @@
 
                     } else {
                         element.innerHTML = `<i class="fas fa-heart"></i> 찜`;
+                        element.classList.add('clicked');
                         const dibsCounts = document.querySelector(`.dib__counts`);
                         const dibsCountsHTML = dibsCounts.innerHTML;
                         const [dibString, num] = dibsCountsHTML.split(' ');
