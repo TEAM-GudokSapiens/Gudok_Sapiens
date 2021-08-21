@@ -1400,6 +1400,9 @@ text-shadow:1px 1px 0 #07449a,
 .board-content-container p a {
   font-family: "GmarketSansTTFMedium";
 }
+.board-content-container:hover {
+  background: #f3f3f3;
+}
 .board-title {
   background-color: #f9f9f9;
   border-bottom: 1px solid #cdcdcd;
