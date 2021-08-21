@@ -121,7 +121,7 @@
                                     </div>
                                 </div>
                                 <div class="sns-modal-footer">
-                                    <button class="close btn-lg" data-dismiss="modal" aria-label="Close" id="closeSnsModalBtn">닫기</button>
+                                    <button class="close btn" data-dismiss="modal" aria-label="Close" id="closeSnsModalBtn">닫기</button>
                                 </div>
                             </div>
                         </div>
@@ -149,7 +149,7 @@
                                     <div class="my-review-content-container">
                                         <div class="my-review-content">
                                             <div class="my-review-target ">
-                                                <span style="color: #585858;font-weight: 400;">{{review.user}}</span>
+                                                <span style="color: #000;font-weight: 400;">{{review.user}}</span>
                                                 <span class="">| {{review.period}}개월 사용</span>
                                             </div>
                                             <!-- <div class="my-review-score">
@@ -161,15 +161,15 @@
                                             </span>
                                         </div>
                                         <span class="my-review-date" style="font-size: 0.9rem;
-                                                        color: #808080;">{{review.period}}개월 사용</span>
+                                                        color: #3c3c3c;">{{review.period}}개월 사용</span>
                                         <span class="my-review-title">{{review.title}}</span>
                                         <span class="my-review-content">{{review.content}}</span>
                                     </div>
                                     <div class="my-review-likes">
                                         {% if review.is_help %}
-                                        <span class="help" onclick="onClickHelp({{ review.id }})"><i class="fas fa-thumbs-up" style="color: #808080;"></i></span>
+                                        <span class="help" onclick="onClickHelp({{ review.id }})"><i class="fas fa-thumbs-up" style="color: #3c3c3c;"></i></span>
                                         {% else %}
-                                        <span class="help" onclick="onClickHelp({{ review.id }})"><i class="far fa-thumbs-up" style="color: #808080;"></i></span>
+                                        <span class="help" onclick="onClickHelp({{ review.id }})"><i class="far fa-thumbs-up" style="color: #3c3c3c;"></i></span>
                                         {% endif %}
                                         <span class="help__counts">{{ review.reviews_help.all.count }}</span>
                                     </div>
@@ -267,8 +267,8 @@
                                                     <!--  -->
                                                 </div>
                                                 <div class="review-modal-footer">
-                                                    <button type="button" class="closeModalBtn btn btn-lg" data-dismiss="modal" aria-label="Close" >취소</button>
-                                                    <input type="submit" class="review-submit btn-lg" onclick="" value="리뷰 등록" disabled/>
+                                                    <button type="button" class="closeModalBtn btn" data-dismiss="modal" aria-label="Close" >취소</button>
+                                                    <input type="submit" class="review-submit btn" onclick="" value="리뷰 등록" disabled/>
                                                 </div>
                                         </form>
                                     </div>
@@ -388,7 +388,7 @@
             () => {
                 if (requestDib.status < 400) {
                     const {
-                        id
+                        id 
                     } = JSON.parse(requestDib.response);
                     const element = document.querySelector(`.fix-link .dib`);
                     if (element.innerHTML == `<i class="fas fa-heart"></i> 찜`) {
@@ -434,18 +434,17 @@
         HelpHandleResponse = () => {
             if (requestHelp.status < 400) {
                 const {
-                    id
+                    id  
                 } = JSON.parse(requestHelp.response)
                 const element = document.querySelector(`.review-${id} .help`);
-                if (element.innerHTML == `<i class="fas fa-thumbs-up" style="color: #808080;"></i>`) {
-                    element.innerHTML = `<i class="far fa-thumbs-up" style="color: #808080;"></i>`
+                if (element.innerHTML == `<i class="fas fa-thumbs-up" style="color: #3c3c3c;"></i>`) {
+                    element.innerHTML = `<i class="far fa-thumbs-up" style="color: #3c3c3c;"></i>`
                     const dibsCounts = document.querySelector(`.review-${id} .help__counts`);
-                    const
-                        num = dibsCounts.innerHTML;
+                    const num = dibsCounts.innerHTML;
                     const count = Number(num) - 1;
                     dibsCounts.innerHTML = `${count}`;
                 } else {
-                    element.innerHTML = `<i class="fas fa-thumbs-up" style="color: #808080;"></i>`;
+                    element.innerHTML = `<i class="fas fa-thumbs-up" style="color: #3c3c3c;"></i>`;
                     const dibsCounts = document.querySelector(`.review-${id} .help__counts`);
                     const num = dibsCounts.innerHTML;
                     const count = Number(num) + 1;

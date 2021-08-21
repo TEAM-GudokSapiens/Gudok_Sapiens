@@ -51,7 +51,7 @@
                         <div class="my-review-content-container">
                             <div class="my-review-content">
                                 <div class="my-review-target ">
-                                    <a href="{% url 'services:services_detail' pk=review.target.id %}" style="color: #585858;font-weight: 400;"
+                                    <a href="{% url 'services:services_detail' pk=review.target.id %}" style="color: #000;font-weight: 400;"
                                     class="">{{review.target.name}}</a> 
                                     <span class="">| {{review.period}}개월 사용</span>
                                 </div>
@@ -64,12 +64,12 @@
                                 </span>
                             </div>
                             <span class="my-review-date" style="font-size: 0.9rem;
-                                color: #808080;">{{review.period}}개월 사용</span>
+                                color: #3c3c3c;">{{review.period}}개월 사용</span>
                             <span class="my-review-title">{{review.title}}</span>
                             <span class="my-review-content">{{review.content}}</span>
                         </div>
                     <div class="my-review-likes">
-                        <span><i class="far fa-thumbs-up" style="color: #585858;"></i> {{review.reviews_help.count}}개</span>
+                        <span><i class="far fa-thumbs-up" style="color: #3c3c3c;"></i> {{review.reviews_help.count}}개</span>
                     </div>
                 </div>
             </div>

@@ -1227,7 +1227,7 @@ text-shadow:1px 1px 0 #07449a,
   height: 2.6rem;
 }
 #closeSnsModalBtn {
-  font-size: 1.3rem !important;
+  font-size: 1rem !important;
   font-weight: 400 !important;
 }
 .btn-type1 button {
@@ -1669,12 +1669,15 @@ a:hover {
   justify-content: space-between;
   max-height: 10vh;
   overflow: auto;
-  font-size: 0.9rem;
-  color: #808080;
+  font-size: 1rem;
+  color: #3c3c3c;
   word-break: break-all;
 }
+.my-review-content .star {
+  font-size: 1.1rem;
+}
 .my-review-title {
-  font-size: 1rem;
+  /* font-size: 1rem; */
   margin: 0.3rem 0;
   color: #585858;
 }
@@ -1686,8 +1689,8 @@ a:hover {
 .my-review-likes {
   display: flex;
   justify-content: flex-end;
-  color: #808080;
-  font-size: 0.9rem;
+  color: #3c3c3c;
+  font-size: 1.2rem;
 }
 .pw-recovery-3 {
   font-size: 1rem !important;
@@ -2361,13 +2364,13 @@ a:hover {
 }
 
 .range .field .value.left {
-  font-size: 0.9rem;
-  left: -70px;
+  font-size: 1rem;
+  left: -80px;
 }
 
 .range .field .value.right {
-  font-size: 0.9rem;
-  right: -80px;
+  font-size: 1rem;
+  right: -90px;
 }
 
 .range .field input {
