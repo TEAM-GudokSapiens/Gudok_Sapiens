@@ -22,7 +22,7 @@
 
 <div class="col-lg-7 col-sm-8"
     style="display: flex; flex-direction: column; align-items: center; width: 100%; margin: 3rem auto;">
-    <h3 style="margin-bottom: 3rem; text-align: center; font-size: 1.5rem;">
+    <h3 class="agreement-title" style="margin-bottom: 3rem; text-align: center; font-size: 1.5rem;">
         이용약관 동의
     </h3>
     <div class="card col-10" style="margin-bottom: 5rem;">
@@ -350,8 +350,8 @@
                         {% csrf_token %}
                         <div class="col-12 text-right">
                             <label style="padding-top: 0.71rem;">
-                                <input type="checkbox" name="agreement1" />
-                                <span style="font-size: 1rem; font-weight: bold;">이용약관에 동의합니다.</span>
+                                <input class="agreement-check" type="checkbox" name="agreement1" style="vertical-align: middle;"/>
+                                <span class="agreement-check-span" style="font-size: 1rem; font-weight: bold;">이용약관에 동의합니다.</span>
                             </label>
                             <!-- <strong><input type="checkbox" name="agreement1"> 이용약관에 동의합니다.</strong> -->
                         </div>
@@ -545,8 +545,8 @@
                         </div>
                         <div class="col-12 text-right">
                             <label style="padding-top: 10px;">
-                                <input type="checkbox" name="agreement2" />
-                                <span style="font-weight: bold;">개인정보 수집 및 이용에 동의합니다.</span>
+                                <input class="agreement-check" type="checkbox" name="agreement2" style="vertical-align: middle;"/>
+                                <span class="agreement-check-span" style="font-weight: bold;">개인정보 수집 및 이용에 동의합니다.</span>
                             </label>
                             <!-- <strong><input type="checkbox" name="agreement2"> 개인정보 수집 및 이용에 동의합니다.</strong> -->
                         </div>
@@ -555,7 +555,7 @@
                 <div class="col-12 text-center" style="margin-top: 3rem; margin-bottom: 1rem;">
                     <button type="submit" name="register"
                         style="opacity: 90%; font-size: 1.1rem; border: none; background-color: #fff;"
-                        value="register">가입하기</button>
+                        value="register" class="agreement-button">가입하기</button>
 
                 </div>
                 </form>

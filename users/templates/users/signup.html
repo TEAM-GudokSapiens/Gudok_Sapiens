@@ -46,7 +46,7 @@
   </div>
   <form action="{% url 'users:signup' %}" method="post" enctype="multipart/form-data" class="signup-form">
     {% csrf_token %}
-    {% bootstrap_form form %}
+    {% bootstrap_form form form_group_class='bootstrap-form' %}
     <input type="submit" class="btn btn-dark col-12 mt-3 mb-5 py-2">
   </form>
 </div>

@@ -8,123 +8,113 @@
 {% endblock %}
 
 {% block board_content %}
-<div class="board-content mb-3">
-<div class="album py-5 bg-light" >
-    <div class="container"> 
-        <!--공지사항 검색결과-->
-        <p>공지사항</p> 
-        {% if notice_results %}
-            {% for notice in notice_results  %}
-            <a href="{% url 'community:notice_detail' notice.id %}"> 
-                <div class="col">
-                    <div class='card'>
-                        <div class='card-img-top'>
-                            {% if notice.img %}
-                                <img src="{{ notice.img.url }}" width='250px' />
-                            {% endif %}
-                        </div>
-                        <div class='card-body'>
-                            제목 : {{ notice.title }} <hr>
-                            글내용 : {{ notice.content |truncatechars:30 }}
-                        </div>
-                    </div>
+
+<div class="community-search col-10 col-lg-7">
+    <!--공지사항 검색결과-->
+    <div class="community-search-board">
+    <p>공지사항</p>
+    {% if notice_results %}
+    {% for notice in notice_results  %}
+    <a href="{% url 'community:notice_detail' notice.id %}">
+        <div class="col">
+            <div class='card'>
+                <div class='card-img-top'>
+                    {% if notice.img %}
+                    <img src="{{ notice.img.url }}" width='250px' />
+                    {% endif %}
                 </div>
-            </a>
-            {% endfor %}
-        {% else %} 
-            {% if query %}
-                <tr class="text-center">
-                    <td style="font-weight: bold; color:gray;" colspan="5">
-                            &nbsp;일치하는 검색 결과가 없습니다.
-                    </td>
-                </tr>
-            {% else %}
-                <tr class="text-center">
-                <td style="font-weight: bold; color:gray;" colspan="5">
-                        &nbsp;작성된 게시글이 없습니다.
-                    </td>
-                </tr>
-            {% endif %}    
-        {% endif %}   
-        <br>
-        <hr>
-        <!--매거진 검색결과-->
-        <p>매거진</p>
-        {% if magazine_results %}
-            {% for magazine in magazine_results  %}
-                <a href="{% url 'community:magazine_detail' magazine.id %}"> 
-                    <div class="col">
-                        <div class='card'>
-                            <div class='card-img-top'>
-                                {% if magazine.img %}
-                                    <img src="{{ magazine.img.url }}" width='250px' />
-                                {% endif %}
-                            </div>
-                            <div class='card-body'>
-                                제목 : {{ magazine.title }} <hr>
-                                한줄소개 : {{ magazine.intro }}
-                            </div>
-                        </div>
-                    </div>
-                
-                </a>
-                {% endfor %}
-        {% else %}            
-            {% if query %}
-                <tr class="text-center">
-                    <td style="font-weight: bold; color:gray;" colspan="5">
-                            &nbsp;일치하는 검색 결과가 없습니다.
-                    </td>
-                </tr>
-            {% else %}
-                <tr class="text-center">
-                <td style="font-weight: bold; color:gray;" colspan="5">
-                        &nbsp;작성된 게시글이 없습니다.
-                    </td>
-                </tr>
-            {% endif %}     
-        {% endif %} 
-        <br>  
-        <hr>
-        <!--자유게시판 검색결과-->
+                <div class='card-body'>
+                    제목 : {{ notice.title }}
+                    <hr>
+                    글내용 : {{ notice.content |truncatechars:30 }}
+                </div>
+            </div>
+        </div>
+    </a>
+    {% endfor %}
+    {% else %}
+    </div>
+    {% if query %}
+    <tr class="text-center">
+        <td style="font-weight: bold; color:gray;" colspan="5">
+            &nbsp;일치하는 검색 결과가 없습니다.
+        </td>
+    </tr>
+    {% else %}
+    <tr class="text-center">
+        <td style="font-weight: bold; color:gray;" colspan="5">
+            &nbsp;작성된 게시글이 없습니다.
+        </td>
+    </tr>
+    {% endif %}
+    {% endif %}
+    <br>
+    <hr color="#fdeeee">
+    <!--매거진 검색결과-->
+    <p>매거진</p>
+    {% if magazine_results %}
+    {% for magazine in magazine_results  %}
+    <div class="magazine-box col-12">
+        <a href="{%url 'community:magazine_detail' magazine.id%}"><img src="{{ magazine.img.url }}"></a>
+    </div>
+    {% endfor %}
+    {% else %}
+    {% if query %}
+    <tr class="text-center">
+        <td style="font-weight: bold; color:gray;" colspan="5">
+            &nbsp;일치하는 검색 결과가 없습니다.
+        </td>
+    </tr>
+    {% else %}
+    <tr class="text-center">
+        <td style="font-weight: bold; color:gray;" colspan="5">
+            &nbsp;작성된 게시글이 없습니다.
+        </td>
+    </tr>
+    {% endif %}
+    {% endif %}
+    <br>
+    <hr color="#fdeeee">
+    <!--자유게시판 검색결과-->
+    <div class="community-search-board">
         <p>자유게시판</p>
         {% if board_results %}
-            {% for board in board_results  %}
-                <a href="{% url 'community:board_detail' board.id %}"> 
-                    <div class="col">
-                        <div class='card'>
-                            <div class='card-img-top'>
-                            {% if board.img %}
-                                <img src="{{ board.img.url }}" width='250px' />
-                            {% endif %}
-                            </div>
-                            <div class='card-body'>
-                                제목 : {{ board.title }}<hr>
-                                글내용 : {{ board.content |truncatechars:30 }}
-                            </div>
-                        </div>
-                    </div>                
-                </a>
-                {% endfor %}
-        {% else %} 
-            {% if query %}
-                <tr class="text-center">
-                    <td style="font-weight: bold; color:gray;" colspan="5">
-                            &nbsp;일치하는 검색 결과가 없습니다.
-                    </td>
-                </tr>
-            {% else %}
-                <tr class="text-center">
-                <td style="font-weight: bold; color:gray;" colspan="5">
-                        &nbsp;작성된 게시글이 없습니다.
-                    </td>
-                </tr>
-            {% endif %}  
-        {% endif %} 
-        <br>
-        <hr>
+        {% for board in board_results  %}
+        <a href="{% url 'community:board_detail' board.id %}">
+                <div class='card'>
+                    <div class='card-img-top'>
+                        {% if board.img %}
+                        <img src="{{ board.img.url }}" width='250px' />
+                        {% endif %}
+                    </div>
+                    <div class='card-body text-dark'>
+                        <span>제목 : {{ board.title }}</span> 
+                        <span>글내용 : {{ board.content |truncatechars:30 }}</span> 
+                    </div>
+                </div>
+        </a>
+        {% endfor %}
+        {% else %}
     </div>
+    {% if query %}
+    <tr class="text-center">
+        <td style="font-weight: bold; color:gray;" colspan="5">
+            &nbsp;일치하는 검색 결과가 없습니다.
+        </td>
+    </tr>
+    {% else %}
+    <tr class="text-center">
+        <td style="font-weight: bold; color:gray;" colspan="5">
+            &nbsp;작성된 게시글이 없습니다.
+        </td>
+    </tr>
+    {% endif %}
+    {% endif %}
+    <br>
+    <hr>
 
 </div>
-</div>
+
+
+
 {% endblock %}
