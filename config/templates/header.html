@@ -1,11 +1,13 @@
-<div class="header-container navbar navbar-expand-lg navbar-light col-7">
-  <h1>
+{% load static %}
+
+<div class="header-container navbar navbar-expand-lg navbar-light col-10 col-lg-7">
+  <h1 class="col-3">
     <a href="{% url 'services:main' %}" class="header-title text-dark">
-      구독사피엔스
+      <img src="{% static 'assets/title.png' %}" alt="">
     </a>
   </h1>
   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
-    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" style="z-index: 5;">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="header-links collapse navbar-collapse justify-content-end" id="navbarCollapse">
@@ -38,7 +40,7 @@
       {% else %}
       <!--로그아웃상태-->
       <a href="{% url 'users:login' %}"
-        class="btn btn-outline-dark rounded-pill col-3 d-flex flex-column justify-content-center align-items-center ml-3">로그인</a>
+        class="btn btn-outline-dark rounded-pill col-2 col-lg-4 d-flex flex-column justify-content-center align-items-center ml-3">로그인</a>
       {% endif %}
     </div>
   </div>

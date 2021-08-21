@@ -2,7 +2,7 @@
 {% load bootstrap4 %}
 
 {% block content %}
-<nav class="main-navbar navbar navbar-expand-lg navbar-light col-7">
+<nav class="main-navbar navbar navbar-expand-lg navbar-light col-10 col-lg-7">
     <ul class="navbar-nav mr-auto">
         </li>
         <li class="nav-item">
@@ -15,11 +15,11 @@
             <a class="nav-link text-dark" href="{% url 'community:board' %}">자유게시판</a>
         </li>
     </ul>
-    <form method="GET" action="{% url 'services:search' %}">
+    <form method="GET" action="{% url 'community:search' %}">
         {% csrf_token %}
         <div class="main-search">
             <div class="main-search-icon">
-                <i class="search fa fa-search"></i>
+                <i class="search1 fa fa-search"></i>
             </div>
             <div class="main-search-input">
                 <input type="text" placeholder="서비스 검색" id="main-search-input" name='search_key' value="{{ search_key }}">
@@ -30,12 +30,28 @@
     </form>
 </nav>
 <!--------------------------------------------------------------------->
-<h3 class="magazine-header col-7">
+
+<nav class="main-navbar-2 navbar navbar-expand-lg navbar-light col-10 col-lg-7">
+    <ul class="navbar-nav mr-auto">
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" href="{% url 'community:notice' %}" style="padding-left: 0 !important;">공지사항</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" href="{% url 'community:magazine' %}">매거진</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" href="{% url 'community:board' %}">자유게시판</a>
+        </li>
+    </ul>
+</nav>
+
+<h3 class="magazine-header col-10 col-lg-7">
     매거진
 </h3>
 
 {% for magazine in page_obj.object_list %}
-<div class="magazine-box col-7">
+<div class="magazine-box  col-10 col-lg-7">
     <a href="{%url 'community:magazine_detail' magazine.id%}"><img src="{{ magazine.img.url }}"></a>
 </div>
 {%endfor%}
@@ -69,8 +85,7 @@
 
 
 <script>
-    let search = document.querySelector(".search");
-    let clearh = document.querySelector(".clear");
+    let search = document.querySelector(".search1");
 
     search.onclick = function(){
         document.querySelector(".main-search").classList.toggle('active');

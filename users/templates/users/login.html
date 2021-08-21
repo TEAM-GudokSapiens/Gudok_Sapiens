@@ -26,11 +26,11 @@
         </h2>
         <hr style="border-color: #000">
     </div>
-    <form method="POST" class="update-form text-dark" >
+    <form method="POST" class="update-form text-dark">
         {% load widget_tweaks %}
         {% csrf_token %}
         <div class="mb-4 md-form" style="text-align: start;">
-            <label name="label_user_id" for="{{ form.user_id.id_for_label }}">{{ form.user_id.label }}</label>
+            <label name="label_user_id" for="{{ form.user_id.id_for_label }}" class="user-label">{{ form.user_id.label }}</label>
             {{ form.user_id |add_class:"ud-form-input"}}
             <script type="text/javascript">
                 if (document.getElementsByName('user_id')[0].value != '') {
@@ -51,7 +51,7 @@
         </div>
 
         <div class="mb-2 md-form" style="text-align: start;">
-            <label for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+            <label for="{{ form.password.id_for_label }}" class="user-label">{{ form.password.label }}</label>
             {{ form.password |add_class:"ud-form-input"}}
 
             {% if form.password.errors %}
@@ -85,15 +85,15 @@
         <a class="social-login2 w-100" href="/accounts/naver/login/?process=login">
             <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=http%3A%2F%2Fcfile28.uf.tistory.com%2Fimage%2F99BEE8465C3D7D12140EAC" alt="네이버 로그인" style="width: 100%;">
         </a> -->
-        <a class="social-login1 w-100" href="/accounts/google/login/?process=login">
+        <a class="social-login social-login1 w-100" href="/accounts/google/login/?process=login">
             <img src="../../../media/google_logo.png" alt="" style="width: 10%;" class="mr-2">
             구글로 시작하기
         </a>
-        <a class="social-login2 w-100" href="/accounts/naver/login/?process=login">
+        <a class="social-login social-login2 w-100" href="/accounts/naver/login/?process=login">
             <img src="../../../media/naver_logo.png" alt="" style="width: 8%;" class="mr-2">
             네이버로 시작하기
         </a>
-        <a class="social-login3 w-100" href="/accounts/kakao/login/?process=login">
+        <a class="social-login social-login3 w-100" href="/accounts/kakao/login/?process=login">
             <img src="../../../media/kakao_logo.png" alt="" style="width: 8%;" class="mr-2">
             카카오로 시작하기
         </a>

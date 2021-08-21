@@ -1,18 +1,28 @@
-<div class="top-nav col-7">
+{% load static %}
+
+<div class="top-nav col-10">
   <h1>
     <a href="{% url 'services:main' %}" class="header-title text-dark">
-      구독사피엔스
+      <img src="{% static 'assets/title.png' %}" alt="">
     </a>
   </h1>
   <form method="GET" action="{% url 'services:search' %}">
     {% csrf_token %}
-    <div class="main-search">
-        <div class="main-search-icon" >
-            <i class="search fa fa-search"></i>
+    <div class="top-search">
+        <div class="top-search-icon" >
+            <i class="search2 fa fa-search"></i>
         </div>
-        <div class="main-search-input">
-            <input type="text" placeholder="서비스 검색" id="main-search-input" name='search_key' value="{{ search_key }}">
+        <div class="top-search-input">
+            <input type="text" placeholder="서비스 검색" id="top-search-input" name='search_key' value="{{ search_key }}">
         </div>
     </div>
-</form>
+  </form>
 </div>
+
+<script>
+    let search2 = document.querySelector(".search2");
+
+    search2.onclick = function(){
+        document.querySelector(".top-search").classList.toggle('active');
+    }
+</script>

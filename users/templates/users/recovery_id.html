@@ -14,7 +14,7 @@
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-<div class="forms col-lg-3 col-md-4 col-sm-6 col-10">
+<div class="recovery forms col-lg-3 col-md-4 col-sm-6 col-10">
     <div>
         <h4 class="form-logo">
           아이디 찾기
@@ -23,12 +23,12 @@
     </div>
     {% csrf_token %}
     <div style="margin-bottom: 0.8rem;">
-        이름
-        {{ form.name }}
+        <div class="user-label">이름</div>
+        <div class="bootstrap-form">{{ form.name }}</div>
     </div>
     <div>
-        이메일
-        {{ form.email }}
+        <div class="user-label">이메일</div>
+        <div class="bootstrap-form">{{ form.email }}</div>
     </div>
 
 
