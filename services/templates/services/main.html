@@ -102,8 +102,8 @@
         금주의 사피엔스's PICK
     </h4>
     <div class="main-service-list-box col-12">
-        {% if services %}
-        {% for service in services  %}
+        {% if this_week_services %}
+        {% for service in this_week_services  %}
         <div class="service-card card service-id-{{ service.id }} col-6 col-md-3">
             <div class='card-img-top'>
                 {% if service.img1 %}
