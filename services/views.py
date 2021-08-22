@@ -31,19 +31,19 @@ def main(request):
     categories = Category.objects.all()
     
     NUM_OF_CATEGORY_DISPLAY = 8
-    services_list_by_category = []
+    services_list_by_category = {}
     for category in categories:
-        category_services = Service.objects.annotate(is_dib=Exists(Dib.objects.filter(users__pk=request.user.id, service_id=OuterRef('pk')))).annotate(num_dibs=Count('dib')).annotate(
-            avg_reviews=Avg('review__score')).filter(category__slug = category.slug).order_by('-num_dibs')[:NUM_OF_CATEGORY_DISPLAY]
-        services_list_by_category.append(category_services)
+        category_services = Service.objects.annotate(is_dib=Exists(Dib.objects.filter(users__pk=request.user.id, service_id=OuterRef('pk')))).annotate(
+            num_dibs=Count('dib')).annotate(avg_reviews=Avg('review__score')).order_by('-num_dibs').filter(category__name = category.name)[:NUM_OF_CATEGORY_DISPLAY]
+        services_list_by_category[category] = category_services
 
+    
     ctx = {
         'magazine_list': magazine_list,
         'services': services,
         'random_services': random_services,
-        'categories': categories,
         "new_order_services": new_order_services,
-        "services_list_by_category":services_list_by_category,
+        "category_dict": services_list_by_category.items(),
     }
     return render(request, 'services/main.html', context=ctx)
 
