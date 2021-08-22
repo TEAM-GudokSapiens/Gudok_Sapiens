@@ -2142,6 +2142,10 @@ a:hover {
     font-size: 8.5px;
   }
 
+  .community-container {
+    margin-top: 4rem;
+  }
+
   .popular-services h5 {
     margin-top: 2rem;
     margin-bottom: 1.5rem;
@@ -2423,9 +2427,14 @@ a:hover {
 
 .top-nav {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   margin: 2rem auto !important;
   padding: 0 !important;
+}
+
+.top-nav h1 {
+  width: 60%;
 }
 
 .bottom-nav {
