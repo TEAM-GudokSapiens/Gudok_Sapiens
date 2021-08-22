@@ -56,7 +56,7 @@
             <div class="service-box">
                 <div class="service-name">{{service.name}}</div>
                 <div class="service-intro">{{service.intro}}</div>
-                <div class="service-content">{{service.content}}</div>
+                <div class="service-content">{{service.content |linebreaks}}</div>
             </div>
         <div class="fixing-box">
             <div class="keywords">
@@ -171,7 +171,7 @@
                                         {% else %}
                                         <span class="help" onclick="onClickHelp({{ review.id }})"><i class="far fa-thumbs-up" style="color: #3c3c3c;"></i></span>
                                         {% endif %}
-                                        <span class="help__counts">{{ review.reviews_help.all.count }}</span>
+                                        <span class="help__counts"> {{ review.reviews_help.all.count }}</span>
                                     </div>
                                 </div>
                             </div>
