@@ -58,6 +58,7 @@ def services_list(request):
         services_list = Service.objects.annotate(avg_reviews=Avg('review__score')).annotate(is_dib=Exists(Dib.objects.filter(users__pk=request.user.id, service_id=OuterRef('pk')))).order_by('-created_at')
     
     services = make_paginator(request, services_list)
+    categories = Category.objects.all()
 
     ctx = {
         'services': services,
