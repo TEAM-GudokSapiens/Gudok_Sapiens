@@ -6,8 +6,7 @@ from reviews.forms import ReviewCreateForm
 from django.views.decorators.csrf import csrf_exempt
 from likes.models import Dib, Help
 from django.db.models import Exists, OuterRef
-from config.utils import get_random_services
-
+from config.utils import get_random_services, make_paginator
 from .models import *
 from reviews.models import *
 from community.models import *
@@ -84,11 +83,7 @@ def category_list(request, category_slug):
         category__slug__contains=category_slug).annotate(avg_reviews=Avg('review__score'))
     categories = Category.objects.order_by('-id')
     sub_category_list = SubCategory.objects.filter(category__slug__contains=category_slug).order_by('id')
-    # 한 페이지 당 담을 수 있는 객체 수를 정할 수 있음
-    NUM_OF_PAGINATOR = 12
-    paginator = Paginator(services_list, NUM_OF_PAGINATOR)
-    page = request.GET.get('page')
-    services = paginator.get_page(page)
+    services = make_paginator(request, services_list)
 
     ctx = {
         'services': services,
@@ -104,11 +99,8 @@ def sub_category_list(request, category_slug, sub_category_slug):
     categories = Category.objects.all()
     sub_category_list = SubCategory.objects.filter(
         category__slug__contains=category_slug)
-    # 한 페이지 당 담을 수 있는 객체 수를 정할 수 있음
-    NUM_OF_PAGINATOR = 12
-    paginator = Paginator(services_list, NUM_OF_PAGINATOR)
-    page = request.GET.get('page')
-    services = paginator.get_page(page)
+
+    services = make_paginator(request, services_list)
 
     ctx = {
         'services': services,
@@ -127,10 +119,7 @@ def services_detail(request, pk):
     reviews_order_help = Review.objects.filter(target_id=pk).annotate(
     helps_count=Count('reviews_help')).order_by('-helps_count')
 
-    NUM_OF_PAGINATOR = 12
-    paginator = Paginator(reviews_order_help, NUM_OF_PAGINATOR)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+    page_obj = make_paginator(request, reviews_order_help)
 
     ctx = {
         'service': service,
@@ -141,17 +130,6 @@ def services_detail(request, pk):
         'page_obj': page_obj,
     }
     return render(request, 'services/detail.html', context=ctx)
-# def review(request):
-#     review_list = Review.objects.filter(
-#         service_id=target_id
-#     )
-#     paginator = Paginator(review_list, 5)  # 한페이지에 10개씩
-
-#     page_number = request.GET.get('page')
-#     page_obj = paginator.get_page(page_number)
-
-#     return render(request, 'services/detail.html', {'review_list': review_list, 'page_obj': page_obj})
-
 
 def search(request):
     categories = Category.objects.all()
@@ -221,11 +199,8 @@ def category_lifestyle(request):
     categories = Category.objects.all()
     sub_category_list = SubCategory.objects.filter(
         category__slug__contains=lifestyle)
-    # 한 페이지 당 담을 수 있는 객체 수를 정할 수 있음
-    NUM_OF_PAGINATOR =12
-    paginator = Paginator(services_list, NUM_OF_PAGINATOR)
-    page = request.GET.get('page')
-    services = paginator.get_page(page)
+    
+    services = make_paginator(request, services_list)
 
     ctx = {
         'services': services,
@@ -241,11 +216,8 @@ def category_food(request):
     categories = Category.objects.all()
     sub_category_list = SubCategory.objects.filter(
         category__slug__contains=food)
-    # 한 페이지 당 담을 수 있는 객체 수를 정할 수 있음
-    NUM_OF_PAGINATOR =12
-    paginator = Paginator(services_list, NUM_OF_PAGINATOR)
-    page = request.GET.get('page')
-    services = paginator.get_page(page)
+    
+    services = make_paginator(request, services_list)
 
     ctx = {
         'services': services,
@@ -262,11 +234,8 @@ def category_content(request):
     categories = Category.objects.all()
     sub_category_list = SubCategory.objects.filter(
         category__slug__contains=content)
-    # 한 페이지 당 담을 수 있는 객체 수를 정할 수 있음
-    NUM_OF_PAGINATOR =12
-    paginator = Paginator(services_list, NUM_OF_PAGINATOR)
-    page = request.GET.get('page')
-    services = paginator.get_page(page)
+
+    services = make_paginator(request, services_list)
 
     ctx = {
         'services': services,
@@ -282,11 +251,8 @@ def category_newsletter(request):
     categories = Category.objects.all()
     sub_category_list = SubCategory.objects.filter(
         category__slug__contains=newsletter)
-    # 한 페이지 당 담을 수 있는 객체 수를 정할 수 있음
-    NUM_OF_PAGINATOR =12
-    paginator = Paginator(services_list, NUM_OF_PAGINATOR)
-    page = request.GET.get('page')
-    services = paginator.get_page(page)
+    
+    services = make_paginator(request, services_list)
 
     ctx = {
         'services': services,
@@ -302,11 +268,8 @@ def category_other(request):
     categories = Category.objects.all()
     sub_category_list = SubCategory.objects.filter(
         category__slug__contains=other)
-    # 한 페이지 당 담을 수 있는 객체 수를 정할 수 있음
-    NUM_OF_PAGINATOR =12
-    paginator = Paginator(services_list, NUM_OF_PAGINATOR)
-    page = request.GET.get('page')
-    services = paginator.get_page(page)
+    
+    services = make_paginator(request, services_list)
 
     ctx = {
         'services': services,
@@ -324,20 +287,11 @@ def get_sub_categories(category, subcategory):
         category__slug__contains=category)
     return services_list, category_list, sub_category_list
 
-def make_paginator(request, queryset, NUM_OF_PAGINATOR=10):
-    NUM_OF_PAGINATOR = 12
-    paginator = Paginator(queryset, NUM_OF_PAGINATOR)
-    page = request.GET.get('page')
-    queryset_list = paginator.get_page(page)
-    return queryset_list
-
-
 def subcategory_daily_item(request):
     category = "lifestyle" 
     subcategory = "daily_item"
     services_list, category_list, sub_category_list = get_sub_categories(category, subcategory)
-    num_of_display = 12
-    services = make_paginator(request, services_list, num_of_display)
+    services = make_paginator(request, services_list)
     
     ctx = {
         'services': services,
@@ -351,8 +305,7 @@ def subcategory_health(request):
     category = "lifestyle" 
     subcategory = "health"
     services_list, category_list, sub_category_list = get_sub_categories(category, subcategory)
-    num_of_display = 12
-    services = make_paginator(request, services_list, num_of_display)
+    services = make_paginator(request, services_list)
     
     ctx = {
         'services': services,
@@ -366,8 +319,7 @@ def subcategory_clothing(request):
     category = "lifestyle" 
     subcategory = "clothing"
     services_list, category_list, sub_category_list = get_sub_categories(category, subcategory)
-    num_of_display = 12
-    services = make_paginator(request, services_list, num_of_display)
+    services = make_paginator(request, services_list)
     
     ctx = {
         'services': services,
@@ -381,8 +333,7 @@ def subcategory_cleaning(request):
     category = "lifestyle" 
     subcategory = "cleaning"
     services_list, category_list, sub_category_list = get_sub_categories(category, subcategory)
-    num_of_display = 12
-    services = make_paginator(request, services_list, num_of_display)
+    services = make_paginator(request, services_list)
     
     ctx = {
         'services': services,
@@ -396,8 +347,7 @@ def subcategory_delivery(request):
     category = "food" 
     subcategory = "delivery"
     services_list, category_list, sub_category_list = get_sub_categories(category, subcategory)
-    num_of_display = 12
-    services = make_paginator(request, services_list, num_of_display)
+    services = make_paginator(request, services_list )
     
     ctx = {
         'services': services,
@@ -411,8 +361,7 @@ def subcategory_beverage(request):
     category = "food" 
     subcategory = "beverage"
     services_list, category_list, sub_category_list = get_sub_categories(category, subcategory)
-    num_of_display = 12
-    services = make_paginator(request, services_list, num_of_display)
+    services = make_paginator(request, services_list )
     
     ctx = {
         'services': services,
@@ -426,8 +375,7 @@ def subcategory_alcohol(request):
     category = "food" 
     subcategory = "alcohol"
     services_list, category_list, sub_category_list = get_sub_categories(category, subcategory)
-    num_of_display = 12
-    services = make_paginator(request, services_list, num_of_display)
+    services = make_paginator(request, services_list )
     
     ctx = {
         'services': services,
@@ -441,8 +389,7 @@ def subcategory_fruit(request):
     category = "food" 
     subcategory = "fruit"
     services_list, category_list, sub_category_list = get_sub_categories(category, subcategory)
-    num_of_display = 12
-    services = make_paginator(request, services_list, num_of_display)
+    services = make_paginator(request, services_list)
     
     ctx = {
         'services': services,
@@ -456,8 +403,7 @@ def subcategory_health_food(request):
     category = "food" 
     subcategory = "health_food"
     services_list, category_list, sub_category_list = get_sub_categories(category, subcategory)
-    num_of_display = 12
-    services = make_paginator(request, services_list, num_of_display)
+    services = make_paginator(request, services_list)
     
     ctx = {
         'services': services,
@@ -471,8 +417,7 @@ def subcategory_bakery(request):
     category = "food" 
     subcategory = "bakery"
     services_list, category_list, sub_category_list = get_sub_categories(category, subcategory)
-    num_of_display = 12
-    services = make_paginator(request, services_list, num_of_display)
+    services = make_paginator(request, services_list)
     
     ctx = {
         'services': services,
@@ -486,8 +431,7 @@ def subcategory_meal_kit(request):
     category = "food" 
     subcategory = "meal_kit"
     services_list, category_list, sub_category_list = get_sub_categories(category, subcategory)
-    num_of_display = 12
-    services = make_paginator(request, services_list, num_of_display)
+    services = make_paginator(request, services_list)
     
     ctx = {
         'services': services,
@@ -501,8 +445,7 @@ def subcategory_snack(request):
     category = "food" 
     subcategory = "snack"
     services_list, category_list, sub_category_list = get_sub_categories(category, subcategory)
-    num_of_display = 12
-    services = make_paginator(request, services_list, num_of_display)
+    services = make_paginator(request, services_list)
     
     ctx = {
         'services': services,
@@ -517,8 +460,7 @@ def subcategory_video(request):
     category = "content" 
     subcategory = "video"
     services_list, category_list, sub_category_list = get_sub_categories(category, subcategory)
-    num_of_display = 12
-    services = make_paginator(request, services_list, num_of_display)
+    services = make_paginator(request, services_list)
     
     ctx = {
         'services': services,
@@ -532,8 +474,7 @@ def subcategory_music(request):
     category = "content" 
     subcategory = "music"
     services_list, category_list, sub_category_list = get_sub_categories(category, subcategory)
-    num_of_display = 12
-    services = make_paginator(request, services_list, num_of_display)
+    services = make_paginator(request, services_list)
     
     ctx = {
         'services': services,
@@ -547,8 +488,7 @@ def subcategory_book(request):
     category = "content" 
     subcategory = "book"
     services_list, category_list, sub_category_list = get_sub_categories(category, subcategory)
-    num_of_display = 12
-    services = make_paginator(request, services_list, num_of_display)
+    services = make_paginator(request, services_list)
     
     ctx = {
         'services': services,
