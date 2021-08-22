@@ -115,7 +115,7 @@ def services_detail(request, pk):
     review_form = ReviewCreateForm()
     number_of_dibs = service.dib_set.all().count()
     avg_of_reviews = service.review.aggregate(Avg('score'))['score__avg']
-    reviews_order_help = Review.objects.filter(target_id=pk).annotate(
+    reviews_order_help = Review.objects.annotate(is_help=Exists(Help.objects.filter(users__pk=request.user.id, review_id=OuterRef('pk')))).filter(target_id=pk).annotate(
         helps_count=Count('reviews_help')).order_by('-helps_count')
 
     page_obj = make_paginator(request, reviews_order_help)
