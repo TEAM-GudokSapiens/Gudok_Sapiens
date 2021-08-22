@@ -30,9 +30,11 @@ def main(request):
 
     categories = Category.objects.all()
     
+    NUM_OF_CATEGORY_DISPLAY = 8
     services_list_by_category = []
     for category in categories:
-        category_services = Service.objects.annotate(is_dib=Exists(Dib.objects.filter(users__pk=request.user.id, service_id=OuterRef('pk')))).annotate(num_dibs=Count('dib')).annotate(avg_reviews=Avg('review__score')).filter(category__slug = category.slug).order_by('-num_dibs')[:NUM_OF_DISPLAY]
+        category_services = Service.objects.annotate(is_dib=Exists(Dib.objects.filter(users__pk=request.user.id, service_id=OuterRef('pk')))).annotate(num_dibs=Count('dib')).annotate(
+            avg_reviews=Avg('review__score')).filter(category__slug = category.slug).order_by('-num_dibs')[:NUM_OF_CATEGORY_DISPLAY]
         services_list_by_category.append(category_services)
 
     ctx = {
@@ -44,32 +46,6 @@ def main(request):
         "services_list_by_category":services_list_by_category,
     }
     return render(request, 'services/main.html', context=ctx)
-
-def main_test(request):
-    magazine_list = Magazine.objects.all()
-    # 찜을 많이 받은 서비스를 우선적으로 배치
-    # 추후에 별점 순으로 변경할 수 있음
-    NUM_OF_DISPLAY = 4
-    services = Service.objects.annotate(
-        num_dibs=Count('dib')).order_by('-num_dibs')[:NUM_OF_DISPLAY].annotate(avg_reviews=Avg('review__score'))
-    new_order_services = Service.objects.order_by("-id")[:NUM_OF_DISPLAY]
-    num_of_service = Service.objects.all().count()
-    if num_of_service >= NUM_OF_DISPLAY:
-        random_services = get_random_services(request,NUM_OF_DISPLAY)
-    else:
-        random_services = get_random_services(request, num_of_service)
-
-    categories = Category.objects.all()
-
-    ctx = {
-        'magazine_list': magazine_list,
-        'services': services,
-        'random_services': random_services,
-        'categories': categories,
-        "new_order_services": new_order_services,
-    }
-    return render(request, 'services/main_test.html', context=ctx)
-
 
 def services_list(request):
     sort = request.GET.get('sort','') #url의 쿼리스트링을 가져온다. 없는 경우 공백을 리턴한다

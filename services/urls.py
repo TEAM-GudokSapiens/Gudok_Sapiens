@@ -6,7 +6,6 @@ app_name = 'services'
 
 urlpatterns = [
     path('main/', views.main, name='main'),
-    path('main-test/', views.main_test, name='main_test'),
     path('search/', views.search, name='search'),
     path('list/', views.services_list, name='services_list'),
     path('list/<str:category_slug>/', views.category_list, name='category_list'),
