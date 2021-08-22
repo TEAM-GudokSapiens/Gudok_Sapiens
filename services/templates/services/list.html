@@ -68,14 +68,16 @@
     
     <div class="col-9 col-sm-10" style="padding: 0;">
         <div class="service-list-img">
-            {% if category_slug == food  %}
+            {% if category_slug == 'food'  %}
             <img src="{% static 'assets/service-list-food.png' %}" alt="">
-            {% elif category_slug == lifestyle %}
-            <img src="{% static 'assets/service-list-lifestyle.png' %}" alt="">
-            {% elif category_slug == content %}
-            <img src="{% static 'assets/service-list-food.png' %}" alt="">
+            {% elif category_slug == 'lifestyle' %}
+            <img src="{% static 'assets/service-list-lifestyle2.png' %}" alt="">
+            {% elif category_slug == 'contents' %}
+            <img src="{% static 'assets/service-list-contents.png' %}" alt="">
+            {% elif category_slug == 'newsletter' %}
+            <img src="{% static 'assets/service-list-news.png' %}" alt="">
             {% else %}
-            <img src="{% static 'assets/service-list-food.png' %}" alt="">
+            <img src="{% static 'assets/service-list-lifestyle.png' %}" alt="">
             {% endif %}
         </div>
         <div class="service-list-select">
@@ -240,5 +242,13 @@
     }
     
 </script>
+
+<script>
+$(window).scroll(function(){
+    $(".service-second-category").css("margin-top",Math.max(-100,0-$(this).scrollTop()));
+    });
+</script>
+
+    
 
 {% endblock %}

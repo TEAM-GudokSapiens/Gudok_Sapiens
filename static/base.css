@@ -597,6 +597,10 @@
   margin-bottom: 0.7rem;
 }
 
+/* .service-second-category .material-icons {
+  vertical-align: bottom;
+} */
+
 .list-service-underline:hover {
   text-decoration: underline;
 }
