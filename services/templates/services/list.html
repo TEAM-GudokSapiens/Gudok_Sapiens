@@ -65,9 +65,18 @@
     </div>
 
     {% comment %} 본문 내용 서비스 나열 {% endcomment %}
+    
     <div class="col-9 col-sm-10" style="padding: 0;">
         <div class="service-list-img">
+            {% if category_slug == food  %}
             <img src="{% static 'assets/service-list-food.png' %}" alt="">
+            {% elif category_slug == lifestyle %}
+            <img src="{% static 'assets/service-list-lifestyle.png' %}" alt="">
+            {% elif category_slug == content %}
+            <img src="{% static 'assets/service-list-food.png' %}" alt="">
+            {% else %}
+            <img src="{% static 'assets/service-list-food.png' %}" alt="">
+            {% endif %}
         </div>
         <div class="service-list-select">
             <select id="sort-select" onchange="location = this.value;">

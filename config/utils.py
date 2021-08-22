@@ -6,6 +6,7 @@ from services.models import Service
 from django.db.models import Avg
 from django.db.models import Exists, OuterRef
 from likes.models import Dib
+from django.core.paginator import Paginator
 
 
 def get_filename(filename):
@@ -26,3 +27,8 @@ def get_random_services(request, input_num):
 
     return new_list
 
+def make_paginator(request, queryset, NUM_OF_PAGINATOR=12):
+    paginator = Paginator(queryset, NUM_OF_PAGINATOR)
+    page = request.GET.get('page')
+    queryset_list = paginator.get_page(page)
+    return queryset_list
