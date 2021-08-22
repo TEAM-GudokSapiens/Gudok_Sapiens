@@ -31,7 +31,7 @@
             </div>
         </div>
     </a> -->
-    <div class="board-content-container" style="border-bottom: 1px solid #EEEEEE;border-top: 1px solid #EEEEEE;">
+    <div class="board-content-container mb-5" style="border-bottom: 1px solid #EEEEEE;border-top: 1px solid #EEEEEE;">
         <p class="col-8"><a href="{%url 'community:notice_detail' notice.id%}" class="text-dark">{{ notice.title }}</a></p>
         <div class="board-info col-4 p-0">
             <p class="col-6">{{ notice.created_at | date:"Y-m-d" }}</p>
@@ -46,21 +46,16 @@
     {% else %}
     </div>
     {% if query %}
-    <tr class="text-center">
-        <td style="font-weight: bold; color:gray;" colspan="5">
-            &nbsp;일치하는 검색 결과가 없습니다.
-        </td>
-    </tr>
+    <div class="no-review-text">
+        <p>일치하는 검색 결과가 없습니다.</p>
+    </div>
     {% else %}
-    <tr class="text-center">
-        <td style="font-weight: bold; color:gray;" colspan="5">
-            &nbsp;작성된 게시글이 없습니다.
-        </td>
-    </tr>
+    <div class="no-review-text">
+        <p>작성된 게시글이 없습니다.</p>
+    </div>
     {% endif %}
     {% endif %}
-    <br>
-    <hr>
+    
     <!--매거진 검색결과-->
     <p>매거진</p>
     {% if magazine_results %}
@@ -71,23 +66,18 @@
     {% endfor %}
     {% else %}
     {% if query %}
-    <tr class="text-center">
-        <td style="font-weight: bold; color:gray;" colspan="5">
-            &nbsp;일치하는 검색 결과가 없습니다.
-        </td>
-    </tr>
+    <div class="no-review-text">
+        <p>일치하는 검색 결과가 없습니다.</p>
+    </div>
     {% else %}
-    <tr class="text-center">
-        <td style="font-weight: bold; color:gray;" colspan="5">
-            &nbsp;작성된 게시글이 없습니다.
-        </td>
-    </tr>
+    <div class="no-review-text">
+        <p>작성된 게시글이 없습니다.</p>
+    </div>
     {% endif %}
     {% endif %}
-    <br>
-    <hr>
+    
     <!--자유게시판 검색결과-->
-    <div class="community-search-board">
+    <div class="community-search-board mb-5">
         <p>자유게시판</p>
         {% if board_results %}
         {% for board in board_results  %}
@@ -127,21 +117,16 @@
         {% else %}
     </div>
     {% if query %}
-    <tr class="text-center">
-        <td style="font-weight: bold; color:gray;" colspan="5">
-            &nbsp;일치하는 검색 결과가 없습니다.
-        </td>
-    </tr>
+    <div class="no-review-text">
+        <p>일치하는 검색 결과가 없습니다.</p>
+    </div>
     {% else %}
-    <tr class="text-center">
-        <td style="font-weight: bold; color:gray;" colspan="5">
-            &nbsp;작성된 게시글이 없습니다.
-        </td>
-    </tr>
+    <div class="no-review-text">
+        <p>작성된 게시글이 없습니다.</p>
+    </div>
     {% endif %}
     {% endif %}
-    <br>
-    <hr>
+    
 
 </div>
 
