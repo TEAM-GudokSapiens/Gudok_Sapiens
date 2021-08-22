@@ -75,11 +75,15 @@
             {% endif %}
             <div class="dib__counts">찜: {{ number_of_dibs }}</div>
             <div class="fix-link">
+            {% if request.user.is_authenticated %}
                 {% if service.is_dib %}
                 <button class="dib btn clicked" onclick="onClickDib({{ service.id }})"><i class="fas fa-heart"></i> 찜</button>
                 {% else %}
                 <button class="dib btn" onclick="onClickDib({{ service.id }})"><i class="far fa-heart"></i> 찜</button>
                 {% endif %}
+            {% else %}
+                <button class="dib btn"><a href="javascript:alert('로그인 후 이용해주세요.')"><i class="far fa-heart"></i> 찜</a></button>
+            {% endif %}
                 <a href="{{service.link}}" class="btn">
                     <i class="fas fa-link"></i> 바로가기</a>
                 
