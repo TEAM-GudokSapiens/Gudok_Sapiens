@@ -9,7 +9,7 @@ class Category(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
-    @property
+    # @property
     def get_services_by_category(self):
         return Service.objects.annotate(
         num_dibs=Count('dib')).annotate(avg_reviews=Avg('review__score')).order_by('-num_dibs').filter(category__name=self.name)

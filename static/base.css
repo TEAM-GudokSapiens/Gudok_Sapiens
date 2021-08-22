@@ -251,7 +251,7 @@
 }
 
 .main-carousel {
-  margin-bottom: 60px;
+  margin-bottom: 4rem;
 }
 
 .main-carousel-item {
@@ -419,11 +419,24 @@
 }
 
 .main-service-list-section h4 {
-  margin-bottom: 60px;
-  text-align: center;
-  font-size: 1.6rem;
-  font-weight: 700;
-  font-family: "GmarketSansTTFLight";
+  margin-bottom: 0.1rem;
+  padding: 0 !important;
+  font-size: 1.4rem;
+  font-weight: bold;
+  font-family: -apple-system, BlinkMacSystemFont;
+  letter-spacing: -0.4px;
+  color: rgb(26, 26, 26);
+}
+
+.main-service-list-section > span {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: normal;
+  color: rgb(162, 162, 162);
+  line-height: 20px;
+  letter-spacing: -0.15px;
+  margin-bottom: 1rem;
+  font-family: -apple-system, BlinkMacSystemFont;
 }
 
 .main-service-list-box {
@@ -440,13 +453,17 @@
 }
 
 .service-card .card-img-top {
+  position: relative;
+  padding-bottom: 70%;
   width: 100%;
-  height: 60%;
-  margin-bottom: 1rem;
+  /* height: 10rem; */
+  margin-bottom: 0.8rem;
   overflow: hidden;
 }
 
 .service-card .card-img-top img {
+  object-fit: cover;
+  position: absolute;
   width: 100%;
   height: 100%;
   transform: scale(1);
@@ -497,7 +514,7 @@
 }
 
 .promotion-section {
-  margin: 0 auto 70px auto;
+  margin: 0 auto 4.7rem auto;
   padding: 0 !important;
   width: 100%;
   height: 30%;
@@ -515,18 +532,27 @@
 }
 
 .popular-services h5 {
+  margin-top: 2rem;
   margin-bottom: 1rem;
   text-align: center;
   font-size: 1.2rem;
-  font-weight: 700;
-  font-family: "GmarketSansTTFLight";
+  font-weight: bolder;
+}
+
+.popular-services h5:nth-child(1) {
+  margin-top: 0.5rem;
+}
+
+.popular-services h6 a {
+  font-weight: 400;
+  color: #000 ;
 }
 
 .popular-services .service-card:nth-child(1):after {
   content: "🥇";
   position: absolute;
   top: 0;
-  left: 1.6rem;
+  left: 2.1rem;
   transform: translateX(-50%) scale(1);
   font-size: 2rem;
 }
@@ -551,11 +577,15 @@
 
 .service-list-main {
   display: flex;
+  justify-content: flex-end;
   margin: 0 auto 2rem auto;
   padding: 0 !important;
 }
 
 .service-second-category {
+  position: fixed !important;
+  top: 20%;
+  left: 21%;
   margin-right: 1rem;
   padding: 0 !important;
   font-size: 1rem;
@@ -581,13 +611,13 @@
   font-weight: 600;
 }
 
-.main-service-list-box .service-card:first-child {
+/* .main-service-list-box .service-card:first-child {
   padding-left: 0 !important;
 }
 
 .main-service-list-box .service-card:last-child {
   padding-right: 0 !important;
-}
+} */
 
 .main-service-list-box .fa-heart,
 .main-service-list-box .fa-star,
@@ -604,13 +634,14 @@
 
 .service-list-img {
   width: 100%;
-  height: 8rem;
   margin-bottom: 1rem;
+  padding: 0% 0.5rem;
 }
 
 .service-list-img img {
   width: 100%;
   height: 100%;
+  object-fit: cover;
 }
 
 /* .service-list-main .service-card .card-img-top {
@@ -621,6 +652,7 @@
   display: flex;
   justify-content: flex-end;
   margin-bottom: 0.5rem;
+  padding: 0 0.5rem;
   font-size: 0.8rem;
 }
 
@@ -961,6 +993,7 @@ text-shadow:1px 1px 0 #07449a,
   align-items: center;
   padding: 12rem 0;
   text-align: center;
+  text-shadow: 4px 7px 12px black;
   width: 100%;
   height: 70% !important;
   background-image: url(https://waifu2x.booru.pics/outfiles/2289cc29fb758c9b384ec4c6a626b5bc06260d17_s2_n1.png);
@@ -1723,7 +1756,12 @@ a:hover {
 
 @media screen and (max-width: 992px) {
   html {
-    font-size: 11px;
+    font-size: 12px;
+  }
+
+  .service-second-category {
+    top: 17%;
+    left: 9%;
   }
 
   .footer-section {
@@ -1825,7 +1863,13 @@ a:hover {
 
 @media screen and (max-width: 768px) {
   html {
-    font-size: 9.5px;
+    font-size: 15px;
+  }
+
+  .service-second-category {
+    top: 19%;
+    left: 8%;
+    z-index: 5;
   }
 
   .main-service-list-box.real .service-card:first-child {
@@ -1884,6 +1928,8 @@ a:hover {
   }
 
   .service-second-category {
+    top: 14%;
+    left: 8%;
     font-size: 1.8rem;
   }
 
@@ -2087,13 +2133,32 @@ a:hover {
 
 @media screen and (max-width: 488px) {
   html {
-    font-size: 6.5px;
+    font-size: 7px;
   }
 }
 
 @media screen and (max-width: 430px) {
   html {
     font-size: 8.5px;
+  }
+
+  .popular-services h5 {
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+  }
+  
+  .popular-services h5:nth-child(1) {
+    margin-top: 1rem;
+  }
+
+  .main-service-list-section > span {
+    font-size: 1.3rem;
+  }
+
+  .service-second-category {
+    top: 13%;
+    font-size: 1.3rem !important;
   }
 
   .service-intro-our {

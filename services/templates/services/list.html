@@ -79,7 +79,7 @@
         <div class="main-service-list-box real">
             {% if services %}
             {% for service in services  %}
-            <div class="service-card card service-id-{{ service.id }} col-12 col-sm-6 col-md-3">
+            <div class="service-card card service-id-{{ service.id }} col-6 col-sm-6 col-md-3">
                 <div class='card-img-top'>
                     {% if service.img1 %}
                     <a href="{% url 'services:services_detail' pk=service.pk %}">
