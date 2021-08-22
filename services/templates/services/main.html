@@ -12,8 +12,7 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="{% url 'services:subcategory_daily_item' %}"><i class="fas fa-store"></i>생활용품</a>
                 <a class="dropdown-item" href="{% url 'services:subcategory_health' %}"><i class="fas fa-running"></i>건강/헬스</a>
-                <a class="dropdown-item" href="{% url 'services:subcategory_clothing' %}"><i class="fas fa-tshirt"></i>의류</a>
-                <a class="dropdown-item" href="{% url 'services:subcategory_laundry' %}"><i class="fas fa-hand-sparkles"></i>세탁</a>
+                <a class="dropdown-item" href="{% url 'services:subcategory_clothing' %}"><i class="fas fa-tshirt"></i>패션/뷰티</a>
                 <a class="dropdown-item" href="{% url 'services:subcategory_cleaning' %}"><i class="fas fa-broom"></i>청소</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{% url 'services:subcategory_delivery' %}"><i class="fas fa-truck"></i>홈배달</a>
@@ -22,7 +21,8 @@
                 <a class="dropdown-item" href="{% url 'services:subcategory_fruit' %}"><i class="fas fa-seedling"></i>과일/야채</a>
                 <a class="dropdown-item" href="{% url 'services:subcategory_health_food' %}"><i class="fas fa-capsules"></i>건강식품</a>
                 <a class="dropdown-item" href="{% url 'services:subcategory_bakery' %}"><i class="fas fa-bread-slice"></i>베이커리</a>
-                <a class="dropdown-item" href="{% url 'services:subcategory_fastfood' %}"><i class="fas fa-hamburger"></i>패스트푸드</a>
+                <a class="dropdown-item" href="{% url 'services:subcategory_meal_kit' %}"><i class="fas fa-hamburger"></i>밀키트</a>
+                <a class="dropdown-item" href="{% url 'services:subcategory_snack' %}"><i class="fas fa-hamburger"></i>간식</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{% url 'services:subcategory_video' %}"><i class="fas fa-photo-video"></i>영상</a>
                 <a class="dropdown-item" href="{% url 'services:subcategory_music' %}"><i class="fas fa-headphones-alt"></i>음악</a>
@@ -100,17 +100,17 @@
     <h4 class="col-12">
         금주의 사피엔스's PICK
     </h4>
+    <span>사피엔스에서 엄선한 구독 서비스들을 만나보세요!</span>
     <div class="main-service-list-box col-12">
-        {% if services %}
-        {% for service in services  %}
-        <div class='service-card card service-id-{{ service.id }} col-6 col-md-3'>
+        {% if this_week_services %}
+        {% for service in this_week_services  %}
+        <div class="service-card card service-id-{{ service.id }} col-6 col-md-3">
             <div class='card-img-top'>
                 {% if service.img1 %}
                 <a href="{% url 'services:services_detail' pk=service.pk %}">
                     <img src="{{ service.img1.url }}" />
                 </a>
                 {% endif %}
-                
             </div>
             <div>
                 <div class="d-flex justify-content-between">
@@ -128,7 +128,7 @@
                         <div class="service-card-content dib" onclick="onClickDib({{ service.id }})" style="margin-right: 0.1rem;"><i
                                 class="far fa-heart"></i></div>
                         {% endif %}
-                        <div class="service-card-content dib__counts">{{ service.avg_reviews |floatformat:1 }}</div>
+                        <div class="service-card-content dib__counts">{{ service.dib_set.all.count }}</div>
                     </div>
                 </div>
             </div>
@@ -147,7 +147,7 @@
 
 <div class="promotion-section col-12 col-sm-10 col-md-10 col-lg-7">
     <a href="{% url 'services:service_intro' %}">
-        <img src="{% static 'assets/gudok_start.png' %}" alt="">
+        <img src="{% static 'assets/together.png' %}" alt="">
     </a>
 </div>
 
@@ -155,14 +155,14 @@
     <h4 class="col-12">
         카테고리별 인기 서비스
     </h4>
+    <span>가장 찜이 많은 서비스들을 카테고리별로 만나보세요.</span>
     <div class="main-service-list-box col-12 d-flex flex-column">
-        {% if categories %}
-        {% for category in categories %}
+        {% if category_dict %}
+        {% for category, services in category_dict  %}
         <h5> {{ category }} </h5>
         <div class="popular-service col-12">
-            {% for category_services in services_list_by_category %}
-            {% for service in category_services  %}
-            <div class='service-card card service-id-{{ service.id }} col-6 col-md-3'>
+            {% for service in services  %}
+            <div class="service-card card service-id-{{ service.id }} col-6 col-md-3">
                 <div class='card-img-top'>
                     {% if service.img1 %}
                     <a href="{% url 'services:services_detail' pk=service.pk %}">
@@ -172,7 +172,7 @@
                 </div>
                 <div>
                     <div class="d-flex justify-content-between">
-                        <h5><a class="service-card-content" href="{% url 'services:services_detail' pk=service.pk %}">{{ service.name }}</a></h5>
+                        <h6><a class="service-card-content" href="{% url 'services:services_detail' pk=service.pk %}">{{ service.name }}</a></h6>
                         <span class="service-card-content star"><i
                                 class="service-card-content fas fa-star"></i>{{ service.avg_reviews |floatformat:1 }}({{service.get_review_count}})</span>
                     </div>
@@ -192,7 +192,6 @@
                 </div>
             </div>
             {% endfor %}
-            {% endfor %}
         </div>
         {% endfor %}
         {% else %}
@@ -206,14 +205,21 @@
     </div>
 </div>
 
+<div class="promotion-section col-12 col-sm-10 col-md-10 col-lg-7">
+    <a href="{% url 'users:login' %}">
+        <img src="{% static 'assets/sign-up.png' %}" alt="">
+    </a>
+</div>
+
 <div class="main-service-list-section col-10 col-lg-7">
     <h4 class="col-12">
         신규 구독 서비스
     </h4>
+    <span>실시간으로 업데이트 되는 신규 구독 서비스들을 제시합니다.</span>
     <div class="main-service-list-box col-12">
-        {% if services %}
+        {% if new_order_services %}
         {% for service in new_order_services  %}
-        <div class='service-card card service-id-{{ service.id }} col-6 col-md-3'>
+        <div class="service-card card service-id-{{ service.id }} col-6 col-md-3">
             <div class='card-img-top'>
                 {% if service.img1 %}
                 <a href="{% url 'services:services_detail' pk=service.pk %}">
@@ -255,10 +261,11 @@
     <h4 class="col-12">
         랜덤 구독 서비스
     </h4>
+    <span>랜덤으로 제시해드리는 구독 서비스. 지금 바로 접속해보세요!</span>
     <div class="main-service-list-box col-12">
         {% if random_services %}
         {% for service in random_services  %}
-        <div class='service-card card service-id-{{ service.id }} col-6 col-md-3'>
+        <div class="service-card card service-id-{{ service.id }} col-6 col-md-3">
             <div class='card-img-top'>
                 {% if service.img1 %}
                 <a href="{% url 'services:services_detail' pk=service.pk %}">
@@ -276,11 +283,9 @@
                     <span class="service-card-content service-intro">{{ service.intro }}</span>
                     <div class="service-card-content d-flex">
                         {% if service.is_dib %}
-                        <div class="service-card-content dib" onclick="onClickDib({{ service.id }})" style="margin-right: 0.1rem;"><i
-                                class="fas fa-heart"></i></div>
+                        <div class="service-card-content dib" onclick="onClickDib({{ service.id }})" style="margin-right: 0.1rem;"><i class="fas fa-heart"></i></div>
                         {% else %}
-                        <div class="service-card-content dib" onclick="onClickDib({{ service.id }})" style="margin-right: 0.1rem;"><i
-                                class="far fa-heart"></i></div>
+                        <div class="service-card-content dib" onclick="onClickDib({{ service.id }})" style="margin-right: 0.1rem;"><i class="far fa-heart"></i></div>
                         {% endif %}
                         <div class="service-card-content dib__counts">{{ service.dib_set.all.count }}</div>
                     </div>
@@ -301,6 +306,15 @@
 
 
 <script>
+    let search = document.querySelector(".search1");
+
+    search.onclick = function(){
+        document.querySelector(".main-search").classList.toggle('active');
+    }
+
+
+// 찜하기 ajax
+
     const requestDib = new XMLHttpRequest();
 
     const onClickDib = (id) => {
@@ -315,56 +329,38 @@
         }));
     };
 
-
     const DibHandleResponse = () => {
         if (requestDib.status < 400) {
             const {
                 id
             } = JSON.parse(requestDib.response)
-            const element = document.querySelector(`.service-id-${id} .dib`);
+
+            const elements = document.querySelectorAll(`.service-id-${id} .dib`);
+            for (let i = 0; i < elements.length; i++) {
+                let element = elements[i]
 
             if (element.innerHTML == `<i class="fas fa-heart"></i>`) {
                 element.innerHTML = `<i class="far fa-heart"></i>`;
-                const dibsCounts = document.querySelector(`.service-id-${id} .dib__counts`);
+                const dibsCounts = element.nextElementSibling;
                 const dibsCountsHTML = dibsCounts.innerHTML;
                 const count = Number(dibsCountsHTML) - 1;
                 dibsCounts.innerHTML = `${count}`;
 
             } else {
                 element.innerHTML = `<i class="fas fa-heart"></i>`;
-                const dibsCounts = document.querySelector(`.service-id-${id} .dib__counts`);
+                const dibsCounts = element.nextElementSibling;
                 const dibsCountsHTML = dibsCounts.innerHTML;
                 const count = Number(dibsCountsHTML) + 1;
                 dibsCounts.innerHTML = `${count}`;
 
             }
-
+            }
         }
     }
     requestDib.onreadystatechange = () => {
         if (requestDib.readyState === XMLHttpRequest.DONE) {
             DibHandleResponse();
         }
-    }
-</script>
-
-<!-- <script>
-    const searches = document.querySelectorAll(".search");
-
-    const onClickSearch = () => {
-        document.querySelector(".main-search").classList.toggle('active');
-    }
-
-    for (const search of searches) {
-        search.addEventListener('click', onClickSearch)
-    }
-</script> -->
-
-<script>
-    let search = document.querySelector(".search1");
-
-    search.onclick = function(){
-        document.querySelector(".main-search").classList.toggle('active');
     }
 </script>
 

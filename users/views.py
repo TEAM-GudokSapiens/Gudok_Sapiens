@@ -23,6 +23,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views.generic import UpdateView, DeleteView, FormView, CreateView, View
 from services.models import Service
 from reviews.models import Review
+from django.db.models import Exists, OuterRef
 
 from .helper import *
 from .forms import *
@@ -30,6 +31,7 @@ from .models import *
 from .decorators import *
 from .exception import *
 from reviews.models import Review
+from likes.models import Dib
 
 
 
@@ -183,7 +185,7 @@ def profile_delete_view(request):
 
 @login_message_required
 def dibs_list(request):
-    services_list = Service.objects.filter(dib__users=request.user.id)
+    services_list = Service.objects.annotate(is_dib=Exists(Dib.objects.filter(users__pk=request.user.id, service_id=OuterRef('pk')))).filter(dib__users=request.user.id)
     # 한 페이지 당 담을 수 있는 객체 수를 정할 수 있음
     paginator = Paginator(services_list, 10)
     page = request.GET.get('page')

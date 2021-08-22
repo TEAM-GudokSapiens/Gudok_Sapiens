@@ -3,33 +3,6 @@
 {% load static %}
 
 {% block content %}
-<style>
-    .sns-modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      display: none;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .sns-modal-box {
-      background: white;
-      width: 300px;
-      height: 200px;
-      border-radius: 10px;
-    }
-
-    .sns-modal-title,
-    .sns-modal-content,
-    .sns-modal-close{
-      text-align: center;
-    }
-
-</style>
 <div class="d-flex justify-content-center" >
     <div class="service-detail-container mt-3">
         <div class="img-container d-flex justify-content-around">
@@ -83,7 +56,7 @@
             <div class="service-box">
                 <div class="service-name">{{service.name}}</div>
                 <div class="service-intro">{{service.intro}}</div>
-                <div class="service-content">{{service.content |linebreaks }}</div>
+                <div class="service-content">{{service.content |linebreaks}}</div>
             </div>
         <div class="fixing-box">
             <div class="keywords">
@@ -102,52 +75,63 @@
             {% endif %}
             <div class="dib__counts">찜: {{ number_of_dibs }}</div>
             <div class="fix-link">
+            {% if request.user.is_authenticated %}
                 {% if service.is_dib %}
-                <div class="dib" onclick="onClickDib({{ service.id }})"><i class="fas fa-heart"></i> 찜</div>
+                <button class="dib btn clicked" onclick="onClickDib({{ service.id }})"><i class="fas fa-heart"></i> 찜</button>
                 {% else %}
-                <div class="dib" onclick="onClickDib({{ service.id }})"><i class="far fa-heart"></i> 찜</div>
+                <button class="dib btn" onclick="onClickDib({{ service.id }})"><i class="far fa-heart"></i> 찜</button>
                 {% endif %}
-                {% comment %} <a href="{% url 'likes:likes_dibs' service.id %}">찜({{ number_of_dibs }}개)</a> /
-                {% endcomment %}
-                <a href="{{service.link}}">
+            {% else %}
+                <button class="dib btn"><a href="javascript:alert('로그인 후 이용해주세요.')"><i class="far fa-heart"></i> 찜</a></button>
+            {% endif %}
+                <a href="{{service.link}}" class="btn">
                     <i class="fas fa-link"></i> 바로가기</a>
                 
-                <button id="modal-open-btn">SNS 공유하기</button>
-
-                <!--SNS 공유하기 모달 시작-->
-                <div class='sns-modal'>
-                    <div class='sns-modal-box'>
-                        <div claee='sns-modal-title'>SNS 공유하기</div>
-                        <div class='sns-modal-content'>
-                            <span class="sociallink ml-1">
-                                <a href="javascript:sendLinkFacebook()" title="페이스북으로 공유">                       
-                                    <img src="{% static 'sns/facebook.png' %}" width=36 alt="Facebook">
-                                </a>
-                            </span>
-                            <span class="sociallink ml-1">
-                                <a href="javascript:sendLinkTwitter()" title="트위터로 공유">                
-                                    <img src="{% static 'sns/twitter.png' %}" width=36 alt="Twitter">
-                                </a>
-                            </span>
-                            <span class="sociallink ml-1">
-                            <a href="javascript:sendLinkNaver()" title="네이버로 공유">                
-                                    <img src="{% static 'sns/naver.png' %}" width=36 alt="Naver">
-                            </a>
-                            </span>
-
-                            <input type="text" id = "ShareUrl">
-                            <span class="btn-type1"><button OnClick="javascript:CopyUrlToClipboard()">URL 복사</button></span>
-
-
-                        </div>
-                        <div class="sns-modal-close">
-                            <button id="modal-close-btn">닫기</button>
+                <button class="btn" id="openSnsModalBtn" data-toggle="modal" data-target="#modalBox2">
+                    <i class="fas fa-share-alt"></i> 공유</button>
+            </div>
+        </div>
+        <!--SNS 공유하기 모달 시작-->
+                <div class='modal fade' id="modalBox2" tabindex="-2" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div style="text-align: center; width: 100%;margin-left: 2rem;font-size: 1.4rem;">SNS 공유하기</div>
+                                <button type="button" data-dismiss="modal" aria-label="Close" class="closeSnsModalBtn close btn"><span
+                                        aria-hidden="true">×</span></button>
+                            </div>
+                            <div class='modal-body'>
+                                <div class='sns-modal-content'>
+                                    <div class="sns-link-box">
+                                        <span class="sociallink">
+                                            <a href="javascript:sendLinkFacebook()" title="페이스북으로 공유">
+                                                <img src="{% static 'sns/facebook.png' %}" width=36 alt="Facebook">
+                                            </a>
+                                        </span>
+                                        <span class="sociallink">
+                                            <a href="javascript:sendLinkTwitter()" title="트위터로 공유">
+                                                <img src="{% static 'sns/twitter.png' %}" width=36 alt="Twitter">
+                                            </a>
+                                        </span>
+                                        <span class="sociallink">
+                                            <a href="javascript:sendLinkNaver()" title="네이버로 공유">
+                                                <img src="{% static 'sns/naver.png' %}" width=36 alt="Naver">
+                                            </a>
+                                        </span>
+                                    </div>
+                                    <div class="sns-url-box">
+                                        <input type="text" id="ShareUrl">
+                                        <span class="btn-type1"><button OnClick="javascript:CopyUrlToClipboard()" class="btn url-btn">URL 복사</button></span>
+                                    </div>
+                                </div>
+                                <div class="sns-modal-footer">
+                                    <button class="close btn" data-dismiss="modal" aria-label="Close" id="closeSnsModalBtn">닫기</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <!--SNS 공유하기 모달 끝-->
-            </div>
-        </div>
+            <!--SNS 공유하기 모달 끝-->
             <div class="tab-content" id="pills-tabContent">
                 <hr class="review-hr">
                 <div class="review-tab">
@@ -169,7 +153,7 @@
                                     <div class="my-review-content-container">
                                         <div class="my-review-content">
                                             <div class="my-review-target ">
-                                                <span style="color: #585858;font-weight: 400;">{{review.user}}</span>
+                                                <span style="color: #000;font-weight: 400;">{{review.user}}</span>
                                                 <span class="">| {{review.period}}개월 사용</span>
                                             </div>
                                             <!-- <div class="my-review-score">
@@ -181,17 +165,17 @@
                                             </span>
                                         </div>
                                         <span class="my-review-date" style="font-size: 0.9rem;
-                                                        color: #808080;">{{review.period}}개월 사용</span>
+                                                        color: #3c3c3c;">{{review.period}}개월 사용</span>
                                         <span class="my-review-title">{{review.title}}</span>
                                         <span class="my-review-content">{{review.content}}</span>
                                     </div>
                                     <div class="my-review-likes">
                                         {% if review.is_help %}
-                                        <span class="help" onclick="onClickHelp({{ review.id }})"><i class="fas fa-thumbs-up" style="color: #808080;"></i></span>
+                                        <span class="help" onclick="onClickHelp({{ review.id }})"><i class="fas fa-thumbs-up" style="color: #3c3c3c;"></i></span>
                                         {% else %}
-                                        <span class="help" onclick="onClickHelp({{ review.id }})"><i class="far fa-thumbs-up" style="color: #808080;"></i></span>
+                                        <span class="help" onclick="onClickHelp({{ review.id }})"><i class="far fa-thumbs-up" style="color: #3c3c3c;"></i></span>
                                         {% endif %}
-                                        <span class="help__counts">{{ review.reviews_help.all.count }}</span>
+                                        <span class="help__counts"> {{ review.reviews_help.all.count }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -234,13 +218,13 @@
 
                         {% if request.user.is_authenticated %}
                         <div class="review-button-container">
-                            <button type="button" class="btn btn-lg" id="openModalBtn">
+                            <button type="button" class="btn btn-lg" id="openModalBtn" data-toggle="modal" data-target="#modalBox">
                                 리뷰쓰러가기
                             </button>
                         </div>
                         {% endif %}
                         <!-- 모달 시작 -->
-                        <div id="modalBox" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div id="modalBox" class="modal fade"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -286,11 +270,10 @@
                                                 
                                                     <!--  -->
                                                 </div>
-                                            
-                                            <div class="review-modal-footer">
-                                                <button type="button" class="closeModalBtn btn btn-default">취소</button>
-                                                <input type="submit" class="review-submit" onclick="" value="리뷰 등록" disabled/>
-                                            </div>
+                                                <div class="review-modal-footer">
+                                                    <button type="button" class="closeModalBtn btn" data-dismiss="modal" aria-label="Close" >취소</button>
+                                                    <input type="submit" class="review-submit btn" onclick="" value="리뷰 등록" disabled/>
+                                                </div>
                                         </form>
                                     </div>
                                 </div>
@@ -409,11 +392,12 @@
             () => {
                 if (requestDib.status < 400) {
                     const {
-                        id
+                        id 
                     } = JSON.parse(requestDib.response);
                     const element = document.querySelector(`.fix-link .dib`);
                     if (element.innerHTML == `<i class="fas fa-heart"></i> 찜`) {
                         element.innerHTML = `<i class="far fa-heart"></i> 찜`;   //안찜하기
+                        element.classList.remove('clicked');
                         const dibsCounts = document.querySelector(`.dib__counts`);
                         const dibsCountsHTML = dibsCounts.innerHTML;
                         const [dibString, num] = dibsCountsHTML.split(' ');
@@ -422,6 +406,7 @@
 
                     } else {
                         element.innerHTML = `<i class="fas fa-heart"></i> 찜`;
+                        element.classList.add('clicked');
                         const dibsCounts = document.querySelector(`.dib__counts`);
                         const dibsCountsHTML = dibsCounts.innerHTML;
                         const [dibString, num] = dibsCountsHTML.split(' ');
@@ -453,18 +438,17 @@
         HelpHandleResponse = () => {
             if (requestHelp.status < 400) {
                 const {
-                    id
+                    id  
                 } = JSON.parse(requestHelp.response)
                 const element = document.querySelector(`.review-${id} .help`);
-                if (element.innerHTML == `<i class="fas fa-thumbs-up" style="color: #808080;"></i>`) {
-                    element.innerHTML = `<i class="far fa-thumbs-up" style="color: #808080;"></i>`
+                if (element.innerHTML == `<i class="fas fa-thumbs-up" style="color: #3c3c3c;"></i>`) {
+                    element.innerHTML = `<i class="far fa-thumbs-up" style="color: #3c3c3c;"></i>`
                     const dibsCounts = document.querySelector(`.review-${id} .help__counts`);
-                    const
-                        num = dibsCounts.innerHTML;
+                    const num = dibsCounts.innerHTML;
                     const count = Number(num) - 1;
                     dibsCounts.innerHTML = `${count}`;
                 } else {
-                    element.innerHTML = `<i class="fas fa-thumbs-up" style="color: #808080;"></i>`;
+                    element.innerHTML = `<i class="fas fa-thumbs-up" style="color: #3c3c3c;"></i>`;
                     const dibsCounts = document.querySelector(`.review-${id} .help__counts`);
                     const num = dibsCounts.innerHTML;
                     const count = Number(num) + 1;
@@ -477,28 +461,6 @@
             HelpHandleResponse();
         }
     }
-    // 모달 버튼에 이벤트를 건다.
-    $('#openModalBtn').on('click', function () {
-        $('#modalBox').modal('show');
-    });
-    // 모달 안의 취소 버튼에 이벤트를 건다.
-    $('.closeModalBtn').on('click', function () {
-        $('#modalBox').modal('hide');
-    });
-
-    // modal 
-    const modalOpenBtn = document.getElementById("modal-open-btn");
-    const modalCloseBtn = document.getElementById("modal-close-btn");
-    const modalWrapper = document.querySelector(".sns-modal");
-
-    console.log(modalWrapper.style);
-    modalOpenBtn.addEventListener("click", () => {
-      modalWrapper.style.display = "flex";
-    });
-
-    modalCloseBtn.addEventListener("click", () => {
-      modalWrapper.style.display = "none";
-    });
 
     // 페이스북 공유
     function sendLinkFacebook(){
@@ -528,15 +490,17 @@
                 'scrollbars=no, width=500, height=500');    
     }
 
+    var obShareUrl = document.getElementById("ShareUrl");
+    obShareUrl.value = window.document.location.href;
+
     // URL 복사하기
     function CopyUrlToClipboard()
     {
-   var obShareUrl = document.getElementById("ShareUrl");
-   obShareUrl.value = window.document.location.href; 
-   obShareUrl.select();  
-   document.execCommand("copy"); 
-   obShareUrl.blur(); 
-   alert("URL이 클립보드에 복사되었습니다"); 
+        // var obShareUrl = document.getElementById("ShareUrl");
+        obShareUrl.select();  
+        document.execCommand("copy"); 
+        obShareUrl.blur(); 
+        alert("URL이 클립보드에 복사되었습니다"); 
     }
 
 
