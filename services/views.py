@@ -11,9 +11,7 @@ from .models import *
 from reviews.models import *
 from community.models import *
 
-# 전체 보기 페이지
-
-
+# 메인 페이지
 def main(request):
     magazine_list = Magazine.objects.all()
     NUM_OF_DISPLAY = 4
@@ -59,13 +57,7 @@ def services_list(request):
     else:
         services_list = Service.objects.annotate(avg_reviews=Avg('review__score')).annotate(is_dib=Exists(Dib.objects.filter(users__pk=request.user.id, service_id=OuterRef('pk')))).order_by('-created_at')
     
-
-    categories = Category.objects.all()
-    NUM_OF_PAGINATOR = 12
-    # 한 페이지 당 담을 수 있는 객체 수를 정할 수 있음
-    paginator = Paginator(services_list, NUM_OF_PAGINATOR)
-    page = request.GET.get('page')
-    services = paginator.get_page(page)
+    services = make_paginator(request, services_list)
 
     ctx = {
         'services': services,
@@ -73,10 +65,6 @@ def services_list(request):
     }
 
     return render(request, 'services/list.html', context=ctx)
-
-
-# 카테고리별 페이지 보기
-
 
 def category_list(request, category_slug):
     services_list = Service.objects.filter(
@@ -193,6 +181,7 @@ def same_tag_list(request, tag):
 def service_intro(request):
     return render(request, 'services/service_intro.html')
 
+# 대분류 카테고리 함수 시작
 def category_lifestyle(request):
     services_list = Service.objects.filter(
         category__slug__contains=lifestyle).annotate(avg_reviews=Avg('review__score'))
@@ -259,23 +248,6 @@ def category_newsletter(request):
         'categories': categories,
         'sub_category_list': sub_category_list,
         'category_slug': newsletter,
-    }
-    return render(request, 'services/list.html', context=ctx)
-
-def category_other(request):
-    services_list = Service.objects.filter(
-        category__slug__contains=other).annotate(avg_reviews=Avg('review__score'))
-    categories = Category.objects.all()
-    sub_category_list = SubCategory.objects.filter(
-        category__slug__contains=other)
-    
-    services = make_paginator(request, services_list)
-
-    ctx = {
-        'services': services,
-        'categories': categories,
-        'sub_category_list': sub_category_list,
-        'category_slug': other,
     }
     return render(request, 'services/list.html', context=ctx)
 

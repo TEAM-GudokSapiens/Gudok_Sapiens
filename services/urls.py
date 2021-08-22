@@ -18,7 +18,6 @@ urlpatterns = [
     path('list/content/', views.category_content, name='category_content'),
     path('list/food/', views.category_food, name='category_food'),
     path('list/newsletter/', views.category_newsletter, name='category_newsletter'),
-    path('list/other/', views.category_other, name='category_other'),
     path('list/lifestyle/daily-item/', views.subcategory_daily_item, name='subcategory_daily_item'),
     path('list/lifestyle/health/', views.subcategory_health, name='subcategory_health'),
     path('list/lifestyle/clothing/', views.subcategory_clothing, name='subcategory_clothing'),
