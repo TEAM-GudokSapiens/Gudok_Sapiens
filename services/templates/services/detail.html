@@ -66,7 +66,13 @@
             <div class="fix-name">{{service.name}}</div>
             <!-- <div class="fix-intro">{{service.intro}}</div>  -->
             <!-- <div class="service-content">{{service.content}}</div> -->
+            {% if service.price == 0 %}
+            <div class="service-price"><p>무료</p></div>
+            {% elif service.price == 1 %}
+            <div class="service-price"><p>견적 문의</p></div>
+            {% else %}
             <div class="service-price">{{service.price}}원 (한달 기준)</div>
+            {% endif %}
             {% if avg_of_reviews %}
             <div> 평균 <i class="fas fa-star"></i>{{ avg_of_reviews|floatformat:1 }} ({{service.get_review_count}}명) </div>
             {% else %}

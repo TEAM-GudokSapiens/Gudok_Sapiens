@@ -104,7 +104,7 @@ def sub_category_list(request, category_slug, sub_category_slug):
     
     categories = Category.objects.all()
     sub_category_list = SubCategory.objects.filter(
-        category__slug__contains=category_slug)
+        category__slug__contains=category_slug).order_by('id')
 
     services = make_paginator(request, services_list)
 
@@ -218,7 +218,7 @@ def category_lifestyle(request):
     
     categories = Category.objects.all()
     sub_category_list = SubCategory.objects.filter(
-        category__slug__contains=lifestyle)
+        category__slug__contains=lifestyle).order_by('id')
     
     services = make_paginator(request, services_list)
 
@@ -236,7 +236,7 @@ def category_food(request):
 
     categories = Category.objects.all()
     sub_category_list = SubCategory.objects.filter(
-        category__slug__contains=food)
+        category__slug__contains=food).order_by('id')
     
     services = make_paginator(request, services_list)
 
