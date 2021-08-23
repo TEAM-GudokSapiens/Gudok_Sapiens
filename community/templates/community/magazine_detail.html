@@ -29,44 +29,46 @@
     </form>
 </nav>
 <!--------------------------------------------------------------------->
-
-<nav class="main-navbar-2 navbar navbar-expand-lg navbar-light col-10 col-lg-7">
-    <ul class="navbar-nav mr-auto">
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" href="{% url 'community:notice' %}" style="padding-left: 0 !important;">공지사항</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" href="{% url 'community:magazine' %}">매거진</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" href="{% url 'community:board' %}">자유게시판</a>
-        </li>
-    </ul>
-</nav>
-
-<p style="display:none">{{ magazine.update_counter }}</p>
-
-<div class="magazine-detail-box col-10 col-lg-7">
-    <div class="magazine-detail-box-head">
-        <h3 class="col-7">{{ magazine.title }}</h3>
-        <div class="col-5">
-            <span>작성일: {{ magazine.created_at | date:"Y/m/d" }}</span> 
-            <span>조회수 : {{ magazine.hits }}</span>
+<div style="margin-top: 4rem;">
+    <nav class="main-navbar-2 navbar navbar-expand-lg navbar-light col-10 col-lg-7">
+        <ul class="navbar-nav mr-auto">
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" href="{% url 'community:notice' %}" style="padding-left: 0 !important;">공지사항</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" href="{% url 'community:magazine' %}">매거진</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" href="{% url 'community:board' %}">자유게시판</a>
+            </li>
+        </ul>
+    </nav>
+    
+    <p style="display:none">{{ magazine.update_counter }}</p>
+    
+    <div class="magazine-detail-box col-10 col-lg-7">
+        <div class="magazine-detail-box-head">
+            <h3 class="col-7">{{ magazine.title }}</h3>
+            <div class="col-5">
+                <span>작성일: {{ magazine.created_at | date:"Y/m/d" }}</span> 
+                <span>조회수 : {{ magazine.hits }}</span>
+            </div>
+        </div>
+        <hr>
+        <div class="magazine-content">
+            {{ magazine.content |linebreaks}}
+        </div>
+        <div class="magazine-detail-box-img">
+            <img src="{{ magazine.img.url }}">
+        </div>
+        <hr>
+        <div style="text-align: center; font-size: 0.95rem;">
+            <a href="{%url 'community:magazine'%}" class="return-list text-dark">목록으로 돌아가기</a>
         </div>
     </div>
-    <hr>
-    <div class="magazine-content">
-        {{ magazine.content }}
-    </div>
-    <div class="magazine-detail-box-img">
-        <img src="{{ magazine.img.url }}">
-    </div>
-    <hr>
-    <div style="text-align: center; font-size: 0.95rem;">
-        <a href="{%url 'community:magazine'%}" class="return-list text-dark">목록으로 돌아가기</a>
-    </div>
 </div>
+
 
 <script>
     let search = document.querySelector(".search1");

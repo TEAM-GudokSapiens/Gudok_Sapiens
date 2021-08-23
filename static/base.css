@@ -43,8 +43,8 @@
 }
 
 .user-dropdown .profile {
-  width: 35px;
-  height: 35px;
+  width: 2.2rem;
+  height: 2.2rem;
   margin-left: 10px;
   border-radius: 50%;
   overflow: hidden;
@@ -186,6 +186,10 @@
 
 .main-navbar .dropdown-menu i {
   margin-right: 7px;
+}
+
+.main-navbar .dropdown-menu {
+  position: absolute !important;
 }
 
 .main-navbar .dropdown-item {
@@ -437,7 +441,7 @@
   color: rgb(162, 162, 162);
   line-height: 20px;
   letter-spacing: -0.15px;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   font-family: -apple-system, BlinkMacSystemFont;
 }
 
@@ -516,7 +520,7 @@
 }
 
 .promotion-section {
-  margin: 0 auto 4.7rem auto;
+  margin: 5rem auto 4.7rem auto;
   padding: 0 !important;
   width: 100%;
   height: 30%;
@@ -534,15 +538,15 @@
 }
 
 .popular-services h5 {
-  margin-top: 2rem;
+  margin-top: 3rem;
   margin-bottom: 1rem;
   text-align: center;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: bolder;
 }
 
 .popular-services h5:nth-child(1) {
-  margin-top: 0.5rem;
+  margin-top: 1rem;
 }
 
 .popular-services h6 a {
@@ -597,10 +601,6 @@
   margin-bottom: 0.7rem;
 }
 
-/* .service-second-category .material-icons {
-  vertical-align: bottom;
-} */
-
 .list-service-underline:hover {
   text-decoration: underline;
 }
@@ -616,14 +616,6 @@
 .service-second-category .weight {
   font-weight: 600;
 }
-
-/* .main-service-list-box .service-card:first-child {
-  padding-left: 0 !important;
-}
-
-.main-service-list-box .service-card:last-child {
-  padding-right: 0 !important;
-} */
 
 .main-service-list-box .fa-heart,
 .main-service-list-box .fa-star,
@@ -950,6 +942,7 @@ text-shadow:1px 1px 0 #07449a,
   justify-content: center;
   padding: 12rem 0;
   text-align: center;
+  text-shadow: 4px 7px 12px black;
   background-image: url(https://images.unsplash.com/photo-1606255793378-5b898082c6ee?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1651&q=80);
   background-repeat: no-repeat;
   background-size: cover;
@@ -958,6 +951,10 @@ text-shadow:1px 1px 0 #07449a,
 }
 
 .service-intro-naming h5 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
   font-size: 3rem;
 }
 
@@ -975,6 +972,7 @@ text-shadow:1px 1px 0 #07449a,
   display: flex;
   justify-content: center;
   text-align: center;
+  text-shadow: 4px 7px 12px black;
   padding: 12rem 0;
   background-image: url(https://images.unsplash.com/photo-1628664512047-96ca39e72528?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80);
   background-repeat: no-repeat;
@@ -984,11 +982,42 @@ text-shadow:1px 1px 0 #07449a,
 }
 
 .service-intro-aim h5 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
   font-size: 3rem;
   text-align: center;
 }
 
 .service-intro-aim > p {
+  padding-top: 1.2rem;
+  font-size: 1.2rem;
+}
+
+.service-intro-intro {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  text-shadow: 4px 7px 12px black;
+  padding: 12rem 0;
+  background-image: url(https://images.unsplash.com/photo-1629218609812-93a72b4d4ef6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 0;
+  color: #fff;
+}
+
+.service-intro-intro h5 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  font-size: 3rem;
+  text-align: center;
+}
+
+.service-intro-intro > p {
   padding-top: 1.2rem;
   font-size: 1.2rem;
 }
@@ -1974,6 +2003,12 @@ a:hover {
     font-size: 8px;
   }
 
+  .user-dropdown .menu.active {
+    top: 4rem;
+    right: -2.6rem;
+    height: 6.5rem;
+  }
+
   .service-second-category {
     top: 14%;
     left: 8%;
@@ -2182,6 +2217,12 @@ a:hover {
   html {
     font-size: 7px;
   }
+
+  .user-dropdown .menu.active {
+    top: 4rem;
+    right: -3.3rem;
+    height: 7.3rem;
+  }
 }
 
 @media screen and (max-width: 430px) {
@@ -2194,13 +2235,13 @@ a:hover {
   }
 
   .popular-services h5 {
-    margin-top: 2rem;
+    margin-top: 5rem;
     margin-bottom: 1.5rem;
     font-size: 2rem;
   }
   
   .popular-services h5:nth-child(1) {
-    margin-top: 1rem;
+    margin-top: 3rem;
   }
 
   .main-service-list-section > span {
@@ -2220,10 +2261,6 @@ a:hover {
 
   .service-intro-our h5 {
     font-size: 1.8rem;
-  }
-
-  .service-second-category {
-    font-size: 1.2rem;
   }
 
   .search-result-box h3 {
@@ -2489,9 +2526,9 @@ a:hover {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 55px;
-  box-shadow: 0 0 3px rgba(0, 0, 0);
-  background-color: #ffffff;
+  height: 7rem;
+  box-shadow: rgb(0 0 0 / 8%) 0px 0px 1px, rgb(0 0 0 / 10%) 0px 16px 30px 4px;
+  background-color: rgb(255, 255, 255);
   display: flex;
   overflow-x: auto;
   z-index: 1;
@@ -2507,19 +2544,20 @@ a:hover {
   overflow: hidden;
   white-space: nowrap;
   font-family: sans-serif;
-  font-size: 13px;
+  font-size: 1.3rem;
+
   color: #444444;
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;
   transition: background-color 0.1s ease-in-out;
 }
 
-.nav__link:hover {
-  background-color: #eeeeee;
+.nav__link > span {
+  font-weight: 600;
 }
 
-.nav__link--active {
-  color: #009578;
+.nav__link:hover {
+  background-color: #eeeeee;
 }
 
 .nav__icon {

@@ -45,10 +45,14 @@
         <ul>
             <li>
                 <a href="{% url 'services:services_list' %}" class="weight">‣ 전체보기</a>
-                </il>
+            </li>
                 {% for category in categories %}
-                <li>
-                <a href="{% url 'services:category_list' category.slug %}" class="weight">‣ {{ category.name }}</a>
+            <li>
+                {% if category == category_food %}
+                    <a href="{% url 'services:category_list' category.slug %}" class="weight"> {{ category.name }}</a>
+                {% else %}
+                    <a href="{% url 'services:category_list' category.slug %}" class="weight">‣ {{ category.name }}</a>
+                {% endif %}
                 {% if category_slug == category.slug  %}
                 <ul>
                     {% if sub_category_list %}
@@ -59,7 +63,7 @@
                     {% endif %}
                 </ul>
                 {% endif %}
-                </il>
+            </li>
                 {% endfor %}
         </ul>
     </div>
