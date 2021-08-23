@@ -547,7 +547,7 @@
 
 .popular-services h6 a {
   font-weight: 400;
-  color: #000 ;
+  color: #000;
 }
 
 .popular-services .service-card:nth-child(1):after {
@@ -1042,7 +1042,7 @@ text-shadow:1px 1px 0 #07449a,
 }
 
 .service-content {
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 300;
 }
 
@@ -2194,7 +2194,7 @@ a:hover {
     margin-bottom: 1.5rem;
     font-size: 2rem;
   }
-  
+
   .popular-services h5:nth-child(1) {
     margin-top: 1rem;
   }
