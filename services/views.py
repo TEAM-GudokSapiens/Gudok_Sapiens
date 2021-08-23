@@ -81,7 +81,7 @@ def category_list(request, category_slug):
         services_list = Service.objects.filter(category__slug__contains=category_slug).annotate(avg_reviews=Avg('review__score')).annotate(is_dib=Exists(Dib.objects.filter(users__pk=request.user.id, service_id=OuterRef('pk')))).order_by('-created_at')
     
     categories = Category.objects.order_by('-id')
-    sub_category_list = SubCategory.objects.filter(category__slug__contains=category_slug).order_by('id')
+    sub_category_list = SubCategory.objects.filter(category__slug__contains=category_slug)
     services = make_paginator(request, services_list)
 
     ctx = {
@@ -104,7 +104,7 @@ def sub_category_list(request, category_slug, sub_category_slug):
     
     categories = Category.objects.all()
     sub_category_list = SubCategory.objects.filter(
-        category__slug__contains=category_slug).order_by('id')
+        category__slug__contains=category_slug)
 
     services = make_paginator(request, services_list)
 
@@ -218,7 +218,7 @@ def category_lifestyle(request):
     
     categories = Category.objects.all()
     sub_category_list = SubCategory.objects.filter(
-        category__slug__contains=lifestyle).order_by('id')
+        category__slug__contains=lifestyle)
     
     services = make_paginator(request, services_list)
 
@@ -236,7 +236,7 @@ def category_food(request):
 
     categories = Category.objects.all()
     sub_category_list = SubCategory.objects.filter(
-        category__slug__contains=food).order_by('id')
+        category__slug__contains=food)
     
     services = make_paginator(request, services_list)
 
