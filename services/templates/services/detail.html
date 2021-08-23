@@ -202,8 +202,8 @@
                                 {% for page_number in page_obj.paginator.page_range %}
                                     {% if page_number >= page_obj.number|add:-4 and page_number <= page_obj.number|add:4 %} 
                                         {% if page_number is page_obj.number %} 
-                                            <li class="page-item active" aria-current="page">
-                                            <a class="text-dark" href="?page={{ page_number }}">{{ page_number }}</a>
+                                            <li class="page-item" aria-current="page">
+                                            <a class="text-dark active" href="?page={{ page_number }}">{{ page_number }}</a>
                                             </li>
                                         {% else %}
                                             <li class="page-item">
@@ -513,7 +513,13 @@
         alert("URL이 클립보드에 복사되었습니다"); 
     }
 
-
+    const pageLocation = location.href;
+    const pageItem = document.querySelectorAll('.board-paginator a');
+    const pageLength = pageItem.length
+    for (let i = 0; i < pageLength; i++) {
+        if (pageItem[i].href === pageLocation) {
+            pageItem[i].className = "active"
+        }
+    }
 </script>
-
 {% endblock content %}

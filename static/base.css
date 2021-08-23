@@ -1559,14 +1559,16 @@ a:hover {
 .board-menu a:hover {
   color: #9a30ae;
   transition: 0.5s;
-}
+} */
 .board-paginator a.active {
-  color: #9a30ae;
+  text-decoration: underline;
+  text-underline-position: under;
 }
 .board-paginator a:hover {
-  color: #9a30ae;
-  transition: 0.5s;
-} */
+  color: inherit;
+  text-decoration: underline !important;
+  text-underline-position: under;
+}
 .board-detail-container {
   font-weight: 300;
 }

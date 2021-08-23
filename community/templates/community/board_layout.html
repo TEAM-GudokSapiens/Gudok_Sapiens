@@ -54,23 +54,23 @@
     {% block board_content %}
     {% endblock %}
 </div>
-<!-- <script>
-    const currentLocation=location.href;
-    const menuItem=document.querySelectorAll('a');
-    const menuLength=menuItem.length
-    for(let i=0; i<menuLength;i++){
-        if(menuItem[i].href===currentLocation){
-            menuItem[i].className="active"
-        }
-    }
-</script> -->
 <script>
+    
     let search = document.querySelector(".search1");
 
     search.onclick = function(){
         document.querySelector(".main-search").classList.toggle('active');
     }
 </script>
-
+<script>
+    const pageLocation = location.href;
+    const pageItem = document.querySelectorAll('.board-paginator a');
+    const pageLength = pageItem.length
+    for (let i = 0; i < pageLength; i++) {
+        if (pageItem[i].href === pageLocation) {
+            pageItem[i].className = "active"
+        }
+    }
+</script>
 
 {% endblock %}
