@@ -12,16 +12,19 @@ from reviews.models import *
 from community.models import *
 
 # "정렬하기" 함수
+
+
 def sort_services_list(request):
-    sort = request.GET.get('sort','') #url의 쿼리스트링을 가져온다. 없는 경우 공백을 리턴한다
-    
+    sort = request.GET.get('sort', '')  # url의 쿼리스트링을 가져온다. 없는 경우 공백을 리턴한다
+
     if sort == 'dib':
         return Service.objects.annotate(avg_reviews=Avg('review__score')).annotate(num_dibs=Count('dib')).annotate(is_dib=Exists(Dib.objects.filter(users__pk=request.user.id, service_id=OuterRef('pk')))).order_by('-num_dibs', '-created_at')
     elif sort == 'score':
-        return Service.objects.annotate(avg_reviews=Avg('review__score')).annotate(is_dib=Exists(Dib.objects.filter(users__pk=request.user.id, service_id=OuterRef('pk')))).order_by('-avg_reviews', '-created_at') #복수를 가져올수 있음
+        # 복수를 가져올수 있음
+        return Service.objects.annotate(avg_reviews=Avg('review__score')).annotate(is_dib=Exists(Dib.objects.filter(users__pk=request.user.id, service_id=OuterRef('pk')))).order_by('-avg_reviews', '-created_at')
     else:
         return Service.objects.annotate(avg_reviews=Avg('review__score')).annotate(is_dib=Exists(Dib.objects.filter(users__pk=request.user.id, service_id=OuterRef('pk')))).order_by('-created_at')
-    
+
 
 # 메인 페이지
 
@@ -76,15 +79,18 @@ def services_list(request):
 
 
 def category_list(request, category_slug):
-    sort = request.GET.get('sort','') #url의 쿼리스트링을 가져온다. 없는 경우 공백을 리턴한다
-    
+    sort = request.GET.get('sort', '')  # url의 쿼리스트링을 가져온다. 없는 경우 공백을 리턴한다
+
     if sort == 'dib':
-        services_list = Service.objects.filter(category__slug__contains=category_slug).annotate(avg_reviews=Avg('review__score')).annotate(num_dibs=Count('dib')).annotate(is_dib=Exists(Dib.objects.filter(users__pk=request.user.id, service_id=OuterRef('pk')))).order_by('-num_dibs', '-created_at')
+        services_list = Service.objects.filter(category__slug__contains=category_slug).annotate(avg_reviews=Avg('review__score')).annotate(num_dibs=Count(
+            'dib')).annotate(is_dib=Exists(Dib.objects.filter(users__pk=request.user.id, service_id=OuterRef('pk')))).order_by('-num_dibs', '-created_at')
     elif sort == 'score':
-        services_list = Service.objects.filter(category__slug__contains=category_slug).annotate(avg_reviews=Avg('review__score')).annotate(is_dib=Exists(Dib.objects.filter(users__pk=request.user.id, service_id=OuterRef('pk')))).order_by('-avg_reviews', '-created_at') #복수를 가져올수 있음
+        services_list = Service.objects.filter(category__slug__contains=category_slug).annotate(avg_reviews=Avg('review__score')).annotate(
+            is_dib=Exists(Dib.objects.filter(users__pk=request.user.id, service_id=OuterRef('pk')))).order_by('-avg_reviews', '-created_at')  # 복수를 가져올수 있음
     else:
-        services_list = Service.objects.filter(category__slug__contains=category_slug).annotate(avg_reviews=Avg('review__score')).annotate(is_dib=Exists(Dib.objects.filter(users__pk=request.user.id, service_id=OuterRef('pk')))).order_by('-created_at')
-    
+        services_list = Service.objects.filter(category__slug__contains=category_slug).annotate(avg_reviews=Avg('review__score')).annotate(
+            is_dib=Exists(Dib.objects.filter(users__pk=request.user.id, service_id=OuterRef('pk')))).order_by('-created_at')
+
     categories = Category.objects.order_by('-id')
     sub_category_list = SubCategory.objects.filter(
         category__slug__contains=category_slug).order_by('id')
@@ -100,15 +106,18 @@ def category_list(request, category_slug):
 
 
 def sub_category_list(request, category_slug, sub_category_slug):
-    sort = request.GET.get('sort','') #url의 쿼리스트링을 가져온다. 없는 경우 공백을 리턴한다
-    
+    sort = request.GET.get('sort', '')  # url의 쿼리스트링을 가져온다. 없는 경우 공백을 리턴한다
+
     if sort == 'dib':
-        services_list = Service.objects.filter(subcategory__slug__contains=sub_category_slug).annotate(avg_reviews=Avg('review__score')).annotate(num_dibs=Count('dib')).annotate(is_dib=Exists(Dib.objects.filter(users__pk=request.user.id, service_id=OuterRef('pk')))).order_by('-num_dibs', '-created_at')
+        services_list = Service.objects.filter(subcategory__slug__contains=sub_category_slug).annotate(avg_reviews=Avg('review__score')).annotate(num_dibs=Count(
+            'dib')).annotate(is_dib=Exists(Dib.objects.filter(users__pk=request.user.id, service_id=OuterRef('pk')))).order_by('-num_dibs', '-created_at')
     elif sort == 'score':
-        services_list = Service.objects.filter(subcategory__slug__contains=sub_category_slug).annotate(avg_reviews=Avg('review__score')).annotate(is_dib=Exists(Dib.objects.filter(users__pk=request.user.id, service_id=OuterRef('pk')))).order_by('-avg_reviews', '-created_at') #복수를 가져올수 있음
+        services_list = Service.objects.filter(subcategory__slug__contains=sub_category_slug).annotate(avg_reviews=Avg('review__score')).annotate(
+            is_dib=Exists(Dib.objects.filter(users__pk=request.user.id, service_id=OuterRef('pk')))).order_by('-avg_reviews', '-created_at')  # 복수를 가져올수 있음
     else:
-        services_list = Service.objects.filter(subcategory__slug__contains=sub_category_slug).annotate(avg_reviews=Avg('review__score')).annotate(is_dib=Exists(Dib.objects.filter(users__pk=request.user.id, service_id=OuterRef('pk')))).order_by('-created_at')
-    
+        services_list = Service.objects.filter(subcategory__slug__contains=sub_category_slug).annotate(avg_reviews=Avg('review__score')).annotate(
+            is_dib=Exists(Dib.objects.filter(users__pk=request.user.id, service_id=OuterRef('pk')))).order_by('-created_at')
+
     categories = Category.objects.all()
     sub_category_list = SubCategory.objects.filter(
         category__slug__contains=category_slug)
@@ -131,7 +140,7 @@ def services_detail(request, pk):
     number_of_dibs = service.dib_set.all().count()
     avg_of_reviews = service.review.aggregate(Avg('score'))['score__avg']
     reviews_order_help = Review.objects.annotate(is_help=Exists(Help.objects.filter(users__pk=request.user.id, review_id=OuterRef('pk')))).filter(target_id=pk).annotate(
-    helps_count=Count('reviews_help')).order_by('-helps_count')
+        helps_count=Count('reviews_help')).order_by('-helps_count')
 
     page_obj = make_paginator(request, reviews_order_help)
 
@@ -208,16 +217,17 @@ def same_tag_list(request, tag):
 def service_intro(request):
     return render(request, 'services/service_intro.html')
 
+
 def sort_category(request, category):
-    sort = request.GET.get('sort','') #url의 쿼리스트링을 가져온다. 없는 경우 공백을 리턴한다
-    
+    sort = request.GET.get('sort', '')  # url의 쿼리스트링을 가져온다. 없는 경우 공백을 리턴한다
+
     if sort == 'dib':
         return Service.objects.filter(category__slug__contains=category).annotate(avg_reviews=Avg('review__score')).annotate(num_dibs=Count('dib')).annotate(is_dib=Exists(Dib.objects.filter(users__pk=request.user.id, service_id=OuterRef('pk')))).order_by('-num_dibs', '-created_at')
     elif sort == 'score':
-        return Service.objects.filter(category__slug__contains=category).annotate(avg_reviews=Avg('review__score')).annotate(is_dib=Exists(Dib.objects.filter(users__pk=request.user.id, service_id=OuterRef('pk')))).order_by('-avg_reviews', '-created_at') #복수를 가져올수 있음
+        return Service.objects.filter(category__slug__contains=category).annotate(avg_reviews=Avg('review__score')).annotate(is_dib=Exists(Dib.objects.filter(users__pk=request.user.id, service_id=OuterRef('pk')))).order_by('-avg_reviews', '-created_at')  # 복수를 가져올수 있음
     else:
         return Service.objects.filter(category__slug__contains=category).annotate(avg_reviews=Avg('review__score')).annotate(is_dib=Exists(Dib.objects.filter(users__pk=request.user.id, service_id=OuterRef('pk')))).order_by('-created_at')
-    
+
 
 # 대분류 카테고리 함수 시작
 
@@ -226,7 +236,7 @@ def category_lifestyle(request):
 
     category = "lifestyle"
     services_list = sort_category(request, category)
-    
+
     categories = Category.objects.all()
     sub_category_list = SubCategory.objects.filter(
         category__slug__contains=lifestyle)
@@ -298,16 +308,20 @@ def category_newsletter(request):
     }
     return render(request, 'services/list.html', context=ctx)
 
+
 def get_sub_categories(request, category, subcategory):
-    sort = request.GET.get('sort','') #url의 쿼리스트링을 가져온다. 없는 경우 공백을 리턴한다
-    
+    sort = request.GET.get('sort', '')  # url의 쿼리스트링을 가져온다. 없는 경우 공백을 리턴한다
+
     if sort == 'dib':
-        services_list = Service.objects.filter(subcategory__slug__contains=subcategory).annotate(avg_reviews=Avg('review__score')).annotate(num_dibs=Count('dib')).annotate(is_dib=Exists(Dib.objects.filter(users__pk=request.user.id, service_id=OuterRef('pk')))).order_by('-num_dibs', '-created_at')
+        services_list = Service.objects.filter(subcategory__slug__contains=subcategory).annotate(avg_reviews=Avg('review__score')).annotate(num_dibs=Count(
+            'dib')).annotate(is_dib=Exists(Dib.objects.filter(users__pk=request.user.id, service_id=OuterRef('pk')))).order_by('-num_dibs', '-created_at')
     elif sort == 'score':
-        services_list = Service.objects.filter(subcategory__slug__contains=subcategory).annotate(avg_reviews=Avg('review__score')).annotate(is_dib=Exists(Dib.objects.filter(users__pk=request.user.id, service_id=OuterRef('pk')))).order_by('-avg_reviews', '-created_at') #복수를 가져올수 있음
+        services_list = Service.objects.filter(subcategory__slug__contains=subcategory).annotate(avg_reviews=Avg('review__score')).annotate(
+            is_dib=Exists(Dib.objects.filter(users__pk=request.user.id, service_id=OuterRef('pk')))).order_by('-avg_reviews', '-created_at')  # 복수를 가져올수 있음
     else:
-        services_list = Service.objects.filter(subcategory__slug__contains=subcategory).annotate(avg_reviews=Avg('review__score')).annotate(is_dib=Exists(Dib.objects.filter(users__pk=request.user.id, service_id=OuterRef('pk')))).order_by('-created_at')
-    
+        services_list = Service.objects.filter(subcategory__slug__contains=subcategory).annotate(avg_reviews=Avg('review__score')).annotate(
+            is_dib=Exists(Dib.objects.filter(users__pk=request.user.id, service_id=OuterRef('pk')))).order_by('-created_at')
+
     category_list = Category.objects.all()
     sub_category_list = SubCategory.objects.filter(
         category__slug__contains=category)
@@ -317,7 +331,8 @@ def get_sub_categories(request, category, subcategory):
 def subcategory_daily_item(request):
     category = "lifestyle"
     subcategory = "daily_item"
-    services_list, category_list, sub_category_list = get_sub_categories(request, category, subcategory)
+    services_list, category_list, sub_category_list = get_sub_categories(
+        request, category, subcategory)
     services = make_paginator(request, services_list)
 
     ctx = {
@@ -332,7 +347,8 @@ def subcategory_daily_item(request):
 def subcategory_health(request):
     category = "lifestyle"
     subcategory = "health"
-    services_list, category_list, sub_category_list = get_sub_categories(request, category, subcategory)
+    services_list, category_list, sub_category_list = get_sub_categories(
+        request, category, subcategory)
     services = make_paginator(request, services_list)
 
     ctx = {
@@ -347,7 +363,8 @@ def subcategory_health(request):
 def subcategory_clothing(request):
     category = "lifestyle"
     subcategory = "clothing"
-    services_list, category_list, sub_category_list = get_sub_categories(request, category, subcategory)
+    services_list, category_list, sub_category_list = get_sub_categories(
+        request, category, subcategory)
     services = make_paginator(request, services_list)
 
     ctx = {
@@ -362,7 +379,8 @@ def subcategory_clothing(request):
 def subcategory_cleaning(request):
     category = "lifestyle"
     subcategory = "cleaning"
-    services_list, category_list, sub_category_list = get_sub_categories(request, category, subcategory)
+    services_list, category_list, sub_category_list = get_sub_categories(
+        request, category, subcategory)
     services = make_paginator(request, services_list)
 
     ctx = {
@@ -377,9 +395,10 @@ def subcategory_cleaning(request):
 def subcategory_delivery(request):
     category = "food"
     subcategory = "delivery"
-    services_list, category_list, sub_category_list = get_sub_categories(request, category, subcategory)
-    services = make_paginator(request, services_list )
-    
+    services_list, category_list, sub_category_list = get_sub_categories(
+        request, category, subcategory)
+    services = make_paginator(request, services_list)
+
     ctx = {
         'services': services,
         'categories': category_list,
@@ -392,9 +411,10 @@ def subcategory_delivery(request):
 def subcategory_beverage(request):
     category = "food"
     subcategory = "beverage"
-    services_list, category_list, sub_category_list = get_sub_categories(request, category, subcategory)
-    services = make_paginator(request, services_list )
-    
+    services_list, category_list, sub_category_list = get_sub_categories(
+        request, category, subcategory)
+    services = make_paginator(request, services_list)
+
     ctx = {
         'services': services,
         'categories': category_list,
@@ -407,9 +427,10 @@ def subcategory_beverage(request):
 def subcategory_alcohol(request):
     category = "food"
     subcategory = "alcohol"
-    services_list, category_list, sub_category_list = get_sub_categories(request, category, subcategory)
-    services = make_paginator(request, services_list )
-    
+    services_list, category_list, sub_category_list = get_sub_categories(
+        request, category, subcategory)
+    services = make_paginator(request, services_list)
+
     ctx = {
         'services': services,
         'categories': category_list,
@@ -422,7 +443,8 @@ def subcategory_alcohol(request):
 def subcategory_fruit(request):
     category = "food"
     subcategory = "fruit"
-    services_list, category_list, sub_category_list = get_sub_categories(request, category, subcategory)
+    services_list, category_list, sub_category_list = get_sub_categories(
+        request, category, subcategory)
     services = make_paginator(request, services_list)
 
     ctx = {
@@ -437,7 +459,8 @@ def subcategory_fruit(request):
 def subcategory_health_food(request):
     category = "food"
     subcategory = "health_food"
-    services_list, category_list, sub_category_list = get_sub_categories(request, category, subcategory)
+    services_list, category_list, sub_category_list = get_sub_categories(
+        request, category, subcategory)
     services = make_paginator(request, services_list)
 
     ctx = {
@@ -452,7 +475,8 @@ def subcategory_health_food(request):
 def subcategory_bakery(request):
     category = "food"
     subcategory = "bakery"
-    services_list, category_list, sub_category_list = get_sub_categories(request, category, subcategory)
+    services_list, category_list, sub_category_list = get_sub_categories(
+        request, category, subcategory)
     services = make_paginator(request, services_list)
 
     ctx = {
@@ -467,7 +491,8 @@ def subcategory_bakery(request):
 def subcategory_meal_kit(request):
     category = "food"
     subcategory = "meal_kit"
-    services_list, category_list, sub_category_list = get_sub_categories(request, category, subcategory)
+    services_list, category_list, sub_category_list = get_sub_categories(
+        request, category, subcategory)
     services = make_paginator(request, services_list)
 
     ctx = {
@@ -482,7 +507,8 @@ def subcategory_meal_kit(request):
 def subcategory_snack(request):
     category = "food"
     subcategory = "snack"
-    services_list, category_list, sub_category_list = get_sub_categories(request, category, subcategory)
+    services_list, category_list, sub_category_list = get_sub_categories(
+        request, category, subcategory)
     services = make_paginator(request, services_list)
 
     ctx = {
@@ -497,7 +523,8 @@ def subcategory_snack(request):
 def subcategory_video(request):
     category = "content"
     subcategory = "video"
-    services_list, category_list, sub_category_list = get_sub_categories(request, category, subcategory)
+    services_list, category_list, sub_category_list = get_sub_categories(
+        request, category, subcategory)
     services = make_paginator(request, services_list)
 
     ctx = {
@@ -512,7 +539,8 @@ def subcategory_video(request):
 def subcategory_music(request):
     category = "content"
     subcategory = "music"
-    services_list, category_list, sub_category_list = get_sub_categories(request, category, subcategory)
+    services_list, category_list, sub_category_list = get_sub_categories(
+        request, category, subcategory)
     services = make_paginator(request, services_list)
 
     ctx = {
@@ -527,7 +555,8 @@ def subcategory_music(request):
 def subcategory_book(request):
     category = "content"
     subcategory = "book"
-    services_list, category_list, sub_category_list = get_sub_categories(request, category, subcategory)
+    services_list, category_list, sub_category_list = get_sub_categories(
+        request, category, subcategory)
     services = make_paginator(request, services_list)
 
     ctx = {

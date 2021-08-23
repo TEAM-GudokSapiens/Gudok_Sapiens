@@ -547,7 +547,7 @@
 
 .popular-services h6 a {
   font-weight: 400;
-  color: #000 ;
+  color: #000;
 }
 
 .popular-services .service-card:nth-child(1):after {
@@ -1042,7 +1042,7 @@ text-shadow:1px 1px 0 #07449a,
 }
 
 .service-content {
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 300;
 }
 
@@ -1433,6 +1433,10 @@ text-shadow:1px 1px 0 #07449a,
   padding: 0;
   margin: 0;
 }
+.board-content-container p {
+  padding: 0;
+  margin: 0;
+}
 .board-content-container p a {
   font-family: "GmarketSansTTFMedium";
 }
@@ -1463,7 +1467,7 @@ text-shadow:1px 1px 0 #07449a,
 .board-content-container {
   border-bottom: 1px solid #cdcdcd;
   height: auto;
-  padding: 1.4rem;
+  padding: 2rem 1rem;
   display: flex;
   align-items: center;
   font-weight: 300;
@@ -1559,14 +1563,16 @@ a:hover {
 .board-menu a:hover {
   color: #9a30ae;
   transition: 0.5s;
-}
+} */
 .board-paginator a.active {
-  color: #9a30ae;
+  text-decoration: underline;
+  text-underline-position: under;
 }
 .board-paginator a:hover {
-  color: #9a30ae;
-  transition: 0.5s;
-} */
+  color: inherit;
+  text-decoration: underline !important;
+  text-underline-position: under;
+}
 .board-detail-container {
   font-weight: 300;
 }
@@ -2194,7 +2200,7 @@ a:hover {
     margin-bottom: 1.5rem;
     font-size: 2rem;
   }
-  
+
   .popular-services h5:nth-child(1) {
     margin-top: 1rem;
   }

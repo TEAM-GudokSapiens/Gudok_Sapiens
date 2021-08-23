@@ -170,11 +170,21 @@
                                         <span class="my-review-content">{{review.content}}</span>
                                     </div>
                                     <div class="my-review-likes">
-                                        {% if review.is_help %}
-                                        <span class="help" onclick="onClickHelp({{ review.id }})"><i class="fas fa-thumbs-up" style="color: #3c3c3c;"></i></span>
+                                        {% if request.user.is_authenticated %}
+                                            {% if review.is_help %}
+                                            <span class="help" onclick="onClickHelp({{ review.id }})"><i class="fas fa-thumbs-up"
+                                                    style="color: #3c3c3c;"></i></span>
+                                            {% else %}
+                                            <span class="help" onclick="onClickHelp({{ review.id }})"><i class="far fa-thumbs-up"
+                                                    style="color: #3c3c3c;"></i></span>
+                                            {% endif %}
                                         {% else %}
-                                        <span class="help" onclick="onClickHelp({{ review.id }})"><i class="far fa-thumbs-up" style="color: #3c3c3c;"></i></span>
+                                                <span class="help"><a href="javascript:alert('로그인 후 이용해주세요.')">
+                                                    <i class="far fa-thumbs-up" style="color: #3c3c3c;"></i></a></span>
                                         {% endif %}
+                                        
+
+                                        
                                         <span class="help__counts"> {{ review.reviews_help.all.count }}</span>
                                     </div>
                                 </div>
@@ -192,8 +202,8 @@
                                 {% for page_number in page_obj.paginator.page_range %}
                                     {% if page_number >= page_obj.number|add:-4 and page_number <= page_obj.number|add:4 %} 
                                         {% if page_number is page_obj.number %} 
-                                            <li class="page-item active" aria-current="page">
-                                            <a class="text-dark" href="?page={{ page_number }}">{{ page_number }}</a>
+                                            <li class="page-item" aria-current="page">
+                                            <a class="text-dark active" href="?page={{ page_number }}">{{ page_number }}</a>
                                             </li>
                                         {% else %}
                                             <li class="page-item">
@@ -503,7 +513,13 @@
         alert("URL이 클립보드에 복사되었습니다"); 
     }
 
-
+    const pageLocation = location.href;
+    const pageItem = document.querySelectorAll('.board-paginator a');
+    const pageLength = pageItem.length
+    for (let i = 0; i < pageLength; i++) {
+        if (pageItem[i].href === pageLocation) {
+            pageItem[i].className = "active"
+        }
+    }
 </script>
-
 {% endblock content %}
