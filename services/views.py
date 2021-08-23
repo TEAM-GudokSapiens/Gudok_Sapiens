@@ -34,7 +34,7 @@ def main(request):
     NUM_OF_DISPLAY = 4
 
     # 이번 주 사피엔스 픽 : 서비스의 name 필드에 등록된 이름으로 넣어주면 됨. 갯수 제한은 두지 않았음.
-    THIS_WEEK_PICK = ['라면나라', '술담화', '톤28', '세탁구독']
+    THIS_WEEK_PICK = ['밀라이트', '술담화', '어피티', '폴인']
     this_week_services = Service.objects.annotate(is_dib=Exists(Dib.objects.filter(users__pk=request.user.id, service_id=OuterRef('pk')))).annotate(
         num_dibs=Count('dib')).annotate(avg_reviews=Avg('review__score')).filter(name__in=THIS_WEEK_PICK)
     new_order_services = Service.objects.annotate(is_dib=Exists(Dib.objects.filter(
