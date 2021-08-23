@@ -311,6 +311,7 @@
 .fix-name {
   font-size: 1.3rem;
   margin-bottom: 0.5rem;
+  font-weight: bold;
 }
 
 .fix-intro,
@@ -1066,22 +1067,27 @@ text-shadow:1px 1px 0 #07449a,
 .service-name {
   font-size: 2rem;
   font-family: "GmarketSansTTFMedium";
+  font-weight: bold;
 }
 
 .service-intro {
-  font-size: 1.4rem;
-  padding-bottom: 10px;
+  font-size: 0.9rem;
+  padding-bottom: 2rem;
   color: #525252;
 }
 
 .service-content {
-  font-size: 1.2rem;
-  font-weight: 300;
+  font-size: 0.9rem;
+  font-weight: 400;
 }
 
 .service-box {
   word-break: break-all;
   margin: 1rem 0;
+}
+
+.modal-dialog {
+  top: -5rem;
 }
 
 .read-more {
@@ -1125,6 +1131,7 @@ text-shadow:1px 1px 0 #07449a,
   width: 100%;
   height: 20vh;
   padding: 0px 0px 15px 15px;
+  object-fit: cover;
 }
 
 .main-img {
@@ -1147,8 +1154,8 @@ text-shadow:1px 1px 0 #07449a,
   width: 23.8vw;
   height: auto;
   position: fixed;
-  top: 53%;
-  right: 20.2%;
+  top: 57%;
+  right: 19.6%;
   box-shadow: 0 0 1px rgb(0 0 0 / 20%);
   padding: 1rem;
   margin-bottom: 1rem;
@@ -1156,11 +1163,16 @@ text-shadow:1px 1px 0 #07449a,
   z-index: 1;
 }
 .service-price {
-  font-size: 1.2rem;
+  font-size: 1rem;
+}
+.service-sub-intro {
+  display: flex;
+  font-size: 0.85rem;
 }
 
 .keywords a {
   /* margin: 10px 0px; */
+  font-size: 0.85rem;
   color: #585858;
 }
 .keywords a:hover {
@@ -1174,9 +1186,7 @@ text-shadow:1px 1px 0 #07449a,
 .fix-link {
   text-align: right;
   display: flex;
-  justify-content: space-around;
-  margin-top: 1rem;
-  align-items: center;
+  flex-direction: column;
 }
 .fix-link a {
   color: inherit;
@@ -1185,27 +1195,45 @@ text-shadow:1px 1px 0 #07449a,
   color: inherit;
 }
 .fix-link .btn {
-  padding: 0.2rem 0.4rem !important;
+  margin-top: 0.8rem;
+  padding: 0.6rem 1.5rem !important;
   border-radius: 6px;
-  border: 0.15rem solid #8181dc;
-  color: #8181dc;
+  border: 0.1rem solid #000;
+  font-size: 0.9rem;
+  background-color: #000;
+  color: #fff;
 }
 .fix-link .btn:hover {
-  background-color: #8181dc;
+  background-color: rgba(0, 0, 0, 0.788);
   color: #fff;
 }
 .fix-link .clicked {
-  background-color: #8181dc;
+  background-color: #000;
+  color: #fff;
+}
+.fix-link .dib.btn {
+  background-color: #fff;
+  color: #000;
+}
+.fix-link .dib.btn:hover {
+  background-color: #000;
   color: #fff;
 }
 
 .tab-title {
-  font-size: 2rem;
-  font-family: "GmarketSansTTFMedium";
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: #000;
+}
+
+.review-count {
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: #000;
 }
 
 .tab-content {
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 .review-container {
   border: 2px solid #e8e8e8;
@@ -1276,7 +1304,7 @@ text-shadow:1px 1px 0 #07449a,
 }
 #openModalBtn {
   color: white;
-  background: black;
+  background: #000;
   padding: 0.6rem;
   width: 100%;
 }
@@ -1319,7 +1347,7 @@ text-shadow:1px 1px 0 #07449a,
   color: #bbbbbb;
 }
 .no-review-text {
-  padding: 1.8rem;
+  padding: 4.8rem 1.8rem 1.8rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1683,13 +1711,9 @@ a:hover {
 }
 .my-review-box {
   display: flex;
-  border-radius: 15px;
-  padding: 1.2rem;
-  border: 1px solid #e8e8e8;
+  border-bottom: 1px solid #e8e8e8;
   margin: 1rem 0;
-  /* font-weight: 300; */
-  justify-content: space-between;
-  align-items: center;
+  padding: 0 0 1rem 0!important;
 }
 .my-review-box-container {
   display: flex;
@@ -1723,11 +1747,17 @@ a:hover {
   flex-direction: column;
   justify-content: space-between;
   max-height: 40vh;
+  padding: 0 0 0 1rem !important;
+}
+.my-review-second-intro {
+  display: flex;
+  justify-content: space-between;
 }
 .my-review-content-container {
   display: flex;
   flex-direction: column;
   max-height: 40vh;
+  font-size: 0.9rem;
 }
 .my-review-score {
   display: flex;
@@ -1739,31 +1769,42 @@ a:hover {
 .my-review-content {
   display: flex;
   justify-content: space-between;
-  max-height: 10vh;
+  max-height: 13vh;
   overflow: auto;
-  font-size: 1rem;
-  color: #3c3c3c;
+  font-size: 0.9rem;
   word-break: break-all;
 }
 .my-review-content .star {
-  font-size: 1.1rem;
+  font-size: 0.9rem;
 }
 .my-review-title {
   /* font-size: 1rem; */
   margin: 0.3rem 0;
-  color: #585858;
 }
 .my-review-date {
   display: none;
   font-size: 0.9rem;
-  color: #808080;
 }
 .my-review-likes {
   display: flex;
   justify-content: flex-end;
   color: #3c3c3c;
-  font-size: 1.2rem;
+  font-size:1rem;
 }
+
+.my-review-likes .help {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-right: 0.2rem;
+}
+
+.my-review-likes .help__counts {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .pw-recovery-3 {
   font-size: 1rem !important;
   margin-bottom: 1.7rem !important;
@@ -1991,9 +2032,9 @@ a:hover {
     display: block;
   }
   .my-review-date {
-    display: block;
+    display: none;
   }
-  .my-review-target span {
+  .my-review-target.users span {
     display: none;
   }
 }
@@ -2230,6 +2271,113 @@ a:hover {
     font-size: 8.5px;
   }
 
+  .fix-link {
+    margin-top: 0.8rem;
+  }
+
+  .service-box {
+    word-break: break-all;
+    margin: 0.7rem 0 3rem 0 !important;
+}
+
+  .fixing-box {
+    margin-bottom: 1rem !important;
+  }
+  
+  #openModalBtn {
+    padding: 1.6rem 1.5rem !important;
+    border-radius: 6px;
+    border: 0.1rem solid #000;
+    font-size: 1.7rem;
+  }
+
+  .service-intro2 {
+    display: block;
+    margin-bottom: 1rem;
+    font-size: 2.15rem;
+    font-weight: 400;
+    color: #000;
+    
+  }
+
+  .mb-my-review-img {
+    margin-bottom: 0.5rem;
+  }
+
+  .my-review-content .my-review-content {
+    font-size: 1.3rem;
+  }
+
+  .my-review-target,
+  .my-review-content .star,
+  .my-review-second-intro .my-review-title {
+    font-size: 1.7rem !important;
+    font-weight: 500 !important;
+  }
+
+  .my-review-content,
+  .my-review-content .star,
+  .my-review-second-intro .my-review-title {
+    font-size: 1.45rem;
+  }
+
+  .my-review-second-intro .my-review-likes {
+    font-size: 1.8rem;
+  }
+
+  .tab-title,
+  .review-count {
+    font-size: 2.15rem; 
+  }
+
+  .service-box .service-content {
+    font-size: 1.5rem !important;
+  }
+
+  .service-price,
+  .service-sub-intro {
+    font-size: 1.6rem;
+  }
+
+  .fix-link .btn {
+    padding: 1.6rem 1.5rem !important;
+    font-size: 1.7rem;
+  }
+
+  .keywords a {
+    font-size: 1.45rem; 
+  }
+
+  .fix-name {
+    font-size: 2.5rem;
+    font-family: 'GmarketSansTTFMedium';
+  }
+
+  .mb-my-review-img {
+    display: block;
+    width: 100%;
+    height: 18rem;
+  }
+
+  .mb-my-review-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .my-review-second-section {
+    flex: none !important;
+    padding: 0 !important;
+    max-width: none !important;
+    width: 100% !important;
+  }
+
+  .my-review-img,
+  .service-container .service-name,
+  .service-container .service-intro {
+    display: none;
+  }
+
   .community-container {
     margin-top: 4rem;
   }
@@ -2384,7 +2532,9 @@ a:hover {
 @media screen and (min-width: 430px) {
   .top-nav,
   .bottom-nav,
-  .main-navbar-2 {
+  .main-navbar-2,
+  .mb-my-review-img,
+  .service-intro2 {
     display: none !important;
   }
 }
@@ -2545,7 +2695,6 @@ a:hover {
   white-space: nowrap;
   font-family: sans-serif;
   font-size: 1.3rem;
-
   color: #444444;
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;
