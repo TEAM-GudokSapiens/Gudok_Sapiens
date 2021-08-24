@@ -24,10 +24,10 @@
         <div class="board-content-container" style="border-bottom: 1px solid #EEEEEE;">
             <p class="col-md-6 col-sm-8">
                 <a href="{%url 'community:board_detail' board.id%}" class="text-dark">{{ board.title }}</a>
-                <span class="board-second-user">작성자 : {{ board.user }}</span>
+                <span class="board-second-user">작성자 : {{ board.user.nickname }}</span>
             </p>
             <div class="board-info col-md-6 p-0">
-                <p class="col-md-3">{{ board.user }} </p>
+                <p class="col-md-3">{{ board.user.nickname }} </p>
                 <p class="col-md-3">{{ board.created_at | date:"Y-m-d" }}</p>
                 <p class="col-md-3">{{ board.like.count }}</p>
                 <p class="col-md-3">{{ board.hits }}</p>

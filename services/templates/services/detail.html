@@ -179,7 +179,7 @@
                                             {% endif %}
                                             <div class="my-review-content">
                                                 <div class="my-review-target ">
-                                                    <span>{{review.user}}</span>
+                                                    <span>{{review.user.nickname}}</span>
                                                     <span>| {{review.period}}개월 사용</span>
                                                 </div>
                                                 <!-- <div class="my-review-score">
@@ -293,7 +293,7 @@
                                                             <span onclick="countLetters();">{{ form.score }}</span>
                                                         </div>
                                                         <div class="review-modal-section">
-                                                            <div style="text-align: center;" class="review-modal-text">서비스에 대한 후기를 남겨주세요</div>
+                                                            <div style="text-align: center;" class="review-modal-text">서비스에 대한 후기를 남겨주세요(사진 필수)</div>
                                                             <span class="review-content-title">{{ form.title }}</span>
                                                             <textarea class="content_textarea" rows="3" name="content" placeholder='어떤 점이 좋았나요? 상세한 후기는 다른 사용자에게 도움이 됩니다(최소 15자 이상)'
                                                                 onkeyup="countLetters();"></textarea>
@@ -515,6 +515,10 @@
             pageItem[i].className = "active"
         }
     }
+
+    $(window).scroll(function(){
+        $(".fixing-box").css("margin-top",Math.max(-250,0-$(this).scrollTop()));
+    });
 
 </script>
 
