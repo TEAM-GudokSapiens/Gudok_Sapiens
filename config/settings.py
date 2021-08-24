@@ -31,6 +31,7 @@ def get_secret(setting, secrets=secrets):
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# -------------------------------------------바꿔주기---------------------------------------------
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
@@ -60,7 +61,7 @@ INSTALLED_APPS = [
     'allauth',  # 설치한앱
     'allauth.account',  # 소셜로그인한 계정관리
     'allauth.socialaccount',  # 소셜account 정보관리
-    'allauth.socialaccount.providers.naver',  # 네이버 소셜로그인
+    'allauth.socialaccount.providers.naver', 
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.kakao',
 

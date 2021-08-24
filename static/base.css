@@ -5,6 +5,10 @@
   font-family: "Noto Sans KR";
 }
 
+body {
+  background-color: #fafafa;
+}
+
 .header-container {
   margin: 10px auto 0 auto;
   padding: 10px 0 !important;
@@ -457,6 +461,8 @@
 .service-card {
   padding: 0 0.5rem !important;
   border: none !important;
+    background-color: #fff !important;
+
 }
 
 .service-card .card-img-top {
@@ -781,29 +787,21 @@ ul.tag-service-box label {
 ul.tag-service-box label > span {
   position: relative;
   display: inline-block;
-  padding: 0 0.5rem;
   color: #ba3965;
-  border: 1px solid #e66691;
-  border-radius: 30px;
-  font-size: 0.9rem;
+  border: 2px solid #e66691;
+  border-radius: 40px;
+  padding: 0.4rem 2.5rem;
+  font-size: 1.2rem;
   transition: 0.5s;
   user-select: none;
   overflow: hidden;
 }
 
-ul.tag-service-box label > span:before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 50%;
-}
-
 ul.tag-service-box label > span > span {
-  font-size: 1.3rem;
-  color: #fcdce7;
-  vertical-align: middle;
+  display: none;
+  font-size: 1.5rem;
+  vertical-align: sub;
+  transition: 0.5s;
 }
 
 .tag-service-card label input[type="checkbox"] {
@@ -812,99 +810,112 @@ ul.tag-service-box label > span > span {
 
 .tag-service-card label input[type="checkbox"]:checked ~ span {
   color: #c23464;
-  /* text-shadow: 0.5px 0.5px 0.5px #c23464;  */
   font-weight: 600;
-  /* box-shadow: 0 0 2 #c23464;  */
-  border: 2px solid #c23464;
+  /* border: 2px solid #c23464; */
   background-color: #fdecf2;
 }
 
 .tag-service-card label input[type="checkbox"]:checked ~ span > span {
+  display: inline-block;
   color: #c23464;
-  transition: 0.5s;
 }
 
-/* 체크표시 */
-/* .tag-service-card label input[type="checkbox"]:checked ~ span::before {
-  content: "✔";
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%) scale(1);
-  width: 1rem;
-  color: #03be58;
-} */
-
-/* 밑줄표시 */
-/* .tag-service-card label input[type="checkbox"]:checked ~ span {
-  text-decoration-line: underline;
-} */
-
-/* 3줄효과 */
-/* .tag-service-card label::before {
-  content: "";
-  position: absolute;
-  height: 33.33%;
-  width: 0;
-  background-color: rgba(13,124,255,0.2);
-  right: 0;
-  z-index: 0;
-  top: 33.33%;
-  transition: all 1s;
-}
-.tag-service-card label::after {
-  content: "";
-  position: absolute;
-  height: 33.33%;
-  width: 0;
-  background-color: rgba(13,124,255,0.2);
-  left: 0;
-  z-index: 0;
-  bottom: 0;
-  transition: all 1s;
-}
-.tag-service-card label span::before {
-  position: absolute;
-  content: "";
-  height: 33.33%;
-  width: 0;
-  background-color: rgba(13,124,255,0.2);
-  bottom: 66.66%;
-  left: 0;
-  transition: all 1s;
-}
-.tag-service-card label:hover::before,
-.tag-service-card label:hover::after,
-.tag-service-card label:hover span::before {
-  width: 100%;
+ul.tag-service-box li:nth-child(2n+1) label > span {
+  color: rgb(37, 100, 203);
+  border: 2px solid rgb(84, 145, 250);
 }
 
-.tag-service-card label input[type="checkbox"]:checked ~ span {
-  text-decoration: underline;
-  text-decoration-style: solid;
-  text-decoration-color: inherit;
-  text-decoration-thickness: 0.3rem;
-}  */
+ul.tag-service-box li:nth-child(2n+1) label input[type="checkbox"]:checked ~ span > span {
+  color: rgb(37, 100, 203);
+}
 
-/* 글씨효과 */
-/* .tag-service-card label input[type="checkbox"]:checked ~ span {
-  background: linear-gradient(to right, red, blue); 
-  -webkit-background-clip:text; 
-  -webkit-text-fill-color:transparent;
+ul.tag-service-box li:nth-child(2n+1) label input[type="checkbox"]:checked ~ span {
+  background-color: rgb(235,242,255);
+  color: rgb(37, 100, 203);
+  font-weight: 600;
 }
-.tag-service-card label input[type="checkbox"]:checked ~ span {
-  text-shadow:1px 0 0 red,0 1px 0 red,-1px 0 0 red,0 -1px 0 red,-1px -1px 0 red,1px 1px 0 red
+
+ul.tag-service-box li:nth-child(3n+1) label > span {
+  color: #3C8040;
+  border: 2px solid #B5D2B6;
 }
-.tag-service-card label input[type="checkbox"]:checked ~ span {
-  font-family: arial; font-weight: bold; color:rgba(0,0,0,.5);
-text-shadow:1px 1px 0 #07449a,
-2px 2px 0 orange,
-3px 3px 0 yellow,
-4px 4px 0 green,
-5px 5px 0 blue,
-6px 6px 0 darkblue,
-7px 7px 0 purple;
-} */
+
+ul.tag-service-box li:nth-child(3n+1) label input[type="checkbox"]:checked ~ span > span {
+  color: #3C8040;
+}
+
+ul.tag-service-box li:nth-child(3n+1) label input[type="checkbox"]:checked ~ span {
+  background-color: rgb(237, 255, 235);
+  color: #3C8040;
+  font-weight: 600;
+}
+
+ul.tag-service-box li:nth-child(5n+1) label > span {
+  color: rgb(25,114,114);
+  border: 2px solid rgb(154,201,204);
+}
+
+ul.tag-service-box li:nth-child(5n+1) label input[type="checkbox"]:checked ~ span > span {
+  color: rgb(25,114,114);
+}
+
+ul.tag-service-box li:nth-child(5n+1) label input[type="checkbox"]:checked ~ span {
+  background-color: rgb(235, 255, 254);
+  color: rgb(25,114,114);
+  font-weight: 600;
+}
+
+ul.tag-service-box li:nth-child(4n+1) label > span {
+  color: rgb(190,111,22);
+  border: 2px solid rgb(242,202,157);
+}
+
+ul.tag-service-box li:nth-child(4n+1) label input[type="checkbox"]:checked ~ span > span {
+  color: rgb(190,111,22);
+}
+
+ul.tag-service-box li:nth-child(4n+1) label input[type="checkbox"]:checked ~ span {
+  background-color: rgb(255, 246, 235);
+  color: rgb(190,111,22);
+  font-weight: 600;
+}
+
+ul.tag-service-box li:nth-child(8n+1) label input[type="checkbox"]:checked ~ span {
+  background-color: rgb(239, 240, 251);
+  color: rgb(100,111,163);
+  font-weight: 600;
+}
+
+ul.tag-service-box li:nth-child(8n+1) label > span {
+  color: rgb(100,111,163);
+  border: 2px solid rgb(152, 165, 228);
+}
+
+ul.tag-service-box li:nth-child(8n+1) label input[type="checkbox"]:checked ~ span > span {
+  color: rgb(100,111,163);
+}
+
+ul.tag-service-box li:nth-child(7n+1) label input[type="checkbox"]:checked ~ span {
+  background-color: rgb(239, 240, 251);
+  color: rgb(115, 35, 190);
+  font-weight: 600;
+}
+
+ul.tag-service-box li:nth-child(7n+1) label > span {
+  color: rgb(115, 35, 190);
+  border: 2px solid rgb(176, 140, 209);
+}
+
+ul.tag-service-box li:nth-child(7n+1) label input[type="checkbox"]:checked ~ span > span {
+  color: rgb(115, 35, 190);
+}
+
+.tag-submit {
+  width: 5rem; 
+  height: 2.5rem;
+  margin-top: 2rem;
+}
+
 
 .service-intro-section {
   margin: 0 auto;
@@ -1027,12 +1038,12 @@ text-shadow:1px 1px 0 #07449a,
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 12rem 0;
+  padding: 9rem 0;
   text-align: center;
   text-shadow: 4px 7px 12px black;
   width: 100%;
   height: 70% !important;
-  background-image: url(https://waifu2x.booru.pics/outfiles/2289cc29fb758c9b384ec4c6a626b5bc06260d17_s2_n1.png);
+  background-image: url(/static/assets/service-intro.png);
   background-repeat: no-repeat;
   background-size: 100% 100%;
   background-position: 0;
@@ -1109,6 +1120,10 @@ text-shadow:1px 1px 0 #07449a,
 
 .main-img-container {
   width: 35vw;
+}
+
+.main-img-container img {
+  object-fit: cover;
 }
 
 .img-sub-container {
@@ -1826,6 +1841,12 @@ a:hover {
   justify-content: center;
 }
 
+@media screen and (min-width: 1200px) {
+  html {
+    font-size: 16px;
+  }
+}
+
 @media screen and (max-width: 1200px) {
   html {
     font-size: 14px;
@@ -1885,6 +1906,11 @@ a:hover {
 @media screen and (max-width: 992px) {
   html {
     font-size: 12px;
+  }
+
+  .fix-link .btn {
+    padding: 1rem 1.5rem !important;
+    font-size: 1.3rem;
   }
 
   .service-second-category {
@@ -1994,6 +2020,11 @@ a:hover {
     font-size: 15px;
   }
 
+  .board-submit-box .board-submit {
+    padding: 1rem 0 !important;
+    font-size: 1.4rem;
+  }
+
   .service-second-category {
     top: 19%;
     left: 8%;
@@ -2053,6 +2084,13 @@ a:hover {
 @media screen and (max-width: 576px) {
   html {
     font-size: 8px;
+  }
+
+  .tag-submit {
+    width: 7rem;
+    height: 3.5rem;
+    margin-top: 2rem;
+    font-size: 1.5rem !important;
   }
 
   .user-dropdown .menu.active {
@@ -2280,6 +2318,23 @@ a:hover {
 @media screen and (max-width: 430px) {
   html {
     font-size: 8.5px;
+  }
+
+  .tag-submit {
+    width: 7rem;
+    height: 3.5rem;
+    margin-top: 2rem;
+    font-size: 1.5rem !important;
+  }
+
+  .ul.tag-service-box label > span {
+    padding: 0.2rem 2rem;
+    font-size: 1rem;
+  }
+
+  .board-submit-box .board-submit {
+    padding: 1.5rem 0 !important;
+    font-size: 1.8rem;
   }
 
   .fix-link {

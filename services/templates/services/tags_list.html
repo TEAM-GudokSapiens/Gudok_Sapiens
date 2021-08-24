@@ -28,12 +28,6 @@
     .tag-6 {
         font-size: 6rem;
     } */
-    .page-item input:focus,
-    .page-item input[type]:focus,
-    .uneditable-input:focus {
-        box-shadow: none;
-        outline: 0 none;
-    }
 </style>
 <div class="tag-service-section col-10">
     <form class="sa sa-up" action="{% url 'services:services_tags' %}" method='POST' id="checkbox-group">
@@ -43,8 +37,8 @@
             <li class="tag-service-card tag-{{tag.num_times}}">
                 <label data-weight="3">
                     <input type='checkbox' name='selected' value='{{ tag }}'>
-                    <span style="font-family: 'GmarketSansTTFMedium';">
-                        <span class="material-icons">favorite</span>
+                    <span>
+                        <span class="material-icons">check</span>
                         {{ tag.name }}
                     </span>
                 </label>
@@ -54,7 +48,7 @@
         <div>
             <ul class="pagination justify-content-center">
                 <li class="page-item">
-                    <input class="btn btn-dark" type='submit' value='검색' style="width: 5rem;" />
+                    <input class="btn btn-primary tag-submit" type='submit' value='검색' />
                 </li>
             </ul>
         </div>
