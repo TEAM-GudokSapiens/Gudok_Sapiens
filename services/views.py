@@ -92,7 +92,8 @@ def category_list(request, category_slug):
             is_dib=Exists(Dib.objects.filter(users__pk=request.user.id, service_id=OuterRef('pk')))).order_by('-created_at')
 
     categories = Category.objects.order_by('-id')
-    sub_category_list = SubCategory.objects.filter(category__slug__contains=category_slug)
+    sub_category_list = SubCategory.objects.filter(
+        category__slug__contains=category_slug)
     services = make_paginator(request, services_list)
 
     ctx = {
@@ -141,7 +142,7 @@ def services_detail(request, pk):
     reviews_order_help = Review.objects.annotate(is_help=Exists(Help.objects.filter(users__pk=request.user.id, review_id=OuterRef('pk')))).filter(target_id=pk).annotate(
         helps_count=Count('reviews_help')).order_by('-helps_count')
 
-    page_obj = make_paginator(request, reviews_order_help)
+    page_obj = make_paginator(request, reviews_order_help, 5)
 
     ctx = {
         'service': service,

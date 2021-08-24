@@ -30,7 +30,7 @@ def get_random_services(request, input_num):
     return new_list
 
 
-def make_paginator(request, queryset, NUM_OF_PAGINATOR=5):
+def make_paginator(request, queryset, NUM_OF_PAGINATOR=12):
     paginator = Paginator(queryset, NUM_OF_PAGINATOR)
     page = request.GET.get('page')
     queryset_list = paginator.get_page(page)

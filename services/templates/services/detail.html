@@ -62,20 +62,6 @@
             {% if message %}
                 <script>alert('{{ message }}')</script>
             </div>
-            <div class="fix-name">{{service.name}}</div>
-            <!-- <div class="fix-intro">{{service.intro}}</div>  -->
-            <!-- <div class="service-content">{{service.content}}</div> -->
-            {% if service.price == 0 %}
-            <div class="service-price"><p>무료</p></div>
-            {% elif service.price == 1 %}
-            <div class="service-price"><p>견적 문의</p></div>
-            {% else %}
-            <div class="service-price">{{service.price}}원 (한달 기준)</div>
-            {% endif %}
-            {% if avg_of_reviews %}
-            <div> 평균 <i class="fas fa-star"></i>{{ avg_of_reviews|floatformat:1 }} ({{service.get_review_count}}명) </div>
-            {% else %}
-            <div> 아직 작성한 리뷰가 없습니다. </div>
             {% endif %}
         
             
@@ -193,7 +179,7 @@
                                             {% endif %}
                                             <div class="my-review-content">
                                                 <div class="my-review-target ">
-                                                    <span>{{review.user}}</span>
+                                                    <span>{{review.user.nickname}}</span>
                                                     <span>| {{review.period}}개월 사용</span>
                                                 </div>
                                                 <!-- <div class="my-review-score">
@@ -226,7 +212,6 @@
 
                                             <span class="my-review-content">{{review.content}}</span>
                                         </div>
-<<<<<<< HEAD
 
                                     </div>
                                 </div>
@@ -242,58 +227,8 @@
                                     {% for page_number in page_obj.paginator.page_range %}
                                         {% if page_number >= page_obj.number|add:-4 and page_number <= page_obj.number|add:4 %} 
                                             {% if page_number is page_obj.number %} 
-<<<<<<< HEAD
-                                                <li class="page-item active" aria-current="page">
-=======
-                                        <span class="my-review-date" style="font-size: 0.9rem;
-                                                        color: #3c3c3c;">{{review.period}}개월 사용</span>
-                                        <span class="my-review-title">{{review.title}}</span>
-                                        <span class="my-review-content">{{review.content}}</span>
-                                    </div>
-                                    <div class="my-review-likes">
-                                        {% if request.user.is_authenticated %}
-                                            {% if review.is_help %}
-                                            <span class="help" onclick="onClickHelp({{ review.id }})"><i class="fas fa-thumbs-up"
-                                                    style="color: #3c3c3c;"></i></span>
-                                            {% else %}
-                                            <span class="help" onclick="onClickHelp({{ review.id }})"><i class="far fa-thumbs-up"
-                                                    style="color: #3c3c3c;"></i></span>
-                                            {% endif %}
-                                        {% else %}
-                                                <span class="help"><a href="javascript:alert('로그인 후 이용해주세요.')">
-                                                    <i class="far fa-thumbs-up" style="color: #3c3c3c;"></i></a></span>
-                                        {% endif %}
-                                        
-
-                                        
-                                        <span class="help__counts"> {{ review.reviews_help.all.count }}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <hr>
-                        {% endfor %}
-                        {% if page_obj %}
-                            <div class="board-paginator">
-                                {% if page_obj.has_previous %}
-                                    <a href="?page=1" class="text-dark">처음으로</a>
-                                    <a href="?page={{ page_obj.previous_page_number }}" class="text-dark">&lt&lt</a>
-                                {% endif %}
-                            
-                                {% for page_number in page_obj.paginator.page_range %}
-                                    {% if page_number >= page_obj.number|add:-4 and page_number <= page_obj.number|add:4 %} 
-                                        {% if page_number is page_obj.number %} 
-                                            <li class="page-item" aria-current="page">
-                                            <a class="text-dark active" href="?page={{ page_number }}">{{ page_number }}</a>
-                                            </li>
-                                        {% else %}
-                                            <li class="page-item">
->>>>>>> develop
-                                                <a class="text-dark" href="?page={{ page_number }}">{{ page_number }}</a>
-=======
                                                 <li class="page-item" aria-current="page">
                                                 <a class="text-dark active" href="?page={{ page_number }}">{{ page_number }}</a>
->>>>>>> sangeon_front
                                                 </li>
                                             {% else %}
                                                 <li class="page-item">
@@ -566,17 +501,12 @@
         alert("URL이 클립보드에 복사되었습니다"); 
     }
 
-<<<<<<< HEAD
     // 이미지 크게 보기
     var img = document.querySelectorAll(".open-img");
         for (var x = 0; x < img.length; x++) {
           img.item(x).onclick=function() {window.open(this.src)}; 
         }
 
-<<<<<<< HEAD
-=======
-=======
->>>>>>> sangeon_front
     const pageLocation = location.href;
     const pageItem = document.querySelectorAll('.board-paginator a');
     const pageLength = pageItem.length
@@ -585,14 +515,11 @@
             pageItem[i].className = "active"
         }
     }
-<<<<<<< HEAD
->>>>>>> develop
-=======
 
     $(window).scroll(function(){
         $(".fixing-box").css("margin-top",Math.max(-250,0-$(this).scrollTop()));
     });
 
->>>>>>> sangeon_front
 </script>
+
 {% endblock content %}
