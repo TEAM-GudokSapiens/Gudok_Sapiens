@@ -206,9 +206,15 @@
 </div>
 
 <div class="promotion-section col-12 col-sm-10 col-md-10 col-lg-7">
+    {% if request.user.is_authenticated %}
+    <a href="{% url 'services:services_list' %}">
+        <img src="{% static 'assets/sign-up.png' %}" alt="">
+    </a>
+    {% else %}
     <a href="{% url 'users:login' %}">
         <img src="{% static 'assets/sign-up.png' %}" alt="">
     </a>
+    {% endif %}
 </div>
 
 <div class="main-service-list-section col-10 col-lg-7">

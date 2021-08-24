@@ -91,9 +91,9 @@
                         {% else %}
                             {% if comment.reply == 0 %}
                                 {% if comment.user == board.user %}
-                                <strong>{{ comment.user }}&nbsp;<span style="color:gray";></span></strong>
+                                <strong>{{ comment.user.nickname }}&nbsp;<span style="color:gray";></span></strong>
                                 {% else  %}
-                                <strong>{{ comment.user }}</strong>
+                                <strong>{{ comment.user.nickname }}</strong>
                                 {% endif %}
                                 {% if comment.created_string == False %}
                                 <span style="float:right; color:gray;">{{ comment.created_at|date:'m월 d일' }}</span>
@@ -102,8 +102,8 @@
                                 {% endif %}
                                 {% if comment.user == request.user or request.user.level == '0' or request.user.level == '1' %}
                                 <div>
-                                    <div style="text-align:left;height: auto;">{{ comment.content }}</div>
-                                    <div style="text-align: right; height: auto;">
+                                    <div style="text-align:left;height: auto; word-break: break-all;">{{ comment.content }}</div>
+                                    <div style="text-align: right; height: auto; word-break: break-all;">
                                         <a style="color: #888888f2;cursor: pointer;" onclick="createReplyArea('{{comment.id}}');">답글달기</a>&nbsp;&middot;&nbsp;
                                         <a style="color: #888888f2;cursor: pointer;" onclick="commentDelete('{{comment.id}}');">댓글삭제</a>
                                     </div>
@@ -111,7 +111,7 @@
                                 <hr>
                                 {% else %}
                                 <div>
-                                    <div style="text-align:left;height: auto;">{{ comment.content }}</div>
+                                    <div style="text-align:left;height: auto; word-break: break-all;">{{ comment.content }}</div>
                                     <div style="text-align: right; ">
                                         <a style="color: #888888f2;cursor: pointer;" onclick="createReplyArea('{{comment.id}}');">답글달기</a>
                                     </div>
@@ -139,7 +139,7 @@
                             <script type="text/javascript">
                                 var reply_id = "{{ comment.id }}";
                                 var comment_id = "{{ comment.reply }}";
-                                var reply_user = "{{ comment.user }}";
+                                var reply_user = "{{ comment.user.nickname }}";
                                 var reply_created = "{{ comment.created_string }}";
                                 if (reply_created == 'False') {
                                     reply_created = "{{ comment.created_at|date:'m월 d일' }}"
@@ -156,7 +156,7 @@
                             <script type="text/javascript">
                                 var reply_id = "{{ comment.id }}";
                                 var comment_id = "{{ comment.reply }}";
-                                var reply_user = "{{ comment.user }}";
+                                var reply_user = "{{ comment.user.nickname }}";
                                 var reply_created = "{{ comment.created_string }}";
                                 if (reply_created == 'False') {
                                     reply_created = "{{ comment.created_at|date:'m월 d일' }}"
@@ -175,7 +175,7 @@
                             <script type="text/javascript">
                                 var reply_id = "{{ comment.id }}";
                                 var comment_id = "{{ comment.reply }}";
-                                var reply_user = "{{ comment.user }}";
+                                var reply_user = "{{ comment.user.nickname }}";
                                 // if(reply_user == "None") {
                                 //     reply_user = "탈퇴한 사용자입니다.";
                                 // }
@@ -195,7 +195,7 @@
                             <script type="text/javascript">
                                 var reply_id = "{{ comment.id }}";
                                 var comment_id = "{{ comment.reply }}";
-                                var reply_user = "{{ comment.user }}";
+                                var reply_user = "{{ comment.user.nickname }}";
                                 // if(reply_user == "None") {
                                 //     reply_user = "탈퇴한 사용자입니다.";
                                 // }
